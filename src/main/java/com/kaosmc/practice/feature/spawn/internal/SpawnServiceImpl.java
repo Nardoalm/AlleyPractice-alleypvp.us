@@ -1,0 +1,69 @@
+package com.kaosmc.practice.feature.spawn.internal;
+
+import com.kaosmc.practice.bootstrap.AlleyContext;
+import com.kaosmc.practice.bootstrap.annotation.Service;
+import com.kaosmc.practice.common.PlayerUtil;
+import com.kaosmc.practice.common.logger.Logger;
+import com.kaosmc.practice.common.serializer.Serializer;
+import com.kaosmc.practice.core.locale.LocaleService;
+import com.kaosmc.practice.core.locale.internal.impl.SettingsLocaleImpl;
+import com.kaosmc.practice.feature.spawn.SpawnService;
+import lombok.Getter;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
+
+/**
+ * @author Emmy
+ * @project Kaos
+ * @date 17/05/2024 - 17:47
+ */
+@Getter
+@Service(provides = SpawnService.class, priority = 240)
+public class SpawnServiceImpl implements SpawnService {
+    private final LocaleService localeService;
+
+    private Location location;
+
+    /**
+     * DI Constructor for the SpawnServiceImpl class.
+     *
+     * @param localeService The locale service.
+     */
+    public SpawnServiceImpl(LocaleService localeService) {
+        this.localeService = localeService;
+    }
+
+    @Override
+    public void initialize(AlleyContext context) {
+        this.loadSpawnLocation();
+    }
+
+    private void loadSpawnLocation() {
+        Location location = Serializer.deserializeLocation(this.localeService.getString(SettingsLocaleImpl.SERVER_SPAWN_LOCATION));
+        if (location == null) {
+            Logger.error("Spawn location is null.");
+            return;
+        }
+
+        this.location = new Location(location.getWorld(), location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
+    }
+
+    @Override
+    public void updateSpawnLocation(Location location) {
+        if (location == null) return;
+
+        this.location = location;
+        this.localeService.setString(SettingsLocaleImpl.SERVER_SPAWN_LOCATION, Serializer.serializeLocation(location));
+    }
+
+    @Override
+    public void teleportToSpawn(Player player) {
+        if (this.location == null) {
+            Logger.error("Cannot teleport " + player.getName() + " to spawn: Spawn location is not set.");
+            return;
+        }
+
+        player.teleport(this.location);
+        PlayerUtil.reset(player, false, true);
+    }
+}

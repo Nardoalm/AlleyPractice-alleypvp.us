@@ -1,0 +1,89 @@
+package com.kaosmc.practice.feature.division.command.impl.data;
+
+import com.kaosmc.practice.core.locale.internal.impl.message.GlobalMessagesLocaleImpl;
+import com.kaosmc.practice.feature.division.Division;
+import com.kaosmc.practice.feature.division.DivisionService;
+import com.kaosmc.practice.library.command.BaseCommand;
+import com.kaosmc.practice.library.command.CommandArgs;
+import com.kaosmc.practice.library.command.annotation.CommandData;
+import com.kaosmc.practice.library.command.annotation.CompleterData;
+import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * @author Emmy
+ * @project Kaos
+ * @since 28/01/2025
+ */
+public class DivisionSetWinsCommand extends BaseCommand {
+    @CompleterData(name = "division.setwins")
+    public List<String> DivisionSetWinsCompleter(CommandArgs command) {
+        List<String> completion = new ArrayList<>();
+        if (command.getArgs().length == 1 && command.getPlayer().hasPermission(this.getAdminPermission())) {
+            this.plugin.getService(DivisionService.class).getDivisions().forEach(division -> completion.add(division.getName()));
+        } else if (command.getArgs().length == 2 && command.getPlayer().hasPermission(this.getAdminPermission())) {
+            Division division = this.plugin.getService(DivisionService.class).getDivision(command.getArgs()[0]);
+            if (division != null) {
+                division.getTiers().forEach(tier -> completion.add(tier.getName()));
+            }
+        }
+
+        return completion;
+    }
+
+    @CommandData(
+            name = "division.setwins",
+            isAdminOnly = true,
+            usage = "division setwins <name> <tier> <wins>",
+            description = "Set the required wins for a division tier."
+    )
+    @Override
+    public void onCommand(CommandArgs command) {
+        Player player = command.getPlayer();
+        String[] args = command.getArgs();
+
+        if (args.length < 3) {
+            command.sendUsage();
+            return;
+        }
+
+        DivisionService divisionService = this.plugin.getService(DivisionService.class);
+        Division division = divisionService.getDivision(args[0]);
+        if (division == null) {
+            player.sendMessage(this.getString(GlobalMessagesLocaleImpl.DIVISION_NOT_FOUND).replace("{division-name}", args[0]));
+            return;
+        }
+
+        String tier = args[1];
+        if (division.getTier(tier) == null) {
+            player.sendMessage(this.getString(GlobalMessagesLocaleImpl.DIVISION_TIER_NOT_FOUND)
+                    .replace("{division-name}", division.getDisplayName())
+                    .replace("{tier-name}", tier)
+            );
+            return;
+        }
+
+        int wins;
+        try {
+            wins = Integer.parseInt(args[2]);
+        } catch (NumberFormatException e) {
+            player.sendMessage(this.getString(GlobalMessagesLocaleImpl.ERROR_INVALID_NUMBER).replace("{input}", args[2]));
+            return;
+        }
+
+        if (wins < 0) {
+            player.sendMessage(this.getString(GlobalMessagesLocaleImpl.ERROR_AMOUNT_MUST_BE_GREATER_THAN_ZERO));
+            return;
+        }
+
+        division.getTier(tier).setRequiredWins(wins);
+        divisionService.saveDivision(division);
+        player.sendMessage(this.getString(GlobalMessagesLocaleImpl.DIVISION_WINS_SET)
+                .replace("{division-name}", division.getName())
+                .replace("{tier-name}", tier)
+                .replace("{required-wins}", String.valueOf(wins))
+        );
+    }
+}

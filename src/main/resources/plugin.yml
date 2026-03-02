@@ -1,9 +1,9 @@
-name: Alley
+name: KaosPractice
 version: '${project.version}'
-main: dev.revere.alley.AlleyPlugin
-authors: [ "Emmy", "Remi" ]
+main: com.kaosmc.practice.KaosPractice
+authors: ysubz
 description: '${project.description}'
-website: https://discord.gg/revere
+website: https://knowplugins.com
 softDepend:
   - PlaceholderAPI
 depend: [ FastAsyncWorldEdit, WorldEdit ]

@@ -1,0 +1,65 @@
+package com.kaosmc.practice.feature.command.impl.other;
+
+import com.kaosmc.practice.common.logger.Logger;
+import com.kaosmc.practice.common.reflect.ReflectionService;
+import com.kaosmc.practice.common.reflect.internal.types.VirtualStackReflectionServiceImpl;
+import com.kaosmc.practice.common.text.CC;
+import com.kaosmc.practice.core.locale.internal.impl.message.GlobalMessagesLocaleImpl;
+import com.kaosmc.practice.library.command.BaseCommand;
+import com.kaosmc.practice.library.command.CommandArgs;
+import com.kaosmc.practice.library.command.annotation.CommandData;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+
+/**
+ * @author Emmy
+ * @project Kaos
+ * @date 14/07/2025
+ */
+public class VirtualStackCommand extends BaseCommand {
+    @CommandData(
+            name = "virtualstack",
+            isAdminOnly = true,
+            description = "Bypass stack size limits for items and set a virtual stack amount (max 127)",
+            usage = "virtualstack <amount> [bypassLimit]"
+    )
+    @Override
+    public void onCommand(CommandArgs command) {
+        Player player = command.getPlayer();
+        String[] args = command.getArgs();
+
+        if (args.length < 1) {
+            command.sendUsage();
+            player.sendMessage(CC.translate("&7Example: /virtualstack 127"));
+            player.sendMessage(CC.translate("&7To bypass stack size limits, use: '/virtualstack 130 true'"));
+            return;
+        }
+
+        if (player.getInventory().getItemInHand() == null || player.getInventory().getItemInHand().getType() == Material.AIR) {
+            player.sendMessage(this.getString(GlobalMessagesLocaleImpl.ERROR_YOU_MUST_HOLD_ITEM));
+            return;
+        }
+
+        int amount;
+        try {
+            amount = Integer.parseInt(args[0]);
+        } catch (NumberFormatException exception) {
+            player.sendMessage(this.getString(GlobalMessagesLocaleImpl.ERROR_INVALID_NUMBER).replace("{input}", args[0]));
+            return;
+        }
+
+        boolean bypassLimit = args.length > 1 && args[1].equalsIgnoreCase("true");
+
+        if (!bypassLimit && (amount < 1 || amount > 127)) {
+            player.sendMessage(CC.translate("&cAmount must be between 1 and 127."));
+            return;
+        }
+
+        try {
+            this.plugin.getService(ReflectionService.class).getReflectionService(VirtualStackReflectionServiceImpl.class).setVirtualStackAmount(player, amount);
+            player.sendMessage(CC.translate("&aSuccessfully set the virtual stack amount to &6" + amount + "&a."));
+        } catch (Exception exception) {
+            Logger.logException("Failed to set virtual stack amount", exception);
+        }
+    }
+}

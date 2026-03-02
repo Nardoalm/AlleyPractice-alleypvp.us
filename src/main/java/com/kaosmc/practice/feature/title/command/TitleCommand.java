@@ -1,0 +1,27 @@
+package com.kaosmc.practice.feature.title.command;
+
+import com.kaosmc.practice.library.command.BaseCommand;
+import com.kaosmc.practice.library.command.CommandArgs;
+import com.kaosmc.practice.library.command.annotation.CommandData;
+import com.kaosmc.practice.feature.title.menu.TitleMenu;
+import com.kaosmc.practice.core.profile.ProfileService;
+import org.bukkit.entity.Player;
+
+/**
+ * @author Emmy
+ * @project Kaos
+ * @since 22/04/2025
+ */
+public class TitleCommand extends BaseCommand {
+    @CommandData(
+            name = "title",
+            aliases = {"titles"},
+            usage = "title",
+            description = "Open the title menu."
+    )
+    @Override
+    public void onCommand(CommandArgs command) {
+        Player player = command.getPlayer();
+        new TitleMenu(this.plugin.getService(ProfileService.class).getProfile(player.getUniqueId())).openMenu(player);
+    }
+}

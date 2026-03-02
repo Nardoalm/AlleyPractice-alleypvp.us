@@ -1,5 +1,5 @@
 plugin:
-  # Whether to automatically update Alley Practice upon server start when a new version is available.
+  # Whether to automatically update Kaos Practice upon server start when a new version is available.
   auto-update: true
 
 crafting-operations:
@@ -24,7 +24,7 @@ configuration:
     menu-title: '&6&l{kit-name}'
 
 explosive:
-  # Whether you want to use Alley's built-in explosive mechanics. (Fireball & Instant-TNT)
+  # Whether you want to use Kaos's built-in explosive mechanics. (Fireball & Instant-TNT)
   enabled: true
   values:
     fireball:
@@ -66,7 +66,7 @@ permissions:
     emoji-usage-permission: alley.donator.chat.emoji
 
 profanity-filter:
-  # Alley has a built in list of insults, if this is set to true, those will be used in addition to the custom list below
+  # Kaos has a built in list of insults, if this is set to true, those will be used in addition to the custom list below
   add-default-words: true
   filtered-words:
     - shit

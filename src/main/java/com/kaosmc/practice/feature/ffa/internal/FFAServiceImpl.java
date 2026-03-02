@@ -1,0 +1,122 @@
+package com.kaosmc.practice.feature.ffa.internal;
+
+import com.kaosmc.practice.bootstrap.AlleyContext;
+import com.kaosmc.practice.bootstrap.annotation.Service;
+import com.kaosmc.practice.common.logger.Logger;
+import com.kaosmc.practice.common.text.CC;
+import com.kaosmc.practice.feature.arena.Arena;
+import com.kaosmc.practice.feature.arena.ArenaService;
+import com.kaosmc.practice.feature.ffa.FFAMatch;
+import com.kaosmc.practice.feature.ffa.FFAService;
+import com.kaosmc.practice.feature.kit.Kit;
+import com.kaosmc.practice.feature.kit.KitService;
+import com.kaosmc.practice.feature.kit.setting.types.mechanic.KitSettingBuildImpl;
+import com.kaosmc.practice.feature.kit.setting.types.mode.KitSettingBoxing;
+import lombok.Getter;
+import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+/**
+ * @author Emmy
+ * @project Kaos
+ * @since 11/04/2025
+ */
+@Getter
+@Service(provides = FFAService.class, priority = 130)
+public class FFAServiceImpl implements FFAService {
+    private final KitService kitService;
+    private final ArenaService arenaService;
+
+    private final List<FFAMatch> matches = new ArrayList<>();
+    private final List<Kit> ffaKits = new ArrayList<>();
+    private final int defaultPlayerSize = 20;
+
+    /**
+     * Constructor for DI.
+     */
+    public FFAServiceImpl(KitService kitService, ArenaService arenaService) {
+        this.kitService = kitService;
+        this.arenaService = arenaService;
+    }
+
+    @Override
+    public void initialize(AlleyContext context) {
+        this.ffaKits.addAll(this.kitService.getKits().stream().filter(Kit::isFfaEnabled).collect(Collectors.toList()));
+        this.initializeMatches();
+    }
+
+    @Override
+    public void shutdown(AlleyContext context) {
+        this.matches.forEach(match -> match.getPlayers().forEach(ffaPlayer -> {
+            Player player = ffaPlayer.getPlayer();
+            if (player != null) {
+                match.leave(player);
+                player.sendMessage(CC.translate("&cThe FFA arena is closing due to a server shutdown."));
+            }
+        }));
+        this.matches.clear();
+        Logger.info("Cleaned up all FFA matches.");
+    }
+
+    /**
+     * Load all FFA matches
+     */
+    public void initializeMatches() {
+        for (Kit kit : this.ffaKits) {
+            Arena arena = this.arenaService.getArenaByName(kit.getFfaArenaName());
+            if (arena == null) {
+                Logger.error("Kit " + kit.getName() + " has no FFA arena set. Please set the FFA arena in the kit settings.");
+                continue;
+            }
+
+            if (kit.getMaxFfaPlayers() <= 0) {
+                kit.setMaxFfaPlayers(this.defaultPlayerSize);
+                Logger.error("FFA match for kit " + kit.getName() + " has a max player size of 0. Setting to default of " + this.defaultPlayerSize + " players.");
+            }
+
+            this.createFFAMatch(arena, kit, kit.getMaxFfaPlayers());
+        }
+    }
+
+    @Override
+    public void createFFAMatch(Arena arena, Kit kit, int maxPlayers) {
+        DefaultFFAMatch match = new DefaultFFAMatch(kit.getName(), arena, kit, maxPlayers);
+        this.matches.add(match);
+    }
+
+    @Override
+    public Optional<FFAMatch> getMatchByPlayer(Player player) {
+        return this.matches.stream().filter(match -> match.getPlayers().contains(match.getGameFFAPlayer(player))).findFirst();
+    }
+
+    @Override
+    public FFAMatch getFFAMatch(String kitName) {
+        return this.matches.stream()
+                .filter(match -> match.getKit().getName().equalsIgnoreCase(kitName))
+                .findFirst()
+                .orElse(null);
+    }
+
+    @Override
+    public FFAMatch getFFAMatch(Player player) {
+        return this.getMatchByPlayer(player).orElse(null);
+    }
+
+    @Override
+    public void reloadFFAKits() {
+        this.shutdown(null);
+
+        this.ffaKits.clear();
+        this.ffaKits.addAll(this.kitService.getKits().stream().filter(Kit::isFfaEnabled).collect(Collectors.toList()));
+        this.initializeMatches();
+    }
+
+    @Override
+    public boolean isNotEligibleForFFA(Kit kit) {
+        return kit.isSettingEnabled(KitSettingBuildImpl.class) || kit.isSettingEnabled(KitSettingBoxing.class);
+    }
+}

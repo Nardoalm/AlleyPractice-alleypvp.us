@@ -1,0 +1,126 @@
+package com.kaosmc.practice.adapter.core;
+
+import com.kaosmc.practice.KaosPractice;
+import com.kaosmc.practice.common.text.CC;
+import com.kaosmc.practice.core.locale.LocaleService;
+import com.kaosmc.practice.core.locale.internal.impl.SettingsLocaleImpl;
+import com.kaosmc.practice.core.profile.Profile;
+import com.kaosmc.practice.core.profile.ProfileService;
+import com.kaosmc.practice.feature.level.LevelService;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
+
+import java.util.Objects;
+
+/**
+ * @author Emmy
+ * @project Kaos
+ * @since 26/04/2025
+ */
+public interface Core {
+    /**
+     * Retrieves the bootstrap name of the server implementation.
+     *
+     * @return The bootstrap name as a String.
+     */
+    CoreType getType();
+
+    /**
+     * Retrieves the color associated with a given player.
+     *
+     * @param player The player whose color is to be retrieved.
+     * @return The color as a ChatColor object.
+     */
+    ChatColor getPlayerColor(Player player);
+
+    /**
+     * Retrieves the rank prefix for a given player
+     *
+     * @param player The player whose rank prefix is to be retrieved.
+     * @return The rank prefix as a String.
+     */
+    String getRankPrefix(Player player);
+
+    /**
+     * Retrieves the rank name for a given player.
+     *
+     * @param player The player whose rank is to be retrieved.
+     * @return The rank name as a String.
+     */
+    String getRankName(Player player);
+
+    /**
+     * Retrieves the rank suffix for a given player.
+     *
+     * @param player The player whose rank suffix is to be retrieved.
+     * @return The rank suffix as a String.
+     */
+    String getRankSuffix(Player player);
+
+    /**
+     * Retrieves the rank color for a given player.
+     *
+     * @param player The player whose rank color is to be retrieved.
+     * @return The rank color as a ChatColor object.
+     */
+    ChatColor getRankColor(Player player);
+
+    /**
+     * Retrieves the tag prefix for a given player.
+     *
+     * @param player The player whose tag prefix is to be retrieved.
+     * @return The tag prefix as a String.
+     */
+    String getTagPrefix(Player player);
+
+    /**
+     * Retrieves the color associated with a given player's tag.
+     *
+     * @param player The player whose tag color is to be retrieved.
+     * @return The tag color as a String.
+     */
+    ChatColor getTagColor(Player player);
+
+    /**
+     * Retrieves the chat format for a given player and message.
+     *
+     * @param player       The player whose chat format is to be retrieved.
+     * @param eventMessage The message to be formatted.
+     * @param separator    The separator to be used in the chat format.
+     * @return The formatted chat message as a String.
+     */
+    default String getChatFormat(Player player, String eventMessage, String separator) {
+        Profile profile = KaosPractice.getInstance().getService(ProfileService.class).getProfile(player.getUniqueId());
+
+        String prefix = CC.translate(this.getRankPrefix(player));
+        String suffix = CC.translate(this.getRankSuffix(player));
+        String tagPrefix = CC.translate(this.getTagPrefix(player));
+
+        ChatColor nameColor = profile.getNameColor() != null ? profile.getNameColor() : this.getPlayerColor(player);
+        ChatColor rankColor = this.getRankColor(player);
+        ChatColor tagColor = this.getTagColor(player);
+
+        String selectedTitle = CC.translate(profile.getProfileData().getSelectedTitle());
+        String level = CC.translate(KaosPractice.getInstance().getService(LevelService.class).getLevel(profile.getProfileData().getGlobalLevel()).getDisplayName());
+
+        String tagAppearanceFormat = KaosPractice.getInstance().getService(LocaleService.class).getString(SettingsLocaleImpl.SERVER_CHAT_FORMAT_TAG_APPEARANCE_FORMAT)
+                .replace("{tag-color}", String.valueOf(tagColor))
+                .replace("{tag-prefix}", CC.translate(tagPrefix));
+
+        if (player.hasPermission(KaosPractice.getInstance().getService(LocaleService.class).getString(SettingsLocaleImpl.PERMISSION_USE_OF_COLOR_CODES_IN_CHAT))) {
+            eventMessage = CC.translate(eventMessage);
+        }
+
+        return KaosPractice.getInstance().getService(LocaleService.class).getString(SettingsLocaleImpl.SERVER_CHAT_FORMAT_GLOBAL)
+                .replace("{prefix}", prefix)
+                .replace("{rank-color}", String.valueOf(rankColor))
+                .replace("{name-color}", String.valueOf(nameColor))
+                .replace("{player}", player.getName())
+                .replace("{suffix}", suffix)
+                .replace("{tag}", tagPrefix.isEmpty() ? "" : tagAppearanceFormat)
+                .replace("{separator}", separator)
+                .replace("{message}", eventMessage)
+                .replace("{level}", Objects.requireNonNull(CC.translate(level), "Level cannot be null"))
+                .replace("{selected-title}", selectedTitle);
+    }
+}

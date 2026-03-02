@@ -1,0 +1,48 @@
+package com.kaosmc.practice.feature.kit.command.helper.impl;
+
+import com.kaosmc.practice.common.reflect.utility.ReflectionUtility;
+import com.kaosmc.practice.common.text.CC;
+import com.kaosmc.practice.core.locale.internal.impl.message.GlobalMessagesLocaleImpl;
+import com.kaosmc.practice.library.command.BaseCommand;
+import com.kaosmc.practice.library.command.CommandArgs;
+import com.kaosmc.practice.library.command.annotation.CommandData;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
+/**
+ * @author Emmy
+ * @project Kaos
+ * @date 14/07/2025
+ */
+public class UnbreakableCommand extends BaseCommand {
+    @CommandData(
+            name = "unbreakable",
+            description = "Set the unbreakable state of the item in your hand",
+            usage = "unbreakable <true|false>",
+            isAdminOnly = true
+    )
+    @Override
+    public void onCommand(CommandArgs command) {
+        Player player = command.getPlayer();
+        String[] args = command.getArgs();
+
+        if (args.length < 1) {
+            command.sendUsage();
+            return;
+        }
+
+        ItemStack item = player.getItemInHand();
+        if (item == null || item.getType() == Material.AIR) {
+            player.sendMessage(this.getString(GlobalMessagesLocaleImpl.ERROR_YOU_MUST_HOLD_ITEM));
+            return;
+        }
+
+        boolean unbreakable = Boolean.parseBoolean(args[0]);
+
+        ItemStack unbreakAbleItem = ReflectionUtility.setUnbreakable(item, unbreakable);
+        player.setItemInHand(unbreakAbleItem);
+
+        player.sendMessage(CC.translate("&aSuccessfully set the unbreakable state of the item to &6" + unbreakable + "&a."));
+    }
+}
