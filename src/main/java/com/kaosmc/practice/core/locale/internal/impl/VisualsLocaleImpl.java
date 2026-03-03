@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 /**
  * @author Emmy
- * @project alley-practice
+ * @project kaos-practice
  * @since 13/09/2025
  */
 @Getter
@@ -29,12 +29,12 @@ public enum VisualsLocaleImpl implements LocaleEntry {
     ACTIONBAR_DEATH_MESSAGE_FORMAT("providers/visuals.yml", "action-bars.death-message.format", "&c&lKILL! &f{victim-name-color}{victim}"),
 
     TAB_LIST_ENABLED_BOOLEAN("providers/tab-list.yml", "tab-list.enabled", true),
-    TAB_LIST_HEADER("providers/tab-list.yml", "tab-list.header", Arrays.asList("", "&6&lAlley Network", "")),
-    TAB_LIST_FOOTER("providers/tab-list.yml", "tab-list.footer", Arrays.asList("", "&fPlaying with &6&lAlley &fdeveloped by &6&lEmmy &f& &6&lRemi", "")),
+    TAB_LIST_HEADER("providers/tab-list.yml", "tab-list.header", Arrays.asList("", "&6&lKaosPractice", "")),
+    TAB_LIST_FOOTER("providers/tab-list.yml", "tab-list.footer", Arrays.asList("", "&fJogando no &6&lKaosPractice &fpor &6&lysubz", "")),
 
     TITLE_JOIN_MESSAGE_ENABLED("providers/visuals.yml", "titles.join-message.enabled", true),
-    TITLE_JOIN_MESSAGE_HEADER("providers/visuals.yml", "titles.join-message.header", "&6&lWelcome to Kaos Practice"),
-    TITLE_JOIN_MESSAGE_SUBHEADER("providers/visuals.yml", "titles.join-message.subheader", "&fMade by &6Emmy &f& &6Remi"),
+    TITLE_JOIN_MESSAGE_HEADER("providers/visuals.yml", "titles.join-message.header", "&6&lBem-vindo ao KaosPractice"),
+    TITLE_JOIN_MESSAGE_SUBHEADER("providers/visuals.yml", "titles.join-message.subheader", "&fCriado por &6ysubz"),
     TITLE_JOIN_MESSAGE_FADE_IN("providers/visuals.yml", "titles.join-message.fade-in", 10),
     TITLE_JOIN_MESSAGE_STAY("providers/visuals.yml", "titles.join-message.stay", 40),
     TITLE_JOIN_MESSAGE_FADE_OUT("providers/visuals.yml", "titles.join-message.fade-out", 10),
@@ -54,29 +54,29 @@ public enum VisualsLocaleImpl implements LocaleEntry {
     TITLE_MATCH_RESTARTING_ROUND_FADEOUT("providers/visuals.yml", "titles.match-restarting-round.fade-out", 20),
 
     TITLE_MATCH_STARTED_ENABLED_BOOLEAN("providers/visuals.yml", "titles.match-started.enabled", true),
-    TITLE_MATCH_STARTED_HEADER("providers/visuals.yml", "titles.match-started.header", "&6&lMatch started"),
-    TITLE_MATCH_STARTED_FOOTER("providers/visuals.yml", "titles.match-started.footer", "&fGood Luck!"),
+    TITLE_MATCH_STARTED_HEADER("providers/visuals.yml", "titles.match-started.header", "&6&lPartida iniciada"),
+    TITLE_MATCH_STARTED_FOOTER("providers/visuals.yml", "titles.match-started.footer", "&fBoa sorte!"),
     TITLE_MATCH_STARTED_FADE_IN("providers/visuals.yml", "titles.match-started.fade-in", 0),
     TITLE_MATCH_STARTED_STAY("providers/visuals.yml", "titles.match-started.stay", 25),
     TITLE_MATCH_STARTED_FADEOUT("providers/visuals.yml", "titles.match-started.fade-out", 20),
 
     TITLE_MATCH_RESPAWNING_ENABLED_BOOLEAN("providers/visuals.yml", "titles.match-respawning.enabled", true),
-    TITLE_MATCH_RESPAWNING_HEADER("providers/visuals.yml", "titles.match-respawning.header", "&c&lYOU DIED!"),
-    TITLE_MATCH_RESPAWNING_FOOTER("providers/visuals.yml", "titles.match-respawning.footer", "&fRespawning in &6{seconds}&f..."),
+    TITLE_MATCH_RESPAWNING_HEADER("providers/visuals.yml", "titles.match-respawning.header", "&c&lVOCE MORREU!"),
+    TITLE_MATCH_RESPAWNING_FOOTER("providers/visuals.yml", "titles.match-respawning.footer", "&fRenascendo em &6{seconds}&f..."),
     TITLE_MATCH_RESPAWNING_FADE_IN("providers/visuals.yml", "titles.match-respawning.fade-in", 0),
     TITLE_MATCH_RESPAWNING_STAY("providers/visuals.yml", "titles.match-respawning.stay", 23),
     TITLE_MATCH_RESPAWNING_FADEOUT("providers/visuals.yml", "titles.match-respawning.fade-out", 0),
 
     TITLE_MATCH_RESPAWNED_ENABLED_BOOLEAN("providers/visuals.yml", "titles.match-respawned.enabled", true),
     TITLE_MATCH_VICTORY_HEADER("providers/visuals.yml", "titles.match-victory.header", "&a&lVICTORY!"),
-    TITLE_MATCH_VICTORY_FOOTER("providers/visuals.yml", "titles.match-victory.footer", "&a{winner} &fwon the Match!"),
+    TITLE_MATCH_VICTORY_FOOTER("providers/visuals.yml", "titles.match-victory.footer", "&a{winner} &fvenceu a partida!"),
     TITLE_MATCH_VICTORY_FADE_IN("providers/visuals.yml", "titles.match-victory.fade-in", 0),
     TITLE_MATCH_VICTORY_STAY("providers/visuals.yml", "titles.match-victory.stay", 20),
     TITLE_MATCH_VICTORY_FADEOUT("providers/visuals.yml", "titles.match-victory.fade-out", 20),
 
     TITLE_MATCH_DEFEAT_ENABLED_BOOLEAN("providers/visuals.yml", "titles.match-defeat.enabled", true),
     TITLE_MATCH_DEFEAT_HEADER("providers/visuals.yml", "titles.match-defeat.header", "&c&lDEFEAT!"),
-    TITLE_MATCH_DEFEAT_FOOTER("providers/visuals.yml", "titles.match-defeat.footer", "&c{winner} &fwon the Match!"),
+    TITLE_MATCH_DEFEAT_FOOTER("providers/visuals.yml", "titles.match-defeat.footer", "&c{winner} &fvenceu a partida!"),
     TITLE_MATCH_DEFEAT_FADE_IN("providers/visuals.yml", "titles.match-defeat.fade-in", 0),
     TITLE_MATCH_DEFEAT_STAY("providers/visuals.yml", "titles.match-defeat.stay", 20),
     TITLE_MATCH_DEFEAT_FADEOUT("providers/visuals.yml", "titles.match-defeat.fade-out", 20),
@@ -103,8 +103,8 @@ public enum VisualsLocaleImpl implements LocaleEntry {
     TITLE_MATCH_BED_DESTROYED_FADEOUT("providers/visuals.yml", "titles.match-bed-destroyed.fade-out", 10),
 
     TITLE_MATCH_SEEKERS_RELEASED_ENABLED_BOOLEAN("providers/visuals.yml", "titles.match-seekers-released.enabled", true),
-    TITLE_MATCH_SEEKERS_RELEASED_HEADER("providers/visuals.yml", "titles.match-seekers-released.header", "&c&lSEEKERS RELEASED!"),
-    TITLE_MATCH_SEEKERS_RELEASED_FOOTER("providers/visuals.yml", "titles.match-seekers-released.footer", "&fTHe hunt has begun!"),
+    TITLE_MATCH_SEEKERS_RELEASED_HEADER("providers/visuals.yml", "titles.match-seekers-released.header", "&c&lPROCURADORES LIBERADOS!"),
+    TITLE_MATCH_SEEKERS_RELEASED_FOOTER("providers/visuals.yml", "titles.match-seekers-released.footer", "&fA caca comecou!"),
     TITLE_MATCH_SEEKERS_RELEASED_FADE_IN("providers/visuals.yml", "titles.match-seekers-released.fade-in", 10),
     TITLE_MATCH_SEEKERS_RELEASED_STAY("providers/visuals.yml", "titles.match-seekers-released.stay", 40),
     TITLE_MATCH_SEEKERS_RELEASED_FADEOUT("providers/visuals.yml", "titles.match-seekers-released.fade-out", 20),
@@ -124,29 +124,29 @@ public enum VisualsLocaleImpl implements LocaleEntry {
     TITLE_CAMP_PROTECTION_TAKING_DAMAGE_FADEOUT("providers/visuals.yml", "titles.camp-protection-taking-damage.fade-out", 20),
 
     TITLE_PARTY_LEFT_ENABLED_BOOLEAN("providers/visuals.yml", "titles.party-left.enabled", true),
-    TITLE_PARTY_LEFT_HEADER("providers/visuals.yml", "titles.party-left.header", "&c&l✖ Left {leader}'s Party"),
-    TITLE_PARTY_LEFT_FOOTER("providers/visuals.yml", "titles.party-left.footer", "&7You've left your party."),
+    TITLE_PARTY_LEFT_HEADER("providers/visuals.yml", "titles.party-left.header", "&c&l✖ Voce saiu da party de {leader}"),
+    TITLE_PARTY_LEFT_FOOTER("providers/visuals.yml", "titles.party-left.footer", "&7Voce saiu da sua party."),
     TITLE_PARTY_LEFT_FADE_IN("providers/visuals.yml", "titles.party-left.fade-in", 5),
     TITLE_PARTY_LEFT_STAY("providers/visuals.yml", "titles.party-left.stay", 15),
     TITLE_PARTY_LEFT_FADEOUT("providers/visuals.yml", "titles.party-left.fade-out", 5),
 
     TITLE_PARTY_JOINED_ENABLED_BOOLEAN("providers/visuals.yml", "titles.party-joined.enabled", true),
-    TITLE_PARTY_JOINED_HEADER("providers/visuals.yml", "titles.party-joined.header", "&a&l" + Symbol.CROSSED_SWORDS + " Joined {leader}'s Party"),
-    TITLE_PARTY_JOINED_FOOTER("providers/visuals.yml", "titles.party-joined.footer", "&7Type /p for help."),
+    TITLE_PARTY_JOINED_HEADER("providers/visuals.yml", "titles.party-joined.header", "&a&l" + Symbol.CROSSED_SWORDS + " Voce entrou na party de {leader}"),
+    TITLE_PARTY_JOINED_FOOTER("providers/visuals.yml", "titles.party-joined.footer", "&7Use /p para ajuda."),
     TITLE_PARTY_JOINED_FADE_IN("providers/visuals.yml", "titles.party-joined.fade-in", 5),
     TITLE_PARTY_JOINED_STAY("providers/visuals.yml", "titles.party-joined.stay", 15),
     TITLE_PARTY_JOINED_FADEOUT("providers/visuals.yml", "titles.party-joined.fade-out", 5),
 
     TITLE_PARTY_DISBANDED_ENABLED_BOOLEAN("providers/visuals.yml", "titles.party-disbanded.enabled", true),
-    TITLE_PARTY_DISBANDED_HEADER("providers/visuals.yml", "titles.party-disbanded.header", "&c&l✖ Party Disbanded"),
-    TITLE_PARTY_DISBANDED_FOOTER("providers/visuals.yml", "titles.party-disbanded.footer", "&7You've removed your party."),
+    TITLE_PARTY_DISBANDED_HEADER("providers/visuals.yml", "titles.party-disbanded.header", "&c&l✖ Party desfeita"),
+    TITLE_PARTY_DISBANDED_FOOTER("providers/visuals.yml", "titles.party-disbanded.footer", "&7Sua party foi removida."),
     TITLE_PARTY_DISBANDED_FADE_IN("providers/visuals.yml", "titles.party-disbanded.fade-in", 5),
     TITLE_PARTY_DISBANDED_STAY("providers/visuals.yml", "titles.party-disbanded.stay", 15),
     TITLE_PARTY_DISBANDED_FADEOUT("providers/visuals.yml", "titles.party-disbanded.fade-out", 5),
 
     TITLE_PARTY_CREATED_ENABLED_BOOLEAN("providers/visuals.yml", "titles.party-created.enabled", true),
-    TITLE_PARTY_CREATED_HEADER("providers/visuals.yml", "titles.party-created.header", "&a&l" + Symbol.CROSSED_SWORDS + " Party Created"),
-    TITLE_PARTY_CREATED_FOOTER("providers/visuals.yml", "titles.party-created.footer", "&7Type /p for help."),
+    TITLE_PARTY_CREATED_HEADER("providers/visuals.yml", "titles.party-created.header", "&a&l" + Symbol.CROSSED_SWORDS + " Party criada"),
+    TITLE_PARTY_CREATED_FOOTER("providers/visuals.yml", "titles.party-created.footer", "&7Use /p para ajuda."),
     TITLE_PARTY_CREATED_FADE_IN("providers/visuals.yml", "titles.party-created.fade-in", 5),
     TITLE_PARTY_CREATED_STAY("providers/visuals.yml", "titles.party-created.stay", 15),
     TITLE_PARTY_CREATED_FADEOUT("providers/visuals.yml", "titles.party-created.fade-out", 5),

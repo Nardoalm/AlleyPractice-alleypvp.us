@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 
 /**
  * @author Emmy
- * @project alley-practice
+ * @project kaos-practice
  * @since 13/07/2025
  */
 public class ToggleDuelRequestsCommand extends BaseCommand {
@@ -18,7 +18,7 @@ public class ToggleDuelRequestsCommand extends BaseCommand {
             name = "toggleduelrequests",
             cooldown = 1,
             usage = "toggleduelrequests",
-            description = "Toggle receiving duel requests."
+            description = "Ativa ou desativa o recebimento de pedidos de duelo."
     )
     @Override
     public void onCommand(CommandArgs command) {

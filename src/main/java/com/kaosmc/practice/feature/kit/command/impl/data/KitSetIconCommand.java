@@ -19,7 +19,7 @@ public class KitSetIconCommand extends BaseCommand {
             name = "kit.seticon",
             isAdminOnly = true,
             usage = "kit seticon <kitName>",
-            description = "Set the icon of a kit to the item in your hand."
+            description = "Define o ícone de um kit para o item em sua mão."
     )
     @Override
     public void onCommand(CommandArgs command) {

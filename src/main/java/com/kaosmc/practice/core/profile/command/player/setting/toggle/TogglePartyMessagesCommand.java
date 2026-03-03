@@ -20,7 +20,7 @@ public class TogglePartyMessagesCommand extends BaseCommand {
             name = "togglepartymessages",
             cooldown = 1,
             usage = "togglepartymessages",
-            description = "Toggle party messages on or off."
+            description = "Ativa ou desativa mensagens da party."
     )
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();

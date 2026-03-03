@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 
 /**
  * @author Remi
- * @project alley-practice
+ * @project kaos-practice
  * @date 22/06/2025
  */
 public class SudoAllCommand extends BaseCommand {
@@ -16,7 +16,7 @@ public class SudoAllCommand extends BaseCommand {
             name = "sudoall",
             isAdminOnly = true,
             usage = "sudoall <message>",
-            description = "Make all players say a message"
+            description = "Faz todos os jogadores enviarem uma mensagem"
     )
     @Override
     public void onCommand(CommandArgs command) {

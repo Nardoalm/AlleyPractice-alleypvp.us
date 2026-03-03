@@ -19,7 +19,7 @@ public class ToggleScoreboardLinesCommand extends BaseCommand {
             aliases = "tsl",
             cooldown = 1,
             usage = "togglescoreboardlines",
-            description = "Toggle the scoreboard lines."
+            description = "Alterna as linhas da scoreboard."
     )
     @Override
     public void onCommand(CommandArgs command) {

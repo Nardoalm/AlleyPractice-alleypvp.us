@@ -20,7 +20,7 @@ public class ToggleTablistCommand extends BaseCommand {
             name = "toggletablist",
             cooldown = 1,
             usage = "toggletablist",
-            description = "Toggle tablist on or off."
+            description = "Ativa ou desativa a tablist."
     )
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();

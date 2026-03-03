@@ -26,7 +26,7 @@ public class ArenaViewCommand extends BaseCommand {
             isAdminOnly = true,
             inGameOnly = false,
             usage = "arena view <arenaName>",
-            description = "View detailed information about an arena"
+            description = "Mostra informações detalhadas sobre uma arena"
     )
     @Override
     public void onCommand(CommandArgs command) {

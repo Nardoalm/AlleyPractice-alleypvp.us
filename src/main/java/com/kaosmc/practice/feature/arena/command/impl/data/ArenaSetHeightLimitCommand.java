@@ -21,7 +21,7 @@ public class ArenaSetHeightLimitCommand extends BaseCommand {
             aliases = {"arena.limit", "arena.height"},
             isAdminOnly = true,
             usage = "arena setheightlimit <arenaName> <heightLimit>",
-            description = "Set the height limit for a standalone arena."
+            description = "Define o limite de altura para uma arena standalone."
     )
     @Override
     public void onCommand(CommandArgs command) {

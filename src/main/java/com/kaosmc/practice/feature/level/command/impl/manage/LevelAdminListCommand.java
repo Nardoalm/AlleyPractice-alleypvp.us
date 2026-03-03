@@ -17,7 +17,7 @@ public class LevelAdminListCommand extends BaseCommand {
             name = "leveladmin.list",
             isAdminOnly = true,
             usage = "level admin list",
-            description = "List all levels.",
+            description = "Lista todos os níveis.",
             inGameOnly = false
     )
     @Override
@@ -29,7 +29,7 @@ public class LevelAdminListCommand extends BaseCommand {
         sender.sendMessage("");
         sender.sendMessage(CC.translate("     &6&lLevel List &f(" + levelService.getLevels().size() + "&f)"));
         if (levelService.getLevels().isEmpty()) {
-            sender.sendMessage(CC.translate("      &f◆ &cNo levels available."));
+            sender.sendMessage(CC.translate("      &f◆ &cNenhum nível disponível."));
         } else {
             levelService.getLevels()
                     .forEach(level -> sender.sendMessage(CC.translate("      &f◆ &6" + level.getDisplayName() + " &f(" + level.getMinElo() + " - " + level.getMaxElo() + " elo)")));

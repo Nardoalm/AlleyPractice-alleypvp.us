@@ -23,7 +23,7 @@ public class AbilityCommand extends BaseCommand {
             name = "ability",
             permission = "hypractice.command.ability",
             usage = "ability",
-            description = "Manage abilities."
+            description = "Gerenciar abilities."
     )
     @Override
     public void onCommand(CommandArgs commandArgs) {

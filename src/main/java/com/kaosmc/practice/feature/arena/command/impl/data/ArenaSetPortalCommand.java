@@ -20,7 +20,7 @@ public class ArenaSetPortalCommand extends BaseCommand {
             name = "arena.setportal",
             isAdminOnly = true,
             usage = "arena setportal <name> <red/blue>",
-            description = "Set the portal location for a standalone arena."
+            description = "Define a localização do portal para uma arena standalone."
     )
     @Override
     public void onCommand(CommandArgs command) {

@@ -20,7 +20,7 @@ public class FFAAddCommand extends BaseCommand {
             aliases = {"ffa.addplayer", "ffa.addp"},
             isAdminOnly = true,
             usage = "ffa add <player> <kit>",
-            description = "Add a player to an FFA match"
+            description = "Adiciona um jogador a uma partida de FFA"
     )
     @Override
     public void onCommand(CommandArgs command) {

@@ -1,6 +1,6 @@
 package com.kaosmc.practice;
 
-import com.kaosmc.practice.bootstrap.AlleyContext;
+import com.kaosmc.practice.bootstrap.KaosContext;
 import com.kaosmc.practice.bootstrap.lifecycle.Service;
 import com.kaosmc.practice.common.logger.Logger;
 import com.kaosmc.practice.common.logger.PluginLogger;
@@ -23,10 +23,7 @@ import java.util.concurrent.TimeUnit;
  * Developed by Revere Inc., Kaos focuses on clean, professional, and readable code,
  * making it easy for developers to jump into practice PvP development with minimal friction.
  * </p>
- * <p>
- * Kaos is open source under the terms described in the README:
- * <a href="https://github.com/RevereInc/alley-practice">GitHub Repository</a>
- * </p>
+ *
  *
  * @author Emmy, Remi
  * @version 2.0 — Complete recode (entirely rewritten from scratch)
@@ -40,7 +37,7 @@ public class KaosPractice extends JavaPlugin {
     private static KaosPractice instance;
 
     private final Kaos api;
-    private AlleyContext context;
+    private KaosContext context;
 
     public KaosPractice() {
         this.api = new Kaos();
@@ -54,7 +51,7 @@ public class KaosPractice extends JavaPlugin {
         this.validatePluginMetadata();
 
         try {
-            this.context = new AlleyContext(this);
+            this.context = new KaosContext(this);
             this.context.initialize();
         } catch (Exception exception) {
             Logger.logException("A fatal error occurred during service initialization. Kaos will be disabled.", exception);
@@ -91,7 +88,7 @@ public class KaosPractice extends JavaPlugin {
     public <T extends Service> T getService(Class<T> serviceInterface) {
         Objects.requireNonNull(serviceInterface, "Service interface cannot be null");
         if (this.context == null) {
-            throw new IllegalStateException("AlleyContext is not available. The bootstrap may be disabling or failed to load.");
+            throw new IllegalStateException("KaosContext is not available. The bootstrap may be disabling or failed to load.");
         }
         return this.context.getService(serviceInterface)
                 .orElseThrow(() -> new IllegalStateException("Could not find a registered service for: " + serviceInterface.getSimpleName()));

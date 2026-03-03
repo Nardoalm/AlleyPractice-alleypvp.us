@@ -18,7 +18,7 @@ import java.util.Objects;
 
 /**
  * @author Remi
- * @project alley-practice
+ * @project kaos-practice
  * @date 22/07/2025
  */
 public class PlatformDecayTask extends BukkitRunnable {

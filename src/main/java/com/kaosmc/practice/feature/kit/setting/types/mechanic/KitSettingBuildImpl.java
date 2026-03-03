@@ -8,6 +8,6 @@ import com.kaosmc.practice.feature.kit.setting.annotation.KitSettingData;
  * @project Kaos
  * @date 5/21/2024
  */
-@KitSettingData(name = "Build", description = "Allows you to build in matches", enabled = false)
+@KitSettingData(name = "Build", description = "Permite you to build in matches", enabled = false)
 public class KitSettingBuildImpl extends KitSetting {
 }

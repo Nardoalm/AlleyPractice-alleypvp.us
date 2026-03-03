@@ -21,7 +21,7 @@ public class PartyCloseCommand extends BaseCommand {
             name = "party.close",
             aliases = {"p.close"},
             usage = "party close",
-            description = "Close your party to new members."
+            description = "Fecha sua party para novos membros."
     )
     @Override
     public void onCommand(CommandArgs command) {
@@ -29,7 +29,7 @@ public class PartyCloseCommand extends BaseCommand {
         ProfileService profileService = this.plugin.getService(ProfileService.class);
         Profile profile = profileService.getProfile(player.getUniqueId());
         if (profile.getParty() == null) {
-            player.sendMessage(CC.translate("&cYou are not in a party."));
+            player.sendMessage(CC.translate("&cVocê não está em uma party."));
             return;
         }
 
@@ -39,6 +39,6 @@ public class PartyCloseCommand extends BaseCommand {
         }
 
         profile.getParty().setState(PartyState.PRIVATE);
-        player.sendMessage(CC.translate("&aYou have locked your party. Nobody can join unless invited."));
+        player.sendMessage(CC.translate("&aVocê fechou sua party. Ninguém pode entrar sem convite."));
     }
 }

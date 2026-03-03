@@ -19,7 +19,7 @@ public class LeaveSpectatorCommand extends BaseCommand {
             name = "leavespectator",
             aliases = {"unspec"},
             usage = "leavespectator",
-            description = "Leave spectating a match."
+            description = "Para de assistir uma partida."
     )
     @Override
     public void onCommand(CommandArgs command) {

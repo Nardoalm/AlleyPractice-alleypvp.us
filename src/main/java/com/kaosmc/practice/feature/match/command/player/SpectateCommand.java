@@ -20,7 +20,7 @@ public class SpectateCommand extends BaseCommand {
             name = "spectate",
             aliases = {"spec"},
             usage = "spectate <player>",
-            description = "Spectate a player."
+            description = "Assiste um jogador."
     )
     @Override
     public void onCommand(CommandArgs command) {

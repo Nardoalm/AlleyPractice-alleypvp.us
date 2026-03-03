@@ -24,7 +24,7 @@ public class CosmeticGetSelectedCommand extends BaseCommand {
             aliases = {"cosmetic.get"},
             isAdminOnly = true,
             usage = "cosmetic get <player>",
-            description = "Get the selected cosmetics of a player."
+            description = "Obtém os cosméticos selecionados de um jogador."
     )
     @Override
     public void onCommand(CommandArgs command) {

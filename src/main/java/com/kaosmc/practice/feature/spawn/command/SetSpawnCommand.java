@@ -20,7 +20,7 @@ public class SetSpawnCommand extends BaseCommand {
             name = "setspawn",
             isAdminOnly = true,
             usage = "setspawn",
-            description = "Set the server spawn point."
+            description = "Define o ponto de spawn do servidor."
     )
     @Override
     public void onCommand(CommandArgs cmd) {

@@ -1,7 +1,7 @@
 package com.kaosmc.practice.feature.hotbar.internal;
 
 import com.kaosmc.practice.KaosPractice;
-import com.kaosmc.practice.bootstrap.AlleyContext;
+import com.kaosmc.practice.bootstrap.KaosContext;
 import com.kaosmc.practice.bootstrap.annotation.Service;
 import com.kaosmc.practice.common.item.ItemBuilder;
 import com.kaosmc.practice.common.logger.Logger;
@@ -72,7 +72,7 @@ public class HotbarServiceImpl implements HotbarService {
     }
 
     @Override
-    public void initialize(AlleyContext context) {
+    public void initialize(KaosContext context) {
         FileConfiguration hotbarConfig = this.configService.getHotbarConfig();
         ConfigurationSection hotbarSection = hotbarConfig.getConfigurationSection("hotbar-items");
         if (hotbarSection == null) {

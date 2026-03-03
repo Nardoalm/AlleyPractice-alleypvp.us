@@ -20,7 +20,7 @@ menus:
         item: "DIAMOND_SWORD"
         durability: 0
       potions:
-        name: "&6&lHealth Potions"
+        name: "&6&lPoções de Vida"
         lore:
           - " &fRemaining: &6{potions_remaining}"
           - " &fThrown: &6{potions_thrown}"
@@ -30,24 +30,24 @@ menus:
         item: "POTION"
         durability: 16421
       potion_effects:
-        name: "&6&lPotion Effects"
+        name: "&6&lEfeitos de Poção"
         empty-lore:
-          - " &cNone."
-        lore-header: " &fActive Effects: &6{count}"
+          - " &cNenhum."
+        lore-header: " &fEfeitos Ativos: &6{count}"
         effect-line: " &7{effect}"
         item: "BREWING_STAND_ITEM"
         durability: 0
       food:
-        name: "&6&lFood Level"
+        name: "&6&lNível de Fome"
         lore:
-          - " &fLevel: &6{food_level}"
+          - " &fLevel: &6{food_nível}"
           - " &fSaturation: &6{saturation}"
         item: "COOKED_BEEF"
         durability: 0
       health:
-        name: "&6&lHealth"
+        name: "&6&lVida"
         lore:
-          - " &fHealth: &6{health} {heart}"
+          - " &fVida: &6{health} {heart}"
           - " &fAbsorption: &6{absorption}"
         item: "GOLDEN_APPLE"
         durability: 0
@@ -56,12 +56,12 @@ menus:
       armor:
         slots: [ 36, 37, 38, 39 ]
   spectator-teleport:
-    title: "&6&lSpectator Menu"
+    title: "&6&lMenu de Espectador"
     buttons:
       match-info-button:
         slot: 4
         glass-durability: 15
-        name: "&6&lMatch Info"
+        name: "&6&lInformações da Partida"
         lore:
           - " &f◆ &6Kit: &f{kit}"
           - " &f◆ &6Arena: &f{arena}"
@@ -73,5 +73,5 @@ menus:
           - " &f◆ &6Team: &f{team}"
           - " &f◆ &6ELO: &f{elo}"
           - ""
-          - "&6&lLEFT-CLICK &fto teleport to this player."
-          - "&6&lRIGHT-CLICK &fto view their statistics."
+          - "&6&lCLIQUE ESQUERDO &fpara se teleportar até este jogador."
+          - "&6&lCLIQUE DIREITO &fpara ver as estatísticas dele."

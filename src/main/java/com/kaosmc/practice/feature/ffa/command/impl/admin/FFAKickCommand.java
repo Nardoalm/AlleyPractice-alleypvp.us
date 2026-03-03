@@ -19,7 +19,7 @@ public class FFAKickCommand extends BaseCommand {
             name = "ffa.kick",
             isAdminOnly = true,
             usage = "ffa kick <player>",
-            description = "Kick a player from their current FFA match."
+            description = "Expulsa um jogador da partida de FFA atual."
     )
     @Override
     public void onCommand(CommandArgs command) {

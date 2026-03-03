@@ -19,7 +19,7 @@ public class LeaveMatchCommand extends BaseCommand {
             name = "leave",
             aliases = {"leavematch", "suicide", "l", "lobby"},
             usage = "leave",
-            description = "Leave your current match."
+            description = "Sai da sua partida atual."
     )
     @Override
     public void onCommand(CommandArgs command) {

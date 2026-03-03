@@ -6,7 +6,7 @@ crafting-operations:
   blocked-items: [ ]
 
 commands:
-  anti-syntax-message: '&cYou cannot execute {argument}.'
+  anti-syntax-message: '&cVocê não pode execute {argument}.'
   # this command is executed whenever a player purchases a cosmetic item from the in game shop menu
   grant-cosmetic-permission: permission set {player} {permission}
 
@@ -72,13 +72,13 @@ profanity-filter:
     - shit
     - fuck
     - bitch
-  staff-notification-format: '&6[S] &f(&6Alley: &fProfanity Detected) &c{player}&f: &7{message}'
+  staff-notification-format: '&6[S] &f(&6Kaos: &fPalavrão Detectado) &c{player}&f: &7{message}'
 
 server:
   chat-format:
     global:
       enabled: true
-      format: '&7[{level}&7]&r {prefix}{rank-color}{name-color}{player}{suffix}{tag}{separator}{message}'
+      format: '&7[{nível}&7]&r {prefix}{rank-color}{name-color}{player}{suffix}{tag}{separator}{message}'
       separator: '&7: &f'
     tag-appearance:
       format: ' {tag-color}{tag-prefix}'

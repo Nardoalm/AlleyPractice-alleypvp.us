@@ -15,7 +15,7 @@ public class CosmeticsCommand extends BaseCommand {
     @CommandData(
             name = "cosmetics",
             usage = "cosmetics",
-            description = "Open the cosmetics menu"
+            description = "Abre o menu de cosméticos"
     )
     @Override
     public void onCommand(CommandArgs command) {

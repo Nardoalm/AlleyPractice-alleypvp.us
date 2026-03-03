@@ -1,8 +1,8 @@
 golden-head:
   texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2JiNjEyZWI0OTVlZGUyYzVjYTUxNzhkMmQxZWNmMWNhNWEyNTVkMjVkZmMzYzI1NGJjNDdmNjg0ODc5MWQ4In19fQ=="
-  name: "&6&lGolden Head"
+  name: "&6&lCabeça Dourada"
   lore:
-    - "&fA golden head that gives more health than a regular head."
+    - "&fUma cabeça dourada que concede mais vida do que uma cabeça comum."
 
-# You can find texture links by heading over to https://minecraft-heads.com
-# Under "developers" section copy the "value" and paste it here.
+# Você pode encontrar links de textura em https://minecraft-heads.com
+# Na seção "developers", copie o campo "value" e cole aqui.

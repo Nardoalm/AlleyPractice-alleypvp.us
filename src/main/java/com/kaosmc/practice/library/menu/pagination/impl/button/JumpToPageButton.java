@@ -32,7 +32,7 @@ public class JumpToPageButton extends Button {
         if (this.current) {
             lore.add(CC.translate("&aSelected."));
         } else {
-            lore.add(CC.translate("&aClick to open."));
+            lore.add(CC.translate("&aClique para abrir."));
         }
         lore.add(CC.MENU_BAR);
 

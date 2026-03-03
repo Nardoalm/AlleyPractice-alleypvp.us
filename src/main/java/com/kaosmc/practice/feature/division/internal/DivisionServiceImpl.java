@@ -1,7 +1,7 @@
 package com.kaosmc.practice.feature.division.internal;
 
 import com.kaosmc.practice.core.config.ConfigService;
-import com.kaosmc.practice.bootstrap.AlleyContext;
+import com.kaosmc.practice.bootstrap.KaosContext;
 import com.kaosmc.practice.bootstrap.annotation.Service;
 import com.kaosmc.practice.feature.division.Division;
 import com.kaosmc.practice.feature.division.DivisionService;
@@ -33,12 +33,12 @@ public class DivisionServiceImpl implements DivisionService {
     }
 
     @Override
-    public void initialize(AlleyContext context) {
+    public void initialize(KaosContext context) {
         this.loadDivisions();
     }
 
     @Override
-    public void shutdown(AlleyContext context) {
+    public void shutdown(KaosContext context) {
         this.saveDivisions();
         Logger.info("Saved all divisions.");
     }

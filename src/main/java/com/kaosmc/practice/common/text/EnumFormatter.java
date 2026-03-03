@@ -10,7 +10,7 @@ import java.util.Arrays;
 
 /**
  * @author Emmy
- * @project alley-practice
+ * @project kaos-practice
  * @since 03/09/2025
  */
 @UtilityClass

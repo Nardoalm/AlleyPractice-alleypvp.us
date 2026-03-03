@@ -13,7 +13,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 /**
  * @author Emmy
- * @project alley-practice
+ * @project kaos-practice
  * @since 16/07/2025
  */
 public class FFADisconnectListener implements Listener {

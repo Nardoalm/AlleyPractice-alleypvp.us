@@ -34,7 +34,7 @@ public class ArenaRemoveKitCommand extends BaseCommand {
             name = "arena.removekit",
             isAdminOnly = true,
             usage = "arena removekit <arenaName> <kitName>",
-            description = "Removes a kit from an arena"
+            description = "Remover um kit de uma arena"
     )
     @Override
     public void onCommand(CommandArgs command) {

@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 
 /**
  * @author Emmy
- * @project alley-practice
+ * @project kaos-practice
  * @since 19/07/2025
  */
 public class LobbyMusicCommand extends BaseCommand {
@@ -18,7 +18,7 @@ public class LobbyMusicCommand extends BaseCommand {
             name = "lobbymusic",
             aliases = {"music"},
             usage = "lobbymusic",
-            description = "Open the lobby music selector menu"
+            description = "Abre o menu seletor de música do lobby"
     )
     @Override
     public void onCommand(CommandArgs command) {

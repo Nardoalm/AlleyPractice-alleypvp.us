@@ -18,7 +18,7 @@ public class DivisionDeleteCommand extends BaseCommand {
             name = "division.delete",
             isAdminOnly = true,
             usage = "division delete <name>",
-            description = "Delete a division."
+            description = "Exclui uma divisão."
     )
     @Override
     public void onCommand(CommandArgs command) {

@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 
 /**
  * @author Remi
- * @project alley-practice
+ * @project kaos-practice
  * @date 6/08/2025
  */
 public abstract class BaseKillEffect extends BaseCosmetic {

@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 
 /**
  * @author Emmy
- * @project alley-practice
+ * @project kaos-practice
  * @since 21/07/2025
  */
 public class HotbarCreateCommand extends BaseCommand {
@@ -19,7 +19,7 @@ public class HotbarCreateCommand extends BaseCommand {
             name = "hotbar.create",
             isAdminOnly = true,
             usage = "hotbar create <name> <type>",
-            description = "Create a new hotbar item."
+            description = "Cria um novo item de hotbar."
     )
     @Override
     public void onCommand(CommandArgs command) {

@@ -10,15 +10,15 @@ import org.bukkit.inventory.ItemStack;
 
 /**
  * @author Emmy
- * @project alley-practice
+ * @project kaos-practice
  * @since 18/07/2025
  */
 public class CustomItemsGoldenHeadCommand extends BaseCommand {
     @CommandData(
             name = "customitems.goldenhead",
-            aliases = {"alleyitems.goldenhead", "specialitems.goldenhead"},
+            aliases = {"kaositems.goldenhead", "specialitems.goldenhead"},
             usage = "customitems goldenhead <amount>",
-            description = "Gives the player specific amount of custom golden heads",
+            description = "Dá ao jogador uma quantidade específica de golden heads customizadas",
             isAdminOnly = true
     )
     @Override

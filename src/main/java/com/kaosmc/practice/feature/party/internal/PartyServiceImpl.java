@@ -1,7 +1,7 @@
 package com.kaosmc.practice.feature.party.internal;
 
 import com.kaosmc.practice.KaosPractice;
-import com.kaosmc.practice.bootstrap.AlleyContext;
+import com.kaosmc.practice.bootstrap.KaosContext;
 import com.kaosmc.practice.bootstrap.annotation.Service;
 import com.kaosmc.practice.common.SoundUtil;
 import com.kaosmc.practice.common.reflect.ReflectionService;
@@ -91,7 +91,7 @@ public class PartyServiceImpl implements PartyService {
     }
 
     @Override
-    public void initialize(AlleyContext context) {
+    public void initialize(KaosContext context) {
         this.chatFormat = this.localeService.getString(SettingsLocaleImpl.SERVER_CHAT_FORMAT_PARTY);
     }
 
@@ -289,12 +289,12 @@ public class PartyServiceImpl implements PartyService {
         }
 
         if (party.getLeader().equals(member)) {
-            leader.sendMessage(CC.translate("&cYou cannot kick the party leader."));
+            leader.sendMessage(CC.translate("&cVocê não pode expulsar o líder da party."));
             return;
         }
 
         if (!party.getMembers().contains(member.getUniqueId())) {
-            leader.sendMessage(CC.translate("&cThat player is not in your party."));
+            leader.sendMessage(CC.translate("&cEsse jogador não está na sua party."));
             return;
         }
 
@@ -326,12 +326,12 @@ public class PartyServiceImpl implements PartyService {
         }
 
         if (party.getLeader().equals(target)) {
-            leader.sendMessage(CC.translate("&cYou cannot ban the party leader."));
+            leader.sendMessage(CC.translate("&cVocê não pode banir o líder da party."));
             return;
         }
 
         if (!party.getMembers().contains(target.getUniqueId())) {
-            leader.sendMessage(CC.translate("&cThat player is not in your party."));
+            leader.sendMessage(CC.translate("&cEsse jogador não está na sua party."));
             return;
         }
 
@@ -364,7 +364,7 @@ public class PartyServiceImpl implements PartyService {
         }
 
         if (!party.getBannedPlayers().contains(target.getUniqueId())) {
-            leader.sendMessage(CC.translate("&cThat player is not banned from your party."));
+            leader.sendMessage(CC.translate("&cEsse jogador não está banido da sua party."));
             return;
         }
 
@@ -382,7 +382,7 @@ public class PartyServiceImpl implements PartyService {
         }
         Party party = this.getPartyByLeader(leader);
         if (party == null) {
-            player.sendMessage(CC.translate("&cThis party does not exist."));
+            player.sendMessage(CC.translate("&cEssa party não existe."));
             return;
         }
 
@@ -393,7 +393,7 @@ public class PartyServiceImpl implements PartyService {
         }
 
         if (party.getLeader() == player) {
-            player.sendMessage(CC.translate("&cYou cannot join your own party."));
+            player.sendMessage(CC.translate("&cVocê não pode entrar na sua própria party."));
             return;
         }
 
@@ -414,7 +414,7 @@ public class PartyServiceImpl implements PartyService {
         QueueProfile queueProfile = leaderProfile.getQueueProfile();
 
         if (queueProfile != null) {
-            player.sendMessage(CC.translate("&cYou can't join the party as they are already in a queue."));
+            player.sendMessage(CC.translate("&cVocê não pode entrar na party, pois ela já está em uma fila."));
             return;
         }
 
@@ -620,7 +620,7 @@ public class PartyServiceImpl implements PartyService {
             Player leader = Bukkit.getPlayer(associatedQueueProfile.getUuid());
             Party party = getPartyByLeader(leader);
             if (party.getMembers().size() < 2) {
-                leader.sendMessage(CC.translate("&eA party member has left/disconnected. You are now queuing solo for duos."));
+                leader.sendMessage(CC.translate("&eUm membro da party saiu/desconectou. Agora você está na fila solo para duos."));
             }
         }
 

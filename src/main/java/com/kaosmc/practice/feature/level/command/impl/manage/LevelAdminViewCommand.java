@@ -22,7 +22,7 @@ public class LevelAdminViewCommand extends BaseCommand {
             isAdminOnly = true,
             inGameOnly = false,
             usage = "leveladmin view <levelName>",
-            description = "View level information"
+            description = "Mostra informações do nível"
     )
     @Override
     public void onCommand(CommandArgs command) {

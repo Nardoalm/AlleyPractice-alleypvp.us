@@ -21,7 +21,7 @@ public class QueuesCommand extends BaseCommand {
             name = "queues",
             aliases = {"selectqueue", "joinqueue"},
             usage = "queues",
-            description = "Open the queue selection menu."
+            description = "Abre o menu de seleção de fila."
     )
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();
@@ -29,12 +29,12 @@ public class QueuesCommand extends BaseCommand {
         ProfileService profileService = this.plugin.getService(ProfileService.class);
         Profile profile = profileService.getProfile(player.getUniqueId());
         if (!profile.getState().equals(ProfileState.LOBBY)) {
-            player.sendMessage(CC.translate("&cYou must be at spawn in order to execute this command :v"));
+            player.sendMessage(CC.translate("&cVocê precisa estar no spawn para executar este comando :v"));
             return;
         }
 
         if (profile.getParty() != null) {
-            player.sendMessage(CC.translate("&cYou must leave your party to queue for a game."));
+            player.sendMessage(CC.translate("&cVocê precisa sair da party para entrar na fila de uma partida."));
             return;
         }
 

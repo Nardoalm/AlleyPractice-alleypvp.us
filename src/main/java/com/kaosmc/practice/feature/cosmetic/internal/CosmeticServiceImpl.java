@@ -1,9 +1,9 @@
 package com.kaosmc.practice.feature.cosmetic.internal;
 
-import com.kaosmc.practice.bootstrap.AlleyContext;
+import com.kaosmc.practice.bootstrap.KaosContext;
 import com.kaosmc.practice.bootstrap.annotation.Service;
 import com.kaosmc.practice.feature.cosmetic.internal.repository.*;
-import dev.revere.alley.feature.cosmetic.internal.repository.*;
+import dev.revere.kaos.feature.cosmetic.internal.repository.*;
 import com.kaosmc.practice.feature.cosmetic.CosmeticService;
 import com.kaosmc.practice.feature.cosmetic.model.CosmeticType;
 import lombok.Getter;
@@ -22,7 +22,7 @@ public class CosmeticServiceImpl implements CosmeticService {
     private final Map<CosmeticType, BaseCosmeticRepository<?>> repositories = new EnumMap<>(CosmeticType.class);
 
     @Override
-    public void initialize(AlleyContext context) {
+    public void initialize(KaosContext context) {
         this.register(new KillEffectRepository());
         this.register(new SoundEffectRepository());
         this.register(new ProjectileTrailRepository());

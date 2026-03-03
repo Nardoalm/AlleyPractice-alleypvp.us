@@ -1,6 +1,6 @@
 package com.kaosmc.practice.feature.ffa.spawn.internal;
 
-import com.kaosmc.practice.bootstrap.AlleyContext;
+import com.kaosmc.practice.bootstrap.KaosContext;
 import com.kaosmc.practice.bootstrap.annotation.Service;
 import com.kaosmc.practice.common.geom.Cuboid;
 import com.kaosmc.practice.common.logger.Logger;
@@ -39,7 +39,7 @@ public class FFASpawnServiceImpl implements FFASpawnService {
     }
 
     @Override
-    public void initialize(AlleyContext context) {
+    public void initialize(KaosContext context) {
         this.loadCuboid();
     }
 

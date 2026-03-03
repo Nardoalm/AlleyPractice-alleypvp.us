@@ -19,7 +19,7 @@ public class PartyDisbandCommand extends BaseCommand {
             name = "party.disband",
             aliases = {"p.disband"},
             usage = "party disband",
-            description = "Disband your party."
+            description = "Desfaz sua party."
     )
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();

@@ -14,7 +14,7 @@ public class ShopCommand extends BaseCommand {
     @CommandData(
             name = "shop",
             usage = "shop",
-            description = "Open the server shop"
+            description = "Abre a loja do servidor"
     )
     @Override
     public void onCommand(CommandArgs command) {

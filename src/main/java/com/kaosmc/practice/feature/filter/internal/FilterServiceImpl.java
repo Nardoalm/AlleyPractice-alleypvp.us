@@ -1,7 +1,7 @@
 package com.kaosmc.practice.feature.filter.internal;
 
 import com.kaosmc.practice.KaosPractice;
-import com.kaosmc.practice.bootstrap.AlleyContext;
+import com.kaosmc.practice.bootstrap.KaosContext;
 import com.kaosmc.practice.bootstrap.annotation.Service;
 import com.kaosmc.practice.common.constants.PluginConstant;
 import com.kaosmc.practice.common.text.CC;
@@ -47,7 +47,7 @@ public class FilterServiceImpl implements FilterService {
     }
 
     @Override
-    public void initialize(AlleyContext context) {
+    public void initialize(KaosContext context) {
         this.notificationMessage = this.localeService.getString(SettingsLocaleImpl.PROFANITY_FILTER_STAFF_NOTIFICATION_FORMAT);
         this.loadFilteredWords();
     }

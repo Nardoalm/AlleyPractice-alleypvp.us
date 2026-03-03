@@ -18,7 +18,7 @@ public class FFAMaxPlayersCommand extends BaseCommand {
             name = "ffa.maxplayers",
             isAdminOnly = true,
             usage = "ffa maxplayers <kit> <maxPlayers>",
-            description = "Set the max players for a FFA kit."
+            description = "Define o máximo de jogadores para um kit de FFA."
     )
     @Override
     public void onCommand(CommandArgs command) {

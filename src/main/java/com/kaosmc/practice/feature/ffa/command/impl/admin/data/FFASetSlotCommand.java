@@ -19,7 +19,7 @@ public class FFASetSlotCommand extends BaseCommand {
             name = "ffa.setslot",
             isAdminOnly = true,
             usage = "ffa setslot <kitName> <slot>",
-            description = "Set the FFA slot for a kit."
+            description = "Define o slot de FFA para um kit."
     )
     @Override
     public void onCommand(CommandArgs command) {

@@ -18,14 +18,14 @@ public class PartyBanListCommand extends BaseCommand {
             name = "party.banlist",
             aliases = "p.banlist",
             usage = "party banlist",
-            description = "Sends a list of all banned members in your party."
+            description = "Envia uma lista de todos os banned members in your party."
     )
     @Override
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();
 
         player.sendMessage("");
-        player.sendMessage(CC.translate("&c&lBanned Members in your party:"));
+        player.sendMessage(CC.translate("&c&lMembros Banidos da sua party:"));
         this.plugin.getService(PartyService.class).getPartyByLeader(player).getBannedPlayers().forEach(bannedMember -> player.sendMessage(CC.translate("&7- &c" + Bukkit.getPlayer(bannedMember).getName())));
         player.sendMessage("");
     }

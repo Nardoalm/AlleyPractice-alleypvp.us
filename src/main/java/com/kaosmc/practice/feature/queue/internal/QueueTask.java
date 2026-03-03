@@ -113,9 +113,9 @@ public class QueueTask implements Runnable {
     private void notifyPlayerOfQueueRemoval(Player player, QueueProfile profile) {
         if (player != null) {
             if (profile.getElapsedTime() >= profile.getQueue().getMaxQueueTime()) {
-                player.sendMessage(CC.translate("&cYou have been removed from the queue due to inactivity"));
+                player.sendMessage(CC.translate("&cVocê foi removido da fila por inatividade"));
             } else {
-                player.sendMessage(CC.translate("&cYou have been removed from the queue due to being offline or state change."));
+                player.sendMessage(CC.translate("&cVocê foi removido da fila por estar offline ou por mudança de estado."));
             }
         }
     }
@@ -598,7 +598,7 @@ public class QueueTask implements Runnable {
      */
     private boolean isArenaAvailable(Arena arena, List<Player> players, Queue queue) {
         if (arena == null || arena.getType().equals(ArenaType.FFA)) {
-            players.forEach(p -> p.sendMessage(CC.translate("&cThere are no available arenas for this kit")));
+            players.forEach(p -> p.sendMessage(CC.translate("&cNão há arenas disponíveis para este kit")));
             return false;
         }
         return true;

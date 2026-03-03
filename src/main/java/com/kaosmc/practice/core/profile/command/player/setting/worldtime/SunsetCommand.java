@@ -18,7 +18,7 @@ public class SunsetCommand extends BaseCommand {
             aliases = "sunrise",
             cooldown = 1,
             usage = "sunset",
-            description = "Set your personal world time to sunset."
+            description = "Define o horário pessoal do mundo para pôr do sol."
     )
     @Override
     public void onCommand(CommandArgs command) {

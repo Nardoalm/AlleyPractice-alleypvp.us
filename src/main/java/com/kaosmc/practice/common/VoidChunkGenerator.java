@@ -8,7 +8,7 @@ import java.util.Random;
 
 /**
  * @author Remi
- * @project alley-practice
+ * @project kaos-practice
  * @date 20/06/2025
  */
 public class VoidChunkGenerator extends ChunkGenerator {

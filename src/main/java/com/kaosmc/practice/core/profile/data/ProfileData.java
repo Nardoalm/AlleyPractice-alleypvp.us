@@ -11,7 +11,7 @@ import com.kaosmc.practice.feature.title.TitleService;
 import com.kaosmc.practice.feature.title.model.TitleRecord;
 import com.kaosmc.practice.feature.match.data.MatchData;
 import com.kaosmc.practice.core.profile.Profile;
-import dev.revere.alley.core.profile.data.types.*;
+import dev.revere.kaos.core.profile.data.types.*;
 import com.kaosmc.practice.common.text.CC;
 import lombok.Getter;
 import lombok.Setter;

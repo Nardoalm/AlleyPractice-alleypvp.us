@@ -18,7 +18,7 @@ public class DivisionCreateCommand extends BaseCommand {
             name = "division.create",
             isAdminOnly = true,
             usage = "division.create <name> <requiredWins>",
-            description = "Create a new division."
+            description = "Cria uma nova divisão."
     )
     @Override
     public void onCommand(CommandArgs command) {

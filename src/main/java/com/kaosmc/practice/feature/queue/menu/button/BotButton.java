@@ -44,6 +44,6 @@ public class BotButton extends Button {
             return;
         }
 
-        player.sendMessage(CC.translate("&cThis feature is not yet available."));
+        player.sendMessage(CC.translate("&cEste recurso ainda não está disponível."));
     }
 }

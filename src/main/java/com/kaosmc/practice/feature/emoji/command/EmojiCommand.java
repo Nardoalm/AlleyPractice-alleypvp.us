@@ -19,9 +19,9 @@ public class EmojiCommand extends BaseCommand {
     @CommandData(
             name = "emoji",
             aliases = "emojis",
-            permission = "alley.donator.chat.symbol",
+            permission = "kaos.donator.chat.symbol",
             usage = "emoji",
-            description = "Help guide for emojis"
+            description = "Guia de ajuda para emojis"
     )
     @Override
     public void onCommand(CommandArgs command) {
@@ -35,7 +35,7 @@ public class EmojiCommand extends BaseCommand {
                 ""
         ).forEach(line -> player.sendMessage(CC.translate(line)));
 
-        player.spigot().sendMessage(ClickableUtil.createComponent(" &a[Click here to view all emojis]", "/emoji list", "&7Click here to view a list of all available emojis."));
+        player.spigot().sendMessage(ClickableUtil.createComponent(" &a[Clique aqui para ver todos os emojis]", "/emoji list", "&7Clique aqui para ver a lista de todos os emojis disponíveis."));
         player.sendMessage("");
     }
 }

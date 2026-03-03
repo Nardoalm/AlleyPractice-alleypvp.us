@@ -15,7 +15,7 @@ import org.bukkit.World;
 @CosmeticData(
         type = CosmeticType.PROJECTILE_TRAIL,
         name = "Flame",
-        description = "Leave a blazing trail behind your projectiles!",
+        description = "Sair a blazing trail behind your projectiles!",
         icon = Material.BLAZE_POWDER,
         slot = 10,
         price = 1000

@@ -21,7 +21,7 @@ public class EnchantCommand extends BaseCommand {
             name = "enchant",
             isAdminOnly = true,
             usage = "enchant <enchantment> <level>",
-            description = "Enchant the item in your hand with the specified enchantment and level"
+            description = "Encanta o item na sua mão com o encantamento e nível especificados"
     )
     @Override
     public void onCommand(CommandArgs command) {

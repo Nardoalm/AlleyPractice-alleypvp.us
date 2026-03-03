@@ -14,7 +14,7 @@ import java.util.Objects;
 
 /**
  * @author Remi
- * @project alley-practice
+ * @project kaos-practice
  * @date 20/06/2025
  */
 public class ArenaTestCommand extends BaseCommand {
@@ -22,7 +22,7 @@ public class ArenaTestCommand extends BaseCommand {
             name = "arena.test",
             isAdminOnly = true,
             usage = "arena test",
-            description = "Tests various arena properties for debugging purposes"
+            description = "Testa várias propriedades da arena para depuração"
     )
     @Override
     public void onCommand(CommandArgs command) {

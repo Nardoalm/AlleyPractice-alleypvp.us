@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 
 /**
  * @author Remi
- * @project alley-practice
+ * @project kaos-practice
  * @date 22/07/2025
  */
 public class PartyEventMenuCommand extends BaseCommand {
@@ -20,7 +20,7 @@ public class PartyEventMenuCommand extends BaseCommand {
             name = "party.event",
             aliases = {"p.event"},
             usage = "party event",
-            description = "Open the party event menu."
+            description = "Abre o party event menu."
     )
     @Override
     public void onCommand(CommandArgs command) {

@@ -5,7 +5,7 @@ import com.kaosmc.practice.feature.kit.setting.annotation.KitSettingData;
 
 /**
  * @author Remi
- * @project alley-practice
+ * @project kaos-practice
  * @date 27/06/2025
  */
 @KitSettingData(name = "DropItems", description = "This decides whether items should drop on death", enabled = false)

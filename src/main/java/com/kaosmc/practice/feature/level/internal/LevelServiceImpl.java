@@ -3,7 +3,7 @@ package com.kaosmc.practice.feature.level.internal;
 import com.kaosmc.practice.core.config.ConfigService;
 import com.kaosmc.practice.feature.level.LevelService;
 import com.kaosmc.practice.feature.level.data.LevelData;
-import com.kaosmc.practice.bootstrap.AlleyContext;
+import com.kaosmc.practice.bootstrap.KaosContext;
 import com.kaosmc.practice.bootstrap.annotation.Service;
 import com.kaosmc.practice.common.text.ProgressBarUtil;
 import lombok.Getter;
@@ -36,7 +36,7 @@ public class LevelServiceImpl implements LevelService {
     }
 
     @Override
-    public void initialize(AlleyContext context) {
+    public void initialize(KaosContext context) {
         this.loadLevels();
     }
 

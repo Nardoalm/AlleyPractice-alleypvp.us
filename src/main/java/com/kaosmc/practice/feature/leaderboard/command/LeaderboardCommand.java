@@ -16,7 +16,7 @@ public class LeaderboardCommand extends BaseCommand {
             name = "leaderboard",
             aliases = {"leaderboards", "lb"},
             usage = "leaderboard",
-            description = "View the global leaderboards."
+            description = "Vê os rankings globais."
     )
     @Override
     public void onCommand(CommandArgs command) {

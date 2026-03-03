@@ -26,7 +26,7 @@ public class KitAddPotionCommand extends BaseCommand {
             aliases = {"kit.potion"},
             isAdminOnly = true,
             usage = "kit addpotion <kitName>",
-            description = "Add potion effects to a kit based on the potion you are holding."
+            description = "Adiciona efeitos de poção a um kit com base na poção que você está segurando."
     )
     @Override
     public void onCommand(CommandArgs command) {
@@ -47,7 +47,7 @@ public class KitAddPotionCommand extends BaseCommand {
 
         ItemStack itemInHand = player.getInventory().getItemInHand();
         if (itemInHand == null || itemInHand.getType() != Material.POTION) {
-            player.sendMessage(CC.translate("&cYou must hold a potion bottle to set effects for this kit!"));
+            player.sendMessage(CC.translate("&cVocê precisa segurar uma poção para definir efeitos deste kit!"));
             return;
         }
 

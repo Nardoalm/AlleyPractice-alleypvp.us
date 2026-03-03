@@ -20,7 +20,7 @@ public class KitToggleCommand extends BaseCommand {
             isAdminOnly = true,
             inGameOnly = false,
             usage = "kit toggle <kitName>",
-            description = "Toggle a kit's enabled status."
+            description = "Alterna o status habilitado de um kit."
     )
     @Override
     public void onCommand(CommandArgs command) {
@@ -41,17 +41,17 @@ public class KitToggleCommand extends BaseCommand {
         }
 
         if (kit.getIcon() == null) {
-            sender.sendMessage(CC.translate("&cThis kit does not have an icon set. Please set an icon before toggling."));
+            sender.sendMessage(CC.translate("&cEste kit não possui ícone definido. Defina um ícone antes de alternar."));
             return;
         }
 
         if (kit.getCategory() == null) {
-            sender.sendMessage(CC.translate("&cThis kit does not have a category set. Please set a category before toggling."));
+            sender.sendMessage(CC.translate("&cEste kit não possui categoria definida. Defina uma categoria antes de alternar."));
             return;
         }
 
         if (kit.getKitSettings().isEmpty()) {
-            sender.sendMessage(CC.translate("&cThis kit does not have any settings defined. Please configure the kit settings before toggling."));
+            sender.sendMessage(CC.translate("&cEste kit não possui configurações definidas. Configure as opções do kit antes de alternar."));
             return;
         }
 

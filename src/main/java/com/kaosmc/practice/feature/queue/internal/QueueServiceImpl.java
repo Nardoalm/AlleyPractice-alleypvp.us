@@ -8,7 +8,7 @@ import com.kaosmc.practice.feature.kit.KitService;
 import com.kaosmc.practice.feature.kit.setting.types.mode.KitSettingRanked;
 import com.kaosmc.practice.feature.queue.menu.QueuesMenuModern;
 import com.kaosmc.practice.core.config.ConfigService;
-import com.kaosmc.practice.bootstrap.AlleyContext;
+import com.kaosmc.practice.bootstrap.KaosContext;
 import com.kaosmc.practice.bootstrap.annotation.Service;
 import com.kaosmc.practice.core.profile.ProfileService;
 import com.kaosmc.practice.core.profile.Profile;
@@ -41,7 +41,7 @@ public class QueueServiceImpl implements QueueService {
     }
 
     @Override
-    public void initialize(AlleyContext context) {
+    public void initialize(KaosContext context) {
         this.queueMenu = new QueuesMenuModern();
         this.reloadQueues();
 

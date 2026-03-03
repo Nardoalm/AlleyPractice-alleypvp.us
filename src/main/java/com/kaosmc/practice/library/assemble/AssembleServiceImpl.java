@@ -6,7 +6,7 @@ import com.kaosmc.practice.library.assemble.events.AssembleBoardCreateEvent;
 import com.kaosmc.practice.library.assemble.events.AssembleBoardDestroyEvent;
 import com.kaosmc.practice.library.assemble.listener.AssembleListener;
 import com.kaosmc.practice.core.config.ConfigService;
-import com.kaosmc.practice.bootstrap.AlleyContext;
+import com.kaosmc.practice.bootstrap.KaosContext;
 import com.kaosmc.practice.bootstrap.annotation.Service;
 import com.kaosmc.practice.core.profile.ProfileService;
 import com.kaosmc.practice.common.animation.AnimationService;
@@ -53,7 +53,7 @@ public class AssembleServiceImpl implements AssembleService {
     }
 
     @Override
-    public void initialize(AlleyContext context) {
+    public void initialize(KaosContext context) {
         this.adapter = new AssembleAdapterImpl(animationService, profileService, configService);
 
         this.listeners = new AssembleListener(this);
@@ -72,7 +72,7 @@ public class AssembleServiceImpl implements AssembleService {
     }
 
     @Override
-    public void shutdown(AlleyContext context) {
+    public void shutdown(KaosContext context) {
         if (this.thread != null) {
             this.thread.interrupt();
             this.thread = null;

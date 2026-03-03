@@ -18,7 +18,7 @@ public class LevelAdminSetMinEloCommand extends BaseCommand {
             name = "leveladmin.setminelo",
             isAdminOnly = true,
             usage = "leveladmin setminelo <levelName> <minElo>",
-            description = "Set the minimum Elo for a level",
+            description = "Define o Elo mínimo para um nível",
             inGameOnly = false
     )
     @Override

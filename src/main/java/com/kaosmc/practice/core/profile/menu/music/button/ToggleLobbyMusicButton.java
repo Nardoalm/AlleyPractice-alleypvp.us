@@ -14,7 +14,7 @@ import org.bukkit.inventory.ItemStack;
 
 /**
  * @author Emmy
- * @project alley-practice
+ * @project kaos-practice
  * @since 20/07/2025
  */
 public class ToggleLobbyMusicButton extends Button {

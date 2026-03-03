@@ -1,6 +1,6 @@
 package com.kaosmc.practice.feature.ffa.internal;
 
-import com.kaosmc.practice.bootstrap.AlleyContext;
+import com.kaosmc.practice.bootstrap.KaosContext;
 import com.kaosmc.practice.bootstrap.annotation.Service;
 import com.kaosmc.practice.common.logger.Logger;
 import com.kaosmc.practice.common.text.CC;
@@ -44,18 +44,18 @@ public class FFAServiceImpl implements FFAService {
     }
 
     @Override
-    public void initialize(AlleyContext context) {
+    public void initialize(KaosContext context) {
         this.ffaKits.addAll(this.kitService.getKits().stream().filter(Kit::isFfaEnabled).collect(Collectors.toList()));
         this.initializeMatches();
     }
 
     @Override
-    public void shutdown(AlleyContext context) {
+    public void shutdown(KaosContext context) {
         this.matches.forEach(match -> match.getPlayers().forEach(ffaPlayer -> {
             Player player = ffaPlayer.getPlayer();
             if (player != null) {
                 match.leave(player);
-                player.sendMessage(CC.translate("&cThe FFA arena is closing due to a server shutdown."));
+                player.sendMessage(CC.translate("&cA arena de FFA está sendo fechada devido ao desligamento do servidor."));
             }
         }));
         this.matches.clear();

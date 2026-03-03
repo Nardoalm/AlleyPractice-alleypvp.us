@@ -22,7 +22,7 @@ public class MatchInfoCommand extends BaseCommand {
             isAdminOnly = true,
             inGameOnly = false,
             usage = "match info <player>",
-            description = "Get information about a player's current match."
+            description = "Obtém informações da partida atual de um jogador."
     )
     @Override
     public void onCommand(CommandArgs command) {

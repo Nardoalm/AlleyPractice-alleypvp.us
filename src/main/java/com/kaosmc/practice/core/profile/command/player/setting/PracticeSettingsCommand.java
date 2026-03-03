@@ -16,7 +16,7 @@ public class PracticeSettingsCommand extends BaseCommand {
     @CommandData(
             name = "practicesettings",
             usage = "practicesettings",
-            description = "Open the practice settings menu."
+            description = "Abre o menu de configurações do practice."
     )
     @Override
     public void onCommand(CommandArgs command) {

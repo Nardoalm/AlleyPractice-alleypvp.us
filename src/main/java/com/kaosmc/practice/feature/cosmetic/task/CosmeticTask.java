@@ -15,7 +15,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 /**
  * @author Remi
- * @project alley-practice
+ * @project kaos-practice
  * @date 4/08/2025
  */
 public class CosmeticTask extends BukkitRunnable {

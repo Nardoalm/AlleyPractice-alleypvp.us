@@ -9,7 +9,7 @@ import java.util.Arrays;
 
 /**
  * @author Emmy
- * @project alley-practice
+ * @project kaos-practice
  * @since 14/07/2025
  */
 public class KitHelperCommand extends BaseCommand {
@@ -17,7 +17,7 @@ public class KitHelperCommand extends BaseCommand {
             name = "kithelper",
             isAdminOnly = true,
             usage = "kithelper",
-            description = "Provides assistance for essentials."
+            description = "Fornece assistência para comandos utilitários."
     )
     @Override
     public void onCommand(CommandArgs command) {

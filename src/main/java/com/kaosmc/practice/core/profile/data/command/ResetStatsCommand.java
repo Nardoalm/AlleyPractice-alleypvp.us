@@ -25,7 +25,7 @@ public class ResetStatsCommand extends BaseCommand {
             aliases = {"wipestats",},
             isAdminOnly = true,
             usage = "resetstats <player>",
-            description = "Reset a player's statistics."
+            description = "Reseta as estatísticas de um jogador."
     )
     @Override
     public void onCommand(CommandArgs command) {

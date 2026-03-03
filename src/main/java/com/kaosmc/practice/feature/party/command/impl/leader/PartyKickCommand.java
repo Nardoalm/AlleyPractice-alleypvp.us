@@ -21,7 +21,7 @@ public class PartyKickCommand extends BaseCommand {
             name = "party.kick",
             aliases = "p.kick",
             usage = "party kick <player>",
-            description = "Kick a player from your party."
+            description = "Expulsa um jogador da sua party."
     )
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();

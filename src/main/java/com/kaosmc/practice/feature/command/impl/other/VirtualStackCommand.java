@@ -20,7 +20,7 @@ public class VirtualStackCommand extends BaseCommand {
     @CommandData(
             name = "virtualstack",
             isAdminOnly = true,
-            description = "Bypass stack size limits for items and set a virtual stack amount (max 127)",
+            description = "Ignora o limite de pilha dos itens e define uma quantidade virtual (máx. 127)",
             usage = "virtualstack <amount> [bypassLimit]"
     )
     @Override
@@ -51,7 +51,7 @@ public class VirtualStackCommand extends BaseCommand {
         boolean bypassLimit = args.length > 1 && args[1].equalsIgnoreCase("true");
 
         if (!bypassLimit && (amount < 1 || amount > 127)) {
-            player.sendMessage(CC.translate("&cAmount must be between 1 and 127."));
+            player.sendMessage(CC.translate("&cA quantidade deve estar entre 1 e 127."));
             return;
         }
 

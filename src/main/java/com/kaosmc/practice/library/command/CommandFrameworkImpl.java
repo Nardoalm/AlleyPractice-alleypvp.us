@@ -1,7 +1,7 @@
 package com.kaosmc.practice.library.command;
 
 import com.kaosmc.practice.KaosPractice;
-import com.kaosmc.practice.bootstrap.AlleyContext;
+import com.kaosmc.practice.bootstrap.KaosContext;
 import com.kaosmc.practice.bootstrap.annotation.Service;
 import com.kaosmc.practice.common.constants.PluginConstant;
 import com.kaosmc.practice.common.logger.Logger;
@@ -55,7 +55,7 @@ public class CommandFrameworkImpl implements CommandFramework, CommandExecutor {
     }
 
     @Override
-    public void setup(AlleyContext context) {
+    public void setup(KaosContext context) {
         if (plugin.getServer().getPluginManager() instanceof SimplePluginManager) {
             try {
                 SimplePluginManager manager = (SimplePluginManager) plugin.getServer().getPluginManager();
@@ -69,7 +69,7 @@ public class CommandFrameworkImpl implements CommandFramework, CommandExecutor {
     }
 
     @Override
-    public void initialize(AlleyContext context) {
+    public void initialize(KaosContext context) {
         ScanResult scanResult = context.getScanResult();
         if (scanResult == null) {
             Logger.error("CommandFramework cannot initialize: ScanResult from context is null.");

@@ -18,7 +18,7 @@ import org.bukkit.event.entity.ProjectileLaunchEvent;
 
 /**
  * @author Emmy
- * @project alley-practice
+ * @project kaos-practice
  * @since 01/07/2025
  */
 public class SnapshotListener implements Listener {

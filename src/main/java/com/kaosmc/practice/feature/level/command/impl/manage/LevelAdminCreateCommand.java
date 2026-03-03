@@ -19,7 +19,7 @@ public class LevelAdminCreateCommand extends BaseCommand {
             isAdminOnly = true,
             inGameOnly = false,
             usage = "leveladmin create <levelName> <minElo> <maxElo>",
-            description = "Create a new level"
+            description = "Cria um novo nível"
     )
     @Override
     public void onCommand(CommandArgs command) {

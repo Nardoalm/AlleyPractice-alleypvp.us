@@ -13,7 +13,7 @@ import java.util.Collection;
 
 /**
  * @author Emmy
- * @project alley-practice
+ * @project kaos-practice
  * @since 26/07/2025
  */
 public class HotbarListCommand extends BaseCommand {
@@ -21,7 +21,7 @@ public class HotbarListCommand extends BaseCommand {
             name = "hotbar.list",
             isAdminOnly = true,
             usage = "hotbar list",
-            description = "Sends a list of all hotbar items."
+            description = "Envia uma lista de todos os itens da hotbar."
     )
     @Override
     public void onCommand(CommandArgs command) {
@@ -35,7 +35,7 @@ public class HotbarListCommand extends BaseCommand {
             return;
         }
 
-        player.sendMessage(CC.translate("&6Hotbar Items:"));
+        player.sendMessage(CC.translate("&6Itens da Hotbar:"));
         for (HotbarItem item : hotbarItems) {
             player.sendMessage(CC.translate(" &e• &f" + item.getName()));
         }

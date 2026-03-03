@@ -5,7 +5,7 @@ import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
-import com.kaosmc.practice.bootstrap.AlleyContext;
+import com.kaosmc.practice.bootstrap.KaosContext;
 import com.kaosmc.practice.bootstrap.annotation.Service;
 import com.kaosmc.practice.common.logger.Logger;
 import com.kaosmc.practice.core.database.MongoService;
@@ -36,7 +36,7 @@ public class MongoServiceImpl implements MongoService {
     }
 
     @Override
-    public void initialize(AlleyContext context) {
+    public void initialize(KaosContext context) {
         String uri = this.localeService.getString(SettingsLocaleImpl.MONGO_CREDENTIALS_URI);
         String databaseName = this.localeService.getString(SettingsLocaleImpl.MONGO_CREDENTIALS_DATABASE);
 
@@ -63,7 +63,7 @@ public class MongoServiceImpl implements MongoService {
     }
 
     @Override
-    public void shutdown(AlleyContext context) {
+    public void shutdown(KaosContext context) {
         if (this.mongoClient != null) {
             this.mongoClient.close();
             Logger.info("MongoDB connection closed.");

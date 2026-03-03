@@ -22,7 +22,7 @@ public class KitSetDescriptionCommand extends BaseCommand {
             aliases = "kit.setdesc",
             isAdminOnly = true,
             usage = "kit description <kitName> <description/clear>",
-            description = "Set or clear the description of a kit."
+            description = "Define ou limpa a descrição de um kit."
     )
     @Override
     public void onCommand(CommandArgs command) {

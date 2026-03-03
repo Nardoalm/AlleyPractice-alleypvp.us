@@ -18,7 +18,7 @@ public class ResetTimeCommand extends BaseCommand {
             aliases = "currenttime",
             cooldown = 1,
             usage = "resettime",
-            description = "Reset your personal world time to the server time."
+            description = "Reseta o horário pessoal do mundo para o horário do servidor."
     )
     @Override
     public void onCommand(CommandArgs command) {

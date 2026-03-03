@@ -4,7 +4,7 @@ import com.kaosmc.practice.feature.layout.LayoutService;
 import com.kaosmc.practice.library.menu.Menu;
 import com.kaosmc.practice.feature.kit.KitCategory;
 import com.kaosmc.practice.core.config.ConfigService;
-import com.kaosmc.practice.bootstrap.AlleyContext;
+import com.kaosmc.practice.bootstrap.KaosContext;
 import com.kaosmc.practice.bootstrap.annotation.Service;
 import com.kaosmc.practice.feature.layout.data.LayoutData;
 import com.kaosmc.practice.feature.layout.menu.LayoutMenu;
@@ -42,7 +42,7 @@ public class LayoutServiceImpl implements LayoutService {
     }
 
     @Override
-    public void initialize(AlleyContext context) {
+    public void initialize(KaosContext context) {
         this.layoutMenu = this.determineMenu();
     }
 

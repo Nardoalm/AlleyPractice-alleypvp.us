@@ -19,7 +19,7 @@ public class DuelRequestsCommand extends BaseCommand {
             name = "duelrequests",
             aliases = {"viewduelrequests", "viewrequests"},
             usage = "duelrequests",
-            description = "View your duel requests"
+            description = "Veja seus pedidos de duelo"
     )
     @Override
     public void onCommand(CommandArgs command) {

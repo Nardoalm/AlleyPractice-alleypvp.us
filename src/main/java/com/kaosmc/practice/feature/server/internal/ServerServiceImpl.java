@@ -1,6 +1,6 @@
 package com.kaosmc.practice.feature.server.internal;
 
-import com.kaosmc.practice.bootstrap.AlleyContext;
+import com.kaosmc.practice.bootstrap.KaosContext;
 import com.kaosmc.practice.bootstrap.annotation.Service;
 import com.kaosmc.practice.common.logger.Logger;
 import com.kaosmc.practice.common.text.CC;
@@ -63,7 +63,7 @@ public class ServerServiceImpl implements ServerService {
     }
 
     @Override
-    public void initialize(AlleyContext context) {
+    public void initialize(KaosContext context) {
         this.loadBlockedCraftingItems();
     }
 
@@ -81,7 +81,7 @@ public class ServerServiceImpl implements ServerService {
     public void endAllMatches(Player issuer) {
         List<Match> matches = new ArrayList<>(this.matchService.getMatches());
         if (matches.isEmpty()) {
-            if (issuer != null) issuer.sendMessage(CC.translate("&cCould not find any matches to end."));
+            if (issuer != null) issuer.sendMessage(CC.translate("&cNão foi possível encontrar partidas para encerrar."));
             return;
         }
 
@@ -103,7 +103,7 @@ public class ServerServiceImpl implements ServerService {
     public void disbandAllParties(Player issuer) {
         List<Party> parties = new ArrayList<>(this.partyService.getParties());
         if (parties.isEmpty()) {
-            if (issuer != null) issuer.sendMessage(CC.translate("&cCould not find any parties to disband."));
+            if (issuer != null) issuer.sendMessage(CC.translate("&cNão foi possível encontrar parties para desfazer."));
             return;
         }
 
@@ -128,7 +128,7 @@ public class ServerServiceImpl implements ServerService {
                     profile.setQueueProfile(null);
                     this.hotbarService.applyHotbarItems(queuePlayer);
                     this.spawnService.teleportToSpawn(queuePlayer);
-                    queuePlayer.sendMessage(CC.translate("&cYou have been removed from the queue by an administrator."));
+                    queuePlayer.sendMessage(CC.translate("&cVocê foi removido da fila por um administrador."));
                     playersRemoved++;
                 }
             }
@@ -138,7 +138,7 @@ public class ServerServiceImpl implements ServerService {
             if (playersRemoved > 0) {
                 issuer.sendMessage(CC.translate("&cRemoved &f" + playersRemoved + " &cplayer(s) from the queue."));
             } else {
-                issuer.sendMessage(CC.translate("&cCould not find any players in a queue."));
+                issuer.sendMessage(CC.translate("&cNão foi possível encontrar jogadores em fila."));
             }
         }
     }

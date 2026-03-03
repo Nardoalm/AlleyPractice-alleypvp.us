@@ -21,7 +21,7 @@ public class PartyLeaveCommand extends BaseCommand {
             name = "party.leave",
             aliases = {"p.leave"},
             usage = "party leave",
-            description = "Leave your party."
+            description = "Sai da sua party."
     )
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();

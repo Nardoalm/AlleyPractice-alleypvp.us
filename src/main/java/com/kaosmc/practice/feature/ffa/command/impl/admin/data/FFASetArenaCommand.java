@@ -14,7 +14,7 @@ import org.bukkit.command.CommandSender;
 
 /**
  * @author Emmy
- * @project alley-practice
+ * @project kaos-practice
  * @since 25/07/2025
  */
 public class FFASetArenaCommand extends BaseCommand {
@@ -23,7 +23,7 @@ public class FFASetArenaCommand extends BaseCommand {
             isAdminOnly = true,
             inGameOnly = false,
             usage = "ffa setarena <kitName> <arenaName>",
-            description = "Set the FFA arena for a kit."
+            description = "Define a arena de FFA para um kit."
     )
     @Override
     public void onCommand(CommandArgs command) {

@@ -17,7 +17,7 @@ import org.bukkit.inventory.ItemStack;
 
 /**
  * @author Emmy
- * @project alley-practice
+ * @project kaos-practice
  * @since 19/07/2025
  */
 @AllArgsConstructor

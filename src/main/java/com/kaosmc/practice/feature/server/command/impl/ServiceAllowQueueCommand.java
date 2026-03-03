@@ -18,7 +18,7 @@ public class ServiceAllowQueueCommand extends BaseCommand {
             name = "service.allowqueue",
             isAdminOnly = true,
             usage = "service allowqueue <true/false>",
-            description = "Allow/disallow queueing."
+            description = "Permite/bloqueia filas."
     )
     @Override
     public void onCommand(CommandArgs command) {

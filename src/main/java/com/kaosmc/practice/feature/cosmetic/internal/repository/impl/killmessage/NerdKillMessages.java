@@ -6,7 +6,7 @@ import org.bukkit.Material;
 
 /**
  * @author Remi
- * @project alley-practice
+ * @project kaos-practice
  * @date 27/06/2025
  */
 @CosmeticData(

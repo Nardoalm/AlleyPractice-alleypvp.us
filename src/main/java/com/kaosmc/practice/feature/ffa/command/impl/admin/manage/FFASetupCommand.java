@@ -22,7 +22,7 @@ public class FFASetupCommand extends BaseCommand {
             name = "ffa.setup",
             isAdminOnly = true,
             usage = "ffa setup <kitName> <arenaName> <maxPlayers> <menu-slot>",
-            description = "Setup a new FFA match."
+            description = "Configura uma nova partida de FFA."
     )
     @Override
     public void onCommand(CommandArgs command) {

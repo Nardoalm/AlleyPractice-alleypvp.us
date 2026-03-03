@@ -161,7 +161,7 @@ jobs:
             commits=$(git log ${last_tag}..HEAD --oneline --pretty=format:"- %s (%h)" --no-merges)
           fi
           
-          changelog="## 🎉 Alley v${{ steps.version.outputs.version }}\n\n"
+          changelog="## 🎉 Kaos v${{ steps.version.outputs.version }}\n\n"
           
           case $bump_type in
             "major")
@@ -190,7 +190,7 @@ jobs:
           done <<< "$commits"
           
           changelog="${changelog}\n---\n"
-          changelog="${changelog}**Download:** [Alley-${{ steps.version.outputs.version }}.jar](https://github.com/${{ github.repository }}/releases/download/v${{ steps.version.outputs.version }}/Alley-${{ steps.version.outputs.version }}.jar)\n\n"
+          changelog="${changelog}**Download:** [KaosPractice-${{ steps.version.outputs.version }}.jar](https://github.com/${{ github.repository }}/releases/download/v${{ steps.version.outputs.version }}/KaosPractice-${{ steps.version.outputs.version }}.jar)\n\n"
           changelog="${changelog}**Installation:** Place the JAR file in your \`plugins/\` folder and restart your server.\n\n"
           
           changelog="${changelog}---\n### 🏷️ Version Bump Keywords\n"
@@ -248,7 +248,7 @@ jobs:
           name: "🎉 Kaos v${{ steps.version.outputs.version }} (${{ steps.version.outputs.bump_type }} release)"
           body: ${{ steps.changelog.outputs.changelog }}
           files: |
-            target/Alley-${{ steps.version.outputs.version }}.jar
+            target/KaosPractice-${{ steps.version.outputs.version }}.jar
           draft: false
           prerelease: ${{ steps.version.outputs.bump_type == 'major' }}
         env:
@@ -258,14 +258,14 @@ jobs:
         if: steps.skip_check.outputs.skip_release == 'false'
         uses: actions/upload-artifact@v4
         with:
-          name: Kaos-${{ steps.version.outputs.version }}-${{ steps.version.outputs.bump_type }}
-          path: target/Kaos-${{ steps.version.outputs.version }}.jar
+          name: KaosPractice-${{ steps.version.outputs.version }}-${{ steps.version.outputs.bump_type }}
+          path: target/KaosPractice-${{ steps.version.outputs.version }}.jar
           if-no-files-found: error
 
       - name: Post-release summary
         if: steps.skip_check.outputs.skip_release == 'false'
         run: |
-          echo "🎉 Successfully released Alley v${{ steps.version.outputs.version }}!"
+          echo "🎉 Successfully released Kaos v${{ steps.version.outputs.version }}!"
           echo "📦 Version bump type: ${{ steps.version.outputs.bump_type }}"
           echo "📈 Previous version: ${{ steps.version.outputs.current_version }}"
           echo "🚀 New version: ${{ steps.version.outputs.version }}"

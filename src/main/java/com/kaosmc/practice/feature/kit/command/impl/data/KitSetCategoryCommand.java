@@ -22,7 +22,7 @@ public class KitSetCategoryCommand extends BaseCommand {
             isAdminOnly = true,
             inGameOnly = false,
             usage = "kit setcategory <kitName> <category>",
-            description = "Set the category of a kit."
+            description = "Define a categoria de um kit."
     )
     @Override
     public void onCommand(CommandArgs command) {

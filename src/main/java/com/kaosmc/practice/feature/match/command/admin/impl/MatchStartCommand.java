@@ -28,7 +28,7 @@ public class MatchStartCommand extends BaseCommand {
         List<String> completion = new ArrayList<>();
         Player player = command.getPlayer();
 
-        if (player.hasPermission("alley.admin")) {
+        if (player.hasPermission("kaos.admin")) {
             switch (command.getArgs().length) {
                 case 1:
                 case 2:
@@ -61,7 +61,7 @@ public class MatchStartCommand extends BaseCommand {
             aliases = {"mstart"},
             cooldown = 1,
             usage = "match start <player1> <player2> <kit> <arena>",
-            description = "Start a match between two players with a specific kit and arena"
+            description = "Inicia uma partida entre dois jogadores com um kit e arena específicos"
     )
     @Override
     public void onCommand(CommandArgs command) {

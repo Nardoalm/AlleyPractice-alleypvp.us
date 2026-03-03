@@ -24,7 +24,7 @@ public class KitSetRaidingRoleKitCommand extends BaseCommand {
             isAdminOnly = true,
             inGameOnly = false,
             usage = "kit setraidingrolekit <kitName> <role> <kitName>",
-            description = "Set the raiding role kit for a specific role in a raiding kit."
+            description = "Define o kit de função de raiding para uma função específica em um kit de raiding."
     )
     @Override
     public void onCommand(CommandArgs command) {

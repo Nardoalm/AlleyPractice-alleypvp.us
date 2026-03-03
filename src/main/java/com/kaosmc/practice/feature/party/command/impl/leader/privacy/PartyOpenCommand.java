@@ -21,7 +21,7 @@ public class PartyOpenCommand extends BaseCommand {
             name = "party.open",
             aliases = {"p.open"},
             usage = "party open",
-            description = "Open your party to the public."
+            description = "Abre sua party ao público."
     )
     @Override
     public void onCommand(CommandArgs command) {
@@ -39,6 +39,6 @@ public class PartyOpenCommand extends BaseCommand {
         }
 
         profile.getParty().setState(PartyState.PUBLIC);
-        player.sendMessage(CC.translate("&aYou have opened your party to the public. Anybody can now join."));
+        player.sendMessage(CC.translate("&aVocê abriu sua party ao público. Agora qualquer um pode entrar."));
     }
 }

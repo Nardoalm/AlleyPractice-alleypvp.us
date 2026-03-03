@@ -10,7 +10,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 /**
  * @author Remi
- * @project alley-practice
+ * @project kaos-practice
  * @date 20/07/2025
  */
 @RequiredArgsConstructor

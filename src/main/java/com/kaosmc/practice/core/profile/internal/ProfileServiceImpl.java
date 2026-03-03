@@ -2,7 +2,7 @@ package com.kaosmc.practice.core.profile.internal;
 
 import com.mongodb.client.MongoCollection;
 import com.kaosmc.practice.KaosPractice;
-import com.kaosmc.practice.bootstrap.AlleyContext;
+import com.kaosmc.practice.bootstrap.KaosContext;
 import com.kaosmc.practice.bootstrap.annotation.Service;
 import com.kaosmc.practice.common.logger.Logger;
 import com.kaosmc.practice.common.text.CC;
@@ -44,13 +44,13 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    public void initialize(AlleyContext context) {
+    public void initialize(KaosContext context) {
         this.collection = mongoService.getMongoDatabase().getCollection("profiles");
         this.databaseProfile = new MongoProfileImpl();
     }
 
     @Override
-    public void shutdown(AlleyContext context) {
+    public void shutdown(KaosContext context) {
         Logger.info("Saving all loaded player profiles...");
         this.profiles.values().forEach(Profile::save);
         Logger.info("Profile saving complete.");
@@ -111,6 +111,6 @@ public class ProfileServiceImpl implements ProfileService {
             }
         });
 
-        Bukkit.broadcastMessage(CC.translate("&c&lLAYOUT RESET: &cThe layout for kit " + kit.getName() + " has been reset for all players."));
+        Bukkit.broadcastMessage(CC.translate("&c&lRESET DE LAYOUT: &cO layout do kit " + kit.getName() + " foi resetado para todos os jogadores."));
     }
 }

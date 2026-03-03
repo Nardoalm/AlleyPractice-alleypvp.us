@@ -21,10 +21,10 @@ import com.kaosmc.practice.feature.ffa.listener.FFACuboidListener;
 import com.kaosmc.practice.feature.ffa.listener.FFADamageListener;
 import com.kaosmc.practice.feature.ffa.listener.FFADisconnectListener;
 import com.kaosmc.practice.feature.match.listener.MatchListener;
-import dev.revere.alley.feature.match.listener.types.*;
+import dev.revere.kaos.feature.match.listener.types.*;
 import com.kaosmc.practice.feature.match.snapshot.listener.SnapshotListener;
 import com.kaosmc.practice.feature.party.listener.PartyListener;
-import com.kaosmc.practice.bootstrap.AlleyContext;
+import com.kaosmc.practice.bootstrap.KaosContext;
 import com.kaosmc.practice.bootstrap.annotation.Service;
 import com.kaosmc.practice.core.profile.listener.ProfileListener;
 
@@ -32,14 +32,14 @@ import java.util.Arrays;
 
 /**
  * @author Emmy
- * @project alley-practice
+ * @project kaos-practice
  * @since 16/07/2025
  */
 @Service(provides = ListenerService.class, priority = 1000)
 public class ListenerServiceImpl implements ListenerService {
 
     @Override
-    public void initialize(AlleyContext context) {
+    public void initialize(KaosContext context) {
         this.registerListeners(context.getPlugin());
     }
 

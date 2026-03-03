@@ -1,41 +1,41 @@
 package com.kaosmc.practice.bootstrap.lifecycle;
 
-import com.kaosmc.practice.bootstrap.AlleyContext;
+import com.kaosmc.practice.bootstrap.KaosContext;
 
 /**
  * @author Remi
- * @project alley-practice
+ * @project kaos-practice
  * @date 2/07/2025
  */
 public interface Service {
     /**
-     * Called by the AlleyContext *after* the service instance has been created
+     * Called by the KaosContext *after* the service instance has been created
      * and its server dependencies are available, but not necessarily fully initialized.
      *
      * @param context The application context, for access to the bootstrap instance or other services.
      */
-    default void setup(AlleyContext context) {
+    default void setup(KaosContext context) {
         // Default implementation: no-op
     }
 
     /**
-     * Called by the AlleyContext *after* all services have been created and setup.
+     * Called by the KaosContext *after* all services have been created and setup.
      * Use this for logic that requires other services to be fully operational,
      * such as registering listeners or loading data from other services.
      *
      * @param context The application context.
      */
-    default void initialize(AlleyContext context) {
+    default void initialize(KaosContext context) {
         // Default implementation: no-op
     }
 
     /**
-     * Called by the AlleyContext during bootstrap shutdown.
+     * Called by the KaosContext during bootstrap shutdown.
      * Should be used to release resources, save data, etc.
      *
      * @param context The application context.
      */
-    default void shutdown(AlleyContext context) {
+    default void shutdown(KaosContext context) {
         // Default implementation: no-op
     }
 }

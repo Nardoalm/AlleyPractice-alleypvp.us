@@ -21,7 +21,7 @@ public class AcceptCommand extends BaseCommand {
             name = "accept",
             aliases = {"duel.accept"},
             usage = "accept <player>",
-            description = "Accept a duel request"
+            description = "Aceita um pedido de duelo"
     )
     @Override
     public void onCommand(CommandArgs command) {

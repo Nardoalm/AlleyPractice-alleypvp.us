@@ -21,7 +21,7 @@ public class ArenaSetDisplayNameCommand extends BaseCommand {
             isAdminOnly = true,
             inGameOnly = false,
             usage = "arena setdisplayname <arenaName> <displayName>",
-            description = "Sets the display name of an arena"
+            description = "Define o nome de exibição de uma arena"
     )
     @Override
     public void onCommand(CommandArgs command) {

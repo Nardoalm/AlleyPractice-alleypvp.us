@@ -1,7 +1,7 @@
 package com.kaosmc.practice.visual.nametag.internal;
 
 import com.kaosmc.practice.KaosPractice;
-import com.kaosmc.practice.bootstrap.AlleyContext;
+import com.kaosmc.practice.bootstrap.KaosContext;
 import com.kaosmc.practice.bootstrap.annotation.Service;
 import com.kaosmc.practice.visual.nametag.model.NametagPerspective;
 import com.kaosmc.practice.visual.nametag.NametagService;
@@ -20,7 +20,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Remi
- * @project alley-practice
+ * @project kaos-practice
  * @date 27/06/2025
  */
 @Getter
@@ -40,7 +40,7 @@ public class NametagServiceImpl implements NametagService, Listener {
     }
 
     @Override
-    public void initialize(AlleyContext context) {
+    public void initialize(KaosContext context) {
         this.plugin.getServer().getPluginManager().registerEvents(this, this.plugin);
     }
 

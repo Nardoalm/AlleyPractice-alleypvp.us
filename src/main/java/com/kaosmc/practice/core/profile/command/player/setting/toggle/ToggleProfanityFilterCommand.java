@@ -21,7 +21,7 @@ public class ToggleProfanityFilterCommand extends BaseCommand {
             aliases = {"tpf"},
             cooldown = 1,
             usage = "toggleprofanityfilter",
-            description = "Toggle the profanity filter on or off."
+            description = "Ativa ou desativa o filtro de palavrões."
     )
     @Override
     public void onCommand(CommandArgs command) {
@@ -33,7 +33,7 @@ public class ToggleProfanityFilterCommand extends BaseCommand {
         if (!chatFormatEnabled) {
             player.sendMessage(MessageConstant.FEATURE_CURRENTLY_DISABLED);
             if (player.isOp()) {
-                player.sendMessage(CC.translate("&cYou seem to be an operator. This feature is disabled because you're currently &c&lnot &cusing &6&lAlley's &cchat format. &7To enable it, head to settings config and enable chat format."));
+                player.sendMessage(CC.translate("&cVocê é operador. Este recurso está desativado porque você não está usando o formato de chat do &6&lKaos&c. &7Para ativar, abra as configurações e habilite o formato de chat."));
             }
             return;
         }

@@ -17,7 +17,7 @@ public class ToggleWorldTimeCommand extends BaseCommand {
             name = "toggleworldtime",
             cooldown = 1,
             usage = "toggleworldtime",
-            description = "Toggle through your world time settings."
+            description = "Alterna entre suas configurações de horário do mundo."
     )
     @Override
     public void onCommand(CommandArgs command) {

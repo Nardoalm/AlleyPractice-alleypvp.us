@@ -18,7 +18,7 @@ public class KitSaveAllCommand extends BaseCommand {
             name = "kit.saveall",
             isAdminOnly = true,
             usage = "kit saveall",
-            description = "Save all kits to storage."
+            description = "Salva todos os kits no armazenamento."
     )
     @Override
     public void onCommand(CommandArgs command) {

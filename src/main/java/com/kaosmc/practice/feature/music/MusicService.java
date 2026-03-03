@@ -11,7 +11,7 @@ import java.util.UUID;
 
 /**
  * @author Emmy
- * @project alley-practice
+ * @project kaos-practice
  * @since 19/07/2025
  */
 public interface MusicService extends Service {

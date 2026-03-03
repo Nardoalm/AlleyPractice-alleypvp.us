@@ -19,7 +19,7 @@ public class ViewPlayersCommand extends BaseCommand {
     @CommandData(
             name = "viewplayers",
             usage = "viewplayers",
-            description = "View all players in the match (spectator only)."
+            description = "Mostra todos os jogadores da partida (somente espectador)."
     )
     @Override
     public void onCommand(CommandArgs command) {

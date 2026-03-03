@@ -4,7 +4,7 @@ import com.kaosmc.practice.KaosPractice;
 import com.kaosmc.practice.adapter.knockback.Knockback;
 import com.kaosmc.practice.adapter.knockback.KnockbackAdapter;
 import com.kaosmc.practice.adapter.knockback.KnockbackType;
-import com.kaosmc.practice.bootstrap.AlleyContext;
+import com.kaosmc.practice.bootstrap.KaosContext;
 import com.kaosmc.practice.bootstrap.annotation.Service;
 import lombok.Getter;
 
@@ -27,7 +27,7 @@ public class KnockbackAdapterImpl implements KnockbackAdapter {
     }
 
     @Override
-    public void initialize(AlleyContext context) {
+    public void initialize(KaosContext context) {
         this.knockbackImplementation = this.determineKnockback();
     }
 

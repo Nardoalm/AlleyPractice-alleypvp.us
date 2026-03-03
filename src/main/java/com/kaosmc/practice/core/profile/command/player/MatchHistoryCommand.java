@@ -18,7 +18,7 @@ public class MatchHistoryCommand extends BaseCommand {
             name = "matchhistory",
             aliases = {"pastmatches", "previousmatches", "mh"},
             usage = "matchhistory",
-            description = "View your match history"
+            description = "Veja seu histórico de partidas"
     )
     @Override
     public void onCommand(CommandArgs command) {

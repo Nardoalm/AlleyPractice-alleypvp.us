@@ -5,7 +5,7 @@ import com.kaosmc.practice.bootstrap.lifecycle.Service;
 
 /**
  * @author Remi
- * @project alley-practice
+ * @project kaos-practice
  * @date 2/07/2025
  */
 public interface MongoService extends Service {

@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 
 /**
  * @author Emmy
- * @project alley-practice
+ * @project kaos-practice
  * @since 19/07/2025
  */
 public class ToggleServerTitlesCommand extends BaseCommand {
@@ -18,7 +18,7 @@ public class ToggleServerTitlesCommand extends BaseCommand {
             name = "toggleservertitles",
             cooldown = 1,
             usage = "toggleservertitles",
-            description = "Toggle the server titles on or off"
+            description = "Ativa ou desativa os títulos do servidor"
     )
     @Override
     public void onCommand(CommandArgs command) {

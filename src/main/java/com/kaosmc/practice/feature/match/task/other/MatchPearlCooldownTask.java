@@ -15,7 +15,7 @@ import java.util.Optional;
 
 /**
  * @author Remi
- * @project alley-practice
+ * @project kaos-practice
  * @date 26/06/2025
  */
 public class MatchPearlCooldownTask extends BukkitRunnable {

@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  * @author Emmy
- * @project alley-practice
+ * @project kaos-practice
  * @since 25/07/2025
  */
 public class FFACommand extends BaseCommand {
@@ -44,7 +44,7 @@ public class FFACommand extends BaseCommand {
             isAdminOnly = true,
             inGameOnly = false,
             usage = "ffa help <page>",
-            description = "View FFA commands."
+            description = "Mostra os comandos de FFA."
     )
     @Override
     public void onCommand(CommandArgs command) {
@@ -69,7 +69,7 @@ public class FFACommand extends BaseCommand {
         }
 
         sender.sendMessage("");
-        sender.sendMessage(CC.translate("&6&lFFA Commands &8(&7Page &f" + page + "&7/&f" + this.pages.length + "&8)"));
+        sender.sendMessage(CC.translate("&6&lComandos de FFA &8(&7Page &f" + page + "&7/&f" + this.pages.length + "&8)"));
         for (String string : this.pages[page - 1]) {
             sender.sendMessage(CC.translate(string));
         }

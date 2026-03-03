@@ -19,7 +19,7 @@ public class CreativeCommand extends BaseCommand {
             aliases = {"gm.c", "gamemode.c", "gm.1", "gm1", "gamemode.1", "gamemode.creative"},
             isAdminOnly = true,
             usage = "gamemode creative [player]",
-            description = "Set your or another player's gamemode to Creative."
+            description = "Define o modo de jogo seu ou de outro jogador para Criativo."
     )
     @Override
     public void onCommand(CommandArgs command) {
@@ -28,7 +28,7 @@ public class CreativeCommand extends BaseCommand {
 
         if (args.length < 1) {
             player.setGameMode(GameMode.CREATIVE);
-            player.sendMessage(CC.translate("&eYour gamemode has been updated to Creative."));
+            player.sendMessage(CC.translate("&eSeu modo de jogo foi alterado para Criativo."));
             return;
         }
 
@@ -40,6 +40,6 @@ public class CreativeCommand extends BaseCommand {
 
         targetPlayer.setGameMode(GameMode.CREATIVE);
         player.sendMessage(CC.translate("&eYou have updated &d" + targetPlayer.getName() + "'s &egamemode to Creative."));
-        targetPlayer.sendMessage(CC.translate("&eYour gamemode has been updated to Creative."));
+        targetPlayer.sendMessage(CC.translate("&eSeu modo de jogo foi alterado para Criativo."));
     }
 }

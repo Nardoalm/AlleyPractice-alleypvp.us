@@ -21,7 +21,7 @@ public class FFAJoinCommand extends BaseCommand {
     @CommandData(
             name = "ffa.join",
             usage = "ffa join <kit>",
-            description = "Join a FFA match."
+            description = "Entra em uma partida de FFA."
     )
     @Override
     public void onCommand(CommandArgs command) {

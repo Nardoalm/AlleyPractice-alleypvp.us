@@ -23,7 +23,7 @@ public class KitSetMenuTitleCommand extends BaseCommand {
             isAdminOnly = true,
             inGameOnly = false,
             usage = "kit setmenutitle <kitName> <title>",
-            description = "Set the menu title for a kit."
+            description = "Define o título do menu de um kit."
     )
     @Override
     public void onCommand(CommandArgs command) {

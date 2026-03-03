@@ -36,7 +36,7 @@ public class ArenaAddKitCommand extends BaseCommand {
             name = "arena.addkit",
             isAdminOnly = true,
             usage = "arena addkit <arenaName> <kitName>",
-            description = "Adds a kit to an arena"
+            description = "Adiciona um kit a uma arena"
     )
     @Override
     public void onCommand(CommandArgs command) {

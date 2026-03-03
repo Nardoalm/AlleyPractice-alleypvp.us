@@ -17,7 +17,7 @@ public class KitSettingsCommand extends BaseCommand {
             name = "kit.settings",
             isAdminOnly = true,
             usage = "kit settings",
-            description = "List all available kit settings."
+            description = "Lista todas as configurações de kit disponíveis."
     )
     @Override
     public void onCommand(CommandArgs command) {
@@ -27,7 +27,7 @@ public class KitSettingsCommand extends BaseCommand {
         player.sendMessage("");
         player.sendMessage(CC.translate("&6&lKit Settings List &f(" + kitSettingService.getSettings().size() + "&f)"));
         if (kitSettingService.getSettings().isEmpty()) {
-            player.sendMessage(CC.translate(" &f● &cNo Kit Settings available."));
+            player.sendMessage(CC.translate(" &f● &cNenhuma configuração de kit disponível."));
         }
         kitSettingService.getSettings().forEach(setting -> player.sendMessage(CC.translate(" &f◆ &6" + setting.getName() + " &8(&7" + setting.getDescription() + "&7)")));
         player.sendMessage("");

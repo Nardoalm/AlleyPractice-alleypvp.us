@@ -10,7 +10,7 @@ import java.util.Set;
 
 /**
  * @author Remi
- * @project alley-practice
+ * @project kaos-practice
  * @since 29/06/2025
  */
 public class ZoneKnockbackImpl implements Knockback {

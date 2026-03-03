@@ -24,7 +24,7 @@ public class PartyChatCommand extends BaseCommand {
             name = "party.chat",
             aliases = {"p.chat", "pc"},
             usage = "party chat [message]",
-            description = "Toggle or send a message to party chat."
+            description = "Alterna ou envia mensagem no chat da party."
     )
     @Override
     public void onCommand(CommandArgs command) {
@@ -38,10 +38,10 @@ public class PartyChatCommand extends BaseCommand {
         if (args.length == 0) {
             if (profile.getProfileData().getSettingData().getChatChannel().equals(ChatChannel.PARTY.toString())) {
                 profile.getProfileData().getSettingData().setChatChannel(ChatChannel.GLOBAL.toString());
-                player.sendMessage(CC.translate("&aSet your chat channel to &6global&a."));
+                player.sendMessage(CC.translate("&aSeu canal de chat foi definido para &6global&a."));
             } else {
                 profile.getProfileData().getSettingData().setChatChannel(ChatChannel.PARTY.toString());
-                player.sendMessage(CC.translate("&aSet your chat channel to &6party&a."));
+                player.sendMessage(CC.translate("&aSeu canal de chat foi definido para &6party&a."));
             }
             return;
         }

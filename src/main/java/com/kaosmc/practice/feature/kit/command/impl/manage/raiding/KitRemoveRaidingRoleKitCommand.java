@@ -24,7 +24,7 @@ public class KitRemoveRaidingRoleKitCommand extends BaseCommand {
             isAdminOnly = true,
             inGameOnly = false,
             usage = "kit removeraidingrolekit <kitName> <role> <roleKitName>",
-            description = "Remove a raiding role kit mapping from a kit."
+            description = "Remover o mapeamento de kit de função de raiding de um kit."
     )
     @Override
     public void onCommand(CommandArgs command) {

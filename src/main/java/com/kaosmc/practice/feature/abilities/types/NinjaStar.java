@@ -82,7 +82,7 @@ public class NinjaStar extends Ability {
                         return;
                     }
                     player.teleport(target.getLocation());
-                    player.sendMessage(CC.translate("&7You have been successfully teleported")); // you just got teleported back
+                    player.sendMessage(CC.translate("&7Você foi teleportado com sucesso")); // you just got teleported back
                 }
             }.runTaskLaterAsynchronously(this.plugin, (5 * 10));
 

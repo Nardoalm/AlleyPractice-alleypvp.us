@@ -31,12 +31,12 @@ public class PartyBanCommand extends BaseCommand {
 
         Player target = player.getServer().getPlayer(args[0]);
         if (target == null) {
-            player.sendMessage(CC.translate("&cThat player is not online."));
+            player.sendMessage(CC.translate("&cEsse jogador não está online."));
             return;
         }
 
         if (target.equals(player)) {
-            player.sendMessage(CC.translate("&cYou cannot ban yourself from the party."));
+            player.sendMessage(CC.translate("&cVocê não pode se banir da party."));
             return;
         }
 

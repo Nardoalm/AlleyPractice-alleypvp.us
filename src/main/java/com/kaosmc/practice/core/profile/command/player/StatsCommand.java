@@ -20,7 +20,7 @@ public class StatsCommand extends BaseCommand {
             name = "stats",
             aliases = {"statistics"},
             usage = "stats [player]",
-            description = "View your or another player's statistics."
+            description = "Veja suas estatísticas ou as de outro jogador."
     )
     @Override
     public void onCommand(CommandArgs command) {

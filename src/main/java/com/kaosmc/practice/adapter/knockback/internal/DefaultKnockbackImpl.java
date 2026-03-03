@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 
 /**
  * @author Remi
- * @project alley-practice
+ * @project kaos-practice
  * @since 29/06/2025
  */
 public class DefaultKnockbackImpl implements Knockback {

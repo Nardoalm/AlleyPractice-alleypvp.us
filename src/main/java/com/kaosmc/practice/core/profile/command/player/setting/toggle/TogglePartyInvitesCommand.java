@@ -20,7 +20,7 @@ public class TogglePartyInvitesCommand extends BaseCommand {
             name = "togglepartyinvites",
             cooldown = 1,
             usage = "togglepartyinvites",
-            description = "Toggle party invites on or off."
+            description = "Ativa ou desativa convites de party."
     )
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();

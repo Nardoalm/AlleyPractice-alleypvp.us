@@ -34,7 +34,7 @@ public class ArenaSetSpawnCommand extends BaseCommand {
             name = "arena.setspawn",
             isAdminOnly = true,
             usage = "arena setspawn <arenaName> <blue/red/ffa>",
-            description = "Sets the spawn location of an arena."
+            description = "Define a localização de spawn de uma arena."
     )
     @Override
     public void onCommand(CommandArgs command) {

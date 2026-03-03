@@ -12,13 +12,13 @@ import org.bukkit.inventory.ItemStack;
 
 /**
  * @author Emmy
- * @project alley-practice
+ * @project kaos-practice
  * @since 14/07/2025
  */
 public class ServiceToggleCraftingCommand extends BaseCommand {
     @CommandData(
             name = "service.togglecrafting",
-            description = "Command to manage service crafting operations.",
+            description = "Comando para gerenciar operações de crafting do serviço.",
             usage = "service togglecrafting",
             isAdminOnly = true
     )

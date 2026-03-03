@@ -140,8 +140,8 @@ public class DuelRequestServiceImpl implements DuelRequestService {
             Party partyB = targetProfile.getParty();
 
             if (partyA == null || partyB == null) {
-                duelRequest.getSender().sendMessage(CC.translate("&cThe duel could not be started because one of the parties has disbanded."));
-                duelRequest.getTarget().sendMessage(CC.translate("&cThe duel could not be started because one of the parties has disbanded."));
+                duelRequest.getSender().sendMessage(CC.translate("&cO duelo não pôde ser iniciado porque uma das parties foi desfeita."));
+                duelRequest.getTarget().sendMessage(CC.translate("&cO duelo não pôde ser iniciado porque uma das parties foi desfeita."));
                 removeDuelRequest(duelRequest);
                 return;
             }
@@ -244,7 +244,7 @@ public class DuelRequestServiceImpl implements DuelRequestService {
             }
         } else {
             if (senderProfile.getParty() != null || finalTargetProfile.getParty() != null) {
-                sender.sendMessage(CC.translate("&cTo send a 1v1 duel, neither you nor your target can be in a party."));
+                sender.sendMessage(CC.translate("&cPara enviar um duelo 1v1, nem você nem seu alvo podem estar em uma party."));
                 return true;
             }
         }
@@ -335,27 +335,27 @@ public class DuelRequestServiceImpl implements DuelRequestService {
 
         Profile targetProfile = this.profileService.getProfile(duelRequest.getTarget().getUniqueId());
         if (targetProfile.getState() != ProfileState.LOBBY) {
-            duelRequest.getSender().sendMessage(CC.translate("&cThat player is not in the lobby."));
+            duelRequest.getSender().sendMessage(CC.translate("&cEsse jogador não está no lobby."));
             return false;
         }
 
         if (targetProfile.getParty() != null && profile.getParty() == null) {
-            duelRequest.getSender().sendMessage(CC.translate("&cYou cannot accept a duel request from a player in a party if you are not in a party."));
+            duelRequest.getSender().sendMessage(CC.translate("&cVocê não pode aceitar um pedido de duelo de um jogador em party se você não estiver em uma party."));
             return false;
         }
 
         if (targetProfile.getParty() != null && targetProfile.getParty().getMembers().contains(duelRequest.getSender().getUniqueId())) {
-            duelRequest.getSender().sendMessage(CC.translate("&cYou cannot accept a duel request from a player in your party."));
+            duelRequest.getSender().sendMessage(CC.translate("&cVocê não pode aceitar pedido de duelo de um jogador da sua party."));
             return false;
         }
 
         if (targetProfile.getParty() == null && profile.getParty() != null) {
-            duelRequest.getSender().sendMessage(CC.translate("&cYou cannot accept a duel request from a player who is not in a party."));
+            duelRequest.getSender().sendMessage(CC.translate("&cVocê não pode aceitar pedido de duelo de um jogador que não está em party."));
             return false;
         }
 
         if (duelRequest.isParty() && profile.getParty() == null) {
-            duelRequest.getSender().sendMessage(CC.translate("&cYou can only accept party duel requests if you are in a party."));
+            duelRequest.getSender().sendMessage(CC.translate("&cVocê só pode aceitar pedidos de duelo de party se estiver em uma party."));
             return false;
         }
         return true;

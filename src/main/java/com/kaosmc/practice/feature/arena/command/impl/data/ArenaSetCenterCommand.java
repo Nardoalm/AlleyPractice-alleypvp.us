@@ -35,7 +35,7 @@ public class ArenaSetCenterCommand extends BaseCommand {
             name = "arena.setcenter",
             isAdminOnly = true,
             usage = "arena setcenter <arenaName>",
-            description = "Sets the center location of an arena."
+            description = "Define a localização central de uma arena."
     )
     @Override
     public void onCommand(CommandArgs command) {

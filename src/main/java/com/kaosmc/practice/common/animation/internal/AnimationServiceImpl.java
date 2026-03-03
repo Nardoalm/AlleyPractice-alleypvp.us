@@ -3,7 +3,7 @@ package com.kaosmc.practice.common.animation.internal;
 import com.kaosmc.practice.common.animation.AnimationService;
 import com.kaosmc.practice.common.animation.AnimationType;
 import com.kaosmc.practice.common.constants.PluginConstant;
-import com.kaosmc.practice.bootstrap.AlleyContext;
+import com.kaosmc.practice.bootstrap.KaosContext;
 import com.kaosmc.practice.bootstrap.annotation.Service;
 import com.kaosmc.practice.common.animation.internal.config.TextAnimation;
 import com.kaosmc.practice.common.animation.internal.types.Animation;
@@ -41,7 +41,7 @@ public class AnimationServiceImpl implements AnimationService {
     }
 
     @Override
-    public void initialize(AlleyContext context) {
+    public void initialize(KaosContext context) {
         Reflections reflections = this.pluginConstant.getReflections();
         if (reflections == null) {
             Logger.error("AnimationServiceImpl cannot initialize: Reflections object is null.");

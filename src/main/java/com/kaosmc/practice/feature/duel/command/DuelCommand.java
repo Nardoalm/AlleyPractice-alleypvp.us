@@ -20,7 +20,7 @@ public class DuelCommand extends BaseCommand {
     @CommandData(
             name = "duel",
             usage = "duel <player>",
-            description = "Send a duel request to a player"
+            description = "Envia um pedido de duelo para um jogador"
     )
     @Override
     public void onCommand(CommandArgs command) {

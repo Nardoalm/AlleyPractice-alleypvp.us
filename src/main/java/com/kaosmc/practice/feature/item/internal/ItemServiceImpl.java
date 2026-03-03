@@ -1,6 +1,6 @@
 package com.kaosmc.practice.feature.item.internal;
 
-import com.kaosmc.practice.bootstrap.AlleyContext;
+import com.kaosmc.practice.bootstrap.KaosContext;
 import com.kaosmc.practice.bootstrap.annotation.Service;
 import com.kaosmc.practice.common.constants.TexturesConstant;
 import com.kaosmc.practice.common.item.ItemBuilder;
@@ -20,7 +20,7 @@ import java.util.List;
 
 /**
  * @author Emmy
- * @project alley-practice
+ * @project kaos-practice
  * @since 18/07/2025
  */
 @Getter
@@ -41,7 +41,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public void initialize(AlleyContext context) {
+    public void initialize(KaosContext context) {
         this.loadGoldenHeadTextureAndConstructItem();
     }
 

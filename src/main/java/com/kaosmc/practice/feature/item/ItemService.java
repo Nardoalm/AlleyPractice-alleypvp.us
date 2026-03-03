@@ -6,7 +6,7 @@ import org.bukkit.inventory.ItemStack;
 
 /**
  * @author Emmy
- * @project alley-practice
+ * @project kaos-practice
  * @since 18/07/2025
  */
 public interface ItemService extends Service {

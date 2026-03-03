@@ -42,7 +42,7 @@ public class ArenaCommand extends BaseCommand {
             isAdminOnly = true,
             inGameOnly = false,
             usage = "arena help <page>",
-            description = "Displays a list of arena commands"
+            description = "Mostra uma lista de comandos de arena"
     )
     @Override
     public void onCommand(CommandArgs command) {
@@ -67,7 +67,7 @@ public class ArenaCommand extends BaseCommand {
         }
 
         sender.sendMessage("");
-        sender.sendMessage(CC.translate("&6&lArena Commands &8(&7Page &f" + page + "&7/&f" + pages.length + "&8)"));
+        sender.sendMessage(CC.translate("&6&lComandos de Arena &8(&7Page &f" + page + "&7/&f" + pages.length + "&8)"));
         for (String string : pages[page - 1]) {
             sender.sendMessage(CC.translate(string));
         }

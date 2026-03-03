@@ -10,7 +10,7 @@ import org.bukkit.command.CommandSender;
 
 /**
  * @author Emmy
- * @project alley-practice
+ * @project kaos-practice
  * @since 09/09/2025
  */
 public class ArenaSaveCommand extends BaseCommand {
@@ -19,7 +19,7 @@ public class ArenaSaveCommand extends BaseCommand {
             isAdminOnly = true,
             inGameOnly = false,
             usage = "arena save <name>",
-            description = "Save an arena to the database."
+            description = "Salva uma arena no banco de dados."
     )
     @Override
     public void onCommand(CommandArgs command) {

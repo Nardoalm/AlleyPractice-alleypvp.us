@@ -96,7 +96,7 @@ public class RankedButton extends Button {
                     "",
                     "&c&lRANKED BAN",
                     "&cYou are currently banned from ranked queues.",
-                    "&7You may appeal at &6&ndiscord.gg/alley-practice&7.",
+                    "&7You may appeal at &6&ndiscord.gg/kaos-practice&7.",
                     ""
             ).forEach(line -> player.sendMessage(CC.translate(line)));
             return;

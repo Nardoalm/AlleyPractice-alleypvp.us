@@ -12,13 +12,13 @@ import java.util.Map;
 
 /**
  * @author Remi
- * @project alley-practice
+ * @project kaos-practice
  * @date 4/08/2025
  */
 @CosmeticData(
         type = CosmeticType.SUIT,
         name = "None",
-        description = "Remove your suit",
+        description = "Remover your suit",
         icon = Material.BARRIER,
         slot = 10
 )

@@ -17,7 +17,7 @@ public class NightCommand extends BaseCommand {
             name = "night",
             cooldown = 1,
             usage = "night",
-            description = "Set your personal world time to night."
+            description = "Define o horário pessoal do mundo para noite."
     )
     @Override
     public void onCommand(CommandArgs command) {

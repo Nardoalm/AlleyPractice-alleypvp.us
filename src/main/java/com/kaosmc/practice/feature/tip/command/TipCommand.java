@@ -23,7 +23,7 @@ public class TipCommand extends BaseCommand {
             name = "tip",
             aliases = {"tips"},
             usage = "tip",
-            description = "Get a random tip.",
+            description = "Obter a random tip.",
             cooldown = 5
     )
     @Override

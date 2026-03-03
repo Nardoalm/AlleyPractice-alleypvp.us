@@ -6,13 +6,13 @@ import org.bukkit.Material;
 
 /**
  * @author Remi
- * @project alley-practice
+ * @project kaos-practice
  * @date 27/06/2025
  */
 @CosmeticData(
         type = CosmeticType.KILL_MESSAGE,
         name = "None",
-        description = "Remove your kill message",
+        description = "Remover your kill message",
         icon = Material.BARRIER,
         slot = 10,
         price = 0

@@ -18,7 +18,7 @@ public class ArenaToolCommand extends BaseCommand {
             aliases = "arena.wand",
             isAdminOnly = true,
             usage = "arena tool",
-            description = "Gives or removes the arena selection tool"
+            description = "Dá ou remove a ferramenta de seleção de arena"
     )
     @Override
     public void onCommand(CommandArgs command) {

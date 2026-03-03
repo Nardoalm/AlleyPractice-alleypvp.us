@@ -2,7 +2,7 @@ package com.kaosmc.practice.core.profile.enums;
 
 /**
  * @author Remi
- * @project alley-practice
+ * @project kaos-practice
  * @date 3/07/2025
  */
 public enum GlobalCooldown {

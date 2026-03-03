@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 
 /**
  * @author Remi
- * @project alley-practice
+ * @project kaos-practice
  * @date 2/07/2025
  */
 public interface VisibilityService extends Service {

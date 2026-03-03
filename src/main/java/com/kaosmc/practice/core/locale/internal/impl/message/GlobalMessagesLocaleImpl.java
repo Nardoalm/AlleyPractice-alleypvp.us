@@ -137,11 +137,11 @@ public enum GlobalMessagesLocaleImpl implements LocaleEntry {
     ERROR_YOU_NO_MATCH_HISTORY("messages/global-messages.yml", "error-messages.you.no-match-history", "&cYou have no match history."),
     ERROR_YOU_PARTY_NOT_PUBLIC("messages/global-messages.yml", "error-messages.you.party-not-public", "&cYour party is not open to the public to announce. Please run the following command: &7/party open"),
 
-    ERROR_YOU_NOT_IN_PARTY("messages/global-messages.yml", "error-messages.you..not-in-party", "&cYou are not in a party."),
+    ERROR_YOU_NOT_IN_PARTY("messages/global-messages.yml", "error-messages.you..not-in-party", "&cVocê não está em uma party."),
     ERROR_YOU_NOT_PARTY_LEADER("messages/global-messages.yml", "error-messages.you.not-party-leader", "&cYou are not the leader of the party."),
     ERROR_YOU_ALREADY_IN_PARTY("messages/global-messages.yml", "error-messages.you.already-in-party", "&cYou are already in a party."),
     ERROR_YOU_ALREADY_IN_THIS_PARTY("messages/global-messages.yml", "error-messages.you.already-in-this-party", "&cYou are already in this party."),
-    ERROR_YOU_PARTY_CHAT_DISABLED("messages/global-messages.yml", "error-messages.you.party-chat-disabled", "&cYou have party messages disabled. &7(To enable: /togglepartymessages)"),
+    ERROR_YOU_PARTY_CHAT_DISABLED("messages/global-messages.yml", "error-messages.you.party-chat-disabled", "&cVocê está com as mensagens da party desativadas. &7(To enable: /togglepartymessages)"),
     ERROR_YOU_NO_PARTY_INVITE_FROM_PLAYER("messages/global-messages.yml", "error-messages.you.no-party-invite-from-player", "&cYou do not have a party invitation from &6{name-color}{player}&c."),
     ERROR_YOU_PARTY_NEED_TWO_PLAYERS("messages/global-messages.yml", "error-messages.you.party-need-two-players", "&cYou need at least two players."),
     ERROR_YOU_ARE_IN_COMBAT("messages/global-messages.yml", "error-messages.you.are-in-combat", "&cYou are in combat!"),
@@ -184,12 +184,11 @@ public enum GlobalMessagesLocaleImpl implements LocaleEntry {
     JOIN_MESSAGE_CHAT_ENABLED("messages/global-messages.yml", "join-message.enabled", true),
     JOIN_MESSAGE_CHAT_MESSAGE_LIST("messages/global-messages.yml", "join-message.message", Arrays.asList(
             "",
-            "&6&lAlley Practice Core",
-            " &6&l│ &rWebsite: &6revere.dev",
+            "&6&lKaosPractice Core",
+            " &6&l│ &rWebsite: &6knowplugins.com",
             " &6&l│ &rDiscord: &6discord.gg/p3R5qhfWAx",
-            " &6&l│ &rGitHub: &6github.com/RevereInc/alley-practice",
             "",
-            "&6&lMade by &f{author} &7(v{version})",
+            "&6&lCriado por &f{author} &7(v{version})",
             ""
     )),
 
@@ -387,9 +386,9 @@ public enum GlobalMessagesLocaleImpl implements LocaleEntry {
             ""
     )),
 
-    SPAWN_SET("messages/global-messages.yml", "spawn.command.set", "&aSuccessfully set the new spawn location of &6Alley Practice&a! \n &8- &7{world}: {x}, {y}, {z} (Yaw: {yaw}, Pitch: {pitch})"),
-    SPAWN_TELEPORTED("messages/global-messages.yml", "spawn.command.teleported", "&6Teleported you to spawn!"),
-    SPAWN_ITEMS_GIVEN("messages/global-messages.yml", "spawn.command.items-given", "&aSuccessfully received the spawn items!"),
+    SPAWN_SET("messages/global-messages.yml", "spawn.command.set", "&aLocal de spawn definido com sucesso para &6KaosPractice&a! \n &8- &7{world}: {x}, {y}, {z} (Yaw: {yaw}, Pitch: {pitch})"),
+    SPAWN_TELEPORTED("messages/global-messages.yml", "spawn.command.teleported", "&6Voce foi teleportado para o spawn!"),
+    SPAWN_ITEMS_GIVEN("messages/global-messages.yml", "spawn.command.items-given", "&aItens de spawn recebidos com sucesso!"),
 
     SNAPSHOT_INVENTORY_EXPIRED("messages/global-messages.yml", "snapshot.error.inventory-expired", "&cThis inventory has expired."),
 

@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 
 /**
  * @author Remi
- * @project alley-practice
+ * @project kaos-practice
  * @date 2/07/2025
  */
 @Getter

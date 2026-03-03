@@ -18,7 +18,7 @@ import org.bukkit.inventory.ItemStack;
 public class UnbreakableCommand extends BaseCommand {
     @CommandData(
             name = "unbreakable",
-            description = "Set the unbreakable state of the item in your hand",
+            description = "Define o estado inquebrável do item na sua mão",
             usage = "unbreakable <true|false>",
             isAdminOnly = true
     )

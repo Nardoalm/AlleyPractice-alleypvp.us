@@ -18,7 +18,7 @@ public class LaunchCommand extends BaseCommand {
             name = "launch",
             isAdminOnly = true,
             inGameOnly = false,
-            description = "Launch a player",
+            description = "Lança um jogador",
             usage = "launch <player> | all"
     )
     @Override
@@ -33,7 +33,7 @@ public class LaunchCommand extends BaseCommand {
 
         if (args[0].equalsIgnoreCase("all")) {
             player.getServer().getOnlinePlayers().forEach(target -> target.setVelocity(new Vector(0, 1, 0).multiply(15)));
-            player.sendMessage(CC.translate("&fYou've launched all players"));
+            player.sendMessage(CC.translate("&fVocê lançou todos os jogadores"));
             return;
         }
 

@@ -18,7 +18,7 @@ public class InvSeeCommand extends BaseCommand {
             aliases = {"seeinventory", "seeinv"},
             isAdminOnly = true,
             usage = "invsee <player>",
-            description = "View another player's inventory."
+            description = "Vê o inventário de outro jogador."
     )
     @Override
     public void onCommand(CommandArgs command) {

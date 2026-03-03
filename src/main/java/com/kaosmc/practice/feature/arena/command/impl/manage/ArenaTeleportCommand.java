@@ -37,7 +37,7 @@ public class ArenaTeleportCommand extends BaseCommand {
             aliases = "arena.tp",
             isAdminOnly = true,
             usage = "arena teleport <arenaName>",
-            description = "Teleports you to the center of an arena."
+            description = "Teleporta você para o centro de uma arena."
     )
     @Override
     public void onCommand(CommandArgs command) {

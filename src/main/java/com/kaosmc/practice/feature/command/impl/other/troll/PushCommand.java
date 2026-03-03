@@ -18,7 +18,7 @@ public class PushCommand extends BaseCommand {
             isAdminOnly = true,
             inGameOnly = false,
             usage = "push <player> <value>",
-            description = "Push a player"
+            description = "Empurra um jogador"
     )
     @Override
     public void onCommand(CommandArgs command) {
@@ -48,7 +48,7 @@ public class PushCommand extends BaseCommand {
         }
 
         if (value > 10) {
-            player.sendMessage(CC.translate("&cValue cannot be greater than 10."));
+            player.sendMessage(CC.translate("&cO valor não pode ser maior que 10."));
             return;
         }
 

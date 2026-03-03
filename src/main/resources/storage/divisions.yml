@@ -1,10 +1,10 @@
 divisions:
   Bronze:
     display-name: "Bronze"
-    description: "The Bronze division"
+    description: "A divisão Bronze"
     durability: 0
     icon: CLAY_BRICK
-    tier-levels:
+    tier-nívels:
       I:
         required-wins: 0
       II:
@@ -17,10 +17,10 @@ divisions:
         required-wins: 100
   Silver:
     display-name: "Silver"
-    description: "The Silver division"
+    description: "A divisão Silver"
     durability: 0
     icon: IRON_INGOT
-    tier-levels:
+    tier-nívels:
       I:
         required-wins: 120
       II:
@@ -33,10 +33,10 @@ divisions:
         required-wins: 220
   Gold:
     display-name: "Gold"
-    description: "The Gold division"
+    description: "A divisão Gold"
     durability: 0
     icon: GOLD_INGOT
-    tier-levels:
+    tier-nívels:
       I:
         required-wins: 250
       II:
@@ -49,10 +49,10 @@ divisions:
         required-wins: 500
   Platinum:
     display-name: "Platinum"
-    description: "The Platinum division"
+    description: "A divisão Platinum"
     durability: 4
     icon: INK_SACK
-    tier-levels:
+    tier-nívels:
       I:
         required-wins: 1000
       II:
@@ -65,10 +65,10 @@ divisions:
         required-wins: 1500
   Diamond:
     display-name: "Diamond"
-    description: "The Diamond division"
+    description: "A divisão Diamond"
     durability: 0
     icon: DIAMOND
-    tier-levels:
+    tier-nívels:
       I:
         required-wins: 1600
       II:
@@ -81,10 +81,10 @@ divisions:
         required-wins: 2200
   Master:
     display-name: "Master"
-    description: "The Master division"
+    description: "A divisão Master"
     durability: 12
     icon: INK_SACK
-    tier-levels:
+    tier-nívels:
       I:
         required-wins: 2500
       II:
@@ -97,10 +97,10 @@ divisions:
         required-wins: 5000
   Grandmaster:
     display-name: "Grandmaster"
-    description: "The Grandmaster division"
+    description: "A divisão Grandmaster"
     durability: 6
     icon: INK_SACK
-    tier-levels:
+    tier-nívels:
       I:
         required-wins: 6000
       II:

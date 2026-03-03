@@ -15,7 +15,7 @@ public class MatchSettingsCommand extends BaseCommand {
     @CommandData(
             name = "matchsettings",
             usage = "matchsettings",
-            description = "Open the match settings menu."
+            description = "Abre o menu de configurações de partida."
     )
     @Override
     public void onCommand(CommandArgs command) {

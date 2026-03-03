@@ -21,7 +21,7 @@ public class RankedCommand extends BaseCommand {
             name = "ranked",
             isAdminOnly = true,
             usage = "ranked",
-            description = "Manage ranked allowance."
+            description = "Gerencia a permissão de ranked."
     )
     @Override
     public void onCommand(CommandArgs command) {
@@ -30,8 +30,8 @@ public class RankedCommand extends BaseCommand {
         Arrays.asList(
                 " ",
                 "&6&lRanked Commands Help:",
-                " &f◆ &6/ranked ban &8(&7player&8) &7| Ban a player from ranked matches.",
-                " &f◆ &6/ranked unban &8(&7player&8) &7| Unban a player from ranked matches.",
+                " &f◆ &6/ranked ban &8(&7player&8) &7| Bane um jogador das partidas ranked.",
+                " &f◆ &6/ranked unban &8(&7player&8) &7| Desbane um jogador das partidas ranked.",
                 " "
         ).forEach(message -> player.sendMessage(CC.translate(message)));
     }

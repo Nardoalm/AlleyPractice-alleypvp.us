@@ -22,7 +22,7 @@ public class KitSetDisclaimerCommand extends BaseCommand {
             isAdminOnly = true,
             inGameOnly = false,
             usage = "kit setdisclaimer <kitName> <disclaimer>",
-            description = "Set the disclaimer for a kit."
+            description = "Define o aviso de um kit."
     )
     @Override
     public void onCommand(CommandArgs command) {

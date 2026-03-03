@@ -17,7 +17,7 @@ import com.sk89q.worldedit.regions.CuboidRegion;
 import com.kaosmc.practice.KaosPractice;
 import com.kaosmc.practice.feature.arena.Arena;
 import com.kaosmc.practice.feature.arena.internal.types.StandAloneArena;
-import com.kaosmc.practice.bootstrap.AlleyContext;
+import com.kaosmc.practice.bootstrap.KaosContext;
 import com.kaosmc.practice.bootstrap.annotation.Service;
 import com.kaosmc.practice.common.logger.Logger;
 import com.kaosmc.practice.feature.arena.schematic.ArenaSchematicService;
@@ -30,7 +30,7 @@ import java.util.List;
 
 /**
  * @author Remi
- * @project alley-practice
+ * @project kaos-practice
  * @since 02/07/2025
  */
 @Service(provides = ArenaSchematicService.class, priority = 120)
@@ -48,7 +48,7 @@ public class ArenaSchematicServiceImpl implements ArenaSchematicService {
     }
 
     @Override
-    public void setup(AlleyContext context) {
+    public void setup(KaosContext context) {
         this.schematicsDirectory = this.getSchematicsDirectory();
         this.createSchematicsFolder();
     }

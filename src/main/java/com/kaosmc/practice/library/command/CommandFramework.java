@@ -7,7 +7,7 @@ import java.util.Map;
 
 /**
  * @author Remi
- * @project alley-practice
+ * @project kaos-practice
  * @date 2/07/2025
  */
 public interface CommandFramework extends Service {

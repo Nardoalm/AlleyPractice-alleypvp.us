@@ -1,6 +1,6 @@
 package com.kaosmc.practice.feature.match.internal;
 
-import com.kaosmc.practice.bootstrap.AlleyContext;
+import com.kaosmc.practice.bootstrap.KaosContext;
 import com.kaosmc.practice.bootstrap.annotation.Service;
 import com.kaosmc.practice.common.logger.Logger;
 import com.kaosmc.practice.core.config.ConfigService;
@@ -13,10 +13,10 @@ import com.kaosmc.practice.feature.kit.Kit;
 import com.kaosmc.practice.feature.kit.setting.KitSetting;
 import com.kaosmc.practice.feature.kit.setting.types.mode.*;
 import com.kaosmc.practice.feature.match.internal.types.*;
-import dev.revere.alley.feature.kit.setting.types.mode.*;
+import dev.revere.kaos.feature.kit.setting.types.mode.*;
 import com.kaosmc.practice.feature.match.Match;
 import com.kaosmc.practice.feature.match.MatchService;
-import dev.revere.alley.feature.match.internal.types.*;
+import dev.revere.kaos.feature.match.internal.types.*;
 import com.kaosmc.practice.feature.match.model.GameParticipant;
 import com.kaosmc.practice.feature.match.model.internal.MatchGamePlayer;
 import com.kaosmc.practice.feature.queue.Queue;
@@ -67,13 +67,13 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public void initialize(AlleyContext context) {
+    public void initialize(KaosContext context) {
         this.registerMatchFactories();
         this.loadBlockedCommands();
     }
 
     @Override
-    public void shutdown(AlleyContext context) {
+    public void shutdown(KaosContext context) {
         if (this.matches.isEmpty()) {
             return;
         }

@@ -20,7 +20,7 @@ public class KitSetEditableCommand extends BaseCommand {
             isAdminOnly = true,
             inGameOnly = false,
             usage = "kit seteditable <name> <true/false>",
-            description = "Set whether a kit is editable or not."
+            description = "Define se um kit é editável ou não."
     )
     @Override
     public void onCommand(CommandArgs command) {

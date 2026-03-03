@@ -5,7 +5,7 @@ import com.kaosmc.practice.bootstrap.lifecycle.Service;
 
 /**
  * @author Emmy
- * @project alley-practice
+ * @project kaos-practice
  * @since 17/07/2025
  */
 public interface PlaceholderService extends Service {

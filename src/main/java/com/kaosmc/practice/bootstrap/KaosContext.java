@@ -15,12 +15,12 @@ import java.util.stream.Collectors;
 
 /**
  * @author Remi
- * @project alley-practice
+ * @project kaos-practice
  * @date 2/07/2025
  */
 @Getter
-public final class AlleyContext {
-    private static final String SERVICE_IMPL_PACKAGE = "dev.revere.alley";
+public final class KaosContext {
+    private static final String SERVICE_IMPL_PACKAGE = "dev.revere.kaos";
 
     private final KaosPractice plugin;
     private final Map<Class<? extends com.kaosmc.practice.bootstrap.lifecycle.Service>, com.kaosmc.practice.bootstrap.lifecycle.Service> serviceInstances = new ConcurrentHashMap<>();
@@ -30,7 +30,7 @@ public final class AlleyContext {
     private ScanResult scanResult;
     private List<com.kaosmc.practice.bootstrap.lifecycle.Service> sortedServices = Collections.emptyList();
 
-    public AlleyContext(KaosPractice plugin) {
+    public KaosContext(KaosPractice plugin) {
         this.plugin = Objects.requireNonNull(plugin, "Plugin instance cannot be null");
     }
 

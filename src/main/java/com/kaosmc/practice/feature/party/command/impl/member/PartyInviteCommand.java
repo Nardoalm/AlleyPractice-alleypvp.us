@@ -23,7 +23,7 @@ public class PartyInviteCommand extends BaseCommand {
             name = "party.invite",
             aliases = "p.invite",
             usage = "party invite <player>",
-            description = "Invite a player to your party."
+            description = "Convida um jogador para sua party."
     )
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();
@@ -41,12 +41,12 @@ public class PartyInviteCommand extends BaseCommand {
         Player targetPlayer = Bukkit.getPlayer(target);
 
         if (targetPlayer == null) {
-            player.sendMessage(CC.translate("&cThe player you are trying to invite is not online."));
+            player.sendMessage(CC.translate("&cO jogador que você está tentando convidar não está online."));
             return;
         }
 
         if (targetPlayer == command.getPlayer()) {
-            player.sendMessage(CC.translate("&cYou cannot invite yourself to a party."));
+            player.sendMessage(CC.translate("&cVocê não pode convidar a si mesmo para uma party."));
             return;
         }
 
@@ -57,7 +57,7 @@ public class PartyInviteCommand extends BaseCommand {
         }
 
         if (party.getLeader() != player) {
-            player.sendMessage(CC.translate("&cYou must be the party leader to invite players."));
+            player.sendMessage(CC.translate("&cVocê precisa ser o líder da party para convidar jogadores."));
             return;
         }
 

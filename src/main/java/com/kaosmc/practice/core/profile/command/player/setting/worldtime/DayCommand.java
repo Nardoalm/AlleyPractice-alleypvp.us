@@ -17,7 +17,7 @@ public class DayCommand extends BaseCommand {
             name = "day",
             cooldown = 1,
             usage = "day",
-            description = "Set your personal world time to day."
+            description = "Define o horário pessoal do mundo para dia."
     )
     @Override
     public void onCommand(CommandArgs command) {

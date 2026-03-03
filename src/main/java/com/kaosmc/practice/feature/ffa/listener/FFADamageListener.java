@@ -22,7 +22,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 /**
  * @author Emmy
- * @project alley-practice
+ * @project kaos-practice
  * @since 16/07/2025
  */
 public class FFADamageListener implements Listener {

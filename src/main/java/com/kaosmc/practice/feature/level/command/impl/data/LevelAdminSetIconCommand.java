@@ -19,7 +19,7 @@ public class LevelAdminSetIconCommand extends BaseCommand {
             name = "leveladmin.seticon",
             isAdminOnly = true,
             usage = "leveladmin seticon <levelName>",
-            description = "Set the icon for a level"
+            description = "Define o ícone de um nível"
     )
     @Override
     public void onCommand(CommandArgs command) {

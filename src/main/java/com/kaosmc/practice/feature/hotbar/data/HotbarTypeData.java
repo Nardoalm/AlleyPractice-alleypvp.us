@@ -6,7 +6,7 @@ import lombok.Setter;
 
 /**
  * @author Emmy
- * @project alley-practice
+ * @project kaos-practice
  * @since 21/07/2025
  */
 @Getter

@@ -13,9 +13,9 @@ TalibanPearl:
   block-down-equals-air: true
   Block-if-block-in-front: true
 return-pearl: true
-tp-with-taliban-disabled: true
+tp-com-taliban-disabled: true
 
-Message: '&cInvalid Pearl'
+Message: '&cPérola inválida'
 Invalid-Pearl-Message: false
 invalid-if-block-in-front: true
 Invalid-Pearl-Remove-Timer: true

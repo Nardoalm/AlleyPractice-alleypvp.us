@@ -4,7 +4,7 @@ import lombok.experimental.UtilityClass;
 
 /**
  * @author Emmy
- * @project alley-practice
+ * @project kaos-practice
  * @since 18/07/2025
  */
 @UtilityClass

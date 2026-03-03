@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  * @author Remi
- * @project alley-practice
+ * @project kaos-practice
  * @date 22/07/2025
  */
 @Retention(RetentionPolicy.RUNTIME)

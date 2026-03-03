@@ -19,7 +19,7 @@ import java.util.List;
 
 /**
  * @author Remi
- * @project alley-practice
+ * @project kaos-practice
  * @date 22/07/2025
  */
 public class DonutCommand extends BaseCommand {
@@ -34,7 +34,7 @@ public class DonutCommand extends BaseCommand {
             isAdminOnly = true,
             inGameOnly = false,
             usage = "donut <player>",
-            description = "Spawns a donut of boats around a player"
+            description = "Cria uma rosquinha de barcos ao redor de um jogador"
     )
     @Override
     public void onCommand(CommandArgs command) {

@@ -7,7 +7,7 @@ import com.kaosmc.practice.core.locale.internal.impl.message.GameMessagesLocaleI
 import com.kaosmc.practice.core.profile.Profile;
 import com.kaosmc.practice.feature.arena.Arena;
 import com.kaosmc.practice.feature.kit.setting.types.mode.*;
-import dev.revere.alley.feature.kit.setting.types.mode.*;
+import dev.revere.kaos.feature.kit.setting.types.mode.*;
 import com.kaosmc.practice.feature.match.Match;
 import com.kaosmc.practice.feature.match.MatchState;
 import com.kaosmc.practice.feature.match.model.GameParticipant;

@@ -79,23 +79,23 @@ public class DuelOtherPartyButton extends Button {
         Party playerParty = profile.getParty();
 
         if (playerParty == null) {
-            player.sendMessage(CC.translate("&cYou are not in a party."));
+            player.sendMessage(CC.translate("&cVocê não está em uma party."));
             return;
         }
 
         if (!playerParty.isLeader(player)) {
-            player.sendMessage(CC.translate("&cYou must be the leader of your party to challenge another party."));
+            player.sendMessage(CC.translate("&cVocê precisa ser o líder da sua party para desafiar outra party."));
             return;
         }
 
         if (party.getLeader().equals(player)) {
-            player.sendMessage(CC.translate("&cYou can't duel your own party."));
+            player.sendMessage(CC.translate("&cVocê não pode duelar com sua própria party."));
             return;
         }
 
         Player targetLeader = Bukkit.getPlayer(party.getLeader().getUniqueId());
         if (targetLeader == null) {
-            player.sendMessage(CC.translate("&cThe leader of that party is not online."));
+            player.sendMessage(CC.translate("&cO líder dessa party não está online."));
             return;
         }
 

@@ -1,7 +1,7 @@
 package com.kaosmc.practice.feature.explosives.internal;
 
 import com.kaosmc.practice.KaosPractice;
-import com.kaosmc.practice.bootstrap.AlleyContext;
+import com.kaosmc.practice.bootstrap.KaosContext;
 import com.kaosmc.practice.bootstrap.annotation.Service;
 import com.kaosmc.practice.core.config.ConfigService;
 import com.kaosmc.practice.core.locale.LocaleService;
@@ -48,7 +48,7 @@ public class ExplosiveServiceImpl implements ExplosiveService {
     }
 
     @Override
-    public void initialize(AlleyContext context) {
+    public void initialize(KaosContext context) {
         this.enabled = this.localeService.getBoolean(SettingsLocaleImpl.EXPLOSIVE_ENABLED);
 
         if (this.enabled) {

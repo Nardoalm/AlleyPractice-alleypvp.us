@@ -22,7 +22,7 @@ public class InventoryCommand extends BaseCommand {
             name = "inventory",
             aliases = {"inv", "snapshot"},
             usage = "inventory <playerId>",
-            description = "View a player's inventory."
+            description = "Vê o inventário de um jogador."
     )
     @Override
     public void onCommand(CommandArgs command) {

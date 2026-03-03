@@ -19,24 +19,24 @@ import java.util.Objects;
  * @project Kaos
  * @since 21/05/2025
  */
-public class AlleyPlaceholderExpansion extends PlaceholderExpansion {
+public class KaosPlaceholderExpansion extends PlaceholderExpansion {
 
     /*
      * Examples:
      *
-     * %alley_division_<kit_name>% | returns the player's division in the specified kit
-     * %alley_global-elo% | returns the player's global Elo
+     * %kaos_division_<kit_name>% | returns the player's division in the specified kit
+     * %kaos_global-elo% | returns the player's global Elo
      */
 
     protected final KaosPractice plugin;
     protected final String notAvailableString;
 
     /**
-     * Constructor for the AlleyPlaceholderExpansion class.
+     * Constructor for the KaosPlaceholderExpansion class.
      *
      * @param plugin The Kaos bootstrap instance.
      */
-    public AlleyPlaceholderExpansion(KaosPractice plugin) {
+    public KaosPlaceholderExpansion(KaosPractice plugin) {
         this.plugin = plugin;
         this.notAvailableString = "&cN/A";
     }

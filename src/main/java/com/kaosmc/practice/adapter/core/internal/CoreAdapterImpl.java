@@ -4,7 +4,7 @@ import com.kaosmc.practice.KaosPractice;
 import com.kaosmc.practice.adapter.core.Core;
 import com.kaosmc.practice.adapter.core.CoreAdapter;
 import com.kaosmc.practice.adapter.core.CoreType;
-import com.kaosmc.practice.bootstrap.AlleyContext;
+import com.kaosmc.practice.bootstrap.KaosContext;
 import com.kaosmc.practice.bootstrap.annotation.Service;
 import lombok.Getter;
 import me.activated.core.plugin.AquaCoreAPI;
@@ -31,7 +31,7 @@ public class CoreAdapterImpl implements CoreAdapter {
     }
 
     @Override
-    public void initialize(AlleyContext context) {
+    public void initialize(KaosContext context) {
         this.core = this.determineCore();
     }
 

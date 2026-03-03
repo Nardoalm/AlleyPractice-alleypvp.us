@@ -7,7 +7,7 @@ import java.util.Optional;
 
 /**
  * @author Remi
- * @project alley-practice
+ * @project kaos-practice
  * @date 3/07/2025
  */
 public interface EmojiService extends Service {

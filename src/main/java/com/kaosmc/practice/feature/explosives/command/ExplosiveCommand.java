@@ -24,7 +24,7 @@ public class ExplosiveCommand extends BaseCommand {
             isAdminOnly = true,
             inGameOnly = false,
             usage = "explosive <setting> <value>",
-            description = "Set various explosive settings."
+            description = "Define várias configurações de explosivos."
     )
     @Override
     public void onCommand(CommandArgs command) {

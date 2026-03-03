@@ -28,7 +28,7 @@ public class SpectatorCommand extends BaseCommand {
 
         if (args.length < 1) {
             player.setGameMode(GameMode.SPECTATOR);
-            player.sendMessage(CC.translate("&eYour gamemode has been updated to Spectator."));
+            player.sendMessage(CC.translate("&eSeu modo de jogo foi alterado para Espectador."));
             return;
         }
 
@@ -40,6 +40,6 @@ public class SpectatorCommand extends BaseCommand {
 
         targetPlayer.setGameMode(GameMode.SPECTATOR);
         player.sendMessage(CC.translate("&eYou have updated &d" + targetPlayer.getName() + "'s &egamemode to Spectator."));
-        targetPlayer.sendMessage(CC.translate("&eYour gamemode has been updated to Spectator."));
+        targetPlayer.sendMessage(CC.translate("&eSeu modo de jogo foi alterado para Espectador."));
     }
 }

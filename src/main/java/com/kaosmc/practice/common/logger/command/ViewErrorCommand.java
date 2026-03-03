@@ -21,7 +21,7 @@ public class ViewErrorCommand extends BaseCommand {
             isAdminOnly = true,
             inGameOnly = false,
             usage = "viewerror <error>",
-            description = "View a logged error by its ID."
+            description = "Vê um erro registrado pelo ID."
     )
     @Override
     public void onCommand(CommandArgs command) {

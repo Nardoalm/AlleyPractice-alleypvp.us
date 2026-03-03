@@ -19,7 +19,7 @@ public class FFASetSpawnCommand extends BaseCommand {
             name = "ffa.setspawn",
             isAdminOnly = true,
             usage = "ffa setspawn <arenaName> <spawnNumber>",
-            description = "Set a spawn point for an FFA arena."
+            description = "Define um ponto de spawn para uma arena de FFA."
     )
     @Override
     public void onCommand(CommandArgs command) {

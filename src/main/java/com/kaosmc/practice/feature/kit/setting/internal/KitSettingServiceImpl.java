@@ -5,7 +5,7 @@ import com.kaosmc.practice.feature.kit.Kit;
 import com.kaosmc.practice.feature.kit.setting.KitSetting;
 import com.kaosmc.practice.feature.kit.setting.KitSettingService;
 import com.kaosmc.practice.feature.kit.setting.annotation.KitSettingData;
-import com.kaosmc.practice.bootstrap.AlleyContext;
+import com.kaosmc.practice.bootstrap.KaosContext;
 import com.kaosmc.practice.bootstrap.annotation.Service;
 import com.kaosmc.practice.common.logger.Logger;
 import lombok.Getter;
@@ -37,7 +37,7 @@ public class KitSettingServiceImpl implements KitSettingService {
     }
 
     @Override
-    public void initialize(AlleyContext context) {
+    public void initialize(KaosContext context) {
         this.registerSettings();
     }
 

@@ -16,7 +16,7 @@ public class HeartAttackCommand extends BaseCommand {
             name = "heartattack",
             isAdminOnly = true,
             usage = "heartattack <player>",
-            description = "Gives a player a heart attack."
+            description = "Dá um ataque cardíaco em um jogador."
     )
     @Override
     public void onCommand(CommandArgs command) {

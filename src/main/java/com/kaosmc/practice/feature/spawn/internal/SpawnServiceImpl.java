@@ -1,6 +1,6 @@
 package com.kaosmc.practice.feature.spawn.internal;
 
-import com.kaosmc.practice.bootstrap.AlleyContext;
+import com.kaosmc.practice.bootstrap.KaosContext;
 import com.kaosmc.practice.bootstrap.annotation.Service;
 import com.kaosmc.practice.common.PlayerUtil;
 import com.kaosmc.practice.common.logger.Logger;
@@ -34,7 +34,7 @@ public class SpawnServiceImpl implements SpawnService {
     }
 
     @Override
-    public void initialize(AlleyContext context) {
+    public void initialize(KaosContext context) {
         this.loadSpawnLocation();
     }
 

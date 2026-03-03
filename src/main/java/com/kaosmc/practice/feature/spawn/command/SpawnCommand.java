@@ -26,7 +26,7 @@ public class SpawnCommand extends BaseCommand {
             name = "spawn",
             isAdminOnly = true,
             usage = "spawn",
-            description = "Teleport to spawn."
+            description = "Teleporta para o spawn."
     )
     @Override
     public void onCommand(CommandArgs args) {

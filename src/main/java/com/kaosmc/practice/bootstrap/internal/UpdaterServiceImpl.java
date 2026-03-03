@@ -3,7 +3,7 @@ package com.kaosmc.practice.bootstrap.internal;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.kaosmc.practice.KaosPractice;
-import com.kaosmc.practice.bootstrap.AlleyContext;
+import com.kaosmc.practice.bootstrap.KaosContext;
 import com.kaosmc.practice.bootstrap.UpdaterService;
 import com.kaosmc.practice.bootstrap.annotation.Service;
 import com.kaosmc.practice.common.logger.Logger;
@@ -16,7 +16,7 @@ import java.net.URL;
 
 /**
  * @author Remi
- * @project alley-practice
+ * @project kaos-practice
  * @date 24/07/2025
  */
 @Service(provides = UpdaterService.class, priority = 1500)
@@ -24,7 +24,7 @@ public class UpdaterServiceImpl implements UpdaterService {
     private final LocaleService localeService;
     private final String currentVersion;
 
-    private final String githubRepo = "RevereInc/alley-practice";
+    private final String githubRepo = "RevereInc/kaos-practice";
     private String latestVersion;
 
     /**
@@ -38,7 +38,7 @@ public class UpdaterServiceImpl implements UpdaterService {
     }
 
     @Override
-    public void setup(AlleyContext context) {
+    public void setup(KaosContext context) {
         try {
             this.latestVersion = getLatestVersion();
         } catch (IOException e) {
@@ -47,7 +47,7 @@ public class UpdaterServiceImpl implements UpdaterService {
     }
 
     @Override
-    public void initialize(AlleyContext context) {
+    public void initialize(KaosContext context) {
         this.checkForUpdates();
     }
 

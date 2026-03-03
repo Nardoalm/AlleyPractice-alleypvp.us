@@ -18,7 +18,7 @@ public class ArenaSaveAllCommand extends BaseCommand {
             name = "arena.saveall",
             isAdminOnly = true,
             usage = "arena saveall",
-            description = "Saves all arenas to storage"
+            description = "Salva todas as arenas no armazenamento"
     )
     @Override
     public void onCommand(CommandArgs command) {

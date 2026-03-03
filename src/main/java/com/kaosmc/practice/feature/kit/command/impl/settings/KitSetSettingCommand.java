@@ -21,7 +21,7 @@ public class KitSetSettingCommand extends BaseCommand {
             aliases = {"kit.setting"},
             isAdminOnly = true,
             usage = "kit setsetting <kit> <setting> <true/false>",
-            description = "Set a setting for a kit."
+            description = "Define uma configuração para um kit."
     )
     @Override
     public void onCommand(CommandArgs command) {
@@ -43,7 +43,7 @@ public class KitSetSettingCommand extends BaseCommand {
         boolean enabled = Boolean.parseBoolean(args[2]);
 
         if (this.plugin.getService(KitSettingService.class).getSettings().stream().filter(setting -> setting.getName().equalsIgnoreCase(settingName)).findFirst().orElse(null) == null) {
-            player.sendMessage(CC.translate("&cA setting with that name does not exist."));
+            player.sendMessage(CC.translate("&cUma configuração com esse nome não existe."));
             return;
         }
 

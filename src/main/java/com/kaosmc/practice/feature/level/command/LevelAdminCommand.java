@@ -41,15 +41,15 @@ public class LevelAdminCommand extends BaseCommand {
             isAdminOnly = true,
             inGameOnly = false,
             usage = "leveladmin",
-            description = "Admin command for managing levels"
+            description = "Comando administrativo para gerenciar níveis"
     )
     @Override
     public void onCommand(CommandArgs command) {
         Arrays.asList(
                 "",
                 "&6&lLevel Admin Commands Help:",
-                " &f◆ &6/leveladmin create &8(&7levelName&8) &8(&7minElo&8) &8(&7maxElo&8) &7| Create a new level",
-                " &f◆ &6/leveladmin delete &8(&7levelName&8) &7| Delete a level",
+                " &f◆ &6/leveladmin create &8(&7levelName&8) &8(&7minElo&8) &8(&7maxElo&8) &7| Cria um novo nível",
+                " &f◆ &6/leveladmin delete &8(&7levelName&8) &7| Exclui um nível",
                 " &f◆ &6/leveladmin list &7| List all levels",
                 " &f◆ &6/leveladmin view &8(&7levelName&8) &7| View level info",
                 " &f◆ &6/leveladmin setminelo &8(&7levelName&8) &8(&7minElo&8) &7| Set minimum Elo for a level",

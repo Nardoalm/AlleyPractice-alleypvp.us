@@ -6,7 +6,7 @@ import org.bukkit.Location;
 
 /**
  * @author Remi
- * @project alley-practice
+ * @project kaos-practice
  * @date 2/07/2025
  */
 public interface FFASpawnService extends Service {

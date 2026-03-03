@@ -21,7 +21,7 @@ public class ArenaSetVoidLevelCommand extends BaseCommand {
             aliases = "arena.void",
             isAdminOnly = true,
             usage = "arena setvoidlevel <arenaName> <voidLevel>",
-            description = "Sets the void level for a standalone arena."
+            description = "Define o nível do void para uma arena standalone."
     )
     @Override
     public void onCommand(CommandArgs command) {

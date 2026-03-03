@@ -19,7 +19,7 @@ public class SetCoinsCommand extends BaseCommand {
             name = "coins.set",
             isAdminOnly = true,
             usage = "coins set <player> <amount>",
-            description = "Set a player's coins."
+            description = "Define as moedas de um jogador."
     )
     @Override
     public void onCommand(CommandArgs command) {

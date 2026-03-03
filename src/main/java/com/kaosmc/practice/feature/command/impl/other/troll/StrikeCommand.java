@@ -17,7 +17,7 @@ public class StrikeCommand extends BaseCommand {
             isAdminOnly = true,
             inGameOnly = true,
             usage = "strike <player> | all",
-            description = "Strike a player with lightning"
+            description = "Atinge um jogador com um raio"
     )
     @Override
     public void onCommand(CommandArgs command) {

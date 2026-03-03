@@ -12,22 +12,22 @@ import org.bukkit.entity.Player;
  * @project Kaos
  * @date 06/06/2024 - 17:34
  */
-public class AlleyReloadCommand extends BaseCommand {
+public class KaosReloadCommand extends BaseCommand {
 
     //TODO: reload gui with options: Config files (messages), menus, Caches(kits, arenas, levels, etc..)
 
     @CommandData(
-            name = "alley.reload",
+            name = "kaos.reload",
             isAdminOnly = true,
             inGameOnly = false,
-            usage = "alley.reload",
-            description = "Reload Kaos plugin configurations."
+            usage = "kaos.reload",
+            description = "Recarrega as configuracoes do Kaos."
     )
     @Override
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();
-        player.sendMessage(CC.translate("&6&lAlley &freloading..."));
+        player.sendMessage(CC.translate("&6&lKaos &frecarregando..."));
         this.plugin.getService(ConfigService.class).reloadConfigs();
-        player.sendMessage(CC.translate("&6&lAlley &a&lreloaded&f."));
+        player.sendMessage(CC.translate("&6&lKaos &a&lrecarregado&f."));
     }
 }

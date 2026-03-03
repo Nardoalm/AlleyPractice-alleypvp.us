@@ -1,6 +1,6 @@
 package com.kaosmc.practice.feature.emoji.internal;
 
-import com.kaosmc.practice.bootstrap.AlleyContext;
+import com.kaosmc.practice.bootstrap.KaosContext;
 import com.kaosmc.practice.bootstrap.annotation.Service;
 import com.kaosmc.practice.core.locale.LocaleService;
 import com.kaosmc.practice.core.locale.internal.impl.SettingsLocaleImpl;
@@ -36,7 +36,7 @@ public class EmojiServiceImpl implements EmojiService {
     }
 
     @Override
-    public void initialize(AlleyContext context) {
+    public void initialize(KaosContext context) {
         this.enabled = this.localeService.getBoolean(SettingsLocaleImpl.SERVER_ESSENTIAL_EMOJI_FEATURE_BOOLEAN);
         if (!enabled) return;
 

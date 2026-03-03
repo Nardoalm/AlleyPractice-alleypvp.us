@@ -19,7 +19,7 @@ public class FFASafeZoneCommand extends BaseCommand {
             name = "ffa.safezone",
             isAdminOnly = true,
             usage = "ffa safezone <arenaName> <pos1/pos2>",
-            description = "Set the safezone positions for an FFA arena."
+            description = "Define as posições de safezone para uma arena de FFA."
     )
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();

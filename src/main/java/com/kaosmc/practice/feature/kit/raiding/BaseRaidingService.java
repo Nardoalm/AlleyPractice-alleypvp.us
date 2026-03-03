@@ -6,7 +6,7 @@ import com.kaosmc.practice.feature.match.model.BaseRaiderRole;
 
 /**
  * @author Remi
- * @project alley-practice
+ * @project kaos-practice
  * @date 2/07/2025
  */
 public interface BaseRaidingService extends Service {

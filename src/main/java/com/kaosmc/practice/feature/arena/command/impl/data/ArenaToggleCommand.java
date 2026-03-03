@@ -35,7 +35,7 @@ public class ArenaToggleCommand extends BaseCommand {
             name = "arena.toggle",
             isAdminOnly = true,
             usage = "arena toggle <arenaName>",
-            description = "Toggles the enabled status of an arena"
+            description = "Alterna o status habilitado de uma arena"
     )
     @Override
     public void onCommand(CommandArgs command) {

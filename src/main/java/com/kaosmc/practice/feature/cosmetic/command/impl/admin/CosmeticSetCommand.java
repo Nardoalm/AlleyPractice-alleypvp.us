@@ -25,7 +25,7 @@ public class CosmeticSetCommand extends BaseCommand {
             name = "cosmetic.set",
             isAdminOnly = true,
             usage = "cosmetic set <player> <type> <cosmetic>",
-            description = "Set a player's cosmetic."
+            description = "Define o cosmético de um jogador."
     )
     @Override
     public void onCommand(CommandArgs command) {

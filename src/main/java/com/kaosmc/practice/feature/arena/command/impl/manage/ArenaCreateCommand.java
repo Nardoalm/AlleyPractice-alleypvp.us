@@ -29,7 +29,7 @@ public class ArenaCreateCommand extends BaseCommand {
             name = "arena.create",
             isAdminOnly = true,
             usage = "arena create <arenaName> <type>",
-            description = "Creates a new arena of the specified type"
+            description = "Cria uma nova arena do tipo especificado"
     )
     @Override
     public void onCommand(CommandArgs command) {

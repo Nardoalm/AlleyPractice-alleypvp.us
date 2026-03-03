@@ -9,15 +9,15 @@ import java.util.Arrays;
 
 /**
  * @author Emmy
- * @project alley-practice
+ * @project kaos-practice
  * @since 18/07/2025
  */
 public class CustomItemsCommand extends BaseCommand {
     @CommandData(
             name = "customitems",
-            aliases = {"alleyitems", "specialitems"},
+            aliases = {"kaositems", "specialitems"},
             usage = "customitems",
-            description = "List of commands for special items",
+            description = "Lista de comandos para itens especiais",
             isAdminOnly = true
     )
     @Override

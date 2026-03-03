@@ -20,7 +20,7 @@ public class ToggleScoreboardCommand extends BaseCommand {
             aliases = {"tsb", "togglesb"},
             cooldown = 1,
             usage = "togglescoreboard",
-            description = "Toggle the scoreboard on or off"
+            description = "Ativa ou desativa a scoreboard"
     )
     @Override
     public void onCommand(CommandArgs command) {

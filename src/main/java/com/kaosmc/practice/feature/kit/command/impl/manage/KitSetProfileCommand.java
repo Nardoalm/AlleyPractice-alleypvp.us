@@ -19,7 +19,7 @@ public class KitSetProfileCommand extends BaseCommand {
             aliases = "kit.setkbprofile",
             isAdminOnly = true,
             usage = "kit setprofile <kitName> <profileName>",
-            description = "Set the knockback profile of a kit."
+            description = "Define o perfil de knockback de um kit."
     )
     @Override
     public void onCommand(CommandArgs command) {

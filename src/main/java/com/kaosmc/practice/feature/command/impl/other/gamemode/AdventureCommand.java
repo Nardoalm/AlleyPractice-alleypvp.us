@@ -19,7 +19,7 @@ public class AdventureCommand extends BaseCommand {
             aliases = {"gm.a", "gamemode.a", "gm.2", "gm2", "gamemode.2", "gamemode.adventure"},
             isAdminOnly = true,
             usage = "gamemode adventure [player]",
-            description = "Set your or another player's gamemode to Adventure."
+            description = "Define o modo de jogo seu ou de outro jogador para Aventura."
     )
     @Override
     public void onCommand(CommandArgs command) {
@@ -28,7 +28,7 @@ public class AdventureCommand extends BaseCommand {
 
         if (args.length < 1) {
             player.setGameMode(GameMode.ADVENTURE);
-            player.sendMessage(CC.translate("&eYour gamemode has been updated to Adventure."));
+            player.sendMessage(CC.translate("&eSeu modo de jogo foi alterado para Aventura."));
             return;
         }
 
@@ -40,6 +40,6 @@ public class AdventureCommand extends BaseCommand {
 
         targetPlayer.setGameMode(GameMode.ADVENTURE);
         player.sendMessage(CC.translate("&eYou have updated &d" + targetPlayer.getName() + "'s &egamemode to Adventure."));
-        targetPlayer.sendMessage(CC.translate("&eYour gamemode has been updated to Adventure."));
+        targetPlayer.sendMessage(CC.translate("&eSeu modo de jogo foi alterado para Aventura."));
     }
 }

@@ -16,13 +16,13 @@ import java.util.Arrays;
  * @project Kaos
  * @since 26/04/2025
  */
-public class AlleyCoreCommand extends BaseCommand {
+public class KaosCoreCommand extends BaseCommand {
     @CommandData(
-            name = "alley.core",
+            name = "kaos.core",
             isAdminOnly = true,
             inGameOnly = false,
-            usage = "alley core",
-            description = "Displays information about the core hook."
+            usage = "kaos core",
+            description = "Exibe informacoes sobre a integracao do core."
     )
     @Override
     public void onCommand(CommandArgs command) {
@@ -31,15 +31,15 @@ public class AlleyCoreCommand extends BaseCommand {
 
         Arrays.asList(
                 "",
-                "&6&lCore Hook Information",
+                "&6&lInformacoes do Core Hook",
                 " &6&l│ &rPlugin: &6" + core.getType().getPluginName(),
                 //" &6&l│ &rVersion: &6" + core.getType().getPluginVersion(),
-                " &6&l│ &rAuthors: &6" + core.getType().getPluginAuthor(),
+                " &6&l│ &rAutores: &6" + core.getType().getPluginAuthor(),
                 ""
         ).forEach(line -> sender.sendMessage(CC.translate(line)));
 
         if (core.getType() == CoreType.DEFAULT) {
-            sender.sendMessage(CC.translate("&7Note: This is the default server implementation, as there was no server found to hook into."));
+            sender.sendMessage(CC.translate("&7Aviso: esta e a implementacao padrao do servidor, pois nenhum core compativel foi encontrado."));
         }
     }
 }

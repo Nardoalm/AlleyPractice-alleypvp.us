@@ -19,7 +19,7 @@ public class LevelAdminSetMaxEloCommand extends BaseCommand {
             isAdminOnly = true,
             inGameOnly = false,
             usage = "leveladmin setmaxelo <levelName> <maxElo>",
-            description = "Set the maximum Elo for a level"
+            description = "Define o Elo máximo para um nível"
     )
     @Override
     public void onCommand(CommandArgs command) {

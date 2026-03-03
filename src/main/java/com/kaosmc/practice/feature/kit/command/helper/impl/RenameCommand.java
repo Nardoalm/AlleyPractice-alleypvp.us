@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 /**
  * @author Emmy
- * @project alley-practice
+ * @project kaos-practice
  * @date 28/05/2024 - 20:16
  */
 public class RenameCommand extends BaseCommand {
@@ -23,7 +23,7 @@ public class RenameCommand extends BaseCommand {
             name = "rename",
             isAdminOnly = true,
             usage = "rename <name>",
-            description = "Rename the item in your hand"
+            description = "Renomeia o item na sua mão"
     )
     @Override
     public void onCommand(CommandArgs command) {

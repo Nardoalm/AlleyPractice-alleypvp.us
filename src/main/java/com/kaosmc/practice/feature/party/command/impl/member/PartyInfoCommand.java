@@ -25,7 +25,7 @@ public class PartyInfoCommand extends BaseCommand {
             name = "party.info",
             aliases = {"p.info"},
             usage = "party info",
-            description = "View information about your party.",
+            description = "Mostra informações da sua party.",
             cooldown = 1
     )
     public void onCommand(CommandArgs command) {

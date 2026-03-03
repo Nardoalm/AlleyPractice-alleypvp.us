@@ -21,7 +21,7 @@ public class DivisionViewCommand extends BaseCommand {
             name = "division.view",
             isAdminOnly = true,
             usage = "division view <name>",
-            description = "View information about a division."
+            description = "Mostra informações de uma divisão."
     )
     @Override
     public void onCommand(CommandArgs command) {

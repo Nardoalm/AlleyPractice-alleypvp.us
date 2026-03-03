@@ -1,6 +1,6 @@
 package com.kaosmc.practice.feature.kit.internal;
 
-import com.kaosmc.practice.bootstrap.AlleyContext;
+import com.kaosmc.practice.bootstrap.KaosContext;
 import com.kaosmc.practice.bootstrap.annotation.Service;
 import com.kaosmc.practice.common.logger.Logger;
 import com.kaosmc.practice.common.serializer.Serializer;
@@ -51,12 +51,12 @@ public class KitServiceImpl implements KitService {
     }
 
     @Override
-    public void initialize(AlleyContext context) {
+    public void initialize(KaosContext context) {
         this.loadKits();
     }
 
     @Override
-    public void shutdown(AlleyContext context) {
+    public void shutdown(KaosContext context) {
         this.saveKits();
         Logger.info("Saved all kits.");
     }

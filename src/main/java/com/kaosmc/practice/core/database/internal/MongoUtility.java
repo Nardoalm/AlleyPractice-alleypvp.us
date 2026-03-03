@@ -9,7 +9,7 @@ import com.kaosmc.practice.feature.layout.data.LayoutData;
 import com.kaosmc.practice.feature.music.MusicService;
 import com.kaosmc.practice.core.profile.Profile;
 import com.kaosmc.practice.core.profile.data.ProfileData;
-import dev.revere.alley.core.profile.data.types.*;
+import dev.revere.kaos.core.profile.data.types.*;
 import com.kaosmc.practice.core.profile.enums.ChatChannel;
 import com.kaosmc.practice.core.profile.enums.WorldTime;
 import com.kaosmc.practice.common.logger.Logger;

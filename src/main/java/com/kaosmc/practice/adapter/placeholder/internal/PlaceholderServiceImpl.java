@@ -2,20 +2,20 @@ package com.kaosmc.practice.adapter.placeholder.internal;
 
 import com.kaosmc.practice.KaosPractice;
 import com.kaosmc.practice.adapter.placeholder.PlaceholderService;
-import com.kaosmc.practice.bootstrap.AlleyContext;
+import com.kaosmc.practice.bootstrap.KaosContext;
 import com.kaosmc.practice.bootstrap.annotation.Service;
 import com.kaosmc.practice.common.logger.Logger;
 
 /**
  * @author Emmy
- * @project alley-practice
+ * @project kaos-practice
  * @since 17/07/2025
  */
 @Service(provides = PlaceholderService.class, priority = 430)
 public class PlaceholderServiceImpl implements PlaceholderService {
 
     @Override
-    public void initialize(AlleyContext context) {
+    public void initialize(KaosContext context) {
         this.registerExpansion(context.getPlugin());
     }
 
@@ -26,8 +26,8 @@ public class PlaceholderServiceImpl implements PlaceholderService {
             return;
         }
 
-        Logger.logTime(AlleyPlaceholderExpansion.class.getSimpleName(), () -> {
-            AlleyPlaceholderExpansion expansion = new AlleyPlaceholderExpansion(plugin);
+        Logger.logTime(KaosPlaceholderExpansion.class.getSimpleName(), () -> {
+            KaosPlaceholderExpansion expansion = new KaosPlaceholderExpansion(plugin);
             expansion.register();
         });
     }

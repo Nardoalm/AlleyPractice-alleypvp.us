@@ -2,7 +2,7 @@ package com.kaosmc.practice.feature.hotbar;
 
 /**
  * @author Emmy
- * @project alley-practice
+ * @project kaos-practice
  * @since 21/07/2025
  */
 public enum HotbarAction {

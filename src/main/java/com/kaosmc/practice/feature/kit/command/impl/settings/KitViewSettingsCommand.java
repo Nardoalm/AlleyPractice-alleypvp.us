@@ -20,7 +20,7 @@ public class KitViewSettingsCommand extends BaseCommand {
             isAdminOnly = true,
             inGameOnly = false,
             usage = "kit viewsettings <kitName>",
-            description = "View the settings of a kit."
+            description = "Mostra as configurações de um kit."
     )
     @Override
     public void onCommand(CommandArgs command) {

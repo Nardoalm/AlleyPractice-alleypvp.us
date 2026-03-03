@@ -23,7 +23,7 @@ public class RankedBanCommand extends BaseCommand {
             name = "ranked.ban",
             isAdminOnly = true,
             usage = "ranked ban <player>",
-            description = "Ban a player from ranked matches."
+            description = "Bane um jogador das partidas ranked."
     )
     @Override
     public void onCommand(CommandArgs command) {

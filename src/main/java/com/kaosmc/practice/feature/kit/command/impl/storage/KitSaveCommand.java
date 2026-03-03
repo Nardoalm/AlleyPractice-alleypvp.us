@@ -19,7 +19,7 @@ public class KitSaveCommand extends BaseCommand {
             name = "kit.save",
             isAdminOnly = true,
             usage = "kit save <kitName>",
-            description = "Save a kit to the database."
+            description = "Salva um kit no banco de dados."
     )
     @Override
     public void onCommand(CommandArgs command) {

@@ -19,7 +19,7 @@ public class FFAToggleCommand extends BaseCommand {
             name = "ffa.toggle",
             isAdminOnly = true,
             usage = "ffa toggle <kitName>",
-            description = "Toggle a kit's eligibility for FFA matches."
+            description = "Alterna a elegibilidade de um kit para partidas de FFA."
     )
     @Override
     public void onCommand(CommandArgs command) {

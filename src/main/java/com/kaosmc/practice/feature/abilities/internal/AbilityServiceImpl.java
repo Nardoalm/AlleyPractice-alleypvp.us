@@ -1,6 +1,6 @@
 package com.kaosmc.practice.feature.abilities.internal;
 
-import com.kaosmc.practice.bootstrap.AlleyContext;
+import com.kaosmc.practice.bootstrap.KaosContext;
 import com.kaosmc.practice.bootstrap.annotation.Service;
 import com.kaosmc.practice.common.TaskUtil;
 import com.kaosmc.practice.common.constants.PluginConstant;
@@ -36,7 +36,7 @@ public class AbilityServiceImpl implements AbilityService {
     }
 
     @Override
-    public void initialize(AlleyContext context) {
+    public void initialize(KaosContext context) {
         this.registerAbilities();
 
         Ability.getAbilities().forEach(Ability::register);

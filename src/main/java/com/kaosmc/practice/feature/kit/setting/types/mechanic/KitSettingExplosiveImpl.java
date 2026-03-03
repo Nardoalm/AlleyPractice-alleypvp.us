@@ -8,6 +8,6 @@ import com.kaosmc.practice.feature.kit.setting.annotation.KitSettingData;
  * @project Kaos
  * @since 11/06/2025
  */
-@KitSettingData(name = "Explosive", description = "Allows using fireballs and tnt.", enabled = false)
+@KitSettingData(name = "Explosive", description = "Permite using fireballs and tnt.", enabled = false)
 public class KitSettingExplosiveImpl extends KitSetting {
 }

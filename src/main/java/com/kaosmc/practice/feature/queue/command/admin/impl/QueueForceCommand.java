@@ -27,7 +27,7 @@ public class QueueForceCommand extends BaseCommand {
             aliases = {"forcequeue"},
             isAdminOnly = true,
             usage = "queue force <player> <kit> <ranked>",
-            description = "Force a player into a queue."
+            description = "Força um jogador para uma fila."
     )
     @Override
     public void onCommand(CommandArgs command) {
@@ -36,7 +36,7 @@ public class QueueForceCommand extends BaseCommand {
 
         if (args.length != 3) {
             command.sendUsage();
-            player.sendMessage(CC.translate("&7Example: /queue force hmRemi Boxing true"));
+            player.sendMessage(CC.translate("&7Exemplo: /queue force hmRemi Boxing true"));
             return;
         }
 
@@ -51,7 +51,7 @@ public class QueueForceCommand extends BaseCommand {
 
         Kit kit = this.plugin.getService(KitService.class).getKit(kitType);
         if (kit == null) {
-            player.sendMessage(CC.translate("&cKit not found."));
+            player.sendMessage(CC.translate("&cKit não encontrado."));
             return;
         }
 

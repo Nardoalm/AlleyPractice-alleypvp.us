@@ -22,7 +22,7 @@ public class CooldownResetCommand extends BaseCommand {
             isAdminOnly = true,
             inGameOnly = false,
             usage = "cooldown reset <player> <cooldown>",
-            description = "Reset a player's cooldown of a specific type."
+            description = "Reseta o cooldown de um jogador de um tipo específico."
     )
     @Override
     public void onCommand(CommandArgs command) {

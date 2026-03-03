@@ -19,7 +19,7 @@ public class SurvivalCommand extends BaseCommand {
             aliases = {"gm.s", "gamemode.s", "gm.0", "gm0", "gamemode.0", "gamemode.survival"},
             isAdminOnly = true,
             usage = "gamemode survival [player]",
-            description = "Sets your or another player's gamemode to Survival."
+            description = "Define o modo de jogo seu ou de outro jogador para Sobrevivência."
     )
     @Override
     public void onCommand(CommandArgs command) {
@@ -28,7 +28,7 @@ public class SurvivalCommand extends BaseCommand {
 
         if (args.length < 1) {
             player.setGameMode(GameMode.SURVIVAL);
-            player.sendMessage(CC.translate("&eYour gamemode has been updated to Survival."));
+            player.sendMessage(CC.translate("&eSeu modo de jogo foi alterado para Sobrevivência."));
             return;
         }
 
@@ -40,6 +40,6 @@ public class SurvivalCommand extends BaseCommand {
 
         targetPlayer.setGameMode(GameMode.SURVIVAL);
         player.sendMessage(CC.translate("&eYou have updated &d" + targetPlayer.getName() + "'s &egamemode to Survival."));
-        targetPlayer.sendMessage(CC.translate("&eYour gamemode has been updated to Survival."));
+        targetPlayer.sendMessage(CC.translate("&eSeu modo de jogo foi alterado para Sobrevivência."));
     }
 }

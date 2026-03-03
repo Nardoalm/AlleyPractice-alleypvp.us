@@ -23,7 +23,7 @@ public class PotionDurationCommand extends BaseCommand {
             name = "potionduration",
             isAdminOnly = true,
             usage = "potionduration <duration/infinite>",
-            description = "Set the duration of the potion you are holding."
+            description = "Define a duração da poção que você está segurando."
     )
     @Override
     public void onCommand(CommandArgs command) {
@@ -37,7 +37,7 @@ public class PotionDurationCommand extends BaseCommand {
 
         ItemStack itemInHand = player.getItemInHand();
         if (itemInHand == null || itemInHand.getType() != Material.POTION) {
-            player.sendMessage(CC.translate("&cYou must be holding a potion."));
+            player.sendMessage(CC.translate("&cVocê precisa estar segurando uma poção."));
             return;
         }
 

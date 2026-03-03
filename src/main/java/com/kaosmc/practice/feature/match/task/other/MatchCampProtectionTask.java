@@ -17,7 +17,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 /**
  * @author Remi
- * @project alley-practice
+ * @project kaos-practice
  * @date 22/07/2025
  */
 public class MatchCampProtectionTask extends BukkitRunnable {

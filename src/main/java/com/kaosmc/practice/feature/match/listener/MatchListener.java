@@ -15,7 +15,7 @@ import com.kaosmc.practice.feature.kit.setting.types.mechanic.KitSettingDenyMove
 import com.kaosmc.practice.feature.kit.setting.types.mechanic.KitSettingNoHungerImpl;
 import com.kaosmc.practice.feature.kit.setting.types.mechanic.KitSettingVoidDeathImpl;
 import com.kaosmc.practice.feature.kit.setting.types.mode.*;
-import dev.revere.alley.feature.kit.setting.types.mode.*;
+import dev.revere.kaos.feature.kit.setting.types.mode.*;
 import com.kaosmc.practice.feature.match.Match;
 import com.kaosmc.practice.feature.match.MatchState;
 import com.kaosmc.practice.feature.match.internal.types.RoundsMatch;
@@ -53,7 +53,7 @@ public class MatchListener implements Listener {
             if (event.getCause() == PlayerTeleportEvent.TeleportCause.ENDER_PEARL) {
                 if (MatchUtility.isBeyondBounds(event.getTo(), profile)) {
                     event.setCancelled(true);
-                    player.sendMessage(CC.translate("&cYou cannot leave the arena."));
+                    player.sendMessage(CC.translate("&cVocê não pode sair da arena."));
                 }
             }
         }
@@ -110,7 +110,7 @@ public class MatchListener implements Listener {
 
             if (MatchUtility.isBeyondBounds(event.getTo(), profile)) {
                 // player.teleport(event.getFrom());
-                // player.sendMessage(CC.translate("&cYou cannot leave the arena."));
+                // player.sendMessage(CC.translate("&cVocê não pode sair da arena."));
             }
         }
     }
@@ -237,7 +237,7 @@ public class MatchListener implements Listener {
                             : match.getParticipantB();
 
                     if (!arena.isEnemyPortal(match, player.getLocation(), playerTeam)) {
-                        player.sendMessage(CC.translate("&cYou cannot enter your own portal!"));
+                        player.sendMessage(CC.translate("&cVocê não pode entrar no seu próprio portal!"));
 
                         if (match.getKit().isSettingEnabled(KitSettingRespawnTimer.class)) {
                             player.setHealth(0);

@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 
 /**
  * @author Emmy
- * @project alley-practice
+ * @project kaos-practice
  * @since 07/09/2025
  */
 public class ArenaValidator {

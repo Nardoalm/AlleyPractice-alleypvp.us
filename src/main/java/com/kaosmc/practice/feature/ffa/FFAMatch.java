@@ -86,7 +86,7 @@ public abstract class FFAMatch {
         Profile profile = profileService.getProfile(player.getUniqueId());
 
         if (this.arena.getCenter() == null) {
-            player.sendMessage(CC.translate("&cThe arena is not set up for spectating"));
+            player.sendMessage(CC.translate("&cA arena não está configurada para espectadores"));
             return;
         }
 

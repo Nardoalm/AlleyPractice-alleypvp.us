@@ -120,7 +120,7 @@ public class SpectatorTeleportMenu extends PaginatedMenu {
         public void clicked(Player player, ClickType clickType) {
             if (clickType == ClickType.LEFT) {
                 if (this.gamePlayer.isDead() || this.gamePlayer.isDisconnected()) {
-                    player.sendMessage(CC.translate("&cThis player is either dead or disconnected."));
+                    player.sendMessage(CC.translate("&cEste jogador está morto ou desconectado."));
                     return;
                 }
                 player.teleport(this.gamePlayer.getTeamPlayer().getLocation());

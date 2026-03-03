@@ -24,7 +24,7 @@ public class PartyCreateCommand extends BaseCommand {
             name = "party.create",
             aliases = {"p.create"},
             usage = "party create",
-            description = "Create a party."
+            description = "Cria uma party."
     )
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();
@@ -35,7 +35,7 @@ public class PartyCreateCommand extends BaseCommand {
         ServerService serverService = this.plugin.getService(ServerService.class);
 
         if (profileService.getProfile(playerUUID).getState() != ProfileState.LOBBY) {
-            player.sendMessage(CC.translate("&cYou must be at spawn to execute this command."));
+            player.sendMessage(CC.translate("&cVocê precisa estar no spawn para executar este comando."));
             return;
         }
 
@@ -45,7 +45,7 @@ public class PartyCreateCommand extends BaseCommand {
         }
 
         if (!serverService.isQueueingAllowed()) {
-            player.sendMessage(CC.translate("&cYou cannot create a party while server queueing is disabled."));
+            player.sendMessage(CC.translate("&cVocê não pode criar uma party enquanto as filas do servidor estiverem desativadas."));
             return;
         }
 

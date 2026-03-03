@@ -2,7 +2,7 @@ package com.kaosmc.practice.common.server;
 
 import com.kaosmc.practice.KaosPractice;
 import com.kaosmc.practice.common.server.listener.ServerEnvironmentListener;
-import com.kaosmc.practice.bootstrap.AlleyContext;
+import com.kaosmc.practice.bootstrap.KaosContext;
 import com.kaosmc.practice.bootstrap.annotation.Service;
 import com.kaosmc.practice.common.text.CC;
 import lombok.Getter;
@@ -45,13 +45,13 @@ public class ServerEnvironmentImpl implements ServerEnvironment {
     }
 
     @Override
-    public void initialize(AlleyContext context) {
+    public void initialize(KaosContext context) {
         this.plugin.getServer().getPluginManager().registerEvents(new ServerEnvironmentListener(), this.plugin);
         this.setupWorldDefaults();
     }
 
     @Override
-    public void shutdown(AlleyContext context) {
+    public void shutdown(KaosContext context) {
         this.disconnectPlayers();
         this.clearEntities(EntityType.DROPPED_ITEM);
     }
@@ -95,7 +95,7 @@ public class ServerEnvironmentImpl implements ServerEnvironment {
      */
     private void disconnectPlayers() {
         this.plugin.getServer().getOnlinePlayers().forEach(player ->
-                player.kickPlayer(CC.translate("&cThe server is restarting."))
+                player.kickPlayer(CC.translate("&cO servidor está reiniciando."))
         );
     }
 

@@ -26,9 +26,9 @@ public class PartyAnnounceCommand extends BaseCommand {
     @CommandData(
             name = "party.announce",
             aliases = {"p.announce"},
-            permission = "alley.donator.party.announce",
+            permission = "kaos.donator.party.announce",
             usage = "party announce",
-            description = "Announce your party to the server."
+            description = "Anuncia sua party para o servidor."
     )
     @Override
     public void onCommand(CommandArgs command) {

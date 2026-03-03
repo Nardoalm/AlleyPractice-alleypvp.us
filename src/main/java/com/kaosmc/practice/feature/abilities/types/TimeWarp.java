@@ -123,7 +123,7 @@ public class TimeWarp extends Ability {
         }
 
         if (!this.lastPearl.containsKey(player.getUniqueId())) {
-            player.sendMessage(CC.translate("&cYour last enderpearl location has expired!"));
+            player.sendMessage(CC.translate("&cA localização da sua última ender pearl expirou!"));
             return;
         }
 
@@ -140,7 +140,7 @@ public class TimeWarp extends Ability {
         Bukkit.getScheduler().runTaskLater(KaosPractice.getInstance(), () -> {
             player.teleport(location);
             player.sendMessage(
-                    CC.translate("&7You have been &4teleported &7to your last thrown enderpearl's location!"));
+                    CC.translate("&7Você foi &4teleportado &7para a localização da sua última ender pearl lançada!"));
 
             this.lastPearl.remove(player.getUniqueId());
         }, 60L);

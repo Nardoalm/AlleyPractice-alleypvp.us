@@ -23,7 +23,7 @@ public class ArenaSelection {
             .lore("&7Use this tool to select the minimum and maximum locations.")
             .build();
 
-    private static final String SELECTION_METADATA = "alley.selection";
+    private static final String SELECTION_METADATA = "kaos.selection";
 
     private Location minimum;
     private Location maximum;

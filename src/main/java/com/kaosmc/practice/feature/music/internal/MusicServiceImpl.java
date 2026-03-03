@@ -1,7 +1,7 @@
 package com.kaosmc.practice.feature.music.internal;
 
 import com.kaosmc.practice.KaosPractice;
-import com.kaosmc.practice.bootstrap.AlleyContext;
+import com.kaosmc.practice.bootstrap.KaosContext;
 import com.kaosmc.practice.bootstrap.annotation.Service;
 import com.kaosmc.practice.common.logger.Logger;
 import com.kaosmc.practice.common.text.CC;
@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 
 /**
  * @author Emmy & Remi
- * @project alley-practice
+ * @project kaos-practice
  * @since 19/07/2025
  */
 @Service(provides = MusicService.class, priority = 175)
@@ -53,7 +53,7 @@ public class MusicServiceImpl implements MusicService {
     }
 
     @Override
-    public void initialize(AlleyContext context) {
+    public void initialize(KaosContext context) {
         this.allDiscs = MusicDisc.values();
     }
 

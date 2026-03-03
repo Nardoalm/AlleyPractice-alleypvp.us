@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * @author Remi
- * @project alley-practice
+ * @project kaos-practice
  * @date 2/07/2025
  */
 public interface ArenaService extends Service {
@@ -53,7 +53,7 @@ public interface ArenaService extends Service {
     void saveArena(Arena arena);
 
     /**
-     * Deletes an arena's data from the configuration file.
+     * Exclui uma arena's data from the configuration file.
      * @param arena The arena to delete.
      */
     void deleteArena(Arena arena);

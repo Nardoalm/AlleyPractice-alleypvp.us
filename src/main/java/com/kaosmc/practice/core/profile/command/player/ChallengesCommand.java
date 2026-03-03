@@ -17,7 +17,7 @@ public class ChallengesCommand extends BaseCommand {
     @CommandData(
             name = "challenges",
             usage = "challenges",
-            description = "View your challenges."
+            description = "Veja seus desafios."
     )
     @Override
     public void onCommand(CommandArgs command) {

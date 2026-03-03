@@ -18,7 +18,7 @@ public class RemoveEnchantsCommand extends BaseCommand {
             aliases = "enchantsremovement",
             isAdminOnly = true,
             usage = "removeenchants",
-            description = "Removes all enchantments from the item you're holding."
+            description = "Remover todos os encantamentos do item que você está segurando."
     )
     @Override
     public void onCommand(CommandArgs command) {

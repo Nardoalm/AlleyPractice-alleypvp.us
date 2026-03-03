@@ -18,7 +18,7 @@ public class FFASpawnCommand extends BaseCommand {
     @CommandData(
             name = "ffa.spawn",
             usage = "ffa spawn",
-            description = "Teleport to the ffa safe zone."
+            description = "Teleporta para a zona segura do FFA."
     )
     @Override
     public void onCommand(CommandArgs command) {

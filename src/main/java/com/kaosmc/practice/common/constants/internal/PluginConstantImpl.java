@@ -1,7 +1,7 @@
 package com.kaosmc.practice.common.constants.internal;
 
 import com.kaosmc.practice.KaosPractice;
-import com.kaosmc.practice.bootstrap.AlleyContext;
+import com.kaosmc.practice.bootstrap.KaosContext;
 import com.kaosmc.practice.bootstrap.annotation.Service;
 import com.kaosmc.practice.common.constants.PluginConstant;
 import lombok.Getter;
@@ -45,7 +45,7 @@ public class PluginConstantImpl implements PluginConstant {
     }
 
     @Override
-    public void initialize(AlleyContext context) {
+    public void initialize(KaosContext context) {
         PluginDescriptionFile pluginDescription = plugin.getDescription();
 
         this.name = pluginDescription.getName();
@@ -55,7 +55,7 @@ public class PluginConstantImpl implements PluginConstant {
         this.spigotVersion = this.getBukkitVersionExact();
 
         this.mainColor = ChatColor.GOLD;
-        this.packageDirectory = "dev.revere.alley";
+        this.packageDirectory = "dev.revere.kaos";
 
         this.adminPermissionPrefix = this.name + ".admin";
         this.permissionLackMessage = ChatColor.RED + "Missing permission.";

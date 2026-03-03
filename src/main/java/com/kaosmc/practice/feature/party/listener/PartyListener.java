@@ -31,13 +31,13 @@ public class PartyListener implements Listener {
 
         if (profile.getProfileData().getSettingData().getChatChannel().equalsIgnoreCase(ChatChannel.PARTY.toString())) {
             if (profile.getParty() == null) {
-                player.sendMessage(CC.translate("&cYou're not in a party."));
+                player.sendMessage(CC.translate("&cVocê não está em uma party."));
                 event.setCancelled(true);
                 return;
             }
 
             if (!profile.getProfileData().getSettingData().isPartyMessagesEnabled()) {
-                player.sendMessage(CC.translate("&cYou have party messages disabled."));
+                player.sendMessage(CC.translate("&cVocê está com as mensagens da party desativadas."));
                 event.setCancelled(true);
                 return;
             }
@@ -50,13 +50,13 @@ public class PartyListener implements Listener {
 
         if (event.getMessage().startsWith("#") || event.getMessage().startsWith("!")) {
             if (profile.getParty() == null) {
-                player.sendMessage(CC.translate("&cYou're not in a party."));
+                player.sendMessage(CC.translate("&cVocê não está em uma party."));
                 event.setCancelled(true);
                 return;
             }
 
             if (!profile.getProfileData().getSettingData().isPartyMessagesEnabled()) {
-                player.sendMessage(CC.translate("&cYou have party messages disabled."));
+                player.sendMessage(CC.translate("&cVocê está com as mensagens da party desativadas."));
                 event.setCancelled(true);
                 return;
             }

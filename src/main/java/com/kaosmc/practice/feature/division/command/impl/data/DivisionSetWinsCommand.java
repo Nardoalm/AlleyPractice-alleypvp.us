@@ -37,7 +37,7 @@ public class DivisionSetWinsCommand extends BaseCommand {
             name = "division.setwins",
             isAdminOnly = true,
             usage = "division setwins <name> <tier> <wins>",
-            description = "Set the required wins for a division tier."
+            description = "Define as vitórias necessárias para um tier da divisão."
     )
     @Override
     public void onCommand(CommandArgs command) {

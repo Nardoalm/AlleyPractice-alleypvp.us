@@ -1,7 +1,7 @@
 package com.kaosmc.practice.feature.arena.internal;
 
 import com.kaosmc.practice.KaosPractice;
-import com.kaosmc.practice.bootstrap.AlleyContext;
+import com.kaosmc.practice.bootstrap.KaosContext;
 import com.kaosmc.practice.bootstrap.annotation.Service;
 import com.kaosmc.practice.common.FileUtil;
 import com.kaosmc.practice.common.VoidChunkGenerator;
@@ -70,7 +70,7 @@ public class ArenaServiceImpl implements ArenaService {
     }
 
     @Override
-    public void initialize(AlleyContext context) {
+    public void initialize(KaosContext context) {
         this.loadArenas();
         this.initializeTemporaryWorld();
         buildCaches();
@@ -79,7 +79,7 @@ public class ArenaServiceImpl implements ArenaService {
     }
 
     @Override
-    public void shutdown(AlleyContext context) {
+    public void shutdown(KaosContext context) {
         cleanupTemporaryArenas();
 
         if (temporaryWorld != null) {

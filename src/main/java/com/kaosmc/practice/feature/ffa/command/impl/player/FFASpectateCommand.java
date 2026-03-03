@@ -22,7 +22,7 @@ public class FFASpectateCommand extends BaseCommand {
             name = "ffa.spectate",
             usage = "spectate <ffaKit>",
             aliases = {"specffa", "spectateffa"},
-            description = "Spectate a FFA match"
+            description = "Assiste uma partida de FFA"
     )
     @Override
     public void onCommand(CommandArgs command) {

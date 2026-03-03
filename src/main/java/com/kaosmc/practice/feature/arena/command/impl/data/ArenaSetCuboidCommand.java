@@ -35,7 +35,7 @@ public class ArenaSetCuboidCommand extends BaseCommand {
             name = "arena.setcuboid",
             isAdminOnly = true,
             usage = "arena setcuboid <arenaName>",
-            description = "Set the cuboid selection for an arena"
+            description = "Define a seleção de cuboide para uma arena"
     )
     @Override
     public void onCommand(CommandArgs command) {

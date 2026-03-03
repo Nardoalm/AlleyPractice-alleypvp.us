@@ -32,7 +32,7 @@ import com.kaosmc.practice.feature.hotbar.HotbarService;
 import com.kaosmc.practice.feature.kit.Kit;
 import com.kaosmc.practice.feature.kit.setting.types.mechanic.KitSettingCampProtectionImpl;
 import com.kaosmc.practice.feature.kit.setting.types.mode.*;
-import dev.revere.alley.feature.kit.setting.types.mode.*;
+import dev.revere.kaos.feature.kit.setting.types.mode.*;
 import com.kaosmc.practice.feature.kit.setting.types.visual.KitSettingHealthBar;
 import com.kaosmc.practice.feature.layout.LayoutService;
 import com.kaosmc.practice.feature.layout.data.LayoutData;
@@ -792,7 +792,7 @@ public abstract class Match {
     public void addSpectator(Player player) {
         if (this.getGamePlayer(player) == null) {
             if (this.getState() == MatchState.ENDING_MATCH) {
-                player.sendMessage(CC.translate("&cThis match has already ended."));
+                player.sendMessage(CC.translate("&cEsta partida já terminou."));
                 return;
             }
 
@@ -809,7 +809,7 @@ public abstract class Match {
         hotbarService.applyHotbarItems(player);
 
         if (this.arena.getCenter() == null) {
-            player.sendMessage(CC.translate("&cThe arena is not set up for spectating"));
+            player.sendMessage(CC.translate("&cA arena não está configurada para espectadores"));
             return;
         }
 

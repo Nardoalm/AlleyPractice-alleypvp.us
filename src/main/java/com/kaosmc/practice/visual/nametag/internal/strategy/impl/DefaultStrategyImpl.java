@@ -8,7 +8,7 @@ import org.bukkit.ChatColor;
 
 /**
  * @author Remi
- * @project alley-practice
+ * @project kaos-practice
  * @date 27/06/2025
  */
 public class DefaultStrategyImpl implements NametagStrategy {

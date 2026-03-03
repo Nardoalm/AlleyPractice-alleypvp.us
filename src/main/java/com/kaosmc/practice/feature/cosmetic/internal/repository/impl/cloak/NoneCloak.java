@@ -7,13 +7,13 @@ import org.bukkit.entity.Player;
 
 /**
  * @author Remi
- * @project alley-practice
+ * @project kaos-practice
  * @date 4/08/2025
  */
 @CosmeticData(
         type = CosmeticType.CLOAK,
         name = "None",
-        description = "Remove your cloak",
+        description = "Remover your cloak",
         icon = Material.BARRIER,
         slot = 10
 )

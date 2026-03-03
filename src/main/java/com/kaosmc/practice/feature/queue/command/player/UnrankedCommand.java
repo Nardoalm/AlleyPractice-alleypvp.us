@@ -11,14 +11,14 @@ import org.bukkit.entity.Player;
 
 /**
  * @author Remi
- * @project alley-practice
+ * @project kaos-practice
  * @date 22/06/2025
  */
 public class UnrankedCommand extends BaseCommand {
     @CommandData(
             name = "unranked",
             usage = "unranked",
-            description = "Open the unranked queue menu."
+            description = "Abre o menu da fila unranked."
     )
     @Override
     public void onCommand(CommandArgs command) {

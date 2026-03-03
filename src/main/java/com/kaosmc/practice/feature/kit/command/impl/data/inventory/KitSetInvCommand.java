@@ -22,7 +22,7 @@ public class KitSetInvCommand extends BaseCommand {
             aliases = "kit.setinv",
             isAdminOnly = true,
             usage = "kit setinventory <kitName>",
-            description = "Set the inventory and armor of a kit to your current inventory and armor."
+            description = "Define o inventário e a armadura de um kit para seu inventário e armadura atuais."
     )
     @Override
     public void onCommand(CommandArgs command) {

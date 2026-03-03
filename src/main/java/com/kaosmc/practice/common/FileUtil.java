@@ -10,7 +10,7 @@ import java.util.Comparator;
 
 /**
  * @author Remi
- * @project alley-practice
+ * @project kaos-practice
  * @date 23/06/2025
  */
 @UtilityClass

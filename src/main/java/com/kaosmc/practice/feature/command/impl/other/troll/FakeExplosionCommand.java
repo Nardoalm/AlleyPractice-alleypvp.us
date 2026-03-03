@@ -17,7 +17,7 @@ public class FakeExplosionCommand extends BaseCommand {
             isAdminOnly = true,
             inGameOnly = false,
             usage = "fakeexplosion",
-            description = "Fake an explosion"
+            description = "Simula uma explosão"
     )
     @Override
     public void onCommand(CommandArgs command) {

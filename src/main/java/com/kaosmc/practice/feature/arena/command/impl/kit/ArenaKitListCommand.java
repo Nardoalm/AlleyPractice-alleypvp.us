@@ -34,7 +34,7 @@ public class ArenaKitListCommand extends BaseCommand {
             name = "arena.kitlist",
             isAdminOnly = true,
             usage = "arena kitlist <arenaName>",
-            description = "Lists all kits associated with an arena"
+            description = "Lista todos os kits associados a uma arena"
     )
     @Override
     public void onCommand(CommandArgs command) {
@@ -57,7 +57,7 @@ public class ArenaKitListCommand extends BaseCommand {
         player.sendMessage("");
         player.sendMessage(CC.translate("     &6&l" + arenaName + " Kit List &f(" + arena.getKits().size() + "&f)"));
         if (arena.getKits().isEmpty()) {
-            player.sendMessage(CC.translate("      &f◆ &cNo Arena Kits available."));
+            player.sendMessage(CC.translate("      &f◆ &cNenhum kit de arena disponível."));
         }
         arena.getKits().forEach(kit -> player.sendMessage(CC.translate("      &f◆ &6" + kit)));
         player.sendMessage("");

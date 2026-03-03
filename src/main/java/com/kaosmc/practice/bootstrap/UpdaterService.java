@@ -6,7 +6,7 @@ import java.io.IOException;
 
 /**
  * @author Remi
- * @project alley-practice
+ * @project kaos-practice
  * @date 24/07/2025
  */
 public interface UpdaterService extends Service {

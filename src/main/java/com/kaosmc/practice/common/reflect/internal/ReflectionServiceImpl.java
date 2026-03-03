@@ -1,7 +1,7 @@
 package com.kaosmc.practice.common.reflect.internal;
 
 import com.kaosmc.practice.common.constants.PluginConstant;
-import com.kaosmc.practice.bootstrap.AlleyContext;
+import com.kaosmc.practice.bootstrap.KaosContext;
 import com.kaosmc.practice.bootstrap.annotation.Service;
 import com.kaosmc.practice.common.logger.Logger;
 import com.kaosmc.practice.common.reflect.Reflection;
@@ -35,7 +35,7 @@ public class ReflectionServiceImpl implements ReflectionService {
     }
 
     @Override
-    public void initialize(AlleyContext context) {
+    public void initialize(KaosContext context) {
         this.registerReflectionServices();
     }
 

@@ -13,7 +13,7 @@ import java.util.Map;
 
 /**
  * @author Remi
- * @project alley-practice
+ * @project kaos-practice
  * @date 4/08/2025
  */
 @CosmeticData(

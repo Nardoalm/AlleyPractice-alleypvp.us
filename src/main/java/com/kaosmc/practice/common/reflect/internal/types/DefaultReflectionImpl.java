@@ -4,7 +4,7 @@ import com.kaosmc.practice.common.reflect.Reflection;
 
 /**
  * @author Remi
- * @project alley-practice
+ * @project kaos-practice
  * @date 27/06/2025
  */
 public class DefaultReflectionImpl implements Reflection {

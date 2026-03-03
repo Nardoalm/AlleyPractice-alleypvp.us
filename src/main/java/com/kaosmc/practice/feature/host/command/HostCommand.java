@@ -18,9 +18,9 @@ import org.bukkit.entity.Player;
 public class HostCommand extends BaseCommand {
     @CommandData(
             name = "host",
-            permission = "alley.command.donator.host",
+            permission = "kaos.command.donator.host",
             usage = "host",
-            description = "Open the host menu"
+            description = "Abre o menu de host"
     )
     @Override
     public void onCommand(CommandArgs command) {

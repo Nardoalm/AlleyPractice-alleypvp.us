@@ -18,7 +18,7 @@ public class QueueReloadCommand extends BaseCommand {
             aliases = {"reloadqueue", "reloadqueues"},
             isAdminOnly = true,
             usage = "/queue reload",
-            description = "Reload all queues from configuration"
+            description = "Recarrega todas as filas da configuração"
     )
     @Override
     public void onCommand(CommandArgs command) {

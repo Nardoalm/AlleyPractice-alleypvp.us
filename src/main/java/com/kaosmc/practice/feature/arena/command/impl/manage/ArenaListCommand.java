@@ -27,7 +27,7 @@ public class ArenaListCommand extends BaseCommand {
             aliases = {"arenas"},
             isAdminOnly = true,
             usage = "arena list",
-            description = "Lists all arenas on the server"
+            description = "Lista todas as arenas no servidor"
     )
     @Override
     public void onCommand(CommandArgs command) {
@@ -39,7 +39,7 @@ public class ArenaListCommand extends BaseCommand {
         player.sendMessage(CC.translate("     &6&lArena List &f(" + arenaService.getArenas().size() + "&f)"));
 
         if (arenaService.getArenas().isEmpty()) {
-            player.sendMessage(CC.translate("      &f◆ &cNo arenas available."));
+            player.sendMessage(CC.translate("      &f◆ &cNenhuma arena disponível."));
             return;
         }
 

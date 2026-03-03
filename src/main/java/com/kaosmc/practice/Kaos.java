@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * AlleyAPI – A central class providing easy access to Kaos.
+ * KaosAPI – A central class providing easy access to Kaos.
  * <p>
  * This class allows other developers to interact with the server functionalities of Kaos,
  * such as registering custom code to be executed during bootstrap enable and disable,
@@ -73,7 +73,7 @@ public class Kaos {
      */
     public void runOnEnableCallbacks() {
         if (this.onEnableCallbacks.isEmpty()) {
-            Bukkit.getConsoleSender().sendMessage(CC.translate("&f[&6AlleyAPI&f] No external code registered to be executed on enable."));
+            Bukkit.getConsoleSender().sendMessage(CC.translate("&f[&6KaosAPI&f] Nenhum codigo externo registrado para executar no enable."));
             return;
         }
 
@@ -88,7 +88,7 @@ public class Kaos {
      */
     public void runOnDisableCallbacks() {
         if (this.onDisableCallbacks.isEmpty()) {
-            Bukkit.getConsoleSender().sendMessage(CC.translate("&f[&6AlleyAPI&f] No external code registered to be executed on disable."));
+            Bukkit.getConsoleSender().sendMessage(CC.translate("&f[&6KaosAPI&f] Nenhum codigo externo registrado para executar no disable."));
             return;
         }
 

@@ -20,7 +20,7 @@ public class RefillCommand extends BaseCommand {
             name = "refill",
             isAdminOnly = true,
             usage = "refill",
-            description = "Refill your inventory with health potions."
+            description = "Reabastece seu inventário com poções de vida."
     )
     @Override
     public void onCommand(CommandArgs command) {
@@ -32,6 +32,6 @@ public class RefillCommand extends BaseCommand {
             }
         });
 
-        player.sendMessage(CC.translate("&aYou've refilled &6your inventory &awith &6health &apotions."));
+        player.sendMessage(CC.translate("&aVocê reabasteceu seu inventário com &6poções de vida&a."));
     }
 }

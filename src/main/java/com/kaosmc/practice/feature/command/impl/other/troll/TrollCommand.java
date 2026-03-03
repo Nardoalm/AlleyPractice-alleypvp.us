@@ -22,7 +22,7 @@ public class TrollCommand extends BaseCommand {
             isAdminOnly = true,
             inGameOnly = false,
             usage = "troll <player>",
-            description = "Opens demo screen for target player"
+            description = "Abre a tela de demonstração para o jogador alvo"
     )
     @Override
     public void onCommand(CommandArgs command) {

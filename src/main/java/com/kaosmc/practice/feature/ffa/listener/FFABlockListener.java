@@ -12,7 +12,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 
 /**
  * @author Emmy
- * @project alley-practice
+ * @project kaos-practice
  * @since 16/07/2025
  */
 public class FFABlockListener implements Listener {

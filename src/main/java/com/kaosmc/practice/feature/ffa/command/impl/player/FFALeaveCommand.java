@@ -19,7 +19,7 @@ public class FFALeaveCommand extends BaseCommand {
             name = "ffa.leave",
             aliases = "leaveffa",
             usage = "ffa leave",
-            description = "Leave your current FFA match"
+            description = "Sai da sua partida de FFA atual"
     )
     @Override
     public void onCommand(CommandArgs command) {

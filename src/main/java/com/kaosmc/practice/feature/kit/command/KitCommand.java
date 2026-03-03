@@ -42,7 +42,7 @@ public class KitCommand extends BaseCommand {
             isAdminOnly = true,
             inGameOnly = false,
             usage = "kit help <page>",
-            description = "View all kit commands."
+            description = "Mostra todos os comandos de kit."
     )
     @Override
     public void onCommand(CommandArgs command) {

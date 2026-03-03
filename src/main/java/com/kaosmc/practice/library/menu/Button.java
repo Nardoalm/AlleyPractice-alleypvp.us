@@ -133,20 +133,20 @@ public abstract class Button {
     public Profile getOfflineProfile(String target, CommandSender sender) {
         OfflinePlayer offlinePlayer = PlayerUtil.getOfflinePlayerByName(target);
         if (offlinePlayer == null) {
-            sender.sendMessage(CC.translate("&cThat player does not exist."));
+            sender.sendMessage(CC.translate("&cEsse jogador não existe."));
             return null;
         }
 
         UUID uuid = offlinePlayer.getUniqueId();
         if (uuid == null) {
-            sender.sendMessage(CC.translate("&cThat player is invalid."));
+            sender.sendMessage(CC.translate("&cEsse jogador é inválido."));
             return null;
         }
 
         ProfileService profileService = KaosPractice.getInstance().getService(ProfileService.class);
         Profile profile = profileService.getProfile(uuid);
         if (profile == null) {
-            sender.sendMessage(CC.translate("&cThat player does not have a profile."));
+            sender.sendMessage(CC.translate("&cEsse jogador não possui perfil."));
             return null;
         }
 

@@ -10,7 +10,7 @@ import java.lang.reflect.Field;
 
 /**
  * @author Emmy
- * @project alley-practice
+ * @project kaos-practice
  * @since 14/07/2025
  */
 public class VirtualStackReflectionServiceImpl implements Reflection {

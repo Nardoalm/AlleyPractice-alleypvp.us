@@ -1,6 +1,6 @@
 package com.kaosmc.practice.core.locale.internal;
 
-import com.kaosmc.practice.bootstrap.AlleyContext;
+import com.kaosmc.practice.bootstrap.KaosContext;
 import com.kaosmc.practice.bootstrap.annotation.Service;
 import com.kaosmc.practice.common.logger.Logger;
 import com.kaosmc.practice.common.text.CC;
@@ -38,7 +38,7 @@ public class LocaleServiceImpl implements LocaleService {
     }
 
     @Override
-    public void initialize(AlleyContext context) {
+    public void initialize(KaosContext context) {
         List<Class<? extends LocaleEntry>> localeEntries = Arrays.asList(
                 GlobalMessagesLocaleImpl.class,
                 GameMessagesLocaleImpl.class,

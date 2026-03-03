@@ -21,7 +21,7 @@ public class KitViewCommand extends BaseCommand {
             aliases = "kit.info",
             isAdminOnly = true,
             usage = "kit view <kitName>",
-            description = "View information about a kit."
+            description = "Ver information about a kit."
     )
     @Override
     public void onCommand(CommandArgs command) {

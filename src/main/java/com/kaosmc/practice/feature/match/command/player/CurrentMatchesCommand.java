@@ -20,7 +20,7 @@ public class CurrentMatchesCommand extends BaseCommand {
             name = "currentmatches",
             aliases = {"matches", "games", "currentgames"},
             usage = "currentmatches",
-            description = "View the current active matches."
+            description = "Mostra as partidas ativas no momento."
     )
     @Override
     public void onCommand(CommandArgs command) {

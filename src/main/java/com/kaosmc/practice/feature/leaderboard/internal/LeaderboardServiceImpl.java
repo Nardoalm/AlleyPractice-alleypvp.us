@@ -3,7 +3,7 @@ package com.kaosmc.practice.feature.leaderboard.internal;
 import com.mongodb.client.MongoCollection;
 import com.kaosmc.practice.feature.kit.KitService;
 import com.kaosmc.practice.feature.kit.Kit;
-import com.kaosmc.practice.bootstrap.AlleyContext;
+import com.kaosmc.practice.bootstrap.KaosContext;
 import com.kaosmc.practice.bootstrap.annotation.Service;
 import com.kaosmc.practice.core.database.MongoService;
 import com.kaosmc.practice.feature.leaderboard.LeaderboardService;
@@ -56,12 +56,12 @@ public class LeaderboardServiceImpl implements LeaderboardService {
     }
 
     @Override
-    public void initialize(AlleyContext context) {
+    public void initialize(KaosContext context) {
         this.forceRecalculateAll();
     }
 
     @Override
-    public void shutdown(AlleyContext context) {
+    public void shutdown(KaosContext context) {
         if (executorService != null && !executorService.isShutdown()) {
             executorService.shutdown();
             Logger.info("Leaderboard executor service has been shut down.");

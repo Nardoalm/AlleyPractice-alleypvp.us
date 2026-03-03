@@ -16,7 +16,7 @@ public class LevelCommand extends BaseCommand {
             name = "level",
             aliases = {"levels"},
             usage = "level",
-            description = "View info about your current level."
+            description = "Veja informações sobre seu nível atual."
     )
     @Override
     public void onCommand(CommandArgs command) {

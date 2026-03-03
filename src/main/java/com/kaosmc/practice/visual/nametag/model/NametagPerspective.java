@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 /**
  * @author Remi
- * @project alley-practice
+ * @project kaos-practice
  * @date 27/06/2025
  */
 @Getter

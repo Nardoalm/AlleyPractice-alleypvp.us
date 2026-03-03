@@ -18,7 +18,7 @@ public class DivisionSetDisplayNameCommand extends BaseCommand {
             name = "division.setdisplayname",
             isAdminOnly = true,
             usage = "division setdisplayname <name> <displayName>",
-            description = "Set the display name of a division."
+            description = "Define o nome de exibição de uma divisão."
     )
     @Override
     public void onCommand(CommandArgs command) {

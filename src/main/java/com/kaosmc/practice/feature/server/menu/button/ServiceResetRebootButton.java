@@ -39,7 +39,7 @@ public class ServiceResetRebootButton extends Button {
         if (clickType != ClickType.LEFT) return;
 
         if (!player.isOp()) {
-            player.sendMessage(CC.translate("&cYou do not have permission to use this button."));
+            player.sendMessage(CC.translate("&cVocê não tem permissão para usar este botão."));
             return;
         }
 

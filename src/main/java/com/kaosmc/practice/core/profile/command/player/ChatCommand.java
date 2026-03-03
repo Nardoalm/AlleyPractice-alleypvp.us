@@ -18,7 +18,7 @@ public class ChatCommand extends BaseCommand {
     @CommandData(
             name = "chat",
             usage = "chat <chatChannel>",
-            description = "Set your chat channel."
+            description = "Definir your chat channel."
     )
     @Override
     public void onCommand(CommandArgs command) {
@@ -27,7 +27,7 @@ public class ChatCommand extends BaseCommand {
 
         if (args.length < 1) {
             command.sendUsage();
-            player.sendMessage(CC.translate("&cAvailable chat channels: " + ChatChannel.getChatChannelsSorted()));
+            player.sendMessage(CC.translate("&cCanais de chat disponíveis: " + ChatChannel.getChatChannelsSorted()));
             return;
         }
 

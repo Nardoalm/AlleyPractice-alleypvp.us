@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 
 /**
  * @author Emmy
- * @project alley-practice
+ * @project kaos-practice
  * @since 19/07/2025
  */
 public class ToggleLobbyMusicCommand extends BaseCommand {
@@ -19,7 +19,7 @@ public class ToggleLobbyMusicCommand extends BaseCommand {
             name = "togglelobbymusic",
             cooldown = 1,
             usage = "togglelobbymusic",
-            description = "Toggle the lobby music on or off"
+            description = "Ativa ou desativa a música do lobby"
     )
     @Override
     public void onCommand(CommandArgs command) {

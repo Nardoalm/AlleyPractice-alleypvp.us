@@ -18,7 +18,7 @@ public class SpawnItemsCommand extends BaseCommand {
             aliases = {"lobbyitems"},
             isAdminOnly = true,
             usage = "spawnitems",
-            description = "Gives the player the spawn items."
+            description = "Dá ao jogador os itens de spawn."
     )
     @Override
     public void onCommand(CommandArgs args) {

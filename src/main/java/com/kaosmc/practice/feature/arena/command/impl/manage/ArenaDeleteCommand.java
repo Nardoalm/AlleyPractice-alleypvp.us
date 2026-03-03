@@ -34,7 +34,7 @@ public class ArenaDeleteCommand extends BaseCommand {
             name = "arena.delete",
             isAdminOnly = true,
             usage = "arena delete <arenaName>",
-            description = "Deletes an arena"
+            description = "Exclui uma arena"
     )
     @Override
     public void onCommand(CommandArgs command) {

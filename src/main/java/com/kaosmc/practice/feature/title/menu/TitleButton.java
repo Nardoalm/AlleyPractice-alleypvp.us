@@ -65,7 +65,7 @@ public class TitleButton extends Button {
         }
 
         if (this.profile.getProfileData().getSelectedTitle().equals(this.title.getKit().getName())) {
-            player.sendMessage(CC.translate("&cYou already have this title selected."));
+            player.sendMessage(CC.translate("&cVocê já está com este título selecionado."));
             return;
         }
 

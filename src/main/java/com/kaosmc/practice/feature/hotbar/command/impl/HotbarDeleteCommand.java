@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 
 /**
  * @author Emmy
- * @project alley-practice
+ * @project kaos-practice
  * @since 26/07/2025
  */
 public class HotbarDeleteCommand extends BaseCommand {
@@ -18,7 +18,7 @@ public class HotbarDeleteCommand extends BaseCommand {
             name = "hotbar.delete",
             isAdminOnly = true,
             usage = "hotbar delete <name>",
-            description = "Delete a saved hotbar item."
+            description = "Exclui um item de hotbar salvo."
     )
     @Override
     public void onCommand(CommandArgs command) {

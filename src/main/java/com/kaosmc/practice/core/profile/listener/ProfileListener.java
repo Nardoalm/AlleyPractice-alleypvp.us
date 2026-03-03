@@ -42,7 +42,7 @@ public class ProfileListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     private void onLogin(PlayerLoginEvent event) {
         if (!KaosPractice.getInstance().isEnabled()) {
-            event.disallow(PlayerLoginEvent.Result.KICK_OTHER, CC.translate("&cThe server is still loading, please try again in a few seconds."));
+            event.disallow(PlayerLoginEvent.Result.KICK_OTHER, CC.translate("&cO servidor ainda está carregando, tente novamente em alguns segundos."));
             return;
         }
 
@@ -62,7 +62,7 @@ public class ProfileListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     private void onJoin(PlayerJoinEvent event) {
         if (!KaosPractice.getInstance().isEnabled()) {
-            event.getPlayer().kickPlayer(CC.translate("&cThe server is still loading, please try again in a few seconds."));
+            event.getPlayer().kickPlayer(CC.translate("&cO servidor ainda está carregando, tente novamente em alguns segundos."));
             return;
         }
 

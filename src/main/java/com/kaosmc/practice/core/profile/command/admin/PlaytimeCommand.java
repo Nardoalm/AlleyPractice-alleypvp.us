@@ -29,7 +29,7 @@ public class PlaytimeCommand extends BaseCommand {
             isAdminOnly = true,
             inGameOnly = false,
             usage = "playtime <player>",
-            description = "Check a player's playtime."
+            description = "Verifica o tempo de jogo de um jogador."
     )
     @Override
     public void onCommand(CommandArgs command) {

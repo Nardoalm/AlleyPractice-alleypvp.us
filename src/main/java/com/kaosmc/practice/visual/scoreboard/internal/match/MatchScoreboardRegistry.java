@@ -27,7 +27,7 @@ public class MatchScoreboardRegistry {
      * This should be called once by the object that creates the registry.
      */
     public void initialize() {
-        String searchPackage = "dev.revere.alley.visual.scoreboard";
+        String searchPackage = "dev.revere.kaos.visual.scoreboard";
 
         try (ScanResult scanResult = new ClassGraph().enableAllInfo().acceptPackages(searchPackage).scan()) {
             for (ClassInfo classInfo : scanResult.getClassesWithAnnotation(ScoreboardData.class.getName())) {

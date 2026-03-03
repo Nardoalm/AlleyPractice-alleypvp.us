@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * @author Emmy
- * @project alley-practice
+ * @project kaos-practice
  * @since 21/07/2025
  */
 public interface HotbarService extends Service {
