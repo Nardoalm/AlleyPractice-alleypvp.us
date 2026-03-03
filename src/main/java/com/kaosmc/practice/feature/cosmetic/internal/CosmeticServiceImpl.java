@@ -3,7 +3,6 @@ package com.kaosmc.practice.feature.cosmetic.internal;
 import com.kaosmc.practice.bootstrap.KaosContext;
 import com.kaosmc.practice.bootstrap.annotation.Service;
 import com.kaosmc.practice.feature.cosmetic.internal.repository.*;
-import dev.revere.kaos.feature.cosmetic.internal.repository.*;
 import com.kaosmc.practice.feature.cosmetic.CosmeticService;
 import com.kaosmc.practice.feature.cosmetic.model.CosmeticType;
 import lombok.Getter;

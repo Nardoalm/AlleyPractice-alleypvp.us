@@ -1,7 +1,6 @@
 package com.kaosmc.practice.feature.cosmetic.internal.repository;
 
 import com.kaosmc.practice.feature.cosmetic.internal.repository.impl.killmessage.*;
-import dev.revere.kaos.feature.cosmetic.internal.repository.impl.killmessage.*;
 
 /**
  * @author Remi

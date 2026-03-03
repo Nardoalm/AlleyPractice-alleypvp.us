@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  */
 @Getter
 public final class KaosContext {
-    private static final String SERVICE_IMPL_PACKAGE = "dev.revere.kaos";
+    private static final String SERVICE_IMPL_PACKAGE = "com.kaosmc.practice";
 
     private final KaosPractice plugin;
     private final Map<Class<? extends com.kaosmc.practice.bootstrap.lifecycle.Service>, com.kaosmc.practice.bootstrap.lifecycle.Service> serviceInstances = new ConcurrentHashMap<>();

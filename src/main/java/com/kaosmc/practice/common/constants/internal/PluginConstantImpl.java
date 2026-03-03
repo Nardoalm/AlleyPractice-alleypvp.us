@@ -55,7 +55,7 @@ public class PluginConstantImpl implements PluginConstant {
         this.spigotVersion = this.getBukkitVersionExact();
 
         this.mainColor = ChatColor.GOLD;
-        this.packageDirectory = "dev.revere.kaos";
+        this.packageDirectory = "com.kaosmc.practice";
 
         this.adminPermissionPrefix = this.name + ".admin";
         this.permissionLackMessage = ChatColor.RED + "Missing permission.";
