@@ -1,6 +1,6 @@
 plugin:
   # Define se o Kaos Practice deve atualizar automaticamente ao iniciar o servidor, quando houver nova versão.
-  auto-update: true
+  auto-update: false
 
 arena-management:
   swm:

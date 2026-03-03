@@ -78,9 +78,15 @@ public class UpdaterServiceImpl implements UpdaterService {
 
             File pluginFile = new File(KaosPractice.getInstance().getClass().getProtectionDomain().getCodeSource().getLocation().toURI());
             File pluginDirectory = pluginFile.getParentFile();
+            File updateDirectory = new File(pluginDirectory, "update");
 
-            File updateFile = new File(pluginDirectory, "Kaos-" + version + ".jar");
-            File tempFile = new File(pluginDirectory, "Kaos-temp.jar");
+            if (!updateDirectory.exists() && !updateDirectory.mkdirs()) {
+                Logger.warn("Não foi possível criar a pasta de update: " + updateDirectory.getAbsolutePath());
+                return;
+            }
+
+            File updateFile = new File(updateDirectory, pluginFile.getName());
+            File tempFile = new File(updateDirectory, pluginFile.getName() + ".tmp");
 
             try (InputStream inputStream = connection.getInputStream();
                  FileOutputStream outputStream = new FileOutputStream(tempFile)) {
@@ -92,20 +98,16 @@ public class UpdaterServiceImpl implements UpdaterService {
                 }
             }
 
-            if (pluginFile.delete()) {
-                Logger.info("Successfully deleted old bootstrap file: " + pluginFile.getName());
-            } else {
-                Logger.warn("Failed to delete old bootstrap file: " + pluginFile.getName());
+            if (updateFile.exists() && !updateFile.delete()) {
+                Logger.warn("Falha ao remover atualização antiga em: " + updateFile.getAbsolutePath());
+                return;
             }
 
             if (tempFile.renameTo(updateFile)) {
-                Logger.info("Successfully updated bootstrap to version " + version);
+                Logger.info("Atualização " + version + " baixada em " + updateFile.getAbsolutePath() + ". Reinicie o servidor manualmente para aplicar.");
             } else {
-                Logger.warn("Failed to rename temporary file to bootstrap file: " + updateFile.getName());
+                Logger.warn("Falha ao mover arquivo temporário para: " + updateFile.getName());
             }
-
-            Logger.info("Shutting down the server to apply the update. Please restart the server manually.");
-            KaosPractice.getInstance().getServer().shutdown();
         } catch (Exception e) {
             Logger.logException("Failed to download and update to version " + version, e);
         }
