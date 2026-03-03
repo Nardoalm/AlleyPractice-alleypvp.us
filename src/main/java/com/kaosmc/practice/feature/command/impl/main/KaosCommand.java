@@ -38,7 +38,7 @@ public class KaosCommand extends BaseCommand {
             aliases = {"kaospractice", "kpractice", "practice", "prac"},
             inGameOnly = false,
             usage = "kaos",
-            description = "Exibe informacoes sobre o plugin."
+            description = "Exibe informações sobre o plugin."
     )
     @Override
     public void onCommand(CommandArgs command) {

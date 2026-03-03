@@ -36,6 +36,7 @@ public class StandAloneArena extends Arena {
     protected final KaosPractice plugin = KaosPractice.getInstance();
 
     private boolean isTemporaryCopy = false;
+    private boolean managedBySlimeWorldManager = false;
     private String originalArenaName;
     private int copyId = -1;
 
@@ -132,6 +133,10 @@ public class StandAloneArena extends Arena {
 
     public void deleteCopiedArena() {
         if (!this.isTemporaryCopy) {
+            return;
+        }
+
+        if (this.managedBySlimeWorldManager) {
             return;
         }
 

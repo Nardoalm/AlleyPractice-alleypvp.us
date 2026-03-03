@@ -124,14 +124,14 @@ public enum VisualsLocaleImpl implements LocaleEntry {
     TITLE_CAMP_PROTECTION_TAKING_DAMAGE_FADEOUT("providers/visuals.yml", "titles.camp-protection-taking-damage.fade-out", 20),
 
     TITLE_PARTY_LEFT_ENABLED_BOOLEAN("providers/visuals.yml", "titles.party-left.enabled", true),
-    TITLE_PARTY_LEFT_HEADER("providers/visuals.yml", "titles.party-left.header", "&c&l✖ Voce saiu da party de {leader}"),
+    TITLE_PARTY_LEFT_HEADER("providers/visuals.yml", "titles.party-left.header", "&c&l✖ Você saiu da party de {leader}"),
     TITLE_PARTY_LEFT_FOOTER("providers/visuals.yml", "titles.party-left.footer", "&7Voce saiu da sua party."),
     TITLE_PARTY_LEFT_FADE_IN("providers/visuals.yml", "titles.party-left.fade-in", 5),
     TITLE_PARTY_LEFT_STAY("providers/visuals.yml", "titles.party-left.stay", 15),
     TITLE_PARTY_LEFT_FADEOUT("providers/visuals.yml", "titles.party-left.fade-out", 5),
 
     TITLE_PARTY_JOINED_ENABLED_BOOLEAN("providers/visuals.yml", "titles.party-joined.enabled", true),
-    TITLE_PARTY_JOINED_HEADER("providers/visuals.yml", "titles.party-joined.header", "&a&l" + Symbol.CROSSED_SWORDS + " Voce entrou na party de {leader}"),
+    TITLE_PARTY_JOINED_HEADER("providers/visuals.yml", "titles.party-joined.header", "&a&l" + Symbol.CROSSED_SWORDS + " Você entrou na party de {leader}"),
     TITLE_PARTY_JOINED_FOOTER("providers/visuals.yml", "titles.party-joined.footer", "&7Use /p para ajuda."),
     TITLE_PARTY_JOINED_FADE_IN("providers/visuals.yml", "titles.party-joined.fade-in", 5),
     TITLE_PARTY_JOINED_STAY("providers/visuals.yml", "titles.party-joined.stay", 15),

@@ -12,6 +12,7 @@ import com.kaosmc.practice.feature.arena.Arena;
 import com.kaosmc.practice.feature.arena.ArenaService;
 import com.kaosmc.practice.feature.arena.ArenaType;
 import com.kaosmc.practice.feature.arena.ArenaValidator;
+import com.kaosmc.practice.feature.arena.internal.swm.SwmArenaManager;
 import com.kaosmc.practice.feature.arena.internal.types.FreeForAllArena;
 import com.kaosmc.practice.feature.arena.internal.types.SharedArena;
 import com.kaosmc.practice.feature.arena.internal.types.StandAloneArena;
@@ -44,6 +45,7 @@ public class ArenaServiceImpl implements ArenaService {
     private final ConfigService configService;
     private final KitService kitService;
     private final ArenaSchematicService arenaSchematicService;
+    private final SwmArenaManager swmArenaManager;
     private final ExecutorService executorService;
 
     private final List<Arena> arenas = new ArrayList<>();
@@ -66,21 +68,28 @@ public class ArenaServiceImpl implements ArenaService {
         this.configService = configService;
         this.kitService = kitService;
         this.arenaSchematicService = arenaSchematicService;
+        this.swmArenaManager = new SwmArenaManager(plugin, configService, arenaSchematicService);
         this.executorService = Executors.newFixedThreadPool(4);
     }
 
     @Override
     public void initialize(KaosContext context) {
         this.loadArenas();
-        this.initializeTemporaryWorld();
-        buildCaches();
-
         this.arenaSchematicService.generateMissingSchematics(this.arenas);
+        this.swmArenaManager.initialize();
+
+        if (!this.swmArenaManager.isEnabled()) {
+            this.initializeTemporaryWorld();
+        }
+
+        buildCaches();
     }
 
     @Override
     public void shutdown(KaosContext context) {
         cleanupTemporaryArenas();
+
+        this.swmArenaManager.shutdown();
 
         if (temporaryWorld != null) {
             String worldName = temporaryWorld.getName();
@@ -270,6 +279,21 @@ public class ArenaServiceImpl implements ArenaService {
         }
 
         int copyId = copyIdCounter.incrementAndGet();
+
+        if (this.swmArenaManager.isEnabled()) {
+            StandAloneArena copiedArena = this.swmArenaManager.createTemporaryArenaCopy(originalArena, copyId);
+            if (copiedArena != null) {
+                this.temporaryArenas.add(copiedArena);
+                return copiedArena;
+            }
+
+            Logger.error("Falha ao criar cópia temporária SWM para '" + originalArena.getName() + "'. Voltando para colagem por schematic.");
+
+            if (this.temporaryWorld == null) {
+                this.initializeTemporaryWorld();
+            }
+        }
+
         Location copyLocation = getNextCopyLocationForArena(originalArena);
 
         Location originalPos1 = originalArena.getPos1();
@@ -284,7 +308,9 @@ public class ArenaServiceImpl implements ArenaService {
         }
 
         StandAloneArena copiedArena = originalArena.createCopy(temporaryWorld, copyLocation, copyId);
-        copiedArena.setHeightLimit(copiedArena.getPos1().getBlockY() + copiedArena.getHeightLimit());
+        if (copiedArena.getPos1() != null) {
+            copiedArena.setHeightLimit(copiedArena.getPos1().getBlockY() + copiedArena.getHeightLimit());
+        }
 
         this.arenaSchematicService.paste(copyLocation, this.arenaSchematicService.getSchematicFile(originalArena.getName()));
         this.temporaryArenas.add(copiedArena);
@@ -313,7 +339,9 @@ public class ArenaServiceImpl implements ArenaService {
 
     public void cleanupTemporaryArenas() {
         for (StandAloneArena arena : new ArrayList<>(temporaryArenas)) {
-            arena.deleteCopiedArena();
+            if (!this.swmArenaManager.deleteTemporaryArena(arena)) {
+                arena.deleteCopiedArena();
+            }
         }
         this.temporaryArenas.clear();
     }
@@ -380,7 +408,11 @@ public class ArenaServiceImpl implements ArenaService {
         if (arena == null || !temporaryArenas.contains(arena)) {
             return;
         }
-        arena.deleteCopiedArena();
+
+        if (!this.swmArenaManager.deleteTemporaryArena(arena)) {
+            arena.deleteCopiedArena();
+        }
+
         this.temporaryArenas.remove(arena);
     }
 

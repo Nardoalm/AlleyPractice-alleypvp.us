@@ -22,7 +22,7 @@ public class KaosCoreCommand extends BaseCommand {
             isAdminOnly = true,
             inGameOnly = false,
             usage = "kaos core",
-            description = "Exibe informacoes sobre a integracao do core."
+            description = "Exibe informações sobre a integração do core."
     )
     @Override
     public void onCommand(CommandArgs command) {
@@ -39,7 +39,7 @@ public class KaosCoreCommand extends BaseCommand {
         ).forEach(line -> sender.sendMessage(CC.translate(line)));
 
         if (core.getType() == CoreType.DEFAULT) {
-            sender.sendMessage(CC.translate("&7Aviso: esta e a implementacao padrao do servidor, pois nenhum core compativel foi encontrado."));
+            sender.sendMessage(CC.translate("&7Aviso: esta é a implementação padrão do servidor, pois nenhum core compatível foi encontrado."));
         }
     }
 }

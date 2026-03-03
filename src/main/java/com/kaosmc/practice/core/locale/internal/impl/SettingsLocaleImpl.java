@@ -17,7 +17,7 @@ public enum SettingsLocaleImpl implements LocaleEntry {
 
     BLOCKED_CRAFTING_ITEMS_LIST("settings.yml", "crafting-operations.blocked-items", Collections.emptyList()),
 
-    COMMAND_ANTI_SYNTAX_MESSAGE("settings.yml", "commands.anti-syntax-message", "&cYou cannot execute {argument}."),
+    COMMAND_ANTI_SYNTAX_MESSAGE("settings.yml", "commands.anti-syntax-message", "&cVocê não pode executar {argument}."),
 
     CONFIG_ARENA_DEFAULT_DISPLAY_NAME_FFA("settings.yml", "configuration.arena-default-display-name.ffa", "&6{arena-name}"),
     CONFIG_ARENA_DEFAULT_DISPLAY_NAME_SHARED("settings.yml", "configuration.arena-default-display-name.shared", "&6{arena-name}"),

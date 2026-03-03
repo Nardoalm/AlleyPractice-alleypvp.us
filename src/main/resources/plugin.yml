@@ -6,4 +6,5 @@ description: '${project.description}'
 website: https://knowplugins.com
 softDepend:
   - PlaceholderAPI
+  - SlimeWorldManager
 depend: [ FastAsyncWorldEdit, WorldEdit ]

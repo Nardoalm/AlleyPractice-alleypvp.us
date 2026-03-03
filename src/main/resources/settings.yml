@@ -1,72 +1,79 @@
 plugin:
-  # Whether to automatically update Kaos Practice upon server start when a new version is available.
+  # Define se o Kaos Practice deve atualizar automaticamente ao iniciar o servidor, quando houver nova versão.
   auto-update: true
+
+arena-management:
+  swm:
+    # Ativa o gerenciamento de arenas standalone via SlimeWorldManager.
+    enabled: true
+    # Loader registrado no SWM (ex.: postgresql, file, mongodb...).
+    loader: postgresql
 
 crafting-operations:
   blocked-items: [ ]
 
 commands:
-  anti-syntax-message: '&cVocê não pode execute {argument}.'
-  # this command is executed whenever a player purchases a cosmetic item from the in game shop menu
+  anti-syntax-message: '&cVocê não pode executar {argument}.'
+  # Este comando é executado sempre que um jogador compra um item cosmético no menu da loja in-game.
   grant-cosmetic-permission: permission set {player} {permission}
 
 configuration:
   arena-default-display-name:
-    # When creating an arena, these are the default values that will be applied to it.
+    # Ao criar uma arena, estes são os valores padrão que serão aplicados.
     ffa: '&6{arena-name}'
     shared: '&6{arena-name}'
     standalone: '&6{arena-name}'
   default-kit-values:
-    # When creating a kit, these are the default values that will be applied to it.
+    # Ao criar um kit, estes são os valores padrão que serão aplicados.
     description: ''
-    disclaimer: '&7{kit-name} kit disclaimer.'
+    disclaimer: '&7Aviso do kit {kit-name}.'
     display-name: '&6{kit-name}'
     menu-title: '&6&l{kit-name}'
 
 explosive:
-  # Whether you want to use Kaos's built-in explosive mechanics. (Fireball & Instant-TNT)
+  # Define se você quer usar as mecânicas de explosivos nativas do Kaos (Fireball e TNT instantânea).
   enabled: true
   values:
     fireball:
-      # The affected radius of the explosion measured in blocks.
+      # Raio afetado da explosão, em blocos.
       explosion-range: 3.0
-      # The horizontal knockback multiplier applied to entities hit by the explosion.
+      # Multiplicador de knockback horizontal aplicado nas entidades atingidas pela explosão.
       horizontal-kb: 2.5
-      # The speed at which the fireball is thrown.
+      # Velocidade com que a fireball é lançada.
       throw-speed: 0.7
-      # The vertical knockback multiplier applied to entities hit by the explosion.
+      # Multiplicador de knockback vertical aplicado nas entidades atingidas pela explosão.
       vertical-kb: 2.2
     tnt:
-      # The affected radius of the explosion measured in blocks.
+      # Raio afetado da explosão, em blocos.
       explosion-range: 3.0
-      # The fuse duration in ticks before the TNT explodes.
+      # Tempo do pavio em ticks antes da TNT explodir.
       fuse-ticks: 60
 
 game:
-  # The radius of the end portal thats going to act as the goal. (Better not change this unless you know what you're doing)
+  # Raio do portal do End que atuará como objetivo (não altere sem saber o que está fazendo).
   portal-radius: 5
-  # Blocked commands during matches
+  # Comandos bloqueados durante partidas.
   blocked-commands:
     - kill
     - tp
-  # the amount of lives each player will have (such as pearlfight)
+  # Quantidade de vidas que cada jogador terá (ex.: PearlFight).
   lives-per-game: 3
 
 permissions:
-  syntax-bypass-permission: alley.syntax.bypass
-  color-code-usage-permission: alley.chat.color
+  syntax-bypass-permission: kaos.syntax.bypass
+  color-code-usage-permission: kaos.chat.color
   donators:
-    # Allows players to select an arena in parties
-    party-arena-selector: alley.donator.duel.arena.selector
-    # Allows players to select an arena in /duel menu
-    duel-arena-selector: alley.donator.duel.arena.selector
-    # allow players to fly in the lobby / queue
-    lobby-flight-bypass: alley.donator.lobby.flight
-    # allow players to use emojis in chat (:sad:, etc)
-    emoji-usage-permission: alley.donator.chat.emoji
+    # Permite que jogadores escolham arena em parties.
+    party-arena-selector: kaos.donator.duel.arena.selector
+    # Permite que jogadores escolham arena no menu /duel.
+    duel-arena-selector: kaos.donator.duel.arena.selector
+    # Permite voar no lobby/fila.
+    lobby-flight-bypass: kaos.donator.lobby.flight
+    # Permite usar emojis no chat (:sad:, etc).
+    emoji-usage-permission: kaos.donator.chat.emoji
 
 profanity-filter:
-  # Kaos has a built in list of insults, if this is set to true, those will be used in addition to the custom list below
+  # O Kaos possui uma lista nativa de palavrões; se estiver true, ela será usada junto da lista personalizada abaixo.
   add-default-words: true
   filtered-words:
     - shit

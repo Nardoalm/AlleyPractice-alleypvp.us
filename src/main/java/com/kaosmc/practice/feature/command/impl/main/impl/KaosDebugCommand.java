@@ -34,7 +34,7 @@ public class KaosDebugCommand extends BaseCommand {
             name = "kaos.debug",
             isAdminOnly = true,
             usage = "kaos debug <memory/instance/profile/profileData>",
-            description = "Exibe informacoes de depuracao."
+            description = "Exibe informações de depuração."
     )
 
     @Override
