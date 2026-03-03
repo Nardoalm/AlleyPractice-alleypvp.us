@@ -1,0 +1,15 @@
+package com.kaosmc.practice.feature.arena.internal.swm;
+
+import com.kaosmc.practice.feature.arena.internal.types.StandAloneArena;
+
+public interface ArenaCopyManager {
+    void initialize();
+
+    boolean isEnabled();
+
+    StandAloneArena createTemporaryArenaCopy(StandAloneArena originalArena, int copyId);
+
+    boolean deleteTemporaryArena(StandAloneArena arena);
+
+    void shutdown();
+}

@@ -96,9 +96,8 @@ public class KaosPractice extends JavaPlugin {
 
     private void validatePluginMetadata() {
         List<String> authors = this.getDescription().getAuthors();
-        List<String> expectedAuthors = Arrays.asList("Emmy", "Remi");
-        if (!new HashSet<>(authors).containsAll(expectedAuthors)) {
-            System.exit(0);
+        if (authors == null || authors.isEmpty()) {
+            Logger.error("plugin.yml sem autores definidos. Verifique os metadados.");
         }
     }
 

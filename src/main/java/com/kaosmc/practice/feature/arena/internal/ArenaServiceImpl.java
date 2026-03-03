@@ -12,7 +12,8 @@ import com.kaosmc.practice.feature.arena.Arena;
 import com.kaosmc.practice.feature.arena.ArenaService;
 import com.kaosmc.practice.feature.arena.ArenaType;
 import com.kaosmc.practice.feature.arena.ArenaValidator;
-import com.kaosmc.practice.feature.arena.internal.swm.SwmArenaManager;
+import com.kaosmc.practice.feature.arena.internal.swm.ArenaCopyManager;
+import com.kaosmc.practice.feature.arena.internal.swm.NoOpArenaCopyManager;
 import com.kaosmc.practice.feature.arena.internal.types.FreeForAllArena;
 import com.kaosmc.practice.feature.arena.internal.types.SharedArena;
 import com.kaosmc.practice.feature.arena.internal.types.StandAloneArena;
@@ -26,8 +27,10 @@ import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.plugin.Plugin;
 
 import java.io.File;
+import java.lang.reflect.Constructor;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -45,7 +48,7 @@ public class ArenaServiceImpl implements ArenaService {
     private final ConfigService configService;
     private final KitService kitService;
     private final ArenaSchematicService arenaSchematicService;
-    private final SwmArenaManager swmArenaManager;
+    private ArenaCopyManager arenaCopyManager;
     private final ExecutorService executorService;
 
     private final List<Arena> arenas = new ArrayList<>();
@@ -68,7 +71,7 @@ public class ArenaServiceImpl implements ArenaService {
         this.configService = configService;
         this.kitService = kitService;
         this.arenaSchematicService = arenaSchematicService;
-        this.swmArenaManager = new SwmArenaManager(plugin, configService, arenaSchematicService);
+        this.arenaCopyManager = new NoOpArenaCopyManager();
         this.executorService = Executors.newFixedThreadPool(4);
     }
 
@@ -76,9 +79,10 @@ public class ArenaServiceImpl implements ArenaService {
     public void initialize(KaosContext context) {
         this.loadArenas();
         this.arenaSchematicService.generateMissingSchematics(this.arenas);
-        this.swmArenaManager.initialize();
+        this.arenaCopyManager = this.createArenaCopyManager();
+        this.arenaCopyManager.initialize();
 
-        if (!this.swmArenaManager.isEnabled()) {
+        if (!this.arenaCopyManager.isEnabled()) {
             this.initializeTemporaryWorld();
         }
 
@@ -89,7 +93,7 @@ public class ArenaServiceImpl implements ArenaService {
     public void shutdown(KaosContext context) {
         cleanupTemporaryArenas();
 
-        this.swmArenaManager.shutdown();
+        this.arenaCopyManager.shutdown();
 
         if (temporaryWorld != null) {
             String worldName = temporaryWorld.getName();
@@ -280,8 +284,8 @@ public class ArenaServiceImpl implements ArenaService {
 
         int copyId = copyIdCounter.incrementAndGet();
 
-        if (this.swmArenaManager.isEnabled()) {
-            StandAloneArena copiedArena = this.swmArenaManager.createTemporaryArenaCopy(originalArena, copyId);
+        if (this.arenaCopyManager.isEnabled()) {
+            StandAloneArena copiedArena = this.arenaCopyManager.createTemporaryArenaCopy(originalArena, copyId);
             if (copiedArena != null) {
                 this.temporaryArenas.add(copiedArena);
                 return copiedArena;
@@ -339,7 +343,7 @@ public class ArenaServiceImpl implements ArenaService {
 
     public void cleanupTemporaryArenas() {
         for (StandAloneArena arena : new ArrayList<>(temporaryArenas)) {
-            if (!this.swmArenaManager.deleteTemporaryArena(arena)) {
+            if (!this.arenaCopyManager.deleteTemporaryArena(arena)) {
                 arena.deleteCopiedArena();
             }
         }
@@ -409,7 +413,7 @@ public class ArenaServiceImpl implements ArenaService {
             return;
         }
 
-        if (!this.swmArenaManager.deleteTemporaryArena(arena)) {
+        if (!this.arenaCopyManager.deleteTemporaryArena(arena)) {
             arena.deleteCopiedArena();
         }
 
@@ -456,5 +460,34 @@ public class ArenaServiceImpl implements ArenaService {
      */
     public void refreshCaches() {
         CompletableFuture.runAsync(this::buildCaches, executorService);
+    }
+
+    private ArenaCopyManager createArenaCopyManager() {
+        FileConfiguration settings = this.configService.getSettingsConfig();
+        if (settings == null || !settings.getBoolean("arena-management.swm.enabled", false)) {
+            return new NoOpArenaCopyManager();
+        }
+
+        Plugin swmPlugin = Bukkit.getPluginManager().getPlugin("SlimeWorldManager");
+        if (swmPlugin == null) {
+            Logger.error("SWM está ativado no settings.yml, mas o plugin SlimeWorldManager não está carregado. Usando fallback por schematic.");
+            return new NoOpArenaCopyManager();
+        }
+
+        try {
+            Class<?> swmManagerClass = Class.forName("com.kaosmc.practice.feature.arena.internal.swm.SwmArenaManager");
+            Constructor<?> constructor = swmManagerClass.getConstructor(KaosPractice.class, ConfigService.class, ArenaSchematicService.class);
+            Object managerInstance = constructor.newInstance(this.plugin, this.configService, this.arenaSchematicService);
+
+            if (managerInstance instanceof ArenaCopyManager) {
+                return (ArenaCopyManager) managerInstance;
+            }
+
+            Logger.error("SwmArenaManager não implementa ArenaCopyManager. Usando fallback por schematic.");
+        } catch (Throwable throwable) {
+            Logger.logException("Falha ao carregar SwmArenaManager. Usando fallback por schematic.", throwable);
+        }
+
+        return new NoOpArenaCopyManager();
     }
 }

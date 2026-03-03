@@ -6,8 +6,8 @@ arena-management:
   swm:
     # Ativa o gerenciamento de arenas standalone via SlimeWorldManager.
     enabled: true
-    # Loader registrado no SWM (ex.: postgresql, file, mongodb...).
-    loader: postgresql
+    # Loader registrado no SWM (ex.: file, mysql, mongodb...).
+    loader: file
 
 crafting-operations:
   blocked-items: [ ]

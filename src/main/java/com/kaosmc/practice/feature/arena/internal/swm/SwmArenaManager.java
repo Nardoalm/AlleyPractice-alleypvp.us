@@ -36,7 +36,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * Integra o gerenciamento de cópias de arena com SlimeWorldManager.
  * Quando habilitado, cada cópia temporária de arena standalone roda em um mundo SWM dedicado.
  */
-public class SwmArenaManager {
+public class SwmArenaManager implements ArenaCopyManager {
     private static final String SWM_PLUGIN_NAME = "SlimeWorldManager";
     private static final String TEMPLATE_PREFIX = "kaos_template_";
     private static final String COPY_PREFIX = "kaos_copy_";
@@ -56,40 +56,48 @@ public class SwmArenaManager {
         this.arenaSchematicService = arenaSchematicService;
     }
 
+    @Override
     public void initialize() {
-        FileConfiguration settings = this.configService.getSettingsConfig();
-        boolean swmEnabledInConfig = settings.getBoolean("arena-management.swm.enabled", false);
-        String loaderId = settings.getString("arena-management.swm.loader", "postgresql");
+        try {
+            FileConfiguration settings = this.configService.getSettingsConfig();
+            boolean swmEnabledInConfig = settings.getBoolean("arena-management.swm.enabled", false);
+            String loaderId = settings.getString("arena-management.swm.loader", "file");
 
-        if (!swmEnabledInConfig) {
+            if (!swmEnabledInConfig) {
+                this.enabled = false;
+                Logger.info("Gerenciamento de arenas via SWM está desativado no settings.yml.");
+                return;
+            }
+
+            Plugin possiblePlugin = Bukkit.getPluginManager().getPlugin(SWM_PLUGIN_NAME);
+            if (!(possiblePlugin instanceof SlimePlugin)) {
+                this.enabled = false;
+                Logger.error("SlimeWorldManager não encontrado ou incompatível. Retornando para gerenciamento por schematic.");
+                return;
+            }
+
+            this.slimePlugin = (SlimePlugin) possiblePlugin;
+            this.slimeLoader = this.slimePlugin.getLoader(loaderId);
+            if (this.slimeLoader == null) {
+                this.enabled = false;
+                Logger.error("Loader SWM '" + loaderId + "' não encontrado. Retornando para gerenciamento por schematic.");
+                return;
+            }
+
+            this.enabled = true;
+            Logger.info("Gerenciamento de arenas via SWM ativado com loader: " + loaderId);
+        } catch (Throwable throwable) {
             this.enabled = false;
-            Logger.info("Gerenciamento de arenas via SWM está desativado no settings.yml.");
-            return;
+            Logger.logException("Falha ao inicializar integração SWM. Retornando para gerenciamento por schematic.", throwable);
         }
-
-        Plugin possiblePlugin = Bukkit.getPluginManager().getPlugin(SWM_PLUGIN_NAME);
-        if (!(possiblePlugin instanceof SlimePlugin)) {
-            this.enabled = false;
-            Logger.error("SlimeWorldManager não encontrado ou incompatível. Retornando para gerenciamento por schematic.");
-            return;
-        }
-
-        this.slimePlugin = (SlimePlugin) possiblePlugin;
-        this.slimeLoader = this.slimePlugin.getLoader(loaderId);
-        if (this.slimeLoader == null) {
-            this.enabled = false;
-            Logger.error("Loader SWM '" + loaderId + "' não encontrado. Retornando para gerenciamento por schematic.");
-            return;
-        }
-
-        this.enabled = true;
-        Logger.info("Gerenciamento de arenas via SWM ativado com loader: " + loaderId);
     }
 
+    @Override
     public boolean isEnabled() {
         return enabled;
     }
 
+    @Override
     public StandAloneArena createTemporaryArenaCopy(StandAloneArena originalArena, int copyId) {
         if (!enabled) {
             return null;
@@ -127,6 +135,7 @@ public class SwmArenaManager {
         }
     }
 
+    @Override
     public boolean deleteTemporaryArena(StandAloneArena arena) {
         if (!enabled || !arena.isManagedBySlimeWorldManager()) {
             return false;
@@ -149,6 +158,7 @@ public class SwmArenaManager {
         return true;
     }
 
+    @Override
     public void shutdown() {
         this.templateWorldCache.clear();
     }
