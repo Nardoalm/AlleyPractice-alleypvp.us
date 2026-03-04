@@ -8,6 +8,7 @@ import com.kaosmc.practice.feature.match.model.GameParticipant;
 import com.kaosmc.practice.core.profile.Profile;
 import com.kaosmc.practice.visual.scoreboard.Scoreboard;
 import com.kaosmc.practice.common.text.CC;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -22,6 +23,14 @@ import java.util.List;
 public class SpectatorScoreboardImpl implements Scoreboard {
     @Override
     public List<String> getLines(Profile profile) {
+        if (profile == null || profile.getProfileData() == null) {
+            return Collections.emptyList();
+        }
+
+        Player player = Bukkit.getPlayer(profile.getUuid());
+        if (player == null || !player.isOnline()) {
+            return Collections.emptyList();
+        }
         ConfigService configService = KaosPractice.getInstance().getService(ConfigService.class);
 
         List<String> scoreboardLines = new ArrayList<>();

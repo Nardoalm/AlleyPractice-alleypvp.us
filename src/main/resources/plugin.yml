@@ -1,9 +1,9 @@
 name: KaosPractice
 version: '${project.version}'
 main: com.kaosmc.practice.KaosPractice
-authors: ysubz
+author: ysubz
 description: '${project.description}'
-website: https://knowplugins.com
+website: https://kaosmc.com
 softDepend:
   - PlaceholderAPI
   - SlimeWorldManager

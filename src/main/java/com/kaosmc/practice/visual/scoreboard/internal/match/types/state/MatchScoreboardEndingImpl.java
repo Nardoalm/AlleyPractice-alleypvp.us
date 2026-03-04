@@ -8,9 +8,11 @@ import com.kaosmc.practice.feature.match.model.GameParticipant;
 import com.kaosmc.practice.core.profile.Profile;
 import com.kaosmc.practice.visual.scoreboard.internal.match.MatchScoreboard;
 import com.kaosmc.practice.common.text.CC;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -21,6 +23,13 @@ import java.util.List;
 public class MatchScoreboardEndingImpl implements MatchScoreboard {
     @Override
     public List<String> getLines(Profile profile, Player player, GameParticipant<MatchGamePlayer> you, GameParticipant<MatchGamePlayer> opponent) {
+        if (profile == null || profile.getProfileData() == null) {
+            return Collections.emptyList();
+        }
+        if (player == null || !player.isOnline()) {
+            return Collections.emptyList();
+        }
+
         ConfigService configService = KaosPractice.getInstance().getService(ConfigService.class);
 
         List<String> scoreboardLines = new ArrayList<>();

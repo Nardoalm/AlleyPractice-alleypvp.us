@@ -185,8 +185,8 @@ public enum GlobalMessagesLocaleImpl implements LocaleEntry {
     JOIN_MESSAGE_CHAT_MESSAGE_LIST("messages/global-messages.yml", "join-message.message", Arrays.asList(
             "",
             "&6&lKaosPractice Core",
-            " &6&l│ &rWebsite: &6knowplugins.com",
-            " &6&l│ &rDiscord: &6discord.gg/p3R5qhfWAx",
+            " &6&l│ &rWebsite: &6kaosmc.com",
+            " &6&l│ &rDiscord: &6discord.gg/kaosmc",
             "",
             "&6&lCriado por &f{author} &7(v{version})",
             ""
