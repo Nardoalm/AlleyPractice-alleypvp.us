@@ -25,8 +25,7 @@ public class PlaceholderServiceImpl implements PlaceholderService {
             Logger.info("PlaceholderAPI is not installed! Kaos Placeholder Expansion will not be registered.");
             return;
         }
-
-        Logger.logTime(KaosPlaceholderExpansion.class.getSimpleName(), () -> {
+D        Logger.logTime(KaosPlaceholderExpansion.class.getSimpleName(), () -> {
             KaosPlaceholderExpansion expansion = new KaosPlaceholderExpansion(plugin);
             expansion.register();
         });

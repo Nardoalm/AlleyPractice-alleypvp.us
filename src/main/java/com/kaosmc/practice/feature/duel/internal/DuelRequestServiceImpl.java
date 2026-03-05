@@ -116,27 +116,33 @@ public class DuelRequestServiceImpl implements DuelRequestService {
         DuelRequest duelRequest = new DuelRequest(sender, finalTarget, kit, finalArena, isPartyDuel);
         this.addDuelRequest(duelRequest);
 
-        if (isPartyDuel) {
-            String targetName = targetParty != null && targetParty.getLeader() != null
-                    ? targetParty.getLeader().getName()
-                    : (finalTarget != null ? finalTarget.getName() : initialTarget.getName());
-            int partySize = senderParty != null ? senderParty.getMembers().size() : 1;
+        // --- SOLUÇÃO PARA O ERRO DE COMPILAÇÃO (EFETIVAMENTE FINAL) ---
+        final String fTargetName = (isPartyDuel && targetParty != null && targetParty.getLeader() != null)
+                ? targetParty.getLeader().getName()
+                : (finalTarget != null ? finalTarget.getName() : "Unknown");
 
+        final String fTargetColor = String.valueOf(initialTargetProfile.getNameColor());
+        final String fKitName = kit.getName();
+        final String fArenaName = getArenaDisplayName(finalArena);
+        final int fPartySize = senderParty != null ? senderParty.getMembers().size() : 1;
+        final String fSoloTargetName = (finalTarget != null) ? finalTarget.getName() : "Unknown";
+
+        if (isPartyDuel) {
             List<String> messages = this.localeService.getStringList(GameMessagesLocaleImpl.DUEL_REQUEST_SENT_PARTY);
             messages.forEach(message -> sender.sendMessage(CC.translate(message
-                    .replace("{name-color}", String.valueOf(initialTargetProfile.getNameColor()))
-                    .replace("{target}", targetName)
-                    .replace("{kit}", kit.getName())
-                    .replace("{arena}", getArenaDisplayName(finalArena))
-                    .replace("{party-size}", String.valueOf(partySize))
+                    .replace("{name-color}", fTargetColor)
+                    .replace("{target}", fTargetName)
+                    .replace("{kit}", fKitName)
+                    .replace("{arena}", fArenaName)
+                    .replace("{party-size}", String.valueOf(fPartySize))
             )));
         } else {
             List<String> messages = this.localeService.getStringList(GameMessagesLocaleImpl.DUEL_REQUEST_SENT_SOLO);
             messages.forEach(message -> sender.sendMessage(CC.translate(message
-                    .replace("{name-color}", String.valueOf(initialTargetProfile.getNameColor()))
-                    .replace("{target}", finalTarget.getName())
-                    .replace("{kit}", kit.getName())
-                    .replace("{arena}", getArenaDisplayName(finalArena))
+                    .replace("{name-color}", fTargetColor)
+                    .replace("{target}", fSoloTargetName)
+                    .replace("{kit}", fKitName)
+                    .replace("{arena}", fArenaName)
             )));
         }
 

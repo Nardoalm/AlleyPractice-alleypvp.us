@@ -96,8 +96,8 @@ game:
 match:
   death-message:
     generic: '&c&lMORTE! &f{name-color}{player} &fmorreu.'
-    generic-killer: '&c&lDEATH! &f{name-color}{victim} &ffoi morto por &c{killer-name-color}{killer}&f.'
-    custom: '&c&lDEATH! &f{message}'
+    generic-killer: '&c&lMORTO! &f{name-color}{victim} &ffoi morto por &c{killer-name-color}{killer}&f.'
+    custom: '&c&lMORTO! &f{message}'
   seeker-respawned: '&c&lMORTE! &fO seeker &c{name-color}{player} &frenasceu.'
   started:
     kit-disclaimer:

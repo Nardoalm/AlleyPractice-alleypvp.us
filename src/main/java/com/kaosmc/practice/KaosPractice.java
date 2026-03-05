@@ -57,6 +57,12 @@ public class KaosPractice extends JavaPlugin {
         try {
             this.context = new KaosContext(this);
             this.context.initialize();
+
+            if (this.getServer().getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+                new com.kaosmc.practice.adapter.placeholder.internal.KaosPlaceholderExpansion(this).register();
+                Logger.info("PlaceholderAPI detectado: Placeholders do Kaos registradas!");
+            }
+
         } catch (Exception exception) {
             Logger.logException("A fatal error occurred during service initialization. Kaos will be disabled.", exception);
             this.getServer().getPluginManager().disablePlugin(this);

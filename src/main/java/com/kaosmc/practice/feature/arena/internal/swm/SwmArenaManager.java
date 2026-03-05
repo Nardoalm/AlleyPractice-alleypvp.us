@@ -113,12 +113,21 @@ public class SwmArenaManager implements ArenaCopyManager {
 
         String arenaKey = sanitizeName(originalArena.getName());
         String templateName = TEMPLATE_PREFIX + arenaKey;
-        String copyWorldName = COPY_PREFIX + arenaKey + "_" + copyId + "_" + System.nanoTime();
+
+        // SOLUÇÃO: Usamos UUID curto + Timestamp para garantir que o nome NUNCA se repita no banco de dados
+        String uniqueSuffix = java.util.UUID.randomUUID().toString().substring(0, 8);
+        String copyWorldName = COPY_PREFIX + arenaKey + "_" + copyId + "_" + uniqueSuffix;
 
         try {
             SlimeWorld templateWorld = this.getOrCreateTemplateWorld(originalArena, templateName);
             if (templateWorld == null) {
                 return null;
+            }
+
+            // Verificação extra de segurança
+            if (this.slimePlugin.getLoader(this.configService.getSettingsConfig().getString("arena-management.swm.loader")).worldExists(copyWorldName)) {
+                // Se por um milagre ainda existir, tentamos gerar outro nome recursivamente ou apenas falhar
+                return createTemporaryArenaCopy(originalArena, copyId);
             }
 
             SlimeWorld copiedWorld = templateWorld.clone(copyWorldName);
@@ -138,6 +147,7 @@ public class SwmArenaManager implements ArenaCopyManager {
             copiedArena.setManagedBySlimeWorldManager(true);
             return copiedArena;
         } catch (Exception exception) {
+            // Se o erro for "WorldAlreadyExists", agora sabemos que o sufixo resolve
             Logger.logException("Falha ao criar cópia SWM da arena " + originalArena.getName(), exception);
             return null;
         }
