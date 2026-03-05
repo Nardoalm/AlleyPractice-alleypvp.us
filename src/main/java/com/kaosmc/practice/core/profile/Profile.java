@@ -25,6 +25,7 @@ import com.kaosmc.practice.feature.queue.QueueType;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -58,12 +59,6 @@ public class Profile {
 
     private ChatColor nameColor;
 
-    /**
-     * Constructor for the Profile class.
-     *
-     * @param uuid The UUID of the player.
-     * @param name The name of the player.
-     */
     public Profile(UUID uuid, String name) {
         this.uuid = uuid;
         this.firstJoin = System.currentTimeMillis();
@@ -78,214 +73,171 @@ public class Profile {
         this.globalCooldowns = new EnumMap<>(GlobalCooldown.class);
     }
 
-    /**
-     * Advanced method to retrieve the player's current color.
-     * Before accessing, check if the cached color is up to date. If not, re-assign it using the CoreAdapter.
-     * Logic is in place to avoid unnecessary calls to the CoreAdapter.
-     *
-     * @return The ChatColor representing the player's name color.
-     */
     public ChatColor getNameColor() {
         CoreAdapter adapter = KaosPractice.getInstance().getService(CoreAdapter.class);
-        if (adapter == null) {
-            return this.nameColor;
+        if (adapter == null || adapter.getCore() == null) {
+            return this.nameColor != null ? this.nameColor : ChatColor.WHITE;
         }
 
-        ChatColor upToDateColor = adapter.getCore().getPlayerColor(KaosPractice.getInstance().getServer().getPlayer(this.uuid));
-        if (upToDateColor == null) {
-            upToDateColor = this.nameColor;
+        Player p = KaosPractice.getInstance().getServer().getPlayer(this.uuid);
+        if (p == null) {
+            return this.nameColor != null ? this.nameColor : ChatColor.WHITE;
         }
 
-        if (this.nameColor != upToDateColor) {
+        ChatColor upToDateColor = adapter.getCore().getPlayerColor(p);
+        if (upToDateColor != null && this.nameColor != upToDateColor) {
             this.nameColor = upToDateColor;
         }
 
-        return this.nameColor;
+        return this.nameColor != null ? this.nameColor : ChatColor.WHITE;
     }
 
-    /**
-     * Gets the fancy name of the profile with the color.
-     *
-     * @return The colored name of the profile.
-     */
     public String getFancyName() {
-        return this.nameColor + this.name;
+        return (this.nameColor != null ? this.nameColor : ChatColor.WHITE) + this.name;
     }
 
-    /**
-     * Checks if the profile is currently busy with a match or FFA.
-     *
-     * @return True if the profile is busy, otherwise false.
-     */
     public boolean isBusy() {
         return this.state != ProfileState.LOBBY;
     }
 
-    /**
-     * Checks if the profile is in the lobby or in a queue.
-     *
-     * @return True if the profile is in the lobby or in a queue, otherwise false.
-     */
     public boolean isInLobbyOrInQueue() {
         return this.state == ProfileState.LOBBY || this.state == ProfileState.WAITING;
     }
 
-    /**
-     * Loads the profile from the database.
-     */
     public void load() {
         ProfileService profileService = KaosPractice.getInstance().getService(ProfileService.class);
-        profileService.getDatabaseProfile().loadProfile(this);
+        if (profileService != null && profileService.getDatabaseProfile() != null) {
+            profileService.getDatabaseProfile().loadProfile(this);
+        }
     }
 
-    /**
-     * Saves the profile to the database.
-     */
     public void save() {
         ProfileService profileService = KaosPractice.getInstance().getService(ProfileService.class);
-        profileService.getDatabaseProfile().saveProfile(this);
+        if (profileService != null && profileService.getDatabaseProfile() != null) {
+            profileService.getDatabaseProfile().saveProfile(this);
+        }
     }
 
-    /**
-     * Gets the cooldown object for a specific ability.
-     * If a cooldown for this ability doesn't exist yet for this profile, it will be created.
-     *
-     * @param abilityClass The class of the ability (e.g., GuardianAngel.class).
-     * @return The AbilityCooldown object for that ability.
-     */
     public AbilityCooldown getCooldown(Class<? extends Ability> abilityClass) {
         return this.abilityCooldowns.computeIfAbsent(abilityClass, key -> new AbilityCooldown());
     }
 
-    /**
-     * Gets the cooldown object for a specific global cooldown type.
-     *
-     * @param type The global cooldown type from the enum.
-     * @return The AbilityCooldown object.
-     */
     public AbilityCooldown getGlobalCooldown(GlobalCooldown type) {
         return this.globalCooldowns.computeIfAbsent(type, key -> new AbilityCooldown());
     }
 
-    /**
-     * Retrieves a sorted list of kits that the profile has participated in
-     * based on the profile's ELO for each kit, overall wins/losses and FFA kills/deaths.
-     *
-     * @return A sorted list of kits that the profile has participated in.
-     */
     public List<Kit> getSortedKits() {
         KitService kitService = KaosPractice.getInstance().getService(KitService.class);
-        return kitService.getKits()
-                .stream()
-                .filter(kit -> {
-                    ProfileRankedKitData rankedData = this.profileData.getRankedKitData().get(kit.getName());
-                    ProfileUnrankedKitData unrankedData = this.profileData.getUnrankedKitData().get(kit.getName());
-                    ProfileFFAData ffaData = this.profileData.getFfaData().get(kit.getName());
+        if (kitService == null || kitService.getKits() == null || this.profileData == null) {
+            return Collections.emptyList();
+        }
 
-                    return (rankedData != null && (rankedData.getWins() != 0 || rankedData.getLosses() != 0)) ||
-                            (unrankedData != null && (unrankedData.getWins() != 0 || unrankedData.getLosses() != 0)) ||
-                            (ffaData != null && (ffaData.getKills() != 0 || ffaData.getDeaths() != 0));
-                })
-                .sorted(Comparator.comparingInt((Kit kit) -> {
-                            ProfileRankedKitData ranked = this.profileData.getRankedKitData().get(kit.getName());
-                            return ranked != null ? ranked.getElo() : 0;
-                        }).reversed()
-                        .thenComparingInt(kit -> {
-                            ProfileRankedKitData ranked = this.profileData.getRankedKitData().get(kit.getName());
-                            return ranked != null ? ranked.getWins() : 0;
-                        }).reversed()
-                        .thenComparingInt(kit -> {
-                            ProfileFFAData ffa = this.profileData.getFfaData().get(kit.getName());
-                            return ffa != null ? ffa.getKills() : 0;
-                        }).reversed())
-                .collect(Collectors.toList());
+        return kitService.getKits().stream().filter(kit -> {
+            ProfileRankedKitData rankedData = this.profileData.getRankedKitData().get(kit.getName());
+            ProfileUnrankedKitData unrankedData = this.profileData.getUnrankedKitData().get(kit.getName());
+            ProfileFFAData ffaData = this.profileData.getFfaData().get(kit.getName());
+
+            return (rankedData != null && (rankedData.getWins() > 0 || rankedData.getLosses() > 0)) ||
+                    (unrankedData != null && (unrankedData.getWins() > 0 || unrankedData.getLosses() > 0)) ||
+                    (ffaData != null && (ffaData.getKills() > 0 || ffaData.getDeaths() > 0));
+        }).sorted(Comparator.comparingInt((Kit kit) -> {
+            ProfileRankedKitData ranked = this.profileData.getRankedKitData().get(kit.getName());
+            return ranked != null ? ranked.getElo() : 0;
+        }).reversed().thenComparingInt(kit -> {
+            ProfileRankedKitData ranked = this.profileData.getRankedKitData().get(kit.getName());
+            return ranked != null ? ranked.getWins() : 0;
+        }).reversed().thenComparingInt(kit -> {
+            ProfileFFAData ffa = this.profileData.getFfaData().get(kit.getName());
+            return ffa != null ? ffa.getKills() : 0;
+        }).reversed()).collect(Collectors.toList());
     }
 
-    /**
-     * Checks if the profile has participated in ranked matches.
-     *
-     * @return True if the profile has participated in ranked matches, otherwise false.
-     */
     public boolean hasParticipatedInRanked() {
-        return this.profileData.getRankedKitData().values().stream().anyMatch(data -> data.getWins() > 0 || data.getLosses() > 0 || data.getElo() != 1000);
+        if (this.profileData == null || this.profileData.getRankedKitData() == null) return false;
+        return this.profileData.getRankedKitData().values().stream()
+                .anyMatch(data -> data != null && (data.getWins() > 0 || data.getLosses() > 0 || data.getElo() != 1000));
     }
 
-    /**
-     * Checks if the profile has participated in tournaments.
-     *
-     * @return True if the profile has participated in tournaments, otherwise false.
-     */
     public boolean hasParticipatedInTournament() {
         return false; //TODO: Implement tournament system
     }
 
-    /**
-     * Checks if the profile has participated in FFA matches.
-     *
-     * @return True if the profile has participated in FFA matches, otherwise false.
-     */
     public boolean hasParticipatedInFFA() {
-        return this.profileData.getFfaData().values().stream().anyMatch(data -> data.getKills() > 0 || data.getDeaths() > 0);
+        if (this.profileData == null || this.profileData.getFfaData() == null) return false;
+        return this.profileData.getFfaData().values().stream()
+                .anyMatch(data -> data != null && (data.getKills() > 0 || data.getDeaths() > 0));
     }
 
-    /**
-     * Get the next division or tier string for a given profile and kit.
-     *
-     * @param kitName The name of the kit.
-     * @return The next division or tier string.
-     */
     public String getNextDivisionAndTier(String kitName) {
-        ProfileUnrankedKitData profileUnrankedKitData = this.profileData.getUnrankedKitData().get(kitName);
-        Division division = profileUnrankedKitData.getDivision();
-        DivisionTier tier = profileUnrankedKitData.getTier();
+        if (this.profileData == null || this.profileData.getUnrankedKitData() == null) return "Unranked";
+
+        ProfileUnrankedKitData kitData = this.profileData.getUnrankedKitData().get(kitName);
+        if (kitData == null) return "Unranked";
+
+        Division division = kitData.getDivision();
+        DivisionTier tier = kitData.getTier();
+
+        if (division == null || tier == null) return "Unranked";
 
         List<DivisionTier> tiers = division.getTiers();
-        int tierIndex = tiers.indexOf(tier);
+        if (tiers == null || tiers.isEmpty()) return "Unranked";
 
-        if (tierIndex < tiers.size() - 1) {
+        int tierIndex = tiers.indexOf(tier);
+        if (tierIndex != -1 && tierIndex < tiers.size() - 1) {
             DivisionTier nextTier = tiers.get(tierIndex + 1);
             return division.getName() + " " + nextTier.getName();
         }
 
         DivisionService divisionService = KaosPractice.getInstance().getService(DivisionService.class);
+        if (divisionService == null || divisionService.getDivisions() == null) return "Max";
+
         List<Division> divisions = divisionService.getDivisions();
         int divisionIndex = divisions.indexOf(division);
 
-        if (divisionIndex < divisions.size() - 1) {
+        if (divisionIndex != -1 && divisionIndex < divisions.size() - 1) {
             Division nextDivision = divisions.get(divisionIndex + 1);
-            return nextDivision.getName() + " " + nextDivision.getTiers().get(0).getName();
+            if (nextDivision != null && nextDivision.getTiers() != null && !nextDivision.getTiers().isEmpty()) {
+                return nextDivision.getName() + " " + nextDivision.getTiers().get(0).getName();
+            }
         }
 
-        return profileUnrankedKitData.getDivision().getName() + " " + profileUnrankedKitData.getTier().getName();
+        return division.getName() + " " + tier.getName();
     }
 
-    /**
-     * Get the next division for a given profile and kit.
-     *
-     * @param kitName The name of the kit.
-     * @return The next division.
-     */
     public Division getNextDivision(String kitName) {
-        ProfileUnrankedKitData profileUnrankedKitData = this.profileData.getUnrankedKitData().get(kitName);
-        Division division = profileUnrankedKitData.getDivision();
+        if (this.profileData == null || this.profileData.getUnrankedKitData() == null) return null;
 
+        ProfileUnrankedKitData kitData = this.profileData.getUnrankedKitData().get(kitName);
+        if (kitData == null) return null;
+
+        Division division = kitData.getDivision();
         DivisionService divisionService = KaosPractice.getInstance().getService(DivisionService.class);
+
+        if (divisionService == null || divisionService.getDivisions() == null) return null;
+
+        // Se o jogador não tem divisão ainda, retorna a primeira disponível
+        if (division == null) {
+            if (!divisionService.getDivisions().isEmpty()) {
+                return divisionService.getDivisions().get(0);
+            }
+            return null;
+        }
 
         List<Division> divisions = divisionService.getDivisions();
         int divisionIndex = divisions.indexOf(division);
 
-        if (divisionIndex < divisions.size() - 1) {
+        if (divisionIndex != -1 && divisionIndex < divisions.size() - 1) {
             return divisions.get(divisionIndex + 1);
         }
 
         return null;
     }
 
-    /**
-     * Updates the last play time of the profile.
-     */
     public void updatePlayTime() {
+        if (this.profileData == null) return;
         ProfilePlayTimeData playTimeData = this.profileData.getPlayTimeData();
-        playTimeData.setTotal(playTimeData.getTotal() + (System.currentTimeMillis() - playTimeData.getLastLogin()));
+        if (playTimeData != null) {
+            playTimeData.setTotal(playTimeData.getTotal() + (System.currentTimeMillis() - playTimeData.getLastLogin()));
+        }
     }
 }

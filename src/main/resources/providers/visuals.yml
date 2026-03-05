@@ -16,8 +16,8 @@ action-bars:
 titles:
   join-message:
     enabled: true
-    header: '&6&lBem-vindo ao Kaos Practice'
-    subheader: '&fMade by &6Emmy &f& &6Remi'
+    header: '&6&lKaos Practice'
+    subheader: '&fFeito por: &6ysubz '
     fade-in: 10
     stay: 40
     fade-out: 10

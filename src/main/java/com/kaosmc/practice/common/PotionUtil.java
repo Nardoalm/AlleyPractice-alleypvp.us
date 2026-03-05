@@ -6,7 +6,7 @@ import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffectType;
 
 /**
- * @author Emmy
+ * @author ysubz
  * @project Kaos
  * @date 03/11/2024 - 20:56
  */

@@ -27,7 +27,7 @@ import java.util.UUID;
  * and retrieve player profiles without having to directly interact with other parts of the code.
  * </p>
  *
- * @author Emmy
+ * @author ysubz
  * @project Kaos
  * @since 22/04/2025
  */

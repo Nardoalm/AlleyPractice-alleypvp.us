@@ -3,6 +3,7 @@ package com.kaosmc.practice.visual.scoreboard.internal;
 import com.kaosmc.practice.KaosPractice;
 import com.kaosmc.practice.core.config.ConfigService;
 import com.kaosmc.practice.feature.level.LevelService;
+import com.kaosmc.practice.feature.level.data.LevelData;
 import com.kaosmc.practice.core.profile.ProfileService;
 import com.kaosmc.practice.core.profile.Profile;
 import com.kaosmc.practice.core.profile.enums.ProfileState;
@@ -16,45 +17,69 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * @author Emmy
- * @project Kaos
- * @since 30/04/2025
- */
 public class QueueScoreboardImpl implements Scoreboard {
+
     @Override
     public List<String> getLines(Profile profile) {
-        if (profile == null || profile.getProfileData() == null) {
-            return Collections.emptyList();
-        }
+        if (profile == null || profile.getProfileData() == null) return Collections.emptyList();
+
         Player player = Bukkit.getPlayer(profile.getUuid());
-        if (player == null || !player.isOnline()) {
-            return Collections.emptyList();
-        }
+        if (player == null || !player.isOnline()) return Collections.emptyList();
+
         ConfigService configService = KaosPractice.getInstance().getService(ConfigService.class);
         ProfileService profileService = KaosPractice.getInstance().getService(ProfileService.class);
         LevelService levelService = KaosPractice.getInstance().getService(LevelService.class);
 
-        List<String> scoreboardLines = new ArrayList<>();
-        for (String line : configService.getScoreboardConfig().getStringList("scoreboard.lines.waiting")) {
-            scoreboardLines.add(CC.translate(line)
-                    .replaceAll("\\{online}", String.valueOf(Bukkit.getOnlinePlayers().size()))
-                    .replaceAll("\\{playing}", String.valueOf(safeCountState(profileService, ProfileState.PLAYING)))
-                    .replaceAll("\\{in-queue}", String.valueOf(safeCountState(profileService, ProfileState.WAITING)))
-                    .replaceAll("\\{wins}", String.valueOf(profile.getProfileData().getTotalWins()))
-                    .replaceAll("\\{queued-type}", profile.getQueueProfile().getQueue().getQueueType())
-                    .replaceAll("\\{level}", String.valueOf(levelService.getLevel(profile.getProfileData().getGlobalLevel()).getDisplayName()))
-                    .replaceAll("\\{queued-time}", TimeUtil.getFormattedElapsedTime(profile.getQueueProfile().getElapsedTime()))
-                    .replaceAll("\\{dot-animation}", this.getDotAnimation().getCurrentFrame())
-                    .replaceAll("\\{queued-kit}", profile.getQueueProfile().getQueue().getKit().getDisplayName())
-            );
+        if (configService == null || configService.getScoreboardConfig() == null) return Collections.emptyList();
+
+        // Variáveis de Fila Seguras
+        String queueType = "Carregando...";
+        String queueKit = "Carregando...";
+        long elapsedTime = 0L;
+
+        if (profile.getQueueProfile() != null && profile.getQueueProfile().getQueue() != null) {
+            queueType = profile.getQueueProfile().getQueue().getQueueType();
+            elapsedTime = profile.getQueueProfile().getElapsedTime();
+            if (profile.getQueueProfile().getQueue().getKit() != null) {
+                queueKit = profile.getQueueProfile().getQueue().getKit().getDisplayName();
+            }
         }
 
+        // Variável de Nível Segura (Antiga linha 46)
+        String levelDisplay = "N/A";
+        if (levelService != null && profile.getProfileData().getGlobalLevel() != null) {
+            LevelData levelData = levelService.getLevel(profile.getProfileData().getGlobalLevel());
+            if (levelData != null) levelDisplay = levelData.getDisplayName();
+        }
+
+        List<String> scoreboardLines = new ArrayList<>();
+        List<String> configLines = configService.getScoreboardConfig().getStringList("scoreboard.lines.waiting");
+
+        if (configLines != null) {
+            for (String line : configLines) {
+                scoreboardLines.add(CC.translate(line)
+                        .replaceAll("\\{online}", String.valueOf(Bukkit.getOnlinePlayers().size()))
+                        .replaceAll("\\{playing}", String.valueOf(safeCountState(profileService, ProfileState.PLAYING)))
+                        .replaceAll("\\{in-queue}", String.valueOf(safeCountState(profileService, ProfileState.WAITING)))
+                        .replaceAll("\\{wins}", String.valueOf(profile.getProfileData().getTotalWins()))
+                        .replaceAll("\\{queued-type}", queueType != null ? queueType : "Normal")
+                        .replaceAll("\\{level}", levelDisplay)
+                        .replaceAll("\\{queued-time}", TimeUtil.getFormattedElapsedTime(elapsedTime))
+                        .replaceAll("\\{queued-kit}", queueKit != null ? queueKit : "Nenhum")
+                );
+            }
+        }
         return scoreboardLines;
     }
 
-    @Override
-    public List<String> getLines(Profile profile, Player player) {
-        return Collections.emptyList();
+    public int safeCountState(ProfileService service, ProfileState state) {
+        if (service == null) return 0;
+        return (int) Bukkit.getOnlinePlayers().stream().filter(p -> {
+            Profile prof = service.getProfile(p.getUniqueId());
+            return prof != null && prof.getState() == state;
+        }).count();
     }
+
+    @Override
+    public List<String> getLines(Profile profile, Player player) { return Collections.emptyList(); }
 }

@@ -75,10 +75,12 @@ public class ProfileData {
 
     private void feedDataClasses() {
         KitService kitService = KaosPractice.getInstance().getService(KitService.class);
-        for (Kit kit : kitService.getKits()) {
-            this.rankedKitData.put(kit.getName(), new ProfileRankedKitData());
-            this.unrankedKitData.put(kit.getName(), new ProfileUnrankedKitData());
-            this.ffaData.put(kit.getName(), new ProfileFFAData());
+        if (kitService != null && kitService.getKits() != null) {
+            for (Kit kit : kitService.getKits()) {
+                this.rankedKitData.put(kit.getName(), new ProfileRankedKitData());
+                this.unrankedKitData.put(kit.getName(), new ProfileUnrankedKitData());
+                this.ffaData.put(kit.getName(), new ProfileFFAData());
+            }
         }
     }
 
@@ -88,21 +90,15 @@ public class ProfileData {
         this.ffaData = Maps.newHashMap();
     }
 
-    /**
-     * Calculates the global elo of the player
-     *
-     * @param profile the profile of the player
-     * @return the global elo of the player
-     */
     private int calculateGlobalElo(Profile profile) {
         KitService kitService = KaosPractice.getInstance().getService(KitService.class);
+        if (kitService == null || kitService.getKits() == null) return 0;
+
         List<Kit> rankedKits = kitService.getKits().stream()
                 .filter(kit -> kit.isSettingEnabled(KitSettingRanked.class))
                 .collect(Collectors.toList());
 
-        if (rankedKits.isEmpty()) {
-            return 0;
-        }
+        if (rankedKits.isEmpty()) return 0;
 
         int totalElo = rankedKits.stream()
                 .mapToInt(kit -> {
@@ -116,11 +112,18 @@ public class ProfileData {
 
     public void determineTitles() {
         TitleService titleService = KaosPractice.getInstance().getService(TitleService.class);
+        if (titleService == null || titleService.getTitles() == null) return;
 
         for (TitleRecord title : titleService.getTitles().values()) {
-            if (this.unrankedKitData.get(title.getKit().getName()).getDivision() == title.getRequiredDivision()) {
-                if (!this.unlockedTitles.contains(title.getKit().getName())) {
-                    this.unlockedTitles.add(title.getKit().getName());
+            if (title.getKit() == null) continue;
+
+            ProfileUnrankedKitData kitData = this.unrankedKitData.get(title.getKit().getName());
+
+            if (kitData != null && kitData.getDivision() != null) {
+                if (kitData.getDivision().equals(title.getRequiredDivision())) {
+                    if (!this.unlockedTitles.contains(title.getKit().getName())) {
+                        this.unlockedTitles.add(title.getKit().getName());
+                    }
                 }
             }
         }
@@ -136,37 +139,31 @@ public class ProfileData {
 
         LevelData levelData = levelService.getLevel(this.elo);
 
-        if (levelData != null) {
+        if (levelData != null && levelData.getName() != null) {
             this.globalLevel = levelData.getName();
         } else {
             this.globalLevel = "N/A";
         }
     }
 
-    /**
-     * Updates the elo and division of the player
-     *
-     * @param profile the profile of the player
-     */
     public void updateElo(Profile profile) {
-        int previousElo = this.elo;
         LevelService levelService = KaosPractice.getInstance().getService(LevelService.class);
-        String previousLevel = levelService.getLevel(previousElo).getName();
+        if (levelService == null) return;
+
+        int previousElo = this.elo;
+        LevelData prevLevelData = levelService.getLevel(previousElo);
+        String previousLevel = (prevLevelData != null) ? prevLevelData.getName() : "N/A";
 
         this.elo = this.calculateGlobalElo(profile);
-        String newLevel = levelService.getLevel(this.elo).getName();
 
-        if (!newLevel.equals(previousLevel)) {
+        LevelData newLevelData = levelService.getLevel(this.elo);
+        String newLevel = (newLevelData != null) ? newLevelData.getName() : "N/A";
+
+        if (!newLevel.equals(previousLevel) && !newLevel.equals("N/A")) {
             this.sendLevelUpMessage(profile, newLevel);
         }
     }
 
-    /**
-     * Sends a level up message to the player
-     *
-     * @param profile  the profile of the player
-     * @param newLevel the new level of the player
-     */
     private void sendLevelUpMessage(Profile profile, String newLevel) {
         Arrays.asList(
                 "",
@@ -176,38 +173,18 @@ public class ProfileData {
         ).forEach(line -> Bukkit.getPlayer(profile.getUuid()).sendMessage(CC.translate(line)));
     }
 
-    /**
-     * Get the total amount of wins
-     *
-     * @return The total amount of wins
-     */
     public int getTotalWins() {
         return this.rankedWins + this.unrankedWins;
     }
 
-    /**
-     * Get the total amount of losses
-     *
-     * @return The total amount of losses
-     */
     public int getTotalLosses() {
         return this.rankedLosses + this.unrankedLosses;
     }
 
-    /**
-     * Get the total amount of kills of the player ffa data.
-     *
-     * @return The total amount of kills
-     */
     public int getTotalFFAKills() {
         return this.ffaData.values().stream().mapToInt(ProfileFFAData::getKills).sum();
     }
 
-    /**
-     * Get the total amount of deaths of the player ffa data.
-     *
-     * @return The total amount of deaths
-     */
     public int getTotalFFADeaths() {
         return this.ffaData.values().stream().mapToInt(ProfileFFAData::getDeaths).sum();
     }
@@ -228,11 +205,6 @@ public class ProfileData {
         this.rankedLosses++;
     }
 
-    /**
-     * Increments the player's coins by the specified amount.
-     *
-     * @param amount The amount of coins to add.
-     */
     public void incrementCoins(int amount) {
         this.coins += amount;
     }

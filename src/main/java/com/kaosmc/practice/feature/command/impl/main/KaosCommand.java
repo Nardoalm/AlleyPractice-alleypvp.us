@@ -35,7 +35,7 @@ public class KaosCommand extends BaseCommand {
 
     @CommandData(
             name = "kaos",
-            aliases = {"kaospractice", "kpractice", "practice", "prac"},
+            aliases = {"kaospractice", "practice", "prac"},
             inGameOnly = false,
             usage = "kaos",
             description = "Exibe informações sobre o plugin."

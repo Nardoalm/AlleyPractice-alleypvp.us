@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
  * </p>
  *
  *
- * @author Emmy, Remi
+ * @author ysubz
  * @version 2.0 — Complete recode (entirely rewritten from scratch)
  * @see <a href="https://revere.dev">revere.dev</a>
  * @see <a href="https://discord.gg/revere">Discord Support</a>

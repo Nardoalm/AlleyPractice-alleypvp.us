@@ -20,7 +20,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 /**
- * @author Emmy
+ * @author ysubz
  * @project Kaos
  * @date 29/04/2024 - 18:53
  */

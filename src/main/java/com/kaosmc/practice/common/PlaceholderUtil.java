@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 import java.util.List;
 
 /**
- * @author Emmy
+ * @author ysubz
  * @project kaos-practice
  * @since 26/09/2025
  */
