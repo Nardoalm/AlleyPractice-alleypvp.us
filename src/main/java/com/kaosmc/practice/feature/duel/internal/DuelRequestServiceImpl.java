@@ -72,6 +72,15 @@ public class DuelRequestServiceImpl implements DuelRequestService {
 
     @Override
     public void createAndSendRequest(Player sender, Player initialTarget, Kit kit, @Nullable Arena arena) {
+        if (sender == null || initialTarget == null) {
+            return;
+        }
+
+        if (kit == null) {
+            sender.sendMessage(CC.translate("&cNão foi possível enviar o duelo: kit inválido."));
+            return;
+        }
+
         Profile senderProfile = this.profileService.getProfile(sender.getUniqueId());
         Profile initialTargetProfile = this.profileService.getProfile(initialTarget.getUniqueId());
 
@@ -110,7 +119,7 @@ public class DuelRequestServiceImpl implements DuelRequestService {
                     .replace("{name-color}", String.valueOf(initialTargetProfile.getNameColor()))
                     .replace("{target}", Objects.requireNonNull(targetParty).getLeader().getName())
                     .replace("{kit}", kit.getName())
-                    .replace("{arena}", Objects.requireNonNull(arena).getDisplayName())
+                    .replace("{arena}", finalArena.getDisplayName())
                     .replace("{party-size}", String.valueOf(senderParty.getMembers().size()))
             )));
         } else {
@@ -119,7 +128,7 @@ public class DuelRequestServiceImpl implements DuelRequestService {
                     .replace("{name-color}", String.valueOf(initialTargetProfile.getNameColor()))
                     .replace("{target}", finalTarget.getName())
                     .replace("{kit}", kit.getName())
-                    .replace("{arena}", Objects.requireNonNull(arena).getDisplayName())
+                    .replace("{arena}", finalArena.getDisplayName())
             )));
         }
 

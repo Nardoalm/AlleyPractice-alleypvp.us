@@ -20,8 +20,10 @@ import com.kaosmc.practice.core.config.ConfigService;
 import com.kaosmc.practice.feature.arena.internal.types.StandAloneArena;
 import com.kaosmc.practice.feature.arena.schematic.ArenaSchematicService;
 import org.bukkit.Bukkit;
+import org.bukkit.Difficulty;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.WorldType;
 import org.bukkit.WorldCreator;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
@@ -235,9 +237,9 @@ public class SwmArenaManager implements ArenaCopyManager {
         propertyMap.setBoolean(SlimeProperties.ALLOW_MONSTERS, false);
         propertyMap.setBoolean(SlimeProperties.ALLOW_ANIMALS, false);
         propertyMap.setBoolean(SlimeProperties.PVP, true);
-        propertyMap.setString(SlimeProperties.DIFFICULTY, "normal");
-        propertyMap.setString(SlimeProperties.ENVIRONMENT, "normal");
-        propertyMap.setString(SlimeProperties.WORLD_TYPE, "flat");
+        propertyMap.setString(SlimeProperties.DIFFICULTY, Difficulty.NORMAL.name());
+        propertyMap.setString(SlimeProperties.ENVIRONMENT, World.Environment.NORMAL.name());
+        propertyMap.setString(SlimeProperties.WORLD_TYPE, WorldType.FLAT.name());
         return propertyMap;
     }
 

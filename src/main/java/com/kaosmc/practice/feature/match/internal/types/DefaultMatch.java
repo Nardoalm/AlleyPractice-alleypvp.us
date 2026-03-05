@@ -15,6 +15,8 @@ import com.kaosmc.practice.core.locale.internal.impl.VisualsLocaleImpl;
 import com.kaosmc.practice.core.locale.internal.impl.message.GameMessagesLocaleImpl;
 import com.kaosmc.practice.core.profile.Profile;
 import com.kaosmc.practice.core.profile.ProfileService;
+import com.kaosmc.practice.core.profile.data.types.ProfileRankedKitData;
+import com.kaosmc.practice.core.profile.data.types.ProfileUnrankedKitData;
 import com.kaosmc.practice.core.profile.progress.PlayerProgress;
 import com.kaosmc.practice.core.profile.progress.ProgressService;
 import com.kaosmc.practice.feature.arena.Arena;
@@ -232,14 +234,32 @@ public class DefaultMatch extends Match {
      */
     private void updateUnrankedStats(GameParticipant<MatchGamePlayer> winner, GameParticipant<MatchGamePlayer> loser) {
         ProfileService profileService = KaosPractice.getInstance().getService(ProfileService.class);
+        String kitName = this.getKit() != null ? this.getKit().getName() : null;
+        if (kitName == null || kitName.trim().isEmpty()) {
+            return;
+        }
 
         Profile winnerProfile = profileService.getProfile(winner.getLeader().getUuid());
-        winnerProfile.getProfileData().getUnrankedKitData().get(getKit().getName()).incrementWins();
+        if (winnerProfile == null || winnerProfile.getProfileData() == null || winnerProfile.getProfileData().getUnrankedKitData() == null) {
+            return;
+        }
+
+        ProfileUnrankedKitData winnerKitData = winnerProfile.getProfileData()
+                .getUnrankedKitData()
+                .computeIfAbsent(kitName, key -> new ProfileUnrankedKitData());
+        winnerKitData.incrementWins();
         winnerProfile.getProfileData().incrementUnrankedWins();
         winnerProfile.getProfileData().determineTitles();
 
         Profile loserProfile = profileService.getProfile(loser.getLeader().getUuid());
-        loserProfile.getProfileData().getUnrankedKitData().get(getKit().getName()).incrementLosses();
+        if (loserProfile == null || loserProfile.getProfileData() == null || loserProfile.getProfileData().getUnrankedKitData() == null) {
+            return;
+        }
+
+        ProfileUnrankedKitData loserKitData = loserProfile.getProfileData()
+                .getUnrankedKitData()
+                .computeIfAbsent(kitName, key -> new ProfileUnrankedKitData());
+        loserKitData.incrementLosses();
         loserProfile.getProfileData().incrementUnrankedLosses();
     }
 
@@ -342,25 +362,40 @@ public class DefaultMatch extends Match {
      * @param winner The winning player.
      */
     public void sendProgressToWinner(Player winner) {
+        if (winner == null) {
+            return;
+        }
 
-        /*
-         * TODO: Fix this retarded calculation its pmo
-         *  "next thing i know half the core is f---ed" - Titanic Swim Team, Remi (13/07/2025 - 00:37)
-         */
+        try {
+            /*
+             * TODO: Fix this retarded calculation its pmo
+             *  "next thing i know half the core is f---ed" - Titanic Swim Team, Remi (13/07/2025 - 00:37)
+             */
 
-        Profile winnerProfile = KaosPractice.getInstance().getService(ProfileService.class).getProfile(winner.getUniqueId());
-        PlayerProgress progress = KaosPractice.getInstance().getService(ProgressService.class).calculateProgress(winnerProfile, this.getKit().getName());
+            Profile winnerProfile = KaosPractice.getInstance().getService(ProfileService.class).getProfile(winner.getUniqueId());
+            if (winnerProfile == null || this.getKit() == null) {
+                return;
+            }
 
-        String progressLine;
+            PlayerProgress progress = KaosPractice.getInstance().getService(ProgressService.class).calculateProgress(winnerProfile, this.getKit().getName());
+            if (progress == null) {
+                return;
+            }
 
-        if (progress.isMaxRank() && progress.getCurrentWins() >= progress.getWinsForNextTier()) {
-            progressLine = " &6&l● &fCONGRATULATIONS! You have reached the maximum rank!";
-        } else {
-            progressLine = String.format(" &6&l● &fUnlock &6%s &fwith %d more %s!",
-                    progress.getNextRankName(),
-                    progress.getWinsRequired(),
-                    progress.getWinOrWins()
-            );
+            String progressLine;
+
+            if (progress.isMaxRank() && progress.getCurrentWins() >= progress.getWinsForNextTier()) {
+                progressLine = " &6&l● &fCONGRATULATIONS! You have reached the maximum rank!";
+            } else {
+                progressLine = String.format(" &6&l● &fUnlock &6%s &fwith %d more %s!",
+                        progress.getNextRankName(),
+                        progress.getWinsRequired(),
+                        progress.getWinOrWins()
+                );
+            }
+        } catch (Exception exception) {
+            String kitName = this.getKit() != null ? this.getKit().getName() : "unknown";
+            Logger.logException("Falha ao calcular progresso do vencedor na partida " + kitName, exception);
         }
 
 //        Arrays.asList(
@@ -445,9 +480,21 @@ public class DefaultMatch extends Match {
      * @param winner The winner of the match.
      */
     public void handleWinner(int elo, GameParticipant<MatchGamePlayer> winner) {
+        String kitName = this.getKit() != null ? this.getKit().getName() : null;
+        if (kitName == null || kitName.trim().isEmpty()) {
+            return;
+        }
+
         Profile winnerProfile = KaosPractice.getInstance().getService(ProfileService.class).getProfile(winner.getLeader().getUuid());
-        winnerProfile.getProfileData().getRankedKitData().get(getKit().getName()).setElo(elo);
-        winnerProfile.getProfileData().getRankedKitData().get(getKit().getName()).incrementWins();
+        if (winnerProfile == null || winnerProfile.getProfileData() == null || winnerProfile.getProfileData().getRankedKitData() == null) {
+            return;
+        }
+
+        ProfileRankedKitData winnerKitData = winnerProfile.getProfileData()
+                .getRankedKitData()
+                .computeIfAbsent(kitName, key -> new ProfileRankedKitData());
+        winnerKitData.setElo(elo);
+        winnerKitData.incrementWins();
         winnerProfile.getProfileData().incrementRankedWins();
         winnerProfile.getProfileData().updateElo(winnerProfile);
     }
@@ -459,9 +506,21 @@ public class DefaultMatch extends Match {
      * @param loser The loser of the match.
      */
     public void handleLoser(int elo, GameParticipant<MatchGamePlayer> loser) {
+        String kitName = this.getKit() != null ? this.getKit().getName() : null;
+        if (kitName == null || kitName.trim().isEmpty()) {
+            return;
+        }
+
         Profile loserProfile = KaosPractice.getInstance().getService(ProfileService.class).getProfile(loser.getLeader().getUuid());
-        loserProfile.getProfileData().getRankedKitData().get(getKit().getName()).setElo(elo);
-        loserProfile.getProfileData().getRankedKitData().get(getKit().getName()).incrementLosses();
+        if (loserProfile == null || loserProfile.getProfileData() == null || loserProfile.getProfileData().getRankedKitData() == null) {
+            return;
+        }
+
+        ProfileRankedKitData loserKitData = loserProfile.getProfileData()
+                .getRankedKitData()
+                .computeIfAbsent(kitName, key -> new ProfileRankedKitData());
+        loserKitData.setElo(elo);
+        loserKitData.incrementLosses();
         loserProfile.getProfileData().incrementRankedLosses();
         loserProfile.getProfileData().updateElo(loserProfile);
     }
