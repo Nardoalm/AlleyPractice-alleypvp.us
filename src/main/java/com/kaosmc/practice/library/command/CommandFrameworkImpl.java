@@ -126,7 +126,7 @@ public class CommandFrameworkImpl implements CommandFramework, CommandExecutor {
                         long timeLeft = (lastUsed + cooldownMillis) - System.currentTimeMillis();
 
                         if (timeLeft > 0) {
-                            String message = CC.translate("&cPlease wait " + String.format("%.1f", timeLeft / 1000.0) + " seconds.");
+                            String message = CC.translate("&cPor favor, espere " + String.format("%.1f", timeLeft / 1000.0) + " segundos.");
                             player.sendMessage(message);
                             return true;
                         }
