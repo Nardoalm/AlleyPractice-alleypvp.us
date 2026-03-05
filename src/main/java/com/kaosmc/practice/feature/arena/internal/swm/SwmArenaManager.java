@@ -34,10 +34,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- * Integra o gerenciamento de cópias de arena com SlimeWorldManager.
- * Quando habilitado, cada cópia temporária de arena standalone roda em um mundo SWM dedicado.
- */
 public class SwmArenaManager implements ArenaCopyManager {
     private static final String SWM_PLUGIN_NAME = "SlimeWorldManager";
     private static final String TEMPLATE_PREFIX = "kaos_template_";
@@ -123,16 +119,18 @@ public class SwmArenaManager implements ArenaCopyManager {
             if (templateWorld == null) {
                 return null;
             }
-            this.ensureSafeProperties(templateWorld);
 
-            // Verificação extra de segurança
-            if (this.slimePlugin.getLoader(this.configService.getSettingsConfig().getString("arena-management.swm.loader")).worldExists(copyWorldName)) {
-                // Se por um milagre ainda existir, tentamos gerar outro nome recursivamente ou apenas falhar
-                return createTemporaryArenaCopy(originalArena, copyId);
+            if (this.slimeLoader.worldExists(copyWorldName)) {
+                this.slimeLoader.deleteWorld(copyWorldName);
+                Logger.info("Limpando registro antigo de mundo: " + copyWorldName);
             }
 
-            SlimeWorld copiedWorld = templateWorld.clone(copyWorldName);
+            SlimeWorld copiedWorld = templateWorld.clone(copyWorldName, this.slimeLoader);
+
+            // Força propriedades seguras (Evita erro de casting no SWM)
             this.ensureSafeProperties(copiedWorld);
+
+            // 3. Gerar o mundo no Bukkit
             this.slimePlugin.generateWorld(copiedWorld);
 
             World bukkitWorld = Bukkit.getWorld(copyWorldName);
@@ -143,13 +141,15 @@ public class SwmArenaManager implements ArenaCopyManager {
 
             Location copyOrigin = getCopyOrigin(originalArena, bukkitWorld);
             StandAloneArena copiedArena = originalArena.createCopy(bukkitWorld, copyOrigin, copyId);
+
             if (copiedArena.getPos1() != null) {
                 copiedArena.setHeightLimit(copiedArena.getPos1().getBlockY() + copiedArena.getHeightLimit());
             }
+
             copiedArena.setManagedBySlimeWorldManager(true);
             return copiedArena;
+
         } catch (Exception exception) {
-            // Se o erro for "WorldAlreadyExists", agora sabemos que o sufixo resolve
             Logger.logException("Falha ao criar cópia SWM da arena " + originalArena.getName(), exception);
             return null;
         }
@@ -183,6 +183,7 @@ public class SwmArenaManager implements ArenaCopyManager {
         this.templateWorldCache.clear();
     }
 
+    // EXATAMENTE igual ao original para não dar erro de Maven
     private SlimeWorld getOrCreateTemplateWorld(StandAloneArena originalArena, String templateName) throws IOException, CorruptedWorldException, NewerFormatException, WorldInUseException, UnknownWorldException {
         SlimeWorld cached = this.templateWorldCache.get(templateName);
         if (cached != null) {
@@ -201,6 +202,7 @@ public class SwmArenaManager implements ArenaCopyManager {
         return loaded;
     }
 
+    // EXATAMENTE igual ao original
     private void importTemplateWorld(StandAloneArena originalArena, String templateName) {
         String importWorldName = "swm_import_" + sanitizeName(originalArena.getName()) + "_" + System.currentTimeMillis();
         File worldFolder = new File(Bukkit.getWorldContainer(), importWorldName);
@@ -247,38 +249,36 @@ public class SwmArenaManager implements ArenaCopyManager {
         }
     }
 
+    // CORREÇÃO APLICADA AQUI: Valores em MAIÚSCULO ("NORMAL") em vez de ("normal")
     private SlimePropertyMap createTemplatePropertyMap() {
         SlimePropertyMap propertyMap = new SlimePropertyMap();
+
         propertyMap.setInt(SlimeProperties.SPAWN_X, 0);
         propertyMap.setInt(SlimeProperties.SPAWN_Y, 100);
         propertyMap.setInt(SlimeProperties.SPAWN_Z, 0);
+
         propertyMap.setBoolean(SlimeProperties.ALLOW_MONSTERS, false);
         propertyMap.setBoolean(SlimeProperties.ALLOW_ANIMALS, false);
         propertyMap.setBoolean(SlimeProperties.PVP, true);
-        propertyMap.setString(SlimeProperties.DIFFICULTY, Difficulty.NORMAL.name().toLowerCase(Locale.ROOT));
-        propertyMap.setString(SlimeProperties.ENVIRONMENT, World.Environment.NORMAL.name().toLowerCase(Locale.ROOT));
-        propertyMap.setString(SlimeProperties.WORLD_TYPE, WorldType.FLAT.name().toLowerCase(Locale.ROOT));
+
+        propertyMap.setString(SlimeProperties.DIFFICULTY, "NORMAL");
+        propertyMap.setString(SlimeProperties.ENVIRONMENT, "NORMAL");
+        propertyMap.setString(SlimeProperties.WORLD_TYPE, "FLAT");
+
         return propertyMap;
     }
 
+    // GARANTIA EXTRA: Impede que o SlimeWorldManager leia propriedades em minúsculo de templates antigos
     private void ensureSafeProperties(SlimeWorld world) {
         if (world == null || world.getPropertyMap() == null) {
             return;
         }
-
         SlimePropertyMap propertyMap = world.getPropertyMap();
         try {
-            propertyMap.setInt(SlimeProperties.SPAWN_X, 0);
-            propertyMap.setInt(SlimeProperties.SPAWN_Y, 100);
-            propertyMap.setInt(SlimeProperties.SPAWN_Z, 0);
-            propertyMap.setBoolean(SlimeProperties.ALLOW_MONSTERS, false);
-            propertyMap.setBoolean(SlimeProperties.ALLOW_ANIMALS, false);
-            propertyMap.setBoolean(SlimeProperties.PVP, true);
-            propertyMap.setString(SlimeProperties.DIFFICULTY, "normal");
-            propertyMap.setString(SlimeProperties.ENVIRONMENT, "normal");
-            propertyMap.setString(SlimeProperties.WORLD_TYPE, "flat");
-        } catch (Exception exception) {
-            Logger.logException("Falha ao normalizar propriedades SWM para o mundo '" + world.getName() + "'", exception);
+            propertyMap.setString(SlimeProperties.DIFFICULTY, "NORMAL");
+            propertyMap.setString(SlimeProperties.ENVIRONMENT, "NORMAL");
+            propertyMap.setString(SlimeProperties.WORLD_TYPE, "FLAT");
+        } catch (Exception ignored) {
         }
     }
 
