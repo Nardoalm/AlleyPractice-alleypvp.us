@@ -6,11 +6,10 @@ import com.kaosmc.practice.core.locale.LocaleService;
 import com.kaosmc.practice.core.locale.internal.impl.SettingsLocaleImpl;
 import com.kaosmc.practice.core.profile.Profile;
 import com.kaosmc.practice.core.profile.ProfileService;
+import com.kaosmc.practice.feature.level.data.LevelData;
 import com.kaosmc.practice.feature.level.LevelService;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-
-import java.util.Objects;
 
 /**
  * @author Emmy
@@ -90,37 +89,136 @@ public interface Core {
      * @return The formatted chat message as a String.
      */
     default String getChatFormat(Player player, String eventMessage, String separator) {
-        Profile profile = KaosPractice.getInstance().getService(ProfileService.class).getProfile(player.getUniqueId());
-
-        String prefix = CC.translate(this.getRankPrefix(player));
-        String suffix = CC.translate(this.getRankSuffix(player));
-        String tagPrefix = CC.translate(this.getTagPrefix(player));
-
-        ChatColor nameColor = profile.getNameColor() != null ? profile.getNameColor() : this.getPlayerColor(player);
-        ChatColor rankColor = this.getRankColor(player);
-        ChatColor tagColor = this.getTagColor(player);
-
-        String selectedTitle = CC.translate(profile.getProfileData().getSelectedTitle());
-        String level = CC.translate(KaosPractice.getInstance().getService(LevelService.class).getLevel(profile.getProfileData().getGlobalLevel()).getDisplayName());
-
-        String tagAppearanceFormat = KaosPractice.getInstance().getService(LocaleService.class).getString(SettingsLocaleImpl.SERVER_CHAT_FORMAT_TAG_APPEARANCE_FORMAT)
-                .replace("{tag-color}", String.valueOf(tagColor))
-                .replace("{tag-prefix}", CC.translate(tagPrefix));
-
-        if (player.hasPermission(KaosPractice.getInstance().getService(LocaleService.class).getString(SettingsLocaleImpl.PERMISSION_USE_OF_COLOR_CODES_IN_CHAT))) {
-            eventMessage = CC.translate(eventMessage);
+        if (player == null) {
+            return "";
         }
 
-        return KaosPractice.getInstance().getService(LocaleService.class).getString(SettingsLocaleImpl.SERVER_CHAT_FORMAT_GLOBAL)
+        ProfileService profileService = KaosPractice.getInstance().getService(ProfileService.class);
+        Profile profile = null;
+        if (profileService != null) {
+            try {
+                profile = profileService.getProfile(player.getUniqueId());
+            } catch (Exception ignored) {
+                // Fallback to default formatting below.
+            }
+        }
+        LocaleService localeService = KaosPractice.getInstance().getService(LocaleService.class);
+        LevelService levelService = KaosPractice.getInstance().getService(LevelService.class);
+
+        String safeEventMessage = eventMessage != null ? eventMessage : "";
+        String safeSeparator = separator != null ? separator : "";
+
+        if (localeService == null) {
+            return player.getName() + safeSeparator + " " + safeEventMessage;
+        }
+
+        String rawPrefix = "";
+        String rawSuffix = "";
+        String rawTagPrefix = "";
+        try {
+            rawPrefix = this.getRankPrefix(player);
+        } catch (Exception ignored) {
+        }
+        try {
+            rawSuffix = this.getRankSuffix(player);
+        } catch (Exception ignored) {
+        }
+        try {
+            rawTagPrefix = this.getTagPrefix(player);
+        } catch (Exception ignored) {
+        }
+
+        String prefix = CC.translate(rawPrefix != null ? rawPrefix : "");
+        String suffix = CC.translate(rawSuffix != null ? rawSuffix : "");
+        String tagPrefix = CC.translate(rawTagPrefix != null ? rawTagPrefix : "");
+
+        ChatColor fallbackPlayerColor;
+        try {
+            fallbackPlayerColor = this.getPlayerColor(player);
+        } catch (Exception ignored) {
+            fallbackPlayerColor = ChatColor.WHITE;
+        }
+        ChatColor nameColor = profile != null && profile.getNameColor() != null
+                ? profile.getNameColor()
+                : (fallbackPlayerColor != null ? fallbackPlayerColor : ChatColor.WHITE);
+        ChatColor rankColor;
+        ChatColor tagColor;
+        try {
+            rankColor = this.getRankColor(player);
+        } catch (Exception ignored) {
+            rankColor = ChatColor.WHITE;
+        }
+        try {
+            tagColor = this.getTagColor(player);
+        } catch (Exception ignored) {
+            tagColor = ChatColor.WHITE;
+        }
+
+        if (rankColor == null) {
+            rankColor = ChatColor.WHITE;
+        }
+        if (tagColor == null) {
+            tagColor = ChatColor.WHITE;
+        }
+
+        String selectedTitle = "";
+        String level = "Unranked";
+
+        if (profile != null && profile.getProfileData() != null) {
+            String rawTitle = profile.getProfileData().getSelectedTitle();
+            selectedTitle = rawTitle != null ? CC.translate(rawTitle) : "";
+
+            LevelData levelData = null;
+            String globalLevel = profile.getProfileData().getGlobalLevel();
+
+            if (levelService != null && globalLevel != null && !globalLevel.trim().isEmpty()) {
+                try {
+                    levelData = levelService.getLevel(globalLevel);
+                } catch (Exception ignored) {
+                    levelData = null;
+                }
+            }
+            if (levelService != null && levelData == null) {
+                try {
+                    levelData = levelService.getLevel(profile.getProfileData().getElo());
+                } catch (Exception ignored) {
+                    levelData = null;
+                }
+            }
+            if (levelData != null && levelData.getDisplayName() != null) {
+                level = CC.translate(levelData.getDisplayName());
+            }
+        }
+
+        String tagAppearanceTemplate = localeService.getString(SettingsLocaleImpl.SERVER_CHAT_FORMAT_TAG_APPEARANCE_FORMAT);
+        if (tagAppearanceTemplate == null) {
+            tagAppearanceTemplate = "{tag-prefix}";
+        }
+
+        String tagAppearanceFormat = tagAppearanceTemplate
+                .replace("{tag-color}", String.valueOf(tagColor))
+                .replace("{tag-prefix}", tagPrefix);
+
+        String colorPermission = localeService.getString(SettingsLocaleImpl.PERMISSION_USE_OF_COLOR_CODES_IN_CHAT);
+        if (colorPermission != null && !colorPermission.trim().isEmpty() && player.hasPermission(colorPermission)) {
+            safeEventMessage = CC.translate(safeEventMessage);
+        }
+
+        String globalFormat = localeService.getString(SettingsLocaleImpl.SERVER_CHAT_FORMAT_GLOBAL);
+        if (globalFormat == null) {
+            globalFormat = "{prefix}{name-color}{player}{separator} {message}";
+        }
+
+        return globalFormat
                 .replace("{prefix}", prefix)
                 .replace("{rank-color}", String.valueOf(rankColor))
                 .replace("{name-color}", String.valueOf(nameColor))
                 .replace("{player}", player.getName())
                 .replace("{suffix}", suffix)
                 .replace("{tag}", tagPrefix.isEmpty() ? "" : tagAppearanceFormat)
-                .replace("{separator}", separator)
-                .replace("{message}", eventMessage)
-                .replace("{level}", Objects.requireNonNull(CC.translate(level), "Level cannot be null"))
+                .replace("{separator}", safeSeparator)
+                .replace("{message}", safeEventMessage)
+                .replace("{level}", level)
                 .replace("{selected-title}", selectedTitle);
     }
 }

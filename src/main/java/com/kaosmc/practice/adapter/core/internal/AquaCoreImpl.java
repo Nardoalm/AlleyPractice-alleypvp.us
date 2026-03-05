@@ -3,6 +3,7 @@ package com.kaosmc.practice.adapter.core.internal;
 import com.kaosmc.practice.KaosPractice;
 import com.kaosmc.practice.adapter.core.Core;
 import com.kaosmc.practice.adapter.core.CoreType;
+<<<<<<< HEAD
 import com.kaosmc.practice.common.text.CC;
 import com.kaosmc.practice.core.locale.LocaleService;
 import com.kaosmc.practice.core.locale.internal.impl.SettingsLocaleImpl;
@@ -10,11 +11,21 @@ import com.kaosmc.practice.core.profile.Profile;
 import com.kaosmc.practice.core.profile.ProfileService;
 import com.kaosmc.practice.feature.level.LevelService;
 import com.kaosmc.practice.feature.level.data.LevelData;
+=======
+>>>>>>> 7cac30b4df47816168932facbf03ffdf36579b3c
 import me.activated.core.api.tags.Tag;
 import me.activated.core.plugin.AquaCoreAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+<<<<<<< HEAD
+=======
+/**
+ * @author Emmy
+ * @project Kaos
+ * @since 26/04/2025
+ */
+>>>>>>> 7cac30b4df47816168932facbf03ffdf36579b3c
 public class AquaCoreImpl implements Core {
     protected final KaosPractice plugin;
     protected final AquaCoreAPI aquaCoreAPI;
@@ -61,6 +72,7 @@ public class AquaCoreImpl implements Core {
 
     @Override
     public String getChatFormat(Player player, String eventMessage, String separator) {
+<<<<<<< HEAD
         ProfileService ps = KaosPractice.getInstance().getService(ProfileService.class);
         LocaleService ls = KaosPractice.getInstance().getService(LocaleService.class);
         LevelService levS = KaosPractice.getInstance().getService(LevelService.class);
@@ -87,5 +99,8 @@ public class AquaCoreImpl implements Core {
                 .replace("{level}", levelDisplay)
                 .replace("{name-color}", nColor.toString())
                 .replace("{separator}", separator != null ? separator : ":"));
+=======
+        return Core.super.getChatFormat(player, eventMessage, separator);
+>>>>>>> 7cac30b4df47816168932facbf03ffdf36579b3c
     }
 }
