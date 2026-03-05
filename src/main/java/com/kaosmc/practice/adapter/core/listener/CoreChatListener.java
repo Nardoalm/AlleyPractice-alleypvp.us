@@ -27,8 +27,24 @@ public class CoreChatListener implements Listener {
     private void onChat(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
 
-        Core core = this.plugin.getService(CoreAdapter.class).getCore();
+        Core core = null;
+        try {
+            CoreAdapter coreAdapter = this.plugin.getService(CoreAdapter.class);
+            if (coreAdapter != null) {
+                core = coreAdapter.getCore();
+            }
+        } catch (Exception ignored) {
+            core = null;
+        }
+
+        if (core == null) {
+            return;
+        }
+
         FilterService filterService = this.plugin.getService(FilterService.class);
+        if (filterService == null) {
+            return;
+        }
 
         String eventMessage = event.getMessage();
 
@@ -37,6 +53,9 @@ public class CoreChatListener implements Listener {
         }
 
         LocaleService localeService = this.plugin.getService(LocaleService.class);
+        if (localeService == null) {
+            return;
+        }
 
         if (localeService.getBoolean(SettingsLocaleImpl.SERVER_CHAT_FORMAT_ENABLED_BOOLEAN)) {
             String separator = localeService.getString(SettingsLocaleImpl.SERVER_CHAT_FORMAT_SEPARATOR);
@@ -44,8 +63,18 @@ public class CoreChatListener implements Listener {
             String censoredFormat = core.getChatFormat(player, filterService.censorWords(eventMessage), CC.translate(separator));
 
             for (Player recipient : event.getRecipients()) {
-                Profile profile = this.plugin.getService(ProfileService.class).getProfile(recipient.getUniqueId());
-                if (profile.getProfileData().getSettingData().isProfanityFilterEnabled()) {
+                boolean profanityFilterEnabled = false;
+                try {
+                    Profile profile = this.plugin.getService(ProfileService.class).getProfile(recipient.getUniqueId());
+                    profanityFilterEnabled = profile != null
+                            && profile.getProfileData() != null
+                            && profile.getProfileData().getSettingData() != null
+                            && profile.getProfileData().getSettingData().isProfanityFilterEnabled();
+                } catch (Exception ignored) {
+                    profanityFilterEnabled = false;
+                }
+
+                if (profanityFilterEnabled) {
                     if (!event.isCancelled()) {
                         recipient.sendMessage(censoredFormat);
                     }

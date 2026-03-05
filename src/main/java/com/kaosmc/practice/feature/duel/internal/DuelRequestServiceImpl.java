@@ -30,7 +30,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -83,6 +82,10 @@ public class DuelRequestServiceImpl implements DuelRequestService {
 
         Profile senderProfile = this.profileService.getProfile(sender.getUniqueId());
         Profile initialTargetProfile = this.profileService.getProfile(initialTarget.getUniqueId());
+        if (senderProfile == null || initialTargetProfile == null) {
+            sender.sendMessage(this.localeService.getString(GlobalMessagesLocaleImpl.ERROR_INVALID_PLAYER));
+            return;
+        }
 
         Party senderParty = senderProfile.getParty();
         Party targetParty = initialTargetProfile.getParty();
@@ -114,13 +117,18 @@ public class DuelRequestServiceImpl implements DuelRequestService {
         this.addDuelRequest(duelRequest);
 
         if (isPartyDuel) {
+            String targetName = targetParty != null && targetParty.getLeader() != null
+                    ? targetParty.getLeader().getName()
+                    : (finalTarget != null ? finalTarget.getName() : initialTarget.getName());
+            int partySize = senderParty != null ? senderParty.getMembers().size() : 1;
+
             List<String> messages = this.localeService.getStringList(GameMessagesLocaleImpl.DUEL_REQUEST_SENT_PARTY);
             messages.forEach(message -> sender.sendMessage(CC.translate(message
                     .replace("{name-color}", String.valueOf(initialTargetProfile.getNameColor()))
-                    .replace("{target}", Objects.requireNonNull(targetParty).getLeader().getName())
+                    .replace("{target}", targetName)
                     .replace("{kit}", kit.getName())
-                    .replace("{arena}", finalArena.getDisplayName())
-                    .replace("{party-size}", String.valueOf(senderParty.getMembers().size()))
+                    .replace("{arena}", getArenaDisplayName(finalArena))
+                    .replace("{party-size}", String.valueOf(partySize))
             )));
         } else {
             List<String> messages = this.localeService.getStringList(GameMessagesLocaleImpl.DUEL_REQUEST_SENT_SOLO);
@@ -128,7 +136,7 @@ public class DuelRequestServiceImpl implements DuelRequestService {
                     .replace("{name-color}", String.valueOf(initialTargetProfile.getNameColor()))
                     .replace("{target}", finalTarget.getName())
                     .replace("{kit}", kit.getName())
-                    .replace("{arena}", finalArena.getDisplayName())
+                    .replace("{arena}", getArenaDisplayName(finalArena))
             )));
         }
 
@@ -182,9 +190,16 @@ public class DuelRequestServiceImpl implements DuelRequestService {
             }
 
             boolean isTeamMatch = (!participantA.getPlayers().isEmpty() || !participantB.getPlayers().isEmpty());
+            Arena selectedArena = this.arenaService.selectArenaWithPotentialTemporaryCopy(duelRequest.getArena());
+            if (duelRequest.getKit() == null || selectedArena == null) {
+                duelRequest.getSender().sendMessage(this.localeService.getString(GlobalMessagesLocaleImpl.ERROR_DUEL_REQUESTS_NO_ARENA));
+                duelRequest.getTarget().sendMessage(this.localeService.getString(GlobalMessagesLocaleImpl.ERROR_DUEL_REQUESTS_NO_ARENA));
+                this.removeDuelRequest(duelRequest);
+                return;
+            }
 
             this.matchService.createAndStartMatch(
-                    duelRequest.getKit(), this.arenaService.selectArenaWithPotentialTemporaryCopy(duelRequest.getArena()), participantA, participantB, isTeamMatch, false, false
+                    duelRequest.getKit(), selectedArena, participantA, participantB, isTeamMatch, false, false
             );
 
         } else {
@@ -193,9 +208,16 @@ public class DuelRequestServiceImpl implements DuelRequestService {
 
             GameParticipant<MatchGamePlayer> participantA = new GameParticipant<>(playerA);
             GameParticipant<MatchGamePlayer> participantB = new GameParticipant<>(playerB);
+            Arena selectedArena = this.arenaService.selectArenaWithPotentialTemporaryCopy(duelRequest.getArena());
+            if (duelRequest.getKit() == null || selectedArena == null) {
+                duelRequest.getSender().sendMessage(this.localeService.getString(GlobalMessagesLocaleImpl.ERROR_DUEL_REQUESTS_NO_ARENA));
+                duelRequest.getTarget().sendMessage(this.localeService.getString(GlobalMessagesLocaleImpl.ERROR_DUEL_REQUESTS_NO_ARENA));
+                this.removeDuelRequest(duelRequest);
+                return;
+            }
 
             this.matchService.createAndStartMatch(
-                    duelRequest.getKit(), this.arenaService.selectArenaWithPotentialTemporaryCopy(duelRequest.getArena()), participantA, participantB, false, false, false
+                    duelRequest.getKit(), selectedArena, participantA, participantB, false, false, false
             );
         }
         this.removeDuelRequest(duelRequest);
@@ -275,6 +297,10 @@ public class DuelRequestServiceImpl implements DuelRequestService {
      * @param arena  the arena
      */
     private void sendInvite(Player sender, Player target, Kit kit, Arena arena, boolean isParty) {
+        if (sender == null || target == null || kit == null || arena == null) {
+            return;
+        }
+
         List<String> message;
         String command;
         String hover;
@@ -282,14 +308,14 @@ public class DuelRequestServiceImpl implements DuelRequestService {
         TextComponent clickable;
 
         if (isParty) {
-            command = this.localeService.getString(GameMessagesLocaleImpl.DUEL_REQUEST_RECEIVED_PARTY_CLICKABLE_COMMAND).replace("{sender}", sender.getName());
-            hover = this.localeService.getString(GameMessagesLocaleImpl.DUEL_REQUEST_RECEIVED_PARTY_CLICKABLE_HOVER).replace("{sender}", sender.getName());
-            format = this.localeService.getString(GameMessagesLocaleImpl.DUEL_REQUEST_RECEIVED_PARTY_CLICKABLE_FORMAT);
+            command = String.valueOf(this.localeService.getString(GameMessagesLocaleImpl.DUEL_REQUEST_RECEIVED_PARTY_CLICKABLE_COMMAND)).replace("{sender}", sender.getName());
+            hover = String.valueOf(this.localeService.getString(GameMessagesLocaleImpl.DUEL_REQUEST_RECEIVED_PARTY_CLICKABLE_HOVER)).replace("{sender}", sender.getName());
+            format = String.valueOf(this.localeService.getString(GameMessagesLocaleImpl.DUEL_REQUEST_RECEIVED_PARTY_CLICKABLE_FORMAT));
             message = this.localeService.getStringList(GameMessagesLocaleImpl.DUEL_REQUEST_RECEIVED_PARTY);
         } else {
-            command = this.localeService.getString(GameMessagesLocaleImpl.DUEL_REQUEST_RECEIVED_SOLO_CLICKABLE_COMMAND).replace("{sender}", sender.getName());
-            hover = this.localeService.getString(GameMessagesLocaleImpl.DUEL_REQUEST_RECEIVED_SOLO_CLICKABLE_HOVER).replace("{sender}", sender.getName());
-            format = this.localeService.getString(GameMessagesLocaleImpl.DUEL_REQUEST_RECEIVED_SOLO_CLICKABLE_FORMAT);
+            command = String.valueOf(this.localeService.getString(GameMessagesLocaleImpl.DUEL_REQUEST_RECEIVED_SOLO_CLICKABLE_COMMAND)).replace("{sender}", sender.getName());
+            hover = String.valueOf(this.localeService.getString(GameMessagesLocaleImpl.DUEL_REQUEST_RECEIVED_SOLO_CLICKABLE_HOVER)).replace("{sender}", sender.getName());
+            format = String.valueOf(this.localeService.getString(GameMessagesLocaleImpl.DUEL_REQUEST_RECEIVED_SOLO_CLICKABLE_FORMAT));
             message = this.localeService.getStringList(GameMessagesLocaleImpl.DUEL_REQUEST_RECEIVED_SOLO);
         }
 
@@ -299,12 +325,18 @@ public class DuelRequestServiceImpl implements DuelRequestService {
                 hover
         );
 
+        Profile senderProfile = this.profileService.getProfile(sender.getUniqueId());
+        String senderNameColor = senderProfile != null ? String.valueOf(senderProfile.getNameColor()) : "";
+        final int partySize = (isParty && senderProfile != null && senderProfile.getParty() != null)
+                ? senderProfile.getParty().getMembers().size()
+                : 1;
+
         message.forEach(line -> {
             line = line.replace("{sender}", sender.getName())
-                    .replace("{name-color}", String.valueOf(this.profileService.getProfile(sender.getUniqueId()).getNameColor()))
+                    .replace("{name-color}", senderNameColor)
                     .replace("{kit}", kit.getName())
-                    .replace("{arena}", arena.getDisplayName())
-                    .replace("{party-size}", isParty ? String.valueOf(Objects.requireNonNull(this.profileService.getProfile(sender.getUniqueId()).getParty()).getMembers().size()) : "1");
+                    .replace("{arena}", getArenaDisplayName(arena))
+                    .replace("{party-size}", String.valueOf(partySize));
 
             if (line.contains("{clickable}")) {
                 target.spigot().sendMessage(clickable);
@@ -386,5 +418,16 @@ public class DuelRequestServiceImpl implements DuelRequestService {
      */
     public void removeDuelRequest(DuelRequest duelRequest) {
         this.duelRequests.remove(duelRequest);
+    }
+
+    private String getArenaDisplayName(Arena arena) {
+        if (arena == null) {
+            return "Unknown";
+        }
+        String displayName = arena.getDisplayName();
+        if (displayName == null || displayName.trim().isEmpty()) {
+            return arena.getName() != null ? arena.getName() : "Unknown";
+        }
+        return displayName;
     }
 }

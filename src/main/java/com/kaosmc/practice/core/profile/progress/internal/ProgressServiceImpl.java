@@ -53,13 +53,21 @@ public class ProgressServiceImpl implements ProgressService {
             // Invalid division/tier state in profile data; fall back to wins-based resolution below.
         }
 
-        List<DivisionTier> tiers = currentDivision.getTiers();
+        List<DivisionTier> tiers;
+        try {
+            tiers = currentDivision.getTiers();
+        } catch (Exception ignored) {
+            return createFallbackProgress(wins);
+        }
         if (tiers == null || tiers.isEmpty()) {
             return createFallbackProgress(wins);
         }
 
         int tierIndex = resolveTierIndex(tiers, currentTier, wins);
         DivisionTier currentResolvedTier = tiers.get(tierIndex);
+        if (currentResolvedTier == null) {
+            return createFallbackProgress(wins);
+        }
 
         int nextTierWins;
         String nextRankName;
@@ -67,8 +75,13 @@ public class ProgressServiceImpl implements ProgressService {
 
         if (tierIndex < tiers.size() - 1) {
             DivisionTier nextTier = tiers.get(tierIndex + 1);
-            nextTierWins = Math.max(nextTier.getRequiredWins(), wins);
-            nextRankName = formatRankName(currentDivision, nextTier);
+            if (nextTier == null) {
+                nextTierWins = Math.max(currentResolvedTier.getRequiredWins(), wins);
+                nextRankName = FALLBACK_NEXT_RANK;
+            } else {
+                nextTierWins = Math.max(nextTier.getRequiredWins(), wins);
+                nextRankName = formatRankName(currentDivision, nextTier);
+            }
             isMaxRank = false;
         } else {
             Division nextDivision = null;
