@@ -6,7 +6,6 @@
 
     <groupId>com.kaosmc.practice</groupId>
     <artifactId>KaosPractice</artifactId>
-    <packaging>jar</packaging>
 
     <name>KaosPractice</name>
     <description>A modern practice core built from the ground and up</description>
@@ -16,7 +15,7 @@
         <developer>
             <id>ysubz</id>
             <name>ysubz</name>
-            <email>ysubz@knowplugins.com</email>
+            <email>ysubz@kaosmc.com</email>
         </developer>
     </developers>
 
@@ -52,11 +51,6 @@
                         </goals>
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
-                            <artifactSet>
-                                <excludes>
-                                    <exclude>com.grinderwolf:slimeworldmanager-plugin</exclude>
-                                </excludes>
-                            </artifactSet>
                             <filters>
                                 <filter>
                                     <artifact>*:*</artifact>
@@ -85,7 +79,7 @@
                             <relocations>
                                 <relocation>
                                     <pattern>org.bstats</pattern>
-                                    <shadedPattern>com.kaosmc.practice.shaded.org.bstats</shadedPattern>
+                                    <shadedPattern>dev.revere.kaos.shaded.org.bstats</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>
@@ -169,14 +163,15 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- SlimeWorldManager (local jar from IntelliJ library) -->
+        <!-- SlimeWorldManager (local jars) -->
         <dependency>
             <groupId>com.grinderwolf</groupId>
-            <artifactId>slimeworldmanager-plugin</artifactId>
-            <version>2.1.0</version>
+            <artifactId>slimeworldmanager-api</artifactId>
+            <version>2.2.0-SNAPSHOT</version>
             <scope>system</scope>
-            <systemPath>${user.home}/Downloads/slimeworldmanager-plugin-2.1.0.jar</systemPath>
+            <systemPath>C:/Users/LEO/Documents/SlimeSytem/SWM.jar</systemPath>
         </dependency>
+
         <dependency>
             <groupId>io.github.classgraph</groupId>
             <artifactId>classgraph</artifactId>
