@@ -1,7 +1,7 @@
 # KaosPractice
 
-**Autor:** [ysubz](https://knowplugins.com)  
-**Website:** [knowplugins.com](https://knowplugins.com)
+**Autor:** [ysubz](https://kaosmc.com)
+**Website:** [kaosmc.com](https://kaosmc.com)
 
 KaosPractice e um core de Practice PvP para Minecraft 1.8.
 

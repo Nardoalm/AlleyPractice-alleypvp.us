@@ -7,6 +7,7 @@ import com.kaosmc.practice.feature.kit.KitService;
 import com.kaosmc.practice.feature.kit.Kit;
 import com.kaosmc.practice.feature.kit.setting.types.mode.KitSettingRanked;
 import com.kaosmc.practice.feature.level.LevelService;
+import com.kaosmc.practice.feature.level.data.LevelData;
 import com.kaosmc.practice.feature.title.TitleService;
 import com.kaosmc.practice.feature.title.model.TitleRecord;
 import com.kaosmc.practice.feature.match.data.MatchData;
@@ -127,7 +128,19 @@ public class ProfileData {
 
     public void determineLevel() {
         LevelService levelService = KaosPractice.getInstance().getService(LevelService.class);
-        this.globalLevel = levelService.getLevel(this.elo).getName();
+
+        if (levelService == null) {
+            this.globalLevel = "N/A";
+            return;
+        }
+
+        LevelData levelData = levelService.getLevel(this.elo);
+
+        if (levelData != null) {
+            this.globalLevel = levelData.getName();
+        } else {
+            this.globalLevel = "N/A";
+        }
     }
 
     /**

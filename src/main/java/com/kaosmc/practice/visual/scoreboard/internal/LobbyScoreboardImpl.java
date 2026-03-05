@@ -30,6 +30,17 @@ public class LobbyScoreboardImpl implements Scoreboard {
 
     @Override
     public List<String> getLines(Profile profile) {
+        // 1. Prevenção: O perfil ou os dados ainda não carregaram
+        if (profile == null || profile.getProfileData() == null) {
+            return Collections.singletonList("&cCarregando dados...");
+        }
+
+        // 2. Prevenção: O jogador não está online no momento do tick
+        Player player = Bukkit.getPlayer(profile.getUuid());
+        if (player == null || !player.isOnline()) {
+            return Collections.emptyList();
+        }
+
         ConfigService configService = KaosPractice.getInstance().getService(ConfigService.class);
         ProfileService profileService = KaosPractice.getInstance().getService(ProfileService.class);
         LevelService levelService = KaosPractice.getInstance().getService(LevelService.class);
@@ -44,7 +55,16 @@ public class LobbyScoreboardImpl implements Scoreboard {
         Optional<MusicSession> musicStateOptional = musicService.getMusicState(profile.getUuid());
 
         int currentElo = profile.getProfileData().getElo();
+
+        // 3. Prevenção: Nível não encontrado
         LevelData currentLevel = levelService.getLevel(currentElo);
+        String levelName = (currentLevel != null) ? currentLevel.getDisplayName() : "Sem Nível";
+
+        // 4. Prevenção: CoreAdapter ou Core ausente
+        String rankStr = "";
+        if (coreAdapter != null && coreAdapter.getCore() != null) {
+            rankStr = coreAdapter.getCore().getRankColor(player) + coreAdapter.getCore().getRankName(player);
+        }
 
         for (String line : template) {
             if (line.equalsIgnoreCase("{music}")) {
@@ -71,18 +91,25 @@ public class LobbyScoreboardImpl implements Scoreboard {
             String processedLine = CC.translate(line)
                     .replace("{online}", String.valueOf(Bukkit.getOnlinePlayers().size()))
                     .replace("{wins}", String.valueOf(profile.getProfileData().getTotalWins()))
-                    .replace("{level}", currentLevel.getDisplayName())
+                    .replace("{level}", levelName) // Usando a variável segura
                     .replace("{level_progress_bar}", levelService.getProgressBar(currentElo))
                     .replace("{level_progress_details}", levelService.getProgressDetails(currentElo))
-                    .replace("{rank}", coreAdapter.getCore().getRankColor(Bukkit.getPlayer(profile.getUuid())) + coreAdapter.getCore().getRankName(Bukkit.getPlayer(profile.getUuid())))
+                    .replace("{rank}", rankStr) // Usando a variável segura
                     .replace("{playing}", String.valueOf(safeCountState(profileService, ProfileState.PLAYING)))
                     .replace("{in-queue}", String.valueOf(safeCountState(profileService, ProfileState.WAITING)));
 
             if (profile.getParty() != null) {
+                // 5. Prevenção: O líder da party desconectou e o perfil não está no cache
+                String leaderName = "Desconhecido";
+                Profile leaderProfile = profileService.getProfile(profile.getParty().getLeader().getUniqueId());
+                if (leaderProfile != null) {
+                    leaderName = leaderProfile.getFancyName();
+                }
+
                 processedLine = CC.translate(processedLine)
                         .replace("{party-size}", String.valueOf(profile.getParty().getMembers().size()))
                         .replace("{party-privacy}", profile.getParty().isPrivate() ? "Private" : "Public")
-                        .replace("{party-leader}", profileService.getProfile(profile.getParty().getLeader().getUniqueId()).getFancyName());
+                        .replace("{party-leader}", leaderName); // Usando variável segura
             }
 
             scoreboardLines.add(processedLine);

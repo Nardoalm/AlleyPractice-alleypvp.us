@@ -485,7 +485,11 @@ public class ArenaServiceImpl implements ArenaService {
 
             Logger.error("SwmArenaManager não implementa ArenaCopyManager. Usando fallback por schematic.");
         } catch (Throwable throwable) {
-            Logger.logException("Falha ao carregar SwmArenaManager. Usando fallback por schematic.", throwable);
+            Exception exceptionToLog = (throwable instanceof Exception)
+                    ? (Exception) throwable
+                    : new Exception(throwable);
+
+            Logger.logException("Falha ao carregar SwmArenaManager. Usando fallback por schematic.", exceptionToLog);
         }
 
         return new NoOpArenaCopyManager();

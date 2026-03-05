@@ -24,6 +24,13 @@ import java.util.List;
 public class QueueScoreboardImpl implements Scoreboard {
     @Override
     public List<String> getLines(Profile profile) {
+        if (profile == null || profile.getProfileData() == null) {
+            return Collections.emptyList();
+        }
+        Player player = Bukkit.getPlayer(profile.getUuid());
+        if (player == null || !player.isOnline()) {
+            return Collections.emptyList();
+        }
         ConfigService configService = KaosPractice.getInstance().getService(ConfigService.class);
         ProfileService profileService = KaosPractice.getInstance().getService(ProfileService.class);
         LevelService levelService = KaosPractice.getInstance().getService(LevelService.class);

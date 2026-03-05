@@ -48,7 +48,7 @@ public class KaosCommand extends BaseCommand {
                 "",
                 "     &6&lKaosPractice",
                 "      &6&l│ &fAutor: &6ysubz",
-                "      &6&l│ &fWebsite: &6knowplugins.com",
+                "      &6&l│ &fWebsite: &6kaosmc.com",
                 "      &6&l│ &fEquipe: &6" + this.plugin.getDescription().getAuthors().toString().replace("[", "").replace("]", "").replace(",", "&7,&6"),
                 "",
                 "      &6&l│ &fLicense: &6CC BY-NC-SA 4.0",
@@ -64,7 +64,7 @@ public class KaosCommand extends BaseCommand {
     }
 
     private @NotNull TextComponent createLinkComponent() {
-        TextComponent websiteComponent = ClickableUtil.createLinkComponent("&b&l[WEBSITE]", "https://knowplugins.com", "&aClique para abrir o website.");
+        TextComponent websiteComponent = ClickableUtil.createLinkComponent("&b&l[WEBSITE]", "https://kaosmc.com", "&aClique para abrir o website.");
         String spacing = "  ";
 
         TextComponent clickable = new TextComponent("     ");

@@ -8,6 +8,7 @@ import com.kaosmc.practice.core.profile.data.types.ProfileFFAData;
 import com.kaosmc.practice.feature.ffa.spawn.FFASpawnService;
 import com.kaosmc.practice.visual.scoreboard.Scoreboard;
 import com.kaosmc.practice.common.text.CC;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -34,6 +35,13 @@ public class FFAScoreboardImpl implements Scoreboard {
      */
     @Override
     public List<String> getLines(Profile profile, Player player) {
+        if (profile == null || profile.getProfileData() == null) {
+            return Collections.emptyList();
+        }
+
+        if (player == null || !player.isOnline()) {
+            return Collections.emptyList();
+        }
         ProfileFFAData profileFFAData = profile.getProfileData().getFfaData().get(profile.getFfaMatch().getKit().getName());
 
         FFASpawnService ffaSpawnService = KaosPractice.getInstance().getService(FFASpawnService.class);

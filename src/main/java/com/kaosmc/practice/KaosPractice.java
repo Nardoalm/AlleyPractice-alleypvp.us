@@ -39,6 +39,10 @@ public class KaosPractice extends JavaPlugin {
     private final Kaos api;
     private KaosContext context;
 
+    public static KaosPractice getInstance() {
+        return instance;
+    }
+
     public KaosPractice() {
         this.api = new Kaos();
     }

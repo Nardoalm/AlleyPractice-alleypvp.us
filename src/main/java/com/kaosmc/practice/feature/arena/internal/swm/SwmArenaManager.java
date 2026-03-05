@@ -90,7 +90,13 @@ public class SwmArenaManager implements ArenaCopyManager {
             Logger.info("Gerenciamento de arenas via SWM ativado com loader: " + loaderId);
         } catch (Throwable throwable) {
             this.enabled = false;
-            Logger.logException("Falha ao inicializar integração SWM. Retornando para gerenciamento por schematic.", throwable);
+
+            if (throwable instanceof Exception) {
+                Logger.logException("Falha ao inicializar integração SWM. Retornando para gerenciamento por schematic.", (Exception) throwable);
+            } else {
+                System.err.println("ERRO FATAL (NÃO-EXCEÇÃO) NO SWM:");
+                throwable.printStackTrace();
+            }
         }
     }
 
