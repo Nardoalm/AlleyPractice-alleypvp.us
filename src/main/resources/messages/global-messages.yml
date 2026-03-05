@@ -195,7 +195,7 @@ item:
   command:
     given-item: '&aVocê recebeu &6{amount} &a{item-name}&a.'
     enchanted-item: '&aVocê encantou seu &6{item-name} &acom &6{enchantment}
-      &anível &6{nível}&a.'
+      &anível &6{level}&a.'
   error:
     item-not-configured: '&cO item chamado &6{item-name} &cnão está configurado.'
 join-message:
@@ -252,9 +252,9 @@ kit:
       &ano kit &6{kit-name}&a.'
     saved: '&aSalvou o kit &6{kit-name}&a!'
     saved-all: '&aSalvou todos os kits!'
-nível:
+level:
   error:
-    not-found: '&cUm nível chamado &6{nível-name} &cnão existe!'
+    not-found: '&cUm nível chamado &6{level-name} &cnão existe!'
     already-exists: '&cUm nível chamado &6{level-name} &cjá existe!'
     max-elo-must-be-greater-than-min: '&cO Elo máximo deve ser maior que o Elo mínimo! (Mínimo: &6{min-elo}&c)'
     min-elo-cannot-be-negative: '&cO Elo mínimo não pode ser negativo!'

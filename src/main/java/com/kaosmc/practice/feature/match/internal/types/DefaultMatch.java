@@ -563,16 +563,22 @@ public class DefaultMatch extends Match {
             return;
         }
 
-        Profile profile = this.plugin.getService(ProfileService.class).getProfile(player.getUniqueId());
-        this.sendMessage(profile.getFancyName() + " &fdisconnected.");
-
         MatchGamePlayer gamePlayer = this.getFromAllGamePlayers(player);
-        if (gamePlayer != null) {
-            gamePlayer.setDisconnected(true);
-            gamePlayer.setEliminated(true);
-            if (!gamePlayer.isDead()) {
-                this.handleDeath(player, EntityDamageEvent.DamageCause.CUSTOM);
-            }
+        if (gamePlayer == null || gamePlayer.isDisconnected()) {
+            return;
+        }
+
+        Profile profile = this.plugin.getService(ProfileService.class).getProfile(player.getUniqueId());
+        if (profile != null) {
+            this.sendMessage(profile.getFancyName() + " &fdisconnected.");
+        } else {
+            this.sendMessage("&c" + player.getName() + " &fdisconnected.");
+        }
+
+        gamePlayer.setDisconnected(true);
+        gamePlayer.setEliminated(true);
+        if (!gamePlayer.isDead()) {
+            this.handleDeath(player, EntityDamageEvent.DamageCause.CUSTOM);
         }
 
         if (player.isOnline()) {

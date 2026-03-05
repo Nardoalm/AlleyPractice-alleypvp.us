@@ -219,6 +219,8 @@ public interface Core {
                 .replace("{separator}", safeSeparator)
                 .replace("{message}", safeEventMessage)
                 .replace("{level}", level)
+                .replace("{nivel}", level)
+                .replace("{nível}", level)
                 .replace("{selected-title}", selectedTitle);
     }
 }

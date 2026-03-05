@@ -85,7 +85,7 @@ server:
   chat-format:
     global:
       enabled: true
-      format: '&7[{nível}&7]&r {prefix}{rank-color}{name-color}{player}{suffix}{tag}{separator}{message}'
+      format: '&7[{nivel}&7]&r {prefix}{rank-color}{name-color}{player}{suffix}{tag}{separator}{message}'
       separator: '&7: &f'
     tag-appearance:
       format: ' {tag-color}{tag-prefix}'

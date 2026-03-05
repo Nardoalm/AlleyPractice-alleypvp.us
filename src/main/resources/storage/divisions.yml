@@ -4,7 +4,7 @@ divisions:
     description: "A divisão Bronze"
     durability: 0
     icon: CLAY_BRICK
-    tier-nívels:
+    tier-levels:
       I:
         required-wins: 0
       II:
@@ -20,7 +20,7 @@ divisions:
     description: "A divisão Silver"
     durability: 0
     icon: IRON_INGOT
-    tier-nívels:
+    tier-levels:
       I:
         required-wins: 120
       II:
@@ -36,7 +36,7 @@ divisions:
     description: "A divisão Gold"
     durability: 0
     icon: GOLD_INGOT
-    tier-nívels:
+    tier-levels:
       I:
         required-wins: 250
       II:
@@ -52,7 +52,7 @@ divisions:
     description: "A divisão Platinum"
     durability: 4
     icon: INK_SACK
-    tier-nívels:
+    tier-levels:
       I:
         required-wins: 1000
       II:
@@ -68,7 +68,7 @@ divisions:
     description: "A divisão Diamond"
     durability: 0
     icon: DIAMOND
-    tier-nívels:
+    tier-levels:
       I:
         required-wins: 1600
       II:
@@ -84,7 +84,7 @@ divisions:
     description: "A divisão Master"
     durability: 12
     icon: INK_SACK
-    tier-nívels:
+    tier-levels:
       I:
         required-wins: 2500
       II:
@@ -100,7 +100,7 @@ divisions:
     description: "A divisão Grandmaster"
     durability: 6
     icon: INK_SACK
-    tier-nívels:
+    tier-levels:
       I:
         required-wins: 6000
       II:

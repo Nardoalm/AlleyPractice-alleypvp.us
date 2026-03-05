@@ -12,6 +12,7 @@ import com.kaosmc.practice.core.profile.data.types.ProfileUnrankedKitData;
 import com.kaosmc.practice.core.profile.menu.statistic.button.GlobalStatButton;
 import com.kaosmc.practice.core.profile.menu.statistic.button.LeaderboardButton;
 import com.kaosmc.practice.core.profile.menu.statistic.button.StatisticsButton;
+import com.kaosmc.practice.feature.division.model.DivisionTier;
 import com.kaosmc.practice.common.item.ItemBuilder;
 import com.kaosmc.practice.common.text.CC;
 import lombok.AllArgsConstructor;
@@ -49,7 +50,7 @@ public class StatisticsMenu extends Menu {
 
         int slot = 10;
         for (Kit kit : sortedKits) {
-            buttons.put(slot++, new KitStatButton(profile, kit));
+            buttons.put(slot++, new KitStatButton(this.target.getUniqueId(), kit));
             if (slot == 17 || slot == 26 || slot == 35 || slot == 44 || slot == 53) {
                 slot += 2;
             }
@@ -67,36 +68,69 @@ public class StatisticsMenu extends Menu {
 
     @AllArgsConstructor
     private static class KitStatButton extends Button {
-        private final Profile profile;
+        private static final int DEFAULT_ELO = 1000;
+
+        private final UUID targetUuid;
         private final Kit kit;
 
         @Override
         public ItemStack getButtonItem(Player player) {
-            ProfileRankedKitData profileRankedKitData = this.profile.getProfileData().getRankedKitData().get(this.kit.getName());
-            ProfileUnrankedKitData profileUnrankedKitData = this.profile.getProfileData().getUnrankedKitData().get(this.kit.getName());
-            ProfileFFAData profileFFAData = this.profile.getProfileData().getFfaData().get(this.kit.getName());
+            ProfileService profileService = KaosPractice.getInstance().getService(ProfileService.class);
+            Profile targetProfile = profileService != null ? profileService.getProfile(this.targetUuid) : null;
+
+            ProfileRankedKitData profileRankedKitData = null;
+            ProfileUnrankedKitData profileUnrankedKitData = null;
+            ProfileFFAData profileFFAData = null;
+
+            if (targetProfile != null && targetProfile.getProfileData() != null) {
+                if (targetProfile.getProfileData().getRankedKitData() != null) {
+                    profileRankedKitData = targetProfile.getProfileData().getRankedKitData().get(this.kit.getName());
+                }
+                if (targetProfile.getProfileData().getUnrankedKitData() != null) {
+                    profileUnrankedKitData = targetProfile.getProfileData().getUnrankedKitData().get(this.kit.getName());
+                }
+                if (targetProfile.getProfileData().getFfaData() != null) {
+                    profileFFAData = targetProfile.getProfileData().getFfaData().get(this.kit.getName());
+                }
+            }
+
+            int unrankedWins = profileUnrankedKitData != null ? profileUnrankedKitData.getWins() : 0;
+            int rankedWins = profileRankedKitData != null ? profileRankedKitData.getWins() : 0;
+            int rankedElo = profileRankedKitData != null ? profileRankedKitData.getElo() : DEFAULT_ELO;
+
+            String divisionName = "Unranked";
+            String tierName = "I";
+            if (profileUnrankedKitData != null) {
+                if (profileUnrankedKitData.getDivision() != null && profileUnrankedKitData.getDivision().getName() != null) {
+                    divisionName = profileUnrankedKitData.getDivision().getName();
+                }
+                DivisionTier tier = profileUnrankedKitData.getTier();
+                if (tier != null && tier.getName() != null) {
+                    tierName = tier.getName();
+                }
+            }
 
             List<String> lore = new ArrayList<>(Arrays.asList(
                     CC.MENU_BAR,
-                    "&6&lUnranked &6⭐" + profileUnrankedKitData.getDivision().getName() + " " + profileUnrankedKitData.getTier().getName(),
-                    "&6│ &fWins: &6" + profileUnrankedKitData.getWins(),
+                    "&6&lUnranked &6⭐" + divisionName + " " + tierName,
+                    "&6│ &fWins: &6" + unrankedWins,
                     //"&f● &6Losses: &f" + profileUnrankedKitData.getLosses(),
                     "",
                     "&6│ &fWin Streak: " + "&6N/A",
                     "    &fBest: " + "&6N/A" + " &7(N/A Daily)"
             ));
 
-            if (this.profile.hasParticipatedInRanked()) {
+            if (targetProfile != null && targetProfile.hasParticipatedInRanked()) {
                 lore.addAll(Arrays.asList(
                         "",
                         "&6&lRanked",
-                        "&6│ &fWins: &6" + profileRankedKitData.getWins(),
+                        "&6│ &fWins: &6" + rankedWins,
                         //"&f● &6Losses: &f" + profileRankedKitData.getLosses(),
-                        "&6│ &fElo: &6" + profileRankedKitData.getElo()
+                        "&6│ &fElo: &6" + rankedElo
                 ));
             }
 
-            if (this.profile.hasParticipatedInTournament()) {
+            if (targetProfile != null && targetProfile.hasParticipatedInTournament()) {
                 lore.addAll(Arrays.asList(
                         "",
                         "&6&lTournament",
@@ -105,12 +139,15 @@ public class StatisticsMenu extends Menu {
                 ));
             }
 
-            if (this.kit.isFfaEnabled() && this.profile.hasParticipatedInFFA()) {
+            if (this.kit.isFfaEnabled() && targetProfile != null && targetProfile.hasParticipatedInFFA()) {
+                int kills = profileFFAData != null ? profileFFAData.getKills() : 0;
+                int deaths = profileFFAData != null ? profileFFAData.getDeaths() : 0;
+                String kd = profileFFAData != null ? profileFFAData.getKillDeathRatio() : "0.0x";
                 lore.addAll(Arrays.asList(
                         "",
                         "&6&lFFA",
-                        "&f● &6Kills: &f" + profileFFAData.getKills() + " &7(" + profileFFAData.getKillDeathRatio() + ")",
-                        "&f● &6Deaths: &f" + profileFFAData.getDeaths()
+                        "&f● &6Kills: &f" + kills + " &7(" + kd + ")",
+                        "&f● &6Deaths: &f" + deaths
                 ));
             }
 

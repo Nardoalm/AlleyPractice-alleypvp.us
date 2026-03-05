@@ -369,19 +369,26 @@ public abstract class Match {
         player.getInventory().setArmorContents(kit.getArmor());
 
         Profile profile = profileService.getProfile(player.getUniqueId());
-        if (profile.getProfileData().getLayoutData().getLayouts().size() > 1) {
-            ItemStack[] itemsToGive;
+        ItemStack[] itemsToGive = kit.getItems();
 
-            LayoutData kitLayout = profile.getProfileData().getLayoutData().getLayouts().get(kit.getName()).get(0);
-            if (kitLayout == null) {
-                itemsToGive = kit.getItems();
-            } else {
-                itemsToGive = kitLayout.getItems();
-            }
-
+        if (profile == null
+                || profile.getProfileData() == null
+                || profile.getProfileData().getLayoutData() == null
+                || profile.getProfileData().getLayoutData().getLayouts() == null) {
             player.getInventory().setContents(itemsToGive);
         } else {
-            layoutService.giveBooks(player, kit.getName());
+            List<LayoutData> kitLayouts = profile.getProfileData().getLayoutData().getLayouts().get(kit.getName());
+            if (kitLayouts == null || kitLayouts.isEmpty()) {
+                player.getInventory().setContents(itemsToGive);
+            } else if (kitLayouts.size() == 1) {
+                LayoutData singleLayout = kitLayouts.get(0);
+                if (singleLayout != null && singleLayout.getItems() != null) {
+                    itemsToGive = singleLayout.getItems();
+                }
+                player.getInventory().setContents(itemsToGive);
+            } else {
+                layoutService.giveBooks(player, kit.getName());
+            }
         }
 
         player.updateInventory();
@@ -521,6 +528,10 @@ public abstract class Match {
      * @param cause         The cause of the damage that led to death.
      */
     private void handleDeathMessages(Player victim, Player killer, Profile victimProfile, Profile killerProfile, EntityDamageEvent.DamageCause cause) {
+        if (this.getKit().isSettingEnabled(KitSettingBoxing.class)) {
+            return;
+        }
+
         if (killer == null || killerProfile == null) {
             this.handleDefaultDeathMessages(victim, null, victimProfile);
             return;
@@ -545,8 +556,15 @@ public abstract class Match {
         String messageTemplate = pack.getRandomMessage(cause);
 
         if (messageTemplate != null) {
-            String finalMessage = messageTemplate.replace("{victim}", victimProfile.getNameColor() + victim.getName() + "&f");
-            finalMessage = finalMessage.replace("{killer}", killerProfile.getNameColor() + killer.getName() + "&f");
+            String victimColor = String.valueOf(victimProfile.getNameColor());
+            String killerColor = String.valueOf(killerProfile.getNameColor());
+
+            String finalMessage = messageTemplate.replace("{victim}", victimColor + victim.getName() + "&f");
+            finalMessage = finalMessage.replace("{killer}", killerColor + killer.getName() + "&f");
+            finalMessage = finalMessage.replace("{victim-name-color}", victimColor);
+            finalMessage = finalMessage.replace("{victim-color}", victimColor);
+            finalMessage = finalMessage.replace("{killer-name-color}", killerColor);
+            finalMessage = finalMessage.replace("{killer-color}", killerColor);
 
             this.notifyAll(this.plugin.getService(LocaleService.class).getString(GameMessagesLocaleImpl.MATCH_DEATH_MESSAGE_CUSTOM).replace("{message}", CC.translate(finalMessage)));
             this.processKillerStatActions(killer);
@@ -594,7 +612,10 @@ public abstract class Match {
                 .replace("{victim}", victimProfile.getNameColor() + victim.getName() + "&f")
                 .replace("{killer}", killerProfile.getNameColor() + killer.getName() + "&f")
                 .replace("{name-color}", String.valueOf(victimProfile.getNameColor()))
+                .replace("{victim-name-color}", String.valueOf(victimProfile.getNameColor()))
+                .replace("{victim-color}", String.valueOf(victimProfile.getNameColor()))
                 .replace("{killer-name-color}", String.valueOf(killerProfile.getNameColor()))
+                .replace("{killer-color}", String.valueOf(killerProfile.getNameColor()))
         );
     }
 

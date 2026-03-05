@@ -33,7 +33,7 @@ public class PartyChatCommand extends BaseCommand {
 
         ProfileService profileService = this.plugin.getService(ProfileService.class);
         Profile profile = profileService.getProfile(player.getUniqueId());
-        String message = Arrays.stream(args).map(argument -> argument + " ").collect(Collectors.joining());
+        String message = Arrays.stream(args).collect(Collectors.joining(" ")).trim();
 
         if (args.length == 0) {
             if (profile.getProfileData().getSettingData().getChatChannel().equals(ChatChannel.PARTY.toString())) {
@@ -51,12 +51,11 @@ public class PartyChatCommand extends BaseCommand {
             return;
         }
 
-        if (!profile.getProfileData().getSettingData().isPartyMessagesEnabled()) {
-            player.sendMessage(CC.translate(this.getString(GlobalMessagesLocaleImpl.ERROR_YOU_PARTY_CHAT_DISABLED)));
-            return;
+        String chatFormat = this.plugin.getService(PartyService.class).getChatFormat();
+        if (chatFormat == null || chatFormat.trim().isEmpty()) {
+            chatFormat = "&7[&6Party&7] &6{player}&7: &f{message}";
         }
-
-        String partyMessage = this.plugin.getService(PartyService.class).getChatFormat().replace("{player}", player.getName()).replace("{message}", message);
+        String partyMessage = chatFormat.replace("{player}", player.getName()).replace("{message}", message);
         profile.getParty().notifyParty(partyMessage);
     }
 }

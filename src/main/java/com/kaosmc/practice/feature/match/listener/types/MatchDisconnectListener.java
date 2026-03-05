@@ -20,39 +20,48 @@ import org.bukkit.event.player.PlayerQuitEvent;
 public class MatchDisconnectListener implements Listener {
     @EventHandler
     private void onPlayerQuit(PlayerQuitEvent event) {
-        Player player = event.getPlayer();
-        ProfileService profileService = KaosPractice.getInstance().getService(ProfileService.class);
-        Profile profile = profileService.getProfile(player.getUniqueId());
-
-        if (profile.getState() == ProfileState.PLAYING || profile.getState() == ProfileState.SPECTATING) {
-            profile.setState(ProfileState.LOBBY);
-            Match match = profile.getMatch();
-            if (match.getSpectators().contains(player.getUniqueId())) {
-                match.removeSpectator(player, true);
-            }
-
-            if (match.getGamePlayer(player) == null) {
-                return;
-            }
-
-            if (match.getState() == MatchState.STARTING || match.getState() == MatchState.RUNNING) {
-                match.handleDisconnect(player);
-            }
-        }
+        this.handleDisconnect(event.getPlayer());
     }
 
     @EventHandler
     private void onPlayerKick(PlayerKickEvent event) {
-        Player player = event.getPlayer();
+        this.handleDisconnect(event.getPlayer());
+    }
+
+    private void handleDisconnect(Player player) {
+        if (player == null) {
+            return;
+        }
+
         ProfileService profileService = KaosPractice.getInstance().getService(ProfileService.class);
         Profile profile = profileService.getProfile(player.getUniqueId());
+        if (profile == null) {
+            return;
+        }
 
-        if (profile.getState() == ProfileState.PLAYING) {
-            Match match = profile.getMatch();
+        if (profile.getState() != ProfileState.PLAYING && profile.getState() != ProfileState.SPECTATING) {
+            return;
+        }
 
-            if (match.getState() == MatchState.STARTING || match.getState() == MatchState.RUNNING) {
-                match.handleDisconnect(player);
-            }
+        Match match = profile.getMatch();
+        if (match == null) {
+            profile.setState(ProfileState.LOBBY);
+            return;
+        }
+
+        if (match.getSpectators().contains(player.getUniqueId())) {
+            match.removeSpectator(player, true);
+            return;
+        }
+
+        if (match.getGamePlayer(player) == null || match.getGamePlayer(player).isDisconnected()) {
+            return;
+        }
+
+        if (match.getState() == MatchState.STARTING || match.getState() == MatchState.RUNNING) {
+            match.handleDisconnect(player);
+            profile.setState(ProfileState.LOBBY);
+            profile.setMatch(null);
         }
     }
 }

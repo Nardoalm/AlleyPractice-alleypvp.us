@@ -1,6 +1,7 @@
 package com.kaosmc.practice.visual.scoreboard.internal;
 
 import com.kaosmc.practice.KaosPractice;
+import com.kaosmc.practice.common.animation.internal.types.DotAnimation;
 import com.kaosmc.practice.core.config.ConfigService;
 import com.kaosmc.practice.feature.level.LevelService;
 import com.kaosmc.practice.feature.level.data.LevelData;
@@ -18,6 +19,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class QueueScoreboardImpl implements Scoreboard {
+    private final DotAnimation dotAnimation = new DotAnimation();
 
     @Override
     public List<String> getLines(Profile profile) {
@@ -58,14 +60,17 @@ public class QueueScoreboardImpl implements Scoreboard {
         if (configLines != null) {
             for (String line : configLines) {
                 scoreboardLines.add(CC.translate(line)
-                        .replaceAll("\\{online}", String.valueOf(Bukkit.getOnlinePlayers().size()))
-                        .replaceAll("\\{playing}", String.valueOf(safeCountState(profileService, ProfileState.PLAYING)))
-                        .replaceAll("\\{in-queue}", String.valueOf(safeCountState(profileService, ProfileState.WAITING)))
-                        .replaceAll("\\{wins}", String.valueOf(profile.getProfileData().getTotalWins()))
-                        .replaceAll("\\{queued-type}", queueType != null ? queueType : "Normal")
-                        .replaceAll("\\{level}", levelDisplay)
-                        .replaceAll("\\{queued-time}", TimeUtil.getFormattedElapsedTime(elapsedTime))
-                        .replaceAll("\\{queued-kit}", queueKit != null ? queueKit : "Nenhum")
+                        .replace("{online}", String.valueOf(Bukkit.getOnlinePlayers().size()))
+                        .replace("{playing}", String.valueOf(safeCountState(profileService, ProfileState.PLAYING)))
+                        .replace("{in-queue}", String.valueOf(safeCountState(profileService, ProfileState.WAITING)))
+                        .replace("{wins}", String.valueOf(profile.getProfileData().getTotalWins()))
+                        .replace("{queued-type}", queueType != null ? queueType : "Normal")
+                        .replace("{level}", levelDisplay)
+                        .replace("{nivel}", levelDisplay)
+                        .replace("{nível}", levelDisplay)
+                        .replace("{dot-animation}", this.dotAnimation.getCurrentFrame())
+                        .replace("{queued-time}", TimeUtil.getFormattedElapsedTime(elapsedTime))
+                        .replace("{queued-kit}", queueKit != null ? queueKit : "Nenhum")
                 );
             }
         }

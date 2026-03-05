@@ -73,8 +73,11 @@ public class PartyCommand extends BaseCommand {
 
         Party party = partyService.getPartyByMember(player.getUniqueId());
         if (party == null) {
-            player.sendMessage(CC.translate(this.getString(GlobalMessagesLocaleImpl.ERROR_YOU_NOT_IN_PARTY)));
-            return;
+            partyService.createParty(player);
+            party = partyService.getPartyByMember(player.getUniqueId());
+            if (party == null) {
+                return;
+            }
         }
 
         if (!party.getLeader().equals(player)) {
@@ -83,6 +86,10 @@ public class PartyCommand extends BaseCommand {
         }
 
         Profile targetProfile = profileService.getProfile(targetPlayer.getUniqueId());
+        if (targetProfile == null || targetProfile.getProfileData() == null || targetProfile.getProfileData().getSettingData() == null) {
+            player.sendMessage(CC.translate(this.getString(GlobalMessagesLocaleImpl.ERROR_INVALID_PLAYER)));
+            return;
+        }
         if (!targetProfile.getProfileData().getSettingData().isPartyInvitesEnabled()) {
             player.sendMessage(CC.translate(this.getString(GlobalMessagesLocaleImpl.ERROR_PLAYER_PARTY_INVITES_DISABLED)
                     .replace("{name-color}", String.valueOf(targetProfile.getNameColor()))

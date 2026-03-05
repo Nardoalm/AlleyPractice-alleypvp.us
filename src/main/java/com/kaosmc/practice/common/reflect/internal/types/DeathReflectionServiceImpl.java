@@ -7,6 +7,8 @@ import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.lang.reflect.Field;
 import java.util.HashSet;
 import java.util.List;
@@ -34,19 +36,46 @@ public class DeathReflectionServiceImpl implements Reflection {
      * @param player The supposedly dying player.
      */
     public void animateDeath(Player player) {
+        this.animateDeath(player, this.getPlayersInRange(player));
+    }
+
+    /**
+     * Visualizes the death animation for a specific collection of viewers only.
+     *
+     * @param player  The player whose death animation should be shown.
+     * @param viewers Viewers that should receive the animation packets.
+     */
+    public void animateDeath(Player player, Collection<Player> viewers) {
+        if (player == null) {
+            return;
+        }
+
+        Set<Player> validViewers = new HashSet<>();
+        if (viewers != null) {
+            for (Player viewer : viewers) {
+                if (viewer != null && viewer.isOnline() && !viewer.getUniqueId().equals(player.getUniqueId())) {
+                    validViewers.add(viewer);
+                }
+            }
+        }
+
+        if (validViewers.isEmpty()) {
+            return;
+        }
+
         PacketPlayOutNamedEntitySpawn spawnPacket = this.createSpawnPacket(player);
         PacketPlayOutEntityStatus statusPacket = this.createStatusPacket();
         PacketPlayOutEntityMetadata metadataPacket = this.createMetadataPacket();
 
-        Set<Player> playersInRange = this.getPlayersInRange(player);
-
-        for (Player watcher : playersInRange) {
+        for (Player watcher : validViewers) {
             this.sendPacket(watcher, spawnPacket);
             this.sendPacket(watcher, statusPacket);
-            this.sendPacket(watcher, metadataPacket);
+            if (metadataPacket != null) {
+                this.sendPacket(watcher, metadataPacket);
+            }
         }
 
-        TaskUtil.runLater(() -> this.removeFakeEntities(playersInRange), 40L);
+        TaskUtil.runLater(() -> this.removeFakeEntities(validViewers), 40L);
     }
 
     /**
@@ -114,6 +143,10 @@ public class DeathReflectionServiceImpl implements Reflection {
      * @return A set of nearby players.
      */
     private Set<Player> getPlayersInRange(Player player) {
+        if (player == null) {
+            return Collections.emptySet();
+        }
+
         Set<Player> playersInRange = new HashSet<>();
         for (Entity entity : player.getNearbyEntities(this.VIEW_RADIUS, this.VIEW_RADIUS, this.VIEW_RADIUS)) {
             if (entity instanceof Player && !entity.getUniqueId().equals(player.getUniqueId())) {

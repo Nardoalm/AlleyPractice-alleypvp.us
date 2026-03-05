@@ -40,7 +40,7 @@ menus:
       food:
         name: "&6&lNível de Fome"
         lore:
-          - " &fLevel: &6{food_nível}"
+          - " &fLevel: &6{food_level}"
           - " &fSaturation: &6{saturation}"
         item: "COOKED_BEEF"
         durability: 0

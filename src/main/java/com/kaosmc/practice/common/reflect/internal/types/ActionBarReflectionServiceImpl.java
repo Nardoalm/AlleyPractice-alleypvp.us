@@ -76,11 +76,21 @@ public class ActionBarReflectionServiceImpl implements Reflection {
             Profile victimProfile = KaosPractice.getInstance().getService(ProfileService.class).getProfile(victim.getUniqueId());
             Profile killerProfile = KaosPractice.getInstance().getService(ProfileService.class).getProfile(killer.getUniqueId());
 
+            String victimColor = victimProfile != null && victimProfile.getNameColor() != null
+                    ? victimProfile.getNameColor().toString()
+                    : "";
+            String killerColor = killerProfile != null && killerProfile.getNameColor() != null
+                    ? killerProfile.getNameColor().toString()
+                    : "";
+
             String deathMessage = localeService.getString(VisualsLocaleImpl.ACTIONBAR_DEATH_MESSAGE_FORMAT)
                     .replace("{victim}", victim.getName())
                     .replace("{killer}", killer.getName())
-                    .replace("{name-color}", String.valueOf(victimProfile.getNameColor()))
-                    .replace("{killer-name-color}", String.valueOf(killerProfile.getNameColor()));
+                    .replace("{name-color}", victimColor)
+                    .replace("{victim-name-color}", victimColor)
+                    .replace("{victim-color}", victimColor)
+                    .replace("{killer-name-color}", killerColor)
+                    .replace("{killer-color}", killerColor);
             this.sendMessage(killer, deathMessage, 3);
         }
     }

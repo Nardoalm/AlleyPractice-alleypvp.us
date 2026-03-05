@@ -92,6 +92,8 @@ public class LobbyScoreboardImpl implements Scoreboard {
                     .replace("{online}", String.valueOf(Bukkit.getOnlinePlayers().size()))
                     .replace("{wins}", String.valueOf(profile.getProfileData().getTotalWins()))
                     .replace("{level}", levelName) // Usando a variável segura
+                    .replace("{nivel}", levelName)
+                    .replace("{nível}", levelName)
                     .replace("{level_progress_bar}", levelService.getProgressBar(currentElo))
                     .replace("{level_progress_details}", levelService.getProgressDetails(currentElo))
                     .replace("{rank}", rankStr) // Usando a variável segura

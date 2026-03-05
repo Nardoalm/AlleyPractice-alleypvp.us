@@ -3,14 +3,7 @@ package com.kaosmc.practice.adapter.core.internal;
 import com.kaosmc.practice.KaosPractice;
 import com.kaosmc.practice.adapter.core.Core;
 import com.kaosmc.practice.adapter.core.CoreType;
-
 import com.kaosmc.practice.common.text.CC;
-import com.kaosmc.practice.core.locale.LocaleService;
-import com.kaosmc.practice.core.locale.internal.impl.SettingsLocaleImpl;
-import com.kaosmc.practice.core.profile.Profile;
-import com.kaosmc.practice.core.profile.ProfileService;
-import com.kaosmc.practice.feature.level.LevelService;
-import com.kaosmc.practice.feature.level.data.LevelData;
 import me.activated.core.api.tags.Tag;
 import me.activated.core.plugin.AquaCoreAPI;
 import org.bukkit.ChatColor;
@@ -75,47 +68,6 @@ public class AquaCoreImpl implements Core {
 
     @Override
     public String getChatFormat(Player player, String eventMessage, String separator) {
-        if (player == null) return eventMessage;
-
-        ProfileService ps = KaosPractice.getInstance().getService(ProfileService.class);
-        LocaleService ls = KaosPractice.getInstance().getService(LocaleService.class);
-        LevelService levS = KaosPractice.getInstance().getService(LevelService.class);
-
-        Profile profile = (ps != null) ? ps.getProfile(player.getUniqueId()) : null;
-
-        // Fallback caso o perfil não exista ou o serviço falhe
-        if (profile == null || profile.getProfileData() == null) {
-            return player.getName() + (separator != null ? separator : ": ") + eventMessage;
-        }
-
-        String levelDisplay = "";
-        if (levS != null && profile.getProfileData().getGlobalLevel() != null) {
-            LevelData ld = levS.getLevel(profile.getProfileData().getGlobalLevel());
-            if (ld != null && ld.getDisplayName() != null) {
-                levelDisplay = CC.translate(ld.getDisplayName());
-            }
-        }
-
-        String prefix = getRankPrefix(player);
-        String suffix = getRankSuffix(player);
-
-        // Prioridade: Cor do Perfil -> Cor do AquaCore -> Branco
-        ChatColor nColor = profile.getNameColor();
-        if (nColor == null) {
-            nColor = getPlayerColor(player);
-        }
-
-        String format = (ls != null) ? ls.getString(SettingsLocaleImpl.SERVER_CHAT_FORMAT_GLOBAL) : "{prefix}{player}{suffix}{separator} {message}";
-
-        return CC.translate(format
-                .replace("{prefix}", prefix != null ? prefix : "")
-                .replace("{player}", player.getName())
-                .replace("{suffix}", suffix != null ? suffix : "")
-                .replace("{message}", eventMessage != null ? eventMessage : "")
-                .replace("{level}", levelDisplay)
-                .replace("{name-color}", nColor != null ? nColor.toString() : ChatColor.WHITE.toString())
-                .replace("{separator}", separator != null ? separator : ":"));
-
-        // O código "unreachable" que estava aqui foi removido para o Maven compilar.
+        return Core.super.getChatFormat(player, eventMessage, separator);
     }
 }

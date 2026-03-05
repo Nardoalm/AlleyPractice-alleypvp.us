@@ -22,6 +22,7 @@ import com.kaosmc.practice.core.profile.enums.ProfileState;
 import com.kaosmc.practice.adapter.core.CoreAdapter;
 import com.kaosmc.practice.common.reflect.ReflectionService;
 import com.kaosmc.practice.common.reflect.internal.types.ActionBarReflectionServiceImpl;
+import com.kaosmc.practice.common.reflect.internal.types.DeathReflectionServiceImpl;
 import com.kaosmc.practice.common.text.CC;
 import com.kaosmc.practice.common.text.Symbol;
 import org.bukkit.entity.Arrow;
@@ -32,6 +33,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+
+import java.util.Collections;
 
 /**
  * @author Emmy
@@ -182,8 +185,22 @@ public class MatchDamageListener implements Listener {
                         int requiredHits = lowestPlayerCount * 100;
 
                         if (participant.getTeamHits() >= requiredHits) {
+                            ReflectionService reflectionService = KaosPractice.getInstance().getService(ReflectionService.class);
+                            DeathReflectionServiceImpl deathReflection = reflectionService != null
+                                    ? reflectionService.getReflectionService(DeathReflectionServiceImpl.class)
+                                    : null;
+
                             opponent.getPlayers().forEach(matchGamePlayer -> {
-                                match.handleDeath(matchGamePlayer.getTeamPlayer(), EntityDamageEvent.DamageCause.ENTITY_ATTACK);
+                                Player loser = matchGamePlayer.getTeamPlayer();
+                                if (loser == null) {
+                                    return;
+                                }
+
+                                if (deathReflection != null) {
+                                    deathReflection.animateDeath(loser, Collections.singleton(attacker));
+                                }
+
+                                match.handleDeath(loser, EntityDamageEvent.DamageCause.ENTITY_ATTACK);
                             });
                         }
                     }

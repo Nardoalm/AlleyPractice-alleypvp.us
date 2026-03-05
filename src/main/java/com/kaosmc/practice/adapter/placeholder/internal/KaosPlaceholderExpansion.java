@@ -66,8 +66,10 @@ public class KaosPlaceholderExpansion extends PlaceholderExpansion {
             return "";
         }
 
+        String normalizedParams = params.toLowerCase().replace('_', '-');
+
         // --- Animações Globais (Independente de Perfil) ---
-        if (params.equalsIgnoreCase("dot-animation")) {
+        if (normalizedParams.equals("dot-animation")) {
             return dotAnimation.getCurrentFrame();
         }
 
@@ -81,17 +83,28 @@ public class KaosPlaceholderExpansion extends PlaceholderExpansion {
         ProfileData profileData = profile.getProfileData();
 
         // --- Placeholders com Parâmetros Dinâmicos ---
-        if (params.startsWith("division_")) {
-            String kitName = params.substring("division_".length());
-            if (profileData.getUnrankedKitData().containsKey(kitName)) {
-                String division = profileData.getUnrankedKitData().get(kitName).getDivision().getName();
+        if (normalizedParams.startsWith("division-")) {
+            String kitName = params.length() > 9 ? params.substring(9) : "";
+            if (kitName.trim().isEmpty()) {
+                return this.notAvailableString;
+            }
+            String resolvedKitName = profileData.getUnrankedKitData().keySet().stream()
+                    .filter(key -> key.equalsIgnoreCase(kitName))
+                    .findFirst()
+                    .orElse(null);
+
+            if (resolvedKitName != null) {
+                if (profileData.getUnrankedKitData().get(resolvedKitName).getDivision() == null) {
+                    return this.notAvailableString;
+                }
+                String division = profileData.getUnrankedKitData().get(resolvedKitName).getDivision().getName();
                 return division != null ? CC.translate(division) : this.notAvailableString;
             }
             return this.notAvailableString;
         }
 
         // --- Placeholders Fixas ---
-        switch (params.toLowerCase()) {
+        switch (normalizedParams) {
             case "player-global-elo":
                 return String.valueOf(profileData.getElo());
 
@@ -109,14 +122,25 @@ public class KaosPlaceholderExpansion extends PlaceholderExpansion {
 
             case "player-level":
             case "level":
+            case "nivel":
+            case "nível":
                 LevelService levelService = this.plugin.getService(LevelService.class);
                 if (levelService != null) {
-                    int level = Integer.parseInt(profileData.getGlobalLevel());
-                    LevelData levelData = levelService.getLevel(level);
+                    String globalLevel = profileData.getGlobalLevel();
+                    LevelData levelData = null;
+                    if (globalLevel != null && !globalLevel.trim().isEmpty()) {
+                        levelData = levelService.getLevel(globalLevel);
+                    }
+                    if (levelData == null) {
+                        levelData = levelService.getLevel(profileData.getElo());
+                    }
                     if (levelData != null && levelData.getDisplayName() != null) {
                         return CC.translate(levelData.getDisplayName());
                     }
-                    return String.valueOf(level);
+                    if (globalLevel != null && !globalLevel.trim().isEmpty()) {
+                        return globalLevel;
+                    }
+                    return "N/A";
                 }
                 return "0";
 

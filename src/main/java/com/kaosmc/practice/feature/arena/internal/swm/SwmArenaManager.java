@@ -123,6 +123,7 @@ public class SwmArenaManager implements ArenaCopyManager {
             if (templateWorld == null) {
                 return null;
             }
+            this.ensureSafeProperties(templateWorld);
 
             // Verificação extra de segurança
             if (this.slimePlugin.getLoader(this.configService.getSettingsConfig().getString("arena-management.swm.loader")).worldExists(copyWorldName)) {
@@ -131,6 +132,7 @@ public class SwmArenaManager implements ArenaCopyManager {
             }
 
             SlimeWorld copiedWorld = templateWorld.clone(copyWorldName);
+            this.ensureSafeProperties(copiedWorld);
             this.slimePlugin.generateWorld(copiedWorld);
 
             World bukkitWorld = Bukkit.getWorld(copyWorldName);
@@ -253,10 +255,31 @@ public class SwmArenaManager implements ArenaCopyManager {
         propertyMap.setBoolean(SlimeProperties.ALLOW_MONSTERS, false);
         propertyMap.setBoolean(SlimeProperties.ALLOW_ANIMALS, false);
         propertyMap.setBoolean(SlimeProperties.PVP, true);
-        propertyMap.setString(SlimeProperties.DIFFICULTY, Difficulty.NORMAL.name());
-        propertyMap.setString(SlimeProperties.ENVIRONMENT, World.Environment.NORMAL.name());
-        propertyMap.setString(SlimeProperties.WORLD_TYPE, WorldType.FLAT.name());
+        propertyMap.setString(SlimeProperties.DIFFICULTY, Difficulty.NORMAL.name().toLowerCase(Locale.ROOT));
+        propertyMap.setString(SlimeProperties.ENVIRONMENT, World.Environment.NORMAL.name().toLowerCase(Locale.ROOT));
+        propertyMap.setString(SlimeProperties.WORLD_TYPE, WorldType.FLAT.name().toLowerCase(Locale.ROOT));
         return propertyMap;
+    }
+
+    private void ensureSafeProperties(SlimeWorld world) {
+        if (world == null || world.getPropertyMap() == null) {
+            return;
+        }
+
+        SlimePropertyMap propertyMap = world.getPropertyMap();
+        try {
+            propertyMap.setInt(SlimeProperties.SPAWN_X, 0);
+            propertyMap.setInt(SlimeProperties.SPAWN_Y, 100);
+            propertyMap.setInt(SlimeProperties.SPAWN_Z, 0);
+            propertyMap.setBoolean(SlimeProperties.ALLOW_MONSTERS, false);
+            propertyMap.setBoolean(SlimeProperties.ALLOW_ANIMALS, false);
+            propertyMap.setBoolean(SlimeProperties.PVP, true);
+            propertyMap.setString(SlimeProperties.DIFFICULTY, "normal");
+            propertyMap.setString(SlimeProperties.ENVIRONMENT, "normal");
+            propertyMap.setString(SlimeProperties.WORLD_TYPE, "flat");
+        } catch (Exception exception) {
+            Logger.logException("Falha ao normalizar propriedades SWM para o mundo '" + world.getName() + "'", exception);
+        }
     }
 
     private Location getCopyOrigin(StandAloneArena originalArena, World world) {
