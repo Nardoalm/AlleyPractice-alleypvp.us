@@ -84,6 +84,7 @@ public class SwmArenaManager implements ArenaCopyManager {
 
             this.enabled = true;
             Logger.info("Gerenciamento de arenas via SWM ativado com loader: " + loaderId);
+            this.cleanupCorruptedTemplates();
         } catch (Throwable throwable) {
             this.enabled = false;
 
@@ -110,7 +111,6 @@ public class SwmArenaManager implements ArenaCopyManager {
         String arenaKey = sanitizeName(originalArena.getName());
         String templateName = TEMPLATE_PREFIX + arenaKey;
 
-        // SOLUÇÃO: Usamos UUID curto + Timestamp para garantir que o nome NUNCA se repita no banco de dados
         String uniqueSuffix = java.util.UUID.randomUUID().toString().substring(0, 8);
         String copyWorldName = COPY_PREFIX + arenaKey + "_" + copyId + "_" + uniqueSuffix;
 
@@ -120,6 +120,11 @@ public class SwmArenaManager implements ArenaCopyManager {
                 return null;
             }
 
+            // FIX: Sanitize the template BEFORE cloning.
+            // The cast error (String cannot be cast to Boolean) occurs inside clone()
+            // when SWM iterates the property map of the source world.
+            this.ensureSafeProperties(templateWorld);
+
             if (this.slimeLoader.worldExists(copyWorldName)) {
                 this.slimeLoader.deleteWorld(copyWorldName);
                 Logger.info("Limpando registro antigo de mundo: " + copyWorldName);
@@ -127,10 +132,9 @@ public class SwmArenaManager implements ArenaCopyManager {
 
             SlimeWorld copiedWorld = templateWorld.clone(copyWorldName, this.slimeLoader);
 
-            // Força propriedades seguras (Evita erro de casting no SWM)
+            // Also sanitize the freshly cloned world before generating it
             this.ensureSafeProperties(copiedWorld);
 
-            // 3. Gerar o mundo no Bukkit
             this.slimePlugin.generateWorld(copiedWorld);
 
             World bukkitWorld = Bukkit.getWorld(copyWorldName);
@@ -183,7 +187,6 @@ public class SwmArenaManager implements ArenaCopyManager {
         this.templateWorldCache.clear();
     }
 
-    // EXATAMENTE igual ao original para não dar erro de Maven
     private SlimeWorld getOrCreateTemplateWorld(StandAloneArena originalArena, String templateName) throws IOException, CorruptedWorldException, NewerFormatException, WorldInUseException, UnknownWorldException {
         SlimeWorld cached = this.templateWorldCache.get(templateName);
         if (cached != null) {
@@ -202,7 +205,6 @@ public class SwmArenaManager implements ArenaCopyManager {
         return loaded;
     }
 
-    // EXATAMENTE igual ao original
     private void importTemplateWorld(StandAloneArena originalArena, String templateName) {
         String importWorldName = "swm_import_" + sanitizeName(originalArena.getName()) + "_" + System.currentTimeMillis();
         File worldFolder = new File(Bukkit.getWorldContainer(), importWorldName);
@@ -249,7 +251,6 @@ public class SwmArenaManager implements ArenaCopyManager {
         }
     }
 
-    // CORREÇÃO APLICADA AQUI: Valores em MAIÚSCULO ("NORMAL") em vez de ("normal")
     private SlimePropertyMap createTemplatePropertyMap() {
         SlimePropertyMap propertyMap = new SlimePropertyMap();
 
@@ -261,23 +262,23 @@ public class SwmArenaManager implements ArenaCopyManager {
         propertyMap.setBoolean(SlimeProperties.ALLOW_ANIMALS, false);
         propertyMap.setBoolean(SlimeProperties.PVP, true);
 
+        // FIX: Only set DIFFICULTY as a String — ENVIRONMENT and WORLD_TYPE are
+        // not String-typed in all SWM versions and cause "String cannot be cast to Boolean".
         propertyMap.setString(SlimeProperties.DIFFICULTY, "NORMAL");
-        propertyMap.setString(SlimeProperties.ENVIRONMENT, "NORMAL");
-        propertyMap.setString(SlimeProperties.WORLD_TYPE, "FLAT");
 
         return propertyMap;
     }
 
-    // GARANTIA EXTRA: Impede que o SlimeWorldManager leia propriedades em minúsculo de templates antigos
     private void ensureSafeProperties(SlimeWorld world) {
         if (world == null || world.getPropertyMap() == null) {
             return;
         }
         SlimePropertyMap propertyMap = world.getPropertyMap();
         try {
+            // FIX: Only override DIFFICULTY here. Setting ENVIRONMENT or WORLD_TYPE
+            // as strings causes a ClassCastException inside SWM when it reads them back
+            // as their native typed property (e.g. Boolean/Enum).
             propertyMap.setString(SlimeProperties.DIFFICULTY, "NORMAL");
-            propertyMap.setString(SlimeProperties.ENVIRONMENT, "NORMAL");
-            propertyMap.setString(SlimeProperties.WORLD_TYPE, "FLAT");
         } catch (Exception ignored) {
         }
     }
@@ -301,5 +302,19 @@ public class SwmArenaManager implements ArenaCopyManager {
 
     private String sanitizeName(String input) {
         return input.toLowerCase(Locale.ROOT).replaceAll("[^a-z0-9_]", "_");
+    }
+
+    private void cleanupCorruptedTemplates() {
+        try {
+            for (String worldName : this.slimeLoader.listWorlds()) {
+                if (worldName.startsWith(TEMPLATE_PREFIX)) {
+                    this.slimeLoader.deleteWorld(worldName);
+                    Logger.info("Template antigo removido para reimportação limpa: " + worldName);
+                }
+            }
+            this.templateWorldCache.clear();
+        } catch (Exception e) {
+            Logger.logException("Erro ao limpar templates antigos", e);
+        }
     }
 }
