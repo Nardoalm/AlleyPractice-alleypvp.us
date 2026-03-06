@@ -2,9 +2,9 @@ package com.kaosmc.practice.visual.scoreboard.internal;
 
 import com.kaosmc.practice.KaosPractice;
 import com.kaosmc.practice.adapter.core.CoreAdapter;
+import com.kaosmc.practice.common.PlayerDisplayUtil;
 import com.kaosmc.practice.core.config.ConfigService;
 import com.kaosmc.practice.common.text.LevelBadgeUtil;
-import com.kaosmc.practice.feature.level.LevelService;
 import com.kaosmc.practice.feature.music.MusicService;
 import com.kaosmc.practice.feature.music.MusicSession;
 import com.kaosmc.practice.core.profile.ProfileService;
@@ -43,7 +43,6 @@ public class LobbyScoreboardImpl implements Scoreboard {
 
         ConfigService configService = KaosPractice.getInstance().getService(ConfigService.class);
         ProfileService profileService = KaosPractice.getInstance().getService(ProfileService.class);
-        LevelService levelService = KaosPractice.getInstance().getService(LevelService.class);
         MusicService musicService = KaosPractice.getInstance().getService(MusicService.class);
         CoreAdapter coreAdapter = KaosPractice.getInstance().getService(CoreAdapter.class);
         if (configService == null || configService.getScoreboardConfig() == null || profileService == null || musicService == null) {
@@ -57,11 +56,11 @@ public class LobbyScoreboardImpl implements Scoreboard {
 
         Optional<MusicSession> musicStateOptional = musicService.getMusicState(profile.getUuid());
 
-        int currentElo = profile.getProfileData().getElo();
-        String levelProgressBar = levelService != null ? levelService.getProgressBar(currentElo) : "";
-        String levelProgressDetails = levelService != null ? levelService.getProgressDetails(currentElo) : "";
+        int experience = profile.getProfileData().getExperience();
+        String levelProgressBar = LevelBadgeUtil.getProgressBar(experience, 12);
+        String levelProgressDetails = LevelBadgeUtil.getProgressDetails(experience);
 
-        String levelName = LevelBadgeUtil.getBadge(profile.getProfileData().getExperience());
+        String levelName = LevelBadgeUtil.getBadge(experience);
 
         // 4. Prevenção: CoreAdapter ou Core ausente
         String rankStr = "";
@@ -108,7 +107,9 @@ public class LobbyScoreboardImpl implements Scoreboard {
                 String leaderName = "Desconhecido";
                 Profile leaderProfile = profileService.getProfile(profile.getParty().getLeader().getUniqueId());
                 if (leaderProfile != null) {
-                    leaderName = leaderProfile.getFancyName();
+                    Player leaderPlayer = Bukkit.getPlayer(leaderProfile.getUuid());
+                    String leaderColor = leaderProfile.getNameColor() != null ? leaderProfile.getNameColor().toString() : "";
+                    leaderName = leaderColor + PlayerDisplayUtil.resolveDisplayName(leaderPlayer, leaderProfile.getName());
                 }
 
                 processedLine = CC.translate(processedLine)

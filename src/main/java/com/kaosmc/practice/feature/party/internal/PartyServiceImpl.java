@@ -4,6 +4,7 @@ import com.kaosmc.practice.KaosPractice;
 import com.kaosmc.practice.adapter.core.CoreAdapter;
 import com.kaosmc.practice.bootstrap.KaosContext;
 import com.kaosmc.practice.bootstrap.annotation.Service;
+import com.kaosmc.practice.common.PlayerDisplayUtil;
 import com.kaosmc.practice.common.SoundUtil;
 import com.kaosmc.practice.common.reflect.ReflectionService;
 import com.kaosmc.practice.common.reflect.internal.types.TitleReflectionServiceImpl;
@@ -509,7 +510,7 @@ public class PartyServiceImpl implements PartyService {
             }
         }
 
-        String nick = player != null ? player.getName() : "Unknown";
+        String nick = PlayerDisplayUtil.resolveDisplayName(player, player != null ? player.getName() : "Unknown");
         return CC.translate(format
                 .replace("{tag_prefix}", tagPrefix)
                 .replace("{tag-prefix}", tagPrefix)

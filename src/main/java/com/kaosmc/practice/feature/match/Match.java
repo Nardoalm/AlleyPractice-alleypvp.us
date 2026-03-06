@@ -383,7 +383,7 @@ public abstract class Match {
                 player.getInventory().setContents(itemsToGive);
             } else if (kitLayouts.size() == 1) {
                 LayoutData singleLayout = kitLayouts.get(0);
-                if (singleLayout != null && singleLayout.getItems() != null) {
+                if (singleLayout != null && singleLayout.getItems() != null && singleLayout.getItems().length > 0) {
                     itemsToGive = InventoryUtil.cloneItemStackArray(singleLayout.getItems());
                 }
                 player.getInventory().setContents(itemsToGive);

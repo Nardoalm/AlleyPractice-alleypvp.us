@@ -1,37 +1,190 @@
 package com.kaosmc.practice.common.text;
 
 public final class LevelBadgeUtil {
+    private static final int BASE_XP_PER_LEVEL = 20;
+    private static final int XP_INCREMENT_PER_STAGE = 10;
+    private static final int EARLY_STAGE_SIZE = 10;
+    private static final int LATE_STAGE_SIZE = 100;
+
     private LevelBadgeUtil() {
     }
 
     public static String getBadge(int experience) {
-        int value = Math.max(0, experience);
+        return getBadgeForLevel(getLevel(experience));
+    }
 
-        if (value <= 10) return format("&7", 10, "✺");
-        if (value <= 20) return format("&a", 20, "❈");
-        if (value <= 30) return format("&b", 30, "❄");
-        if (value <= 40) return format("&e", 40, "✵");
-        if (value <= 50) return format("&6", 50, "✶");
-        if (value <= 60) return format("&5", 60, "✫");
-        if (value <= 70) return format("&d", 70, "✿");
-        if (value <= 80) return format("&c", 80, "❁");
-        if (value <= 90) return format("&4", 90, "❂");
-        if (value <= 100) return format("&f", 100, "✦");
-        if (value <= 200) return format("&2", 200, "☘");
-        if (value <= 300) return format("&3", 300, "❉");
-        if (value <= 400) return format("&1", 400, "❊");
-        if (value <= 500) return format("&e", 500, "✹");
-        if (value <= 600) return format("&c", 600, "✸");
-        if (value <= 700) return format("&d", 700, "✾");
-        if (value <= 800) return format("&b", 800, "❅");
-        if (value <= 900) return format("&6", 900, "✤");
-        if (value <= 1000) return format("&4", 1000, "❂");
+    public static String getBadgeForLevel(int level) {
+        int bracket = getDisplayBracket(level);
+        LevelStyle style = resolveStyle(bracket);
+        return format(style.color, bracket, style.icon);
+    }
 
-        int capped = ((value + 99) / 100) * 100;
-        return format("&4", capped, "❂");
+    public static int getLevel(int experience) {
+        int remainingXp = Math.max(0, experience);
+        int stage = 1;
+        int level = 0;
+
+        while (remainingXp > 0) {
+            int levelsInStage = getLevelsInStage(stage);
+            int xpPerLevel = getXpPerLevelForStage(stage);
+
+            if (xpPerLevel <= 0) {
+                break;
+            }
+
+            int availableLevels = remainingXp / xpPerLevel;
+            if (availableLevels <= 0) {
+                break;
+            }
+
+            int consumedLevels = Math.min(levelsInStage, availableLevels);
+            level += consumedLevels;
+            remainingXp -= consumedLevels * xpPerLevel;
+
+            if (consumedLevels < levelsInStage) {
+                break;
+            }
+
+            stage++;
+        }
+
+        return Math.max(0, level);
+    }
+
+    public static int getXpRequiredForNextLevel(int currentLevel) {
+        int safeLevel = Math.max(0, currentLevel);
+        int nextLevel = safeLevel + 1;
+        int stage = getStageByLevel(nextLevel);
+        return getXpPerLevelForStage(stage);
+    }
+
+    public static String getProgressBar(int experience) {
+        return getProgressBar(experience, 10);
+    }
+
+    public static String getProgressBar(int experience, int length) {
+        int safeLength = Math.max(5, length);
+        LevelProgress progress = calculateProgress(experience);
+        double ratio = progress.requiredXp <= 0
+                ? 1.0D
+                : Math.min(1.0D, Math.max(0.0D, (double) progress.currentXp / (double) progress.requiredXp));
+
+        int filled = (int) Math.round(ratio * safeLength);
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < safeLength; i++) {
+            builder.append(i < filled ? CC.translate("&a■") : CC.translate("&7■"));
+        }
+
+        return builder.toString();
+    }
+
+    public static String getProgressDetails(int experience) {
+        LevelProgress progress = calculateProgress(experience);
+        return CC.translate("&7" + progress.currentXp + "/" + progress.requiredXp + " XP");
+    }
+
+    public static int getDisplayBracket(int level) {
+        int safeLevel = Math.max(0, level);
+        if (safeLevel <= 100) {
+            return Math.max(10, ((safeLevel + 9) / 10) * 10);
+        }
+
+        return ((safeLevel + 99) / 100) * 100;
+    }
+
+    private static int getLevelsInStage(int stage) {
+        return stage <= 10 ? EARLY_STAGE_SIZE : LATE_STAGE_SIZE;
+    }
+
+    private static int getXpPerLevelForStage(int stage) {
+        int safeStage = Math.max(1, stage);
+        return BASE_XP_PER_LEVEL + ((safeStage - 1) * XP_INCREMENT_PER_STAGE);
+    }
+
+    private static int getStageByLevel(int level) {
+        int safeLevel = Math.max(1, level);
+
+        if (safeLevel <= 100) {
+            return ((safeLevel - 1) / EARLY_STAGE_SIZE) + 1;
+        }
+
+        return 11 + ((safeLevel - 101) / LATE_STAGE_SIZE);
+    }
+
+    private static LevelProgress calculateProgress(int experience) {
+        int remainingXp = Math.max(0, experience);
+        int stage = 1;
+        int level = 0;
+
+        while (remainingXp > 0) {
+            int levelsInStage = getLevelsInStage(stage);
+            int xpPerLevel = getXpPerLevelForStage(stage);
+            int availableLevels = remainingXp / xpPerLevel;
+
+            if (availableLevels <= 0) {
+                break;
+            }
+
+            int consumedLevels = Math.min(levelsInStage, availableLevels);
+            level += consumedLevels;
+            remainingXp -= consumedLevels * xpPerLevel;
+
+            if (consumedLevels < levelsInStage) {
+                break;
+            }
+
+            stage++;
+        }
+
+        int requiredXp = getXpRequiredForNextLevel(level);
+        return new LevelProgress(Math.max(0, remainingXp), Math.max(1, requiredXp));
+    }
+
+    private static LevelStyle resolveStyle(int bracket) {
+        if (bracket <= 10) return new LevelStyle("&7", "✺");
+        if (bracket <= 20) return new LevelStyle("&a", "❈");
+        if (bracket <= 30) return new LevelStyle("&b", "❄");
+        if (bracket <= 40) return new LevelStyle("&e", "✵");
+        if (bracket <= 50) return new LevelStyle("&6", "✶");
+        if (bracket <= 60) return new LevelStyle("&5", "✫");
+        if (bracket <= 70) return new LevelStyle("&d", "✿");
+        if (bracket <= 80) return new LevelStyle("&c", "❁");
+        if (bracket <= 90) return new LevelStyle("&4", "❂");
+        if (bracket <= 100) return new LevelStyle("&f", "✦");
+        if (bracket <= 200) return new LevelStyle("&2", "☘");
+        if (bracket <= 300) return new LevelStyle("&3", "❉");
+        if (bracket <= 400) return new LevelStyle("&1", "❊");
+        if (bracket <= 500) return new LevelStyle("&e", "✹");
+        if (bracket <= 600) return new LevelStyle("&c", "✸");
+        if (bracket <= 700) return new LevelStyle("&d", "✾");
+        if (bracket <= 800) return new LevelStyle("&b", "❅");
+        if (bracket <= 900) return new LevelStyle("&6", "✤");
+        if (bracket <= 1000) return new LevelStyle("&4", "❂");
+
+        return new LevelStyle("&4", "❂");
     }
 
     private static String format(String color, int number, String icon) {
         return CC.translate(color + "[" + number + icon + "]");
+    }
+
+    private static final class LevelStyle {
+        private final String color;
+        private final String icon;
+
+        private LevelStyle(String color, String icon) {
+            this.color = color;
+            this.icon = icon;
+        }
+    }
+
+    private static final class LevelProgress {
+        private final int currentXp;
+        private final int requiredXp;
+
+        private LevelProgress(int currentXp, int requiredXp) {
+            this.currentXp = currentXp;
+            this.requiredXp = requiredXp;
+        }
     }
 }

@@ -41,6 +41,12 @@ public class MatchScoreboardStartingImpl implements MatchScoreboard {
         }
         ConfigService configService = KaosPractice.getInstance().getService(ConfigService.class);
         ProfileService profileService = KaosPractice.getInstance().getService(ProfileService.class);
+        if (configService == null || configService.getScoreboardConfig() == null || profileService == null || profile.getMatch() == null) {
+            return Collections.emptyList();
+        }
+        if (opponent == null || opponent.getLeader() == null) {
+            return Collections.emptyList();
+        }
 
         List<String> scoreboardLines = new ArrayList<>();
         List<String> template = configService.getScoreboardConfig().getStringList("scoreboard.lines.starting");

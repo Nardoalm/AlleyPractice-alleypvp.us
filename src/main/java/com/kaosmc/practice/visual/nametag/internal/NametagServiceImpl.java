@@ -51,22 +51,35 @@ public class NametagServiceImpl implements NametagService, Listener {
      * @param player The player whose state has changed.
      */
     public void updatePlayerState(Player player) {
-        if (player == null) return;
+        if (player == null) {
+            return;
+        }
 
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
-            NametagPerspective changedPlayerPerspective = playerPerspectives.get(player.getUniqueId());
+        if (Bukkit.isPrimaryThread()) {
+            this.recalculateFor(player);
+            return;
+        }
 
-            for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-                if (changedPlayerPerspective != null) {
-                    changedPlayerPerspective.updateNametagFor(onlinePlayer);
-                }
+        Bukkit.getScheduler().runTask(plugin, () -> this.recalculateFor(player));
+    }
 
-                NametagPerspective otherPlayerPerspective = playerPerspectives.get(onlinePlayer.getUniqueId());
-                if (otherPlayerPerspective != null) {
-                    otherPlayerPerspective.updateNametagFor(player);
-                }
+    private void recalculateFor(Player player) {
+        if (player == null || !player.isOnline()) {
+            return;
+        }
+
+        NametagPerspective changedPlayerPerspective = playerPerspectives.get(player.getUniqueId());
+
+        for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+            if (changedPlayerPerspective != null) {
+                changedPlayerPerspective.updateNametagFor(onlinePlayer);
             }
-        });
+
+            NametagPerspective otherPlayerPerspective = playerPerspectives.get(onlinePlayer.getUniqueId());
+            if (otherPlayerPerspective != null) {
+                otherPlayerPerspective.updateNametagFor(player);
+            }
+        }
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -75,10 +88,13 @@ public class NametagServiceImpl implements NametagService, Listener {
         NametagPerspective newPerspective = new NametagPerspective(this, player, this.nametagRegistry);
         playerPerspectives.put(player.getUniqueId(), newPerspective);
 
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+            if (!player.isOnline()) {
+                return;
+            }
             nametagRegistry.sendAllAdapters(player);
             updatePlayerState(player);
-        });
+        }, 2L);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

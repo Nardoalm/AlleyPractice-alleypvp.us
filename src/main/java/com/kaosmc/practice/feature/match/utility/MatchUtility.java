@@ -1,6 +1,7 @@
 package com.kaosmc.practice.feature.match.utility;
 
 import com.kaosmc.practice.KaosPractice;
+import com.kaosmc.practice.common.PlayerDisplayUtil;
 import com.kaosmc.practice.common.text.CC;
 import com.kaosmc.practice.core.locale.LocaleService;
 import com.kaosmc.practice.core.locale.internal.impl.message.GameMessagesLocaleImpl;
@@ -147,19 +148,26 @@ public class MatchUtility {
      * @param loserParticipant  The loser participant.
      */
     public void sendConjoinedMatchResult(Match match, GameParticipant<MatchGamePlayer> winnerParticipant, GameParticipant<MatchGamePlayer> loserParticipant) {
-        String winnerTeamName = winnerParticipant.getLeader().getUsername();
-        String loserTeamName = loserParticipant.getLeader().getUsername();
+        String winnerTeamName = PlayerDisplayUtil.resolveDisplayName(
+                winnerParticipant.getLeader().getTeamPlayer(),
+                winnerParticipant.getLeader().getUsername()
+        );
+        String loserTeamName = PlayerDisplayUtil.resolveDisplayName(
+                loserParticipant.getLeader().getTeamPlayer(),
+                loserParticipant.getLeader().getUsername()
+        );
 
         match.sendMessage("");
         match.sendMessage(CC.translate("&aWinner Team: &f" + winnerTeamName));
 
         for (MatchGamePlayer player : winnerParticipant.getAllPlayers()) {
-            String playerName = player.getUsername();
+            String commandName = player.getUsername();
+            String displayName = PlayerDisplayUtil.resolveDisplayName(player.getTeamPlayer(), commandName);
 
-            TextComponent playerComponent = new TextComponent(CC.translate("&7- &f" + playerName));
-            playerComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/inventory " + playerName));
+            TextComponent playerComponent = new TextComponent(CC.translate("&7- &f" + displayName));
+            playerComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/inventory " + commandName));
             playerComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                    new ComponentBuilder(CC.translate("&eClick to view " + playerName + "'s inventory")).create()));
+                    new ComponentBuilder(CC.translate("&eClick to view " + displayName + "'s inventory")).create()));
 
             sendCombinedSpigotMessage(match, playerComponent);
         }
@@ -168,12 +176,13 @@ public class MatchUtility {
         match.sendMessage(CC.translate("&cLoser Team: &f" + loserTeamName));
 
         for (MatchGamePlayer player : loserParticipant.getAllPlayers()) {
-            String playerName = player.getUsername();
+            String commandName = player.getUsername();
+            String displayName = PlayerDisplayUtil.resolveDisplayName(player.getTeamPlayer(), commandName);
 
-            TextComponent playerComponent = new TextComponent(CC.translate("&7- &f" + playerName));
-            playerComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/inventory " + playerName));
+            TextComponent playerComponent = new TextComponent(CC.translate("&7- &f" + displayName));
+            playerComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/inventory " + commandName));
             playerComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                    new ComponentBuilder(CC.translate("&eClick to view " + playerName + "'s inventory")).create()));
+                    new ComponentBuilder(CC.translate("&eClick to view " + displayName + "'s inventory")).create()));
 
             sendCombinedSpigotMessage(match, playerComponent);
         }

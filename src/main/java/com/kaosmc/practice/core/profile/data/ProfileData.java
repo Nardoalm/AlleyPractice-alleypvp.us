@@ -13,6 +13,7 @@ import com.kaosmc.practice.feature.title.model.TitleRecord;
 import com.kaosmc.practice.feature.match.data.MatchData;
 import com.kaosmc.practice.core.profile.Profile;
 import com.kaosmc.practice.common.text.CC;
+import com.kaosmc.practice.common.text.LevelBadgeUtil;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
@@ -133,20 +134,7 @@ public class ProfileData {
     }
 
     public void determineLevel() {
-        LevelService levelService = KaosPractice.getInstance().getService(LevelService.class);
-
-        if (levelService == null) {
-            this.globalLevel = "N/A";
-            return;
-        }
-
-        LevelData levelData = levelService.getLevel(this.elo);
-
-        if (levelData != null && levelData.getName() != null) {
-            this.globalLevel = levelData.getName();
-        } else {
-            this.globalLevel = "N/A";
-        }
+        this.globalLevel = String.valueOf(LevelBadgeUtil.getLevel(this.experience));
     }
 
     public void updateElo(Profile profile) {

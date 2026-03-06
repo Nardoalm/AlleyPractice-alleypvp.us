@@ -1,10 +1,13 @@
 package com.kaosmc.practice.core.database.internal;
 
 import com.kaosmc.practice.KaosPractice;
+import com.kaosmc.practice.common.InventoryUtil;
 import com.kaosmc.practice.core.profile.data.types.*;
 import com.kaosmc.practice.feature.cosmetic.model.CosmeticType;
 import com.kaosmc.practice.feature.division.Division;
 import com.kaosmc.practice.feature.division.DivisionService;
+import com.kaosmc.practice.feature.kit.Kit;
+import com.kaosmc.practice.feature.kit.KitService;
 import com.kaosmc.practice.feature.layout.data.LayoutData;
 import com.kaosmc.practice.feature.music.MusicService;
 import com.kaosmc.practice.core.profile.Profile;
@@ -555,6 +558,7 @@ public class MongoUtility {
         layoutDocument.forEach((key, value) -> {
             try {
                 List<LayoutData> layoutRecords = new ArrayList<>();
+                ItemStack[] fallbackItems = getDefaultKitItems(key);
                 @SuppressWarnings("unchecked")
                 List<Document> records = (List<Document>) value;
 
@@ -575,6 +579,10 @@ public class MongoUtility {
                                     }
                                 }
 
+                                if (items == null || items.length == 0) {
+                                    items = InventoryUtil.cloneItemStackArray(fallbackItems);
+                                }
+
                                 LayoutData layoutRecord = new LayoutData(
                                         safeString(name),
                                         safeString(displayName),
@@ -583,13 +591,45 @@ public class MongoUtility {
                                 layoutRecords.add(layoutRecord);
                             });
                 }
-                layoutData.getLayouts().put(key, layoutRecords);
+
+                if (!layoutRecords.isEmpty()) {
+                    layoutData.getLayouts().put(key, layoutRecords);
+                }
             } catch (Exception e) {
                 Logger.logException(String.format("Failed to parse layout data for key: %s", key), e);
             }
         });
 
         return layoutData;
+    }
+
+    private static ItemStack[] getDefaultKitItems(String kitName) {
+        if (kitName == null || kitName.trim().isEmpty()) {
+            return new ItemStack[0];
+        }
+
+        KitService kitService;
+        try {
+            kitService = KaosPractice.getInstance().getService(KitService.class);
+        } catch (Exception ignored) {
+            return new ItemStack[0];
+        }
+
+        if (kitService == null || kitService.getKits() == null) {
+            return new ItemStack[0];
+        }
+
+        Kit matchedKit = kitService.getKits().stream()
+                .filter(Objects::nonNull)
+                .filter(kit -> kit.getName() != null && kit.getName().equalsIgnoreCase(kitName))
+                .findFirst()
+                .orElse(null);
+
+        if (matchedKit == null || matchedKit.getItems() == null) {
+            return new ItemStack[0];
+        }
+
+        return InventoryUtil.cloneItemStackArray(matchedKit.getItems());
     }
 
     /**

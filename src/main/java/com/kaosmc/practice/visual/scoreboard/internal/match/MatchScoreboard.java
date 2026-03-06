@@ -1,9 +1,11 @@
 package com.kaosmc.practice.visual.scoreboard.internal.match;
 
+import com.kaosmc.practice.common.PlayerDisplayUtil;
 import com.kaosmc.practice.feature.match.model.internal.MatchGamePlayer;
 import com.kaosmc.practice.feature.match.model.GameParticipant;
 import com.kaosmc.practice.core.profile.Profile;
 import com.kaosmc.practice.common.reflect.utility.ReflectionUtility;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -33,8 +35,13 @@ public interface MatchScoreboard {
      * @return The formatted player name with color.
      */
     default String getColoredName(Profile profile) {
+        if (profile == null) {
+            return ChatColor.WHITE + "Unknown";
+        }
+
         ChatColor nameColor = profile.getNameColor();
-        String name = profile.getName();
+        Player onlineTarget = Bukkit.getPlayer(profile.getUuid());
+        String name = PlayerDisplayUtil.resolveDisplayName(onlineTarget, profile.getName());
 
         if (nameColor != null) {
             return nameColor + name;

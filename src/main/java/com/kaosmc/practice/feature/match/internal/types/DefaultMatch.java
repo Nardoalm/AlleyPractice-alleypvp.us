@@ -3,6 +3,7 @@ package com.kaosmc.practice.feature.match.internal.types;
 import com.kaosmc.practice.KaosPractice;
 import com.kaosmc.practice.common.InventoryUtil;
 import com.kaosmc.practice.common.ListenerUtil;
+import com.kaosmc.practice.common.PlayerDisplayUtil;
 import com.kaosmc.practice.common.PlayerUtil;
 import com.kaosmc.practice.common.elo.EloCalculator;
 import com.kaosmc.practice.common.elo.EloResult;
@@ -47,6 +48,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * @author Remi
@@ -56,6 +58,23 @@ import java.util.List;
 @Getter
 @Setter
 public class DefaultMatch extends Match {
+    private static final ChatColor[] TEAM_COLOR_POOL = {
+            ChatColor.BLACK,
+            ChatColor.DARK_BLUE,
+            ChatColor.DARK_GREEN,
+            ChatColor.DARK_AQUA,
+            ChatColor.DARK_RED,
+            ChatColor.DARK_PURPLE,
+            ChatColor.GOLD,
+            ChatColor.BLUE,
+            ChatColor.GREEN,
+            ChatColor.AQUA,
+            ChatColor.RED,
+            ChatColor.LIGHT_PURPLE,
+            ChatColor.YELLOW,
+            ChatColor.WHITE
+    };
+
     private final GameParticipant<MatchGamePlayer> participantA;
     private final GameParticipant<MatchGamePlayer> participantB;
 
@@ -79,8 +98,8 @@ public class DefaultMatch extends Match {
         super(queue, kit, arena, ranked);
         this.participantA = participantA;
         this.participantB = participantB;
-        this.teamAColor = ChatColor.BLUE;
-        this.teamBColor = ChatColor.RED;
+        this.teamAColor = pickRandomTeamColor(null);
+        this.teamBColor = pickRandomTeamColor(this.teamAColor);
     }
 
     @Override
@@ -122,14 +141,21 @@ public class DefaultMatch extends Match {
             return;
         }
 
-        final InventoryUtil.TeamColor colorToApply = (participant == this.getParticipantA())
-                ? InventoryUtil.TeamColor.BLUE
-                : InventoryUtil.TeamColor.RED;
+        final ChatColor participantColor = this.getTeamColor(participant);
+        final InventoryUtil.TeamColor colorToApply = InventoryUtil.TeamColor.fromChatColor(participantColor);
 
         participant.getPlayers().stream()
                 .map(MatchGamePlayer::getTeamPlayer)
                 .filter(p -> p != null && p.isOnline())
                 .forEach(teamPlayer -> InventoryUtil.applyTeamColorToInventory(teamPlayer, colorToApply));
+    }
+
+    private static ChatColor pickRandomTeamColor(ChatColor excludedColor) {
+        ChatColor selected = TEAM_COLOR_POOL[ThreadLocalRandom.current().nextInt(TEAM_COLOR_POOL.length)];
+        while (excludedColor != null && selected == excludedColor) {
+            selected = TEAM_COLOR_POOL[ThreadLocalRandom.current().nextInt(TEAM_COLOR_POOL.length)];
+        }
+        return selected;
     }
 
     @Override
@@ -168,10 +194,12 @@ public class DefaultMatch extends Match {
         } else {
             MatchGamePlayer winnerPlayer = winner.getLeader();
             MatchGamePlayer loserPlayer = loser.getLeader();
+            String winnerName = PlayerDisplayUtil.resolveDisplayName(winnerPlayer.getTeamPlayer(), winnerPlayer.getUsername());
+            String loserName = PlayerDisplayUtil.resolveDisplayName(loserPlayer.getTeamPlayer(), loserPlayer.getUsername());
             MatchUtility.sendMatchResult(
                     this,
-                    winnerPlayer.getUsername(),
-                    loserPlayer.getUsername(),
+                    winnerName,
+                    loserName,
                     winnerPlayer.getUuid(),
                     loserPlayer.getUuid()
             );
@@ -297,8 +325,12 @@ public class DefaultMatch extends Match {
 
 
         if (localeService.getBoolean(VisualsLocaleImpl.TITLE_MATCH_RESPAWNED_ENABLED_BOOLEAN)) {
-            String header = localeService.getString(VisualsLocaleImpl.TITLE_MATCH_VICTORY_HEADER).replace("{winner}", winner.getLeader().getUsername());
-            String footer = localeService.getString(VisualsLocaleImpl.TITLE_MATCH_VICTORY_FOOTER).replace("{winner}", winner.getLeader().getUsername());
+            String winnerName = PlayerDisplayUtil.resolveDisplayName(
+                    winner.getLeader().getTeamPlayer(),
+                    winner.getLeader().getUsername()
+            );
+            String header = localeService.getString(VisualsLocaleImpl.TITLE_MATCH_VICTORY_HEADER).replace("{winner}", winnerName);
+            String footer = localeService.getString(VisualsLocaleImpl.TITLE_MATCH_VICTORY_FOOTER).replace("{winner}", winnerName);
 
             int fadeIn = localeService.getInt(VisualsLocaleImpl.TITLE_MATCH_VICTORY_FADE_IN);
             int stay = localeService.getInt(VisualsLocaleImpl.TITLE_MATCH_VICTORY_STAY);
@@ -327,8 +359,12 @@ public class DefaultMatch extends Match {
         LocaleService localeService = this.plugin.getService(LocaleService.class);
 
         if (localeService.getBoolean(VisualsLocaleImpl.TITLE_MATCH_DEFEAT_ENABLED_BOOLEAN)) {
-            String header = localeService.getString(VisualsLocaleImpl.TITLE_MATCH_DEFEAT_HEADER).replace("{winner}", winner.getLeader().getUsername());
-            String footer = localeService.getString(VisualsLocaleImpl.TITLE_MATCH_DEFEAT_FOOTER).replace("{winner}", winner.getLeader().getUsername());
+            String winnerName = PlayerDisplayUtil.resolveDisplayName(
+                    winner.getLeader().getTeamPlayer(),
+                    winner.getLeader().getUsername()
+            );
+            String header = localeService.getString(VisualsLocaleImpl.TITLE_MATCH_DEFEAT_HEADER).replace("{winner}", winnerName);
+            String footer = localeService.getString(VisualsLocaleImpl.TITLE_MATCH_DEFEAT_FOOTER).replace("{winner}", winnerName);
 
             int fadeIn = localeService.getInt(VisualsLocaleImpl.TITLE_MATCH_DEFEAT_FADE_IN);
             int stay = localeService.getInt(VisualsLocaleImpl.TITLE_MATCH_DEFEAT_STAY);
@@ -656,7 +692,7 @@ public class DefaultMatch extends Match {
 
         //TODO: after implementing multiple layouts, we need to give the books here, if multiple layouts are present in profile.
 
-        if (layout != null && layout.getItems() != null) {
+        if (layout != null && layout.getItems() != null && layout.getItems().length > 0) {
             player.getInventory().setContents(InventoryUtil.cloneItemStackArray(layout.getItems()));
         } else {
             player.getInventory().setContents(InventoryUtil.cloneItemStackArray(kitToGive.getItems()));

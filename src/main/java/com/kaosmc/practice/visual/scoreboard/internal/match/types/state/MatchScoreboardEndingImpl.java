@@ -1,6 +1,7 @@
 package com.kaosmc.practice.visual.scoreboard.internal.match.types.state;
 
 import com.kaosmc.practice.KaosPractice;
+import com.kaosmc.practice.common.PlayerDisplayUtil;
 import com.kaosmc.practice.core.config.ConfigService;
 import com.kaosmc.practice.feature.match.Match;
 import com.kaosmc.practice.feature.match.model.internal.MatchGamePlayer;
@@ -31,16 +32,27 @@ public class MatchScoreboardEndingImpl implements MatchScoreboard {
         }
 
         ConfigService configService = KaosPractice.getInstance().getService(ConfigService.class);
+        if (configService == null || configService.getScoreboardConfig() == null || opponent == null || opponent.getLeader() == null || you == null || you.getLeader() == null) {
+            return Collections.emptyList();
+        }
 
         List<String> scoreboardLines = new ArrayList<>();
         Match match = profile.getMatch();
         if (match == null) return scoreboardLines;
 
+        String opponentName = PlayerDisplayUtil.resolveDisplayName(
+                opponent.getLeader().getTeamPlayer(),
+                opponent.getLeader().getUsername()
+        );
+        String winnerName = opponent.getLeader().isDead()
+                ? PlayerDisplayUtil.resolveDisplayName(you.getLeader().getTeamPlayer(), you.getLeader().getUsername())
+                : opponentName;
+
         for (String line : configService.getScoreboardConfig().getStringList("scoreboard.lines.ending")) {
             scoreboardLines.add(CC.translate(line)
-                    .replace("{opponent}", opponent.getLeader().getUsername())
+                    .replace("{opponent}", opponentName)
                     .replace("{duration}", match.getDuration())
-                    .replace("{winner}", opponent.getLeader().isDead() ? you.getLeader().getUsername() : opponent.getLeader().getUsername())
+                    .replace("{winner}", winnerName)
                     .replace("{end-result}", opponent.getLeader().isDead() ? "&a&lVICTORY!" : "&c&lDEFEAT!"));
         }
 

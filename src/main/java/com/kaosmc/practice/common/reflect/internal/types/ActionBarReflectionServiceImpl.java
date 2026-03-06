@@ -1,6 +1,7 @@
 package com.kaosmc.practice.common.reflect.internal.types;
 
 import com.kaosmc.practice.KaosPractice;
+import com.kaosmc.practice.common.PlayerDisplayUtil;
 import com.kaosmc.practice.common.logger.Logger;
 import com.kaosmc.practice.common.reflect.Reflection;
 import com.kaosmc.practice.common.text.CC;
@@ -28,6 +29,10 @@ public class ActionBarReflectionServiceImpl implements Reflection {
      */
     public void sendMessage(Player player, String message, int durationSeconds) {
         try {
+            if (!shouldSendActionBar(player)) {
+                return;
+            }
+
             IChatBaseComponent chatBaseComponent = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + CC.translate(message) + "\"}");
             PacketPlayOutChat packet = new PacketPlayOutChat(chatBaseComponent, (byte) 2);
             this.sendPacket(player, packet);
@@ -36,6 +41,10 @@ public class ActionBarReflectionServiceImpl implements Reflection {
                 new BukkitRunnable() {
                     @Override
                     public void run() {
+                        if (!shouldSendActionBar(player)) {
+                            return;
+                        }
+
                         IChatBaseComponent clearChatBaseComponent = IChatBaseComponent.ChatSerializer.a("{\"text\": \"\"}");
                         PacketPlayOutChat clearPacket = new PacketPlayOutChat(clearChatBaseComponent, (byte) 2);
                         sendPacket(player, clearPacket);
@@ -43,7 +52,8 @@ public class ActionBarReflectionServiceImpl implements Reflection {
                 }.runTaskLater(KaosPractice.getInstance(), durationSeconds * 20L);
             }
         } catch (Exception exception) {
-            Logger.logException("An error occurred while trying to send an action bar message to " + player.getName(), exception);
+            String name = player != null ? player.getName() : "unknown-player";
+            Logger.logException("An error occurred while trying to send an action bar message to " + name, exception);
         }
     }
 
@@ -55,11 +65,16 @@ public class ActionBarReflectionServiceImpl implements Reflection {
      */
     public void sendMessage(Player player, String message) {
         try {
+            if (!shouldSendActionBar(player)) {
+                return;
+            }
+
             IChatBaseComponent chatBaseComponent = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + CC.translate(message) + "\"}");
             PacketPlayOutChat packet = new PacketPlayOutChat(chatBaseComponent, (byte) 2);
             this.sendPacket(player, packet);
         } catch (Exception exception) {
-            Logger.logException("An error occurred while trying to send an action bar message to " + player.getName(), exception);
+            String name = player != null ? player.getName() : "unknown-player";
+            Logger.logException("An error occurred while trying to send an action bar message to " + name, exception);
         }
     }
 
@@ -70,7 +85,14 @@ public class ActionBarReflectionServiceImpl implements Reflection {
      * @param victim The player who died.
      */
     public void sendDeathMessage(Player killer, Player victim) {
+        if (killer == null || victim == null) {
+            return;
+        }
+
         LocaleService localeService = KaosPractice.getInstance().getService(LocaleService.class);
+        if (localeService == null) {
+            return;
+        }
 
         if (localeService.getBoolean(VisualsLocaleImpl.ACTIONBAR_DEATH_MESSAGE_ENABLED_BOOLEAN)) {
             Profile victimProfile = KaosPractice.getInstance().getService(ProfileService.class).getProfile(victim.getUniqueId());
@@ -83,9 +105,12 @@ public class ActionBarReflectionServiceImpl implements Reflection {
                     ? killerProfile.getNameColor().toString()
                     : "";
 
+            String victimName = PlayerDisplayUtil.resolveDisplayName(victim, victim.getName());
+            String killerName = PlayerDisplayUtil.resolveDisplayName(killer, killer.getName());
+
             String deathMessage = localeService.getString(VisualsLocaleImpl.ACTIONBAR_DEATH_MESSAGE_FORMAT)
-                    .replace("{victim}", victim.getName())
-                    .replace("{killer}", killer.getName())
+                    .replace("{victim}", victimName)
+                    .replace("{killer}", killerName)
                     .replace("{name-color}", victimColor)
                     .replace("{victim-name-color}", victimColor)
                     .replace("{victim-color}", victimColor)
@@ -102,11 +127,24 @@ public class ActionBarReflectionServiceImpl implements Reflection {
      * @param target The player whose health will be visualized.
      */
     public void visualizeTargetHealth(Player player, Player target) {
+        if (player == null || target == null) {
+            return;
+        }
+
         LocaleService localeService = KaosPractice.getInstance().getService(LocaleService.class);
+        if (localeService == null) {
+            return;
+        }
+
+        Profile targetProfile = KaosPractice.getInstance().getService(ProfileService.class).getProfile(target.getUniqueId());
+        String targetNameColor = targetProfile != null && targetProfile.getNameColor() != null
+                ? targetProfile.getNameColor().toString()
+                : "";
+        String targetName = PlayerDisplayUtil.resolveDisplayName(target, target.getName());
 
         String message = localeService.getString(VisualsLocaleImpl.ACTIONBAR_HEALTH_INDICATOR_MESSAGE_FORMAT)
-                .replace("{target}", target.getName())
-                .replace("{name-color}", KaosPractice.getInstance().getService(ProfileService.class).getProfile(target.getUniqueId()).getNameColor().toString());
+                .replace("{target}", targetName)
+                .replace("{name-color}", targetNameColor);
 
         String symbol = localeService.getString(VisualsLocaleImpl.ACTIONBAR_HEALTH_INDICATOR_SYMBOL_APPEARANCE);
         String fullColor = localeService.getString(VisualsLocaleImpl.ACTIONBAR_HEALTH_INDICATOR_SYMBOL_COLOR_FULL);
@@ -130,5 +168,9 @@ public class ActionBarReflectionServiceImpl implements Reflection {
 
         String finalMessage = CC.translate(message.replace("{health-bar}", healthBar.toString()));
         this.sendMessage(player, finalMessage);
+    }
+
+    private boolean shouldSendActionBar(Player player) {
+        return player != null && player.isOnline() && !PlayerDisplayUtil.isVanished(player);
     }
 }

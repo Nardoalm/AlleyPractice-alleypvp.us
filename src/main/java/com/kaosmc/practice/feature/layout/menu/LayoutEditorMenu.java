@@ -37,7 +37,7 @@ public class LayoutEditorMenu extends Menu {
             profile.setState(ProfileState.EDITING);
         }
 
-        if (this.layout != null && this.layout.getItems() != null) {
+        if (this.hasLayoutItems(this.layout)) {
             player.getInventory().setContents(InventoryUtil.cloneItemStackArray(this.layout.getItems()));
         } else if (this.kit != null && this.kit.getItems() != null) {
             player.getInventory().setContents(InventoryUtil.cloneItemStackArray(this.kit.getItems()));
@@ -101,6 +101,10 @@ public class LayoutEditorMenu extends Menu {
     @Override
     public boolean isUpdateAfterClick() {
         return false;
+    }
+
+    private boolean hasLayoutItems(LayoutData layoutData) {
+        return layoutData != null && layoutData.getItems() != null && layoutData.getItems().length > 0;
     }
 
     private LayoutData getFirstLayout(Profile profile) {

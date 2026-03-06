@@ -42,11 +42,18 @@ public class FFAScoreboardImpl implements Scoreboard {
         if (player == null || !player.isOnline()) {
             return Collections.emptyList();
         }
+        if (profile.getFfaMatch() == null || profile.getFfaMatch().getKit() == null) {
+            return Collections.emptyList();
+        }
         ProfileFFAData profileFFAData = profile.getProfileData().getFfaData().get(profile.getFfaMatch().getKit().getName());
 
         FFASpawnService ffaSpawnService = KaosPractice.getInstance().getService(FFASpawnService.class);
         ConfigService configService = KaosPractice.getInstance().getService(ConfigService.class);
         CombatService combatService = KaosPractice.getInstance().getService(CombatService.class);
+        if (profileFFAData == null || ffaSpawnService == null || ffaSpawnService.getCuboid() == null
+                || configService == null || configService.getScoreboardConfig() == null || combatService == null) {
+            return Collections.emptyList();
+        }
 
         List<String> scoreboardLines = new ArrayList<>();
 
@@ -58,18 +65,18 @@ public class FFAScoreboardImpl implements Scoreboard {
                 if (combatService.isPlayerInCombat(player.getUniqueId())) {
                     for (String combatLine : combatTagLines) {
                         scoreboardLines.add(CC.translate(combatLine
-                                .replaceAll("\\{combat-tag}", combatService.getRemainingTimeFormatted(player))));
+                                .replace("{combat-tag}", combatService.getRemainingTimeFormatted(player))));
                     }
                 }
             } else {
                 scoreboardLines.add(CC.translate(line)
-                        .replaceAll("\\{kit}", profile.getFfaMatch().getKit().getDisplayName())
-                        .replaceAll("\\{players}", String.valueOf(profile.getFfaMatch().getPlayers().size()))
-                        .replaceAll("\\{zone}", ffaSpawnService.getCuboid().isIn(player) ? "Spawn" : "Warzone")
-                        .replaceAll("\\{ks}", String.valueOf(profileFFAData.getKillstreak()))
-                        .replaceAll("\\{kills}", String.valueOf(profileFFAData.getKills()))
-                        .replaceAll("\\{deaths}", String.valueOf(profileFFAData.getDeaths()))
-                        .replaceAll("\\{ping}", String.valueOf(this.getPing(player))));
+                        .replace("{kit}", profile.getFfaMatch().getKit().getDisplayName())
+                        .replace("{players}", String.valueOf(profile.getFfaMatch().getPlayers().size()))
+                        .replace("{zone}", ffaSpawnService.getCuboid().isIn(player) ? "Spawn" : "Warzone")
+                        .replace("{ks}", String.valueOf(profileFFAData.getKillstreak()))
+                        .replace("{kills}", String.valueOf(profileFFAData.getKills()))
+                        .replace("{deaths}", String.valueOf(profileFFAData.getDeaths()))
+                        .replace("{ping}", String.valueOf(this.getPing(player))));
             }
         }
 

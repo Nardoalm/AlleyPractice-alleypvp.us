@@ -38,9 +38,17 @@ public abstract class BaseMatchScoreboard implements MatchScoreboard {
     public List<String> getLines(Profile profile, Player player, GameParticipant<MatchGamePlayer> you, GameParticipant<MatchGamePlayer> opponent) {
         List<String> scoreboardLines = new ArrayList<>();
         Match match = profile.getMatch();
+        if (match == null || opponent == null || opponent.getLeader() == null) {
+            return scoreboardLines;
+        }
+
+        ConfigService configService = KaosPractice.getInstance().getService(ConfigService.class);
+        if (configService == null || configService.getScoreboardConfig() == null) {
+            return scoreboardLines;
+        }
         String configPath = match.isTeamMatch() ? getTeamConfigPath() : getSoloConfigPath();
 
-        for (String line : KaosPractice.getInstance().getService(ConfigService.class).getScoreboardConfig().getStringList(configPath)) {
+        for (String line : configService.getScoreboardConfig().getStringList(configPath)) {
             scoreboardLines.add(replacePlaceholders(line, profile, player, you, opponent));
         }
 

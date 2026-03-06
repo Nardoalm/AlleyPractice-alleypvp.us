@@ -23,7 +23,7 @@ public class DefaultStrategyImpl implements NametagStrategy {
         String prefix = NametagFormatResolver.resolve(lobbyFormat, context);
 
         if (prefix == null || prefix.trim().isEmpty()) {
-            prefix = NametagFormatResolver.resolve("{name_color}", context);
+            prefix = NametagFormatResolver.resolve("{tag_color}", context);
         }
 
         return new NametagView(prefix, "");

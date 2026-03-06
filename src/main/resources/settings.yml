@@ -99,10 +99,10 @@ server:
 visuals:
   nametag:
     lobby:
-      # Placeholders: {tag_prefix}, {tag_color}, {name_color}
+      # Placeholders: {tag_prefix}, {tag_color}, {name_color}, {team_color}, {nick}/{name}/{player}, %placeholderapi%
       format: "{tag_prefix}"
     match:
-      # Placeholders: {tag_prefix}, {tag_color}, {name_color}
+      # Placeholders: {tag_prefix}, {tag_color}, {name_color}, {team_color}, {nick}/{name}/{player}, %placeholderapi%
       format: "{tag_color}"
 
 sounds:

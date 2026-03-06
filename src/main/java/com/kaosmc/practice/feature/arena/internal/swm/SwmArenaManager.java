@@ -20,10 +20,8 @@ import com.kaosmc.practice.core.config.ConfigService;
 import com.kaosmc.practice.feature.arena.internal.types.StandAloneArena;
 import com.kaosmc.practice.feature.arena.schematic.ArenaSchematicService;
 import org.bukkit.Bukkit;
-import org.bukkit.Difficulty;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.WorldType;
 import org.bukkit.WorldCreator;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
@@ -258,14 +256,6 @@ public class SwmArenaManager implements ArenaCopyManager {
         propertyMap.setInt(SlimeProperties.SPAWN_Y, 100);
         propertyMap.setInt(SlimeProperties.SPAWN_Z, 0);
 
-        propertyMap.setBoolean(SlimeProperties.ALLOW_MONSTERS, false);
-        propertyMap.setBoolean(SlimeProperties.ALLOW_ANIMALS, false);
-        propertyMap.setBoolean(SlimeProperties.PVP, true);
-
-        // FIX: Only set DIFFICULTY as a String — ENVIRONMENT and WORLD_TYPE are
-        // not String-typed in all SWM versions and cause "String cannot be cast to Boolean".
-        propertyMap.setString(SlimeProperties.DIFFICULTY, "NORMAL");
-
         return propertyMap;
     }
 
@@ -273,14 +263,9 @@ public class SwmArenaManager implements ArenaCopyManager {
         if (world == null || world.getPropertyMap() == null) {
             return;
         }
-        SlimePropertyMap propertyMap = world.getPropertyMap();
-        try {
-            // FIX: Only override DIFFICULTY here. Setting ENVIRONMENT or WORLD_TYPE
-            // as strings causes a ClassCastException inside SWM when it reads them back
-            // as their native typed property (e.g. Boolean/Enum).
-            propertyMap.setString(SlimeProperties.DIFFICULTY, "NORMAL");
-        } catch (Exception ignored) {
-        }
+        // Cross-version SWM servers may disagree on property types (e.g. Boolean vs Integer).
+        // We intentionally avoid writing optional properties here and only keep required spawn
+        // coordinates in the creation map to prevent ClassCastException during clone/load.
     }
 
     private Location getCopyOrigin(StandAloneArena originalArena, World world) {

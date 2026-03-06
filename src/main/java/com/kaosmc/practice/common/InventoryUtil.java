@@ -2,6 +2,7 @@ package com.kaosmc.practice.common;
 
 import lombok.Getter;
 import lombok.experimental.UtilityClass;
+import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -104,8 +105,22 @@ public class InventoryUtil {
      */
     @Getter
     public enum TeamColor {
-        BLUE(Color.fromRGB(0, 102, 255), (short) 11),
-        RED(Color.fromRGB(255, 0, 0), (short) 14);
+        WHITE(Color.fromRGB(240, 240, 240), (short) 0),
+        ORANGE(Color.fromRGB(235, 136, 68), (short) 1),
+        MAGENTA(Color.fromRGB(200, 80, 189), (short) 2),
+        LIGHT_BLUE(Color.fromRGB(102, 153, 216), (short) 3),
+        YELLOW(Color.fromRGB(225, 219, 62), (short) 4),
+        LIME(Color.fromRGB(127, 204, 25), (short) 5),
+        PINK(Color.fromRGB(242, 127, 165), (short) 6),
+        GRAY(Color.fromRGB(76, 76, 76), (short) 7),
+        LIGHT_GRAY(Color.fromRGB(153, 153, 153), (short) 8),
+        CYAN(Color.fromRGB(76, 127, 153), (short) 9),
+        PURPLE(Color.fromRGB(127, 63, 178), (short) 10),
+        BLUE(Color.fromRGB(51, 76, 178), (short) 11),
+        BROWN(Color.fromRGB(102, 76, 51), (short) 12),
+        GREEN(Color.fromRGB(102, 127, 51), (short) 13),
+        RED(Color.fromRGB(153, 51, 51), (short) 14),
+        BLACK(Color.fromRGB(25, 25, 25), (short) 15);
 
         private final Color armorColor;
         private final short blockDataValue;
@@ -113,6 +128,48 @@ public class InventoryUtil {
         TeamColor(Color armorColor, short blockDataValue) {
             this.armorColor = armorColor;
             this.blockDataValue = blockDataValue;
+        }
+
+        public static TeamColor fromChatColor(ChatColor color) {
+            if (color == null) {
+                return BLUE;
+            }
+
+            switch (color) {
+                case BLACK:
+                    return BLACK;
+                case DARK_BLUE:
+                    return BLUE;
+                case DARK_GREEN:
+                    return GREEN;
+                case DARK_AQUA:
+                    return CYAN;
+                case DARK_RED:
+                    return RED;
+                case DARK_PURPLE:
+                    return PURPLE;
+                case GOLD:
+                    return ORANGE;
+                case GRAY:
+                    return GRAY;
+                case DARK_GRAY:
+                    return LIGHT_GRAY;
+                case BLUE:
+                    return LIGHT_BLUE;
+                case GREEN:
+                    return LIME;
+                case AQUA:
+                    return CYAN;
+                case RED:
+                    return RED;
+                case LIGHT_PURPLE:
+                    return MAGENTA;
+                case YELLOW:
+                    return YELLOW;
+                case WHITE:
+                default:
+                    return WHITE;
+            }
         }
     }
 }

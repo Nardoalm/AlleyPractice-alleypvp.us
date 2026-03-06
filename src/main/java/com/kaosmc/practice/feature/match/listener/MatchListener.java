@@ -35,8 +35,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.List;
-
 /**
  * @author Remi
  * @project Kaos
@@ -96,8 +94,18 @@ public class MatchListener implements Listener {
         if (profile.getState() == ProfileState.PLAYING) {
             if (match.getState() == MatchState.STARTING || match.getState() == MatchState.ENDING_ROUND || match.getState() == MatchState.RESTARTING_ROUND) {
                 if (matchKit.isSettingEnabled(KitSettingDenyMovementImpl.class)) {
-                    List<GameParticipant<MatchGamePlayer>> participants = match.getParticipants();
-                    match.denyPlayerMovement(participants);
+                    Location from = event.getFrom();
+                    Location to = event.getTo();
+                    if (to != null && (from.getX() != to.getX() || from.getY() != to.getY() || from.getZ() != to.getZ())) {
+                        event.setTo(new Location(
+                                from.getWorld(),
+                                from.getX(),
+                                from.getY(),
+                                from.getZ(),
+                                to.getYaw(),
+                                to.getPitch()
+                        ));
+                    }
                 }
             }
         }

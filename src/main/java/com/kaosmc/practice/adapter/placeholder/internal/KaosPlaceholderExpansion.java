@@ -38,9 +38,8 @@ public class KaosPlaceholderExpansion extends PlaceholderExpansion {
 
     @Override
     public @NotNull String getIdentifier() {
-        // Usando o nome definido nas constantes (ex: kaos)
-        PluginConstant constant = this.plugin.getService(PluginConstant.class);
-        return constant != null ? constant.getName().toLowerCase() : "kaos";
+        // Keep a stable namespace for PlaceholderAPI calls such as %kaos_level%.
+        return "kaos";
     }
 
     @Override
@@ -124,6 +123,19 @@ public class KaosPlaceholderExpansion extends PlaceholderExpansion {
             case "nivel":
             case "nível":
                 return LevelBadgeUtil.getBadge(profileData.getExperience());
+
+            case "player-level-number":
+            case "level-number":
+            case "nivel-numero":
+                return String.valueOf(LevelBadgeUtil.getLevel(profileData.getExperience()));
+
+            case "player-experience":
+            case "xp":
+                return String.valueOf(profileData.getExperience());
+
+            case "level-progress":
+            case "player-level-progress":
+                return LevelBadgeUtil.getProgressDetails(profileData.getExperience());
 
             case "player-coins":
                 return String.valueOf(profileData.getCoins());

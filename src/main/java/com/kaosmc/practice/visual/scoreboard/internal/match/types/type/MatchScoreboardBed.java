@@ -48,6 +48,14 @@ public class MatchScoreboardBed extends BaseMatchScoreboard {
     private String getTeamDisplay(ChatColor teamColor) {
         if (teamColor == null) return "";
         String colorName = teamColor.name().toLowerCase();
-        return KaosPractice.getInstance().getService(ConfigService.class).getScoreboardConfig().getString("scoreboard.team-displays." + colorName, "");
+        ConfigService configService = KaosPractice.getInstance().getService(ConfigService.class);
+        if (configService != null && configService.getScoreboardConfig() != null) {
+            String configured = configService.getScoreboardConfig().getString("scoreboard.team-displays." + colorName, "");
+            if (configured != null && !configured.trim().isEmpty()) {
+                return configured;
+            }
+        }
+
+        return teamColor + colorName.replace('_', ' ');
     }
 }

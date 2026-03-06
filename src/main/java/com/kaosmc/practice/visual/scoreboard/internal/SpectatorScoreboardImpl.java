@@ -1,6 +1,7 @@
 package com.kaosmc.practice.visual.scoreboard.internal;
 
 import com.kaosmc.practice.KaosPractice;
+import com.kaosmc.practice.common.PlayerDisplayUtil;
 import com.kaosmc.practice.core.config.ConfigService;
 import com.kaosmc.practice.feature.match.internal.types.DefaultMatch;
 import com.kaosmc.practice.feature.match.model.internal.MatchGamePlayer;
@@ -32,6 +33,9 @@ public class SpectatorScoreboardImpl implements Scoreboard {
             return Collections.emptyList();
         }
         ConfigService configService = KaosPractice.getInstance().getService(ConfigService.class);
+        if (configService == null || configService.getScoreboardConfig() == null || profile.getMatch() == null) {
+            return Collections.emptyList();
+        }
 
         List<String> scoreboardLines = new ArrayList<>();
 
@@ -46,21 +50,21 @@ public class SpectatorScoreboardImpl implements Scoreboard {
         if (profile.getMatch() instanceof DefaultMatch) {
             for (String line : configService.getScoreboardConfig().getStringList("scoreboard.lines.spectating.regular-match")) {
                 scoreboardLines.add(CC.translate(line)
-                        .replaceAll("\\{playerA}", playerAName)
-                        .replaceAll("\\{playerB}", playerBName)
-                        .replaceAll("\\{pingA}", pingA)
-                        .replaceAll("\\{pingB}", pingB)
-                        .replaceAll("\\{colorA}", String.valueOf(((DefaultMatch) profile.getMatch()).getTeamAColor()))
-                        .replaceAll("\\{colorB}", String.valueOf(((DefaultMatch) profile.getMatch()).getTeamBColor()))
-                        .replaceAll("\\{duration}", profile.getMatch().getDuration())
-                        .replaceAll("\\{arena}", profile.getMatch().getArena().getDisplayName() == null ? "&c&lNULL" : profile.getMatch().getArena().getDisplayName())
-                        .replaceAll("\\{kit}", profile.getMatch().getKit().getDisplayName()));
+                        .replace("{playerA}", playerAName)
+                        .replace("{playerB}", playerBName)
+                        .replace("{pingA}", pingA)
+                        .replace("{pingB}", pingB)
+                        .replace("{colorA}", String.valueOf(((DefaultMatch) profile.getMatch()).getTeamAColor()))
+                        .replace("{colorB}", String.valueOf(((DefaultMatch) profile.getMatch()).getTeamBColor()))
+                        .replace("{duration}", profile.getMatch().getDuration())
+                        .replace("{arena}", profile.getMatch().getArena().getDisplayName() == null ? "&c&lNULL" : profile.getMatch().getArena().getDisplayName())
+                        .replace("{kit}", profile.getMatch().getKit().getDisplayName()));
             }
         } else if (profile.getFfaMatch() != null) {
             for (String line : configService.getScoreboardConfig().getStringList("scoreboard.lines.spectating.ffa")) {
                 scoreboardLines.add(CC.translate(line)
-                        .replaceAll("\\{arena}", profile.getFfaMatch().getArena().getDisplayName() == null ? "&c&lNULL" : profile.getFfaMatch().getArena().getDisplayName())
-                        .replaceAll("\\{kit}", profile.getFfaMatch().getKit().getDisplayName()));
+                        .replace("{arena}", profile.getFfaMatch().getArena().getDisplayName() == null ? "&c&lNULL" : profile.getFfaMatch().getArena().getDisplayName())
+                        .replace("{kit}", profile.getFfaMatch().getKit().getDisplayName()));
             }
         }
 
@@ -98,11 +102,14 @@ public class SpectatorScoreboardImpl implements Scoreboard {
         }
 
         if (!participant.getPlayers().isEmpty()) {
-            return participant.getPlayers().get(0).getUsername();
+            MatchGamePlayer gamePlayer = participant.getPlayers().get(0);
+            return PlayerDisplayUtil.resolveDisplayName(gamePlayer.getTeamPlayer(), gamePlayer.getUsername());
         }
 
         if (!participant.getAllPlayers().isEmpty()) {
-            return "&7" + participant.getAllPlayers().get(0).getUsername() + " &c(DC)";
+            MatchGamePlayer gamePlayer = participant.getAllPlayers().get(0);
+            String displayName = PlayerDisplayUtil.resolveDisplayName(gamePlayer.getTeamPlayer(), gamePlayer.getUsername());
+            return "&7" + displayName + " &c(DC)";
         }
 
         return "&c&lDisconnected";
