@@ -87,7 +87,7 @@ public class ConfigServiceImpl implements ConfigService {
         try {
             Logger.sendMessageAndLog(sender, "");
             Logger.sendMessageAndLog(sender, "&fReload process &a&lSTARTING&f.");
-            Logger.sendMessageAndLog(sender, "&fPor favor, espere...");
+            Logger.sendMessageAndLog(sender, "&fPor favor espere...");
             Logger.sendMessageAndLog(sender, "");
 
             TaskUtil.runLaterAsync(() -> {

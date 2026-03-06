@@ -189,13 +189,16 @@ public class AbilityServiceImpl implements AbilityService {
             return;
         }
 
-        String message = configService.getAbilityConfig().getString("COOLDOWN_EXPIRED");
-        if (message == null) {
-            message = "&a%ABILITY% pronto para uso novamente.";
+        String rawMessage = configService.getAbilityConfig().getString("COOLDOWN_EXPIRED");
+        if (rawMessage == null) {
+            rawMessage = "&a%ABILITY% pronto para uso novamente.";
         }
 
+        final String finalMessage = rawMessage;
+        final String finalAbilityName = abilityName != null ? abilityName : "Ability";
+
         TaskUtil.runLaterAsync(() ->
-                CC.message(player, message
-                        .replace("%ABILITY%", abilityName != null ? abilityName : "Ability")), getCooldown(ability) * 20L);
+                CC.message(player, finalMessage
+                        .replace("%ABILITY%", finalAbilityName)), getCooldown(ability) * 20L);
     }
 }

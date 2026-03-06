@@ -102,7 +102,7 @@ public class AntiTrapper extends Ability {
             }
             if (isAbility(player.getItemInHand())) {
                 if (this.hasCooldown(player)) {
-                    player.sendMessage(CC.translate("&fYou are on cooldown for &4" + DurationFormatter.getRemaining(profile.getCooldown(AntiTrapper.class).getRemainingMillis(player), true)));
+                    player.sendMessage(CC.translate("&fVocê está em cooldown por &4" + DurationFormatter.getRemaining(profile.getCooldown(AntiTrapper.class).getRemainingMillis(player), true)));
                     event.setCancelled(true);
                     player.updateInventory();
                 }
@@ -115,7 +115,7 @@ public class AntiTrapper extends Ability {
         Player player = event.getPlayer();
         if (AntiTrapper.isOnCooldownVic(player)) {
             long millisLeft = AntiTrapper.cooldownvic.get(event.getPlayer().getName()) - System.currentTimeMillis();
-            player.sendMessage(CC.translate("&7You can't place blocks for another &4" + TimeUtil.formatLongMin(millisLeft) + " &7seconds"));
+            player.sendMessage(CC.translate("&7Você não pode quebrar blocos por mais  &4" + TimeUtil.formatLongMin(millisLeft) + " &7segundos"));
             event.setCancelled(true);
         }
     }
@@ -126,7 +126,7 @@ public class AntiTrapper extends Ability {
         if (AntiTrapper.isOnCooldownVic(player)) {
             long millisLeft = AntiTrapper.cooldownvic.get(event.getPlayer().getName()) - System.currentTimeMillis();
             event.setCancelled(true);
-            player.sendMessage(CC.translate("&7You can't break blocks for another &4" + TimeUtil.formatLongMin(millisLeft) + " &7seconds"));
+            player.sendMessage(CC.translate("&7Você não pode quebrar blocos por mais &4" + TimeUtil.formatLongMin(millisLeft) + " &7segundos"));
         }
     }
 

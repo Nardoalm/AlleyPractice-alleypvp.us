@@ -147,8 +147,8 @@ public class Logger {
         } finally {
             long end = System.currentTimeMillis();
             String prefix = success ? TASK_PREFIX_SUCCESS : TASK_PREFIX_FAIL;
-            String message = success ? "&fSuccessfully initialized &6" : "&cFailed to initialize &6";
-            consoleSender.sendMessage(CC.translate(prefix + message + taskName + " &fin &6" + (end - start) + "ms&f."));
+            String message = success ? "&fInicializado com sucesso -> &6" : "&cFalha ao inicializar -> &6";
+            consoleSender.sendMessage(CC.translate(prefix + message + taskName + " &fem &6" + (end - start) + " ms&f."));
         }
     }
     /**
@@ -168,8 +168,8 @@ public class Logger {
         } finally {
             long end = System.currentTimeMillis();
             String prefix = success ? TASK_PREFIX_SUCCESS : TASK_PREFIX_FAIL;
-            String message = success ? "&fSuccessfully ran &6" : "&cFailed to run &6";
-            consoleSender.sendMessage(CC.translate( prefix + message + runnableTaskName + " &fin &6" + (end - start) + "ms&f."));
+            String message = success ? "&fExecutado com sucesso -> &6" : "&cFailed to run &6";
+            consoleSender.sendMessage(CC.translate( prefix + message + runnableTaskName + " &fem &6" + (end - start) + " ms&f."));
         }
     }
 
@@ -191,7 +191,7 @@ public class Logger {
         } finally {
             long runtime = System.currentTimeMillis() - start;
             String prefix = success ? TASK_PREFIX_SUCCESS : TASK_PREFIX_FAIL;
-            String message = success ? "&fSuccessfully " + action + "&f the &6" : "&cFailed to " + action + "&f the &6";
+            String message = success ? "&fSucesso " + action + "&f the &6" : "&cFailed to " + action + "&f the &6";
             consoleSender.sendMessage(CC.translate(prefix + message + task + " &fin &6" + runtime + "ms&f."));
         }
     }

@@ -24,11 +24,6 @@ import com.kaosmc.practice.feature.spawn.command.SetSpawnCommand;
 import com.kaosmc.practice.feature.spawn.command.SpawnCommand;
 import com.kaosmc.practice.feature.spawn.command.SpawnItemsCommand;
 import com.kaosmc.practice.feature.command.impl.main.KaosCommand;
-import com.kaosmc.practice.feature.command.impl.other.*;
-import com.kaosmc.practice.feature.command.impl.other.gamemode.AdventureCommand;
-import com.kaosmc.practice.feature.command.impl.other.gamemode.CreativeCommand;
-import com.kaosmc.practice.feature.command.impl.other.gamemode.SpectatorCommand;
-import com.kaosmc.practice.feature.command.impl.other.gamemode.SurvivalCommand;
 import com.kaosmc.practice.feature.abilities.command.AbilityCommand;
 import com.kaosmc.practice.feature.cosmetic.command.CosmeticCommand;
 import com.kaosmc.practice.feature.division.command.DivisionCommand;
@@ -70,11 +65,6 @@ public class CommandUtility {
     public void registerCommands() {
         Logger.logTimeWithAction("registered", "Commands", () -> {
             new KaosCommand();
-
-            new AdventureCommand();
-            new CreativeCommand();
-            new SurvivalCommand();
-            new SpectatorCommand();
 
             new KitCommand();
             new ArenaCommand();

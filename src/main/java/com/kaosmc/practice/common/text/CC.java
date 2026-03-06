@@ -23,9 +23,16 @@ public class CC {
 
     static {
         MENU_BAR = translate("&8&m----------------------");
-        PREFIX = translate("&f[&6" + KaosPractice.getInstance().getDescription().getName() + "&f] &r");
-        ERROR_PREFIX = translate("&c[&4" + KaosPractice.getInstance().getDescription().getName() + "&c] &r");
-        WARNING_PREFIX = translate("&f[&c" + KaosPractice.getInstance().getDescription().getName() + "&f] &r");
+        String pluginName;
+        try {
+            pluginName = KaosPractice.getInstance().getDescription().getName();
+        } catch (Exception e) {
+            pluginName = "KaosPractice"; // Nome padrão para quando o Bukkit estiver offline
+        }
+
+        PREFIX = translate("&f[&6" + pluginName + "&f] &r");
+        ERROR_PREFIX = translate("&c[&4" + pluginName + "&c] &r");
+        WARNING_PREFIX = translate("&f[&c" + pluginName + "&f] &r");
     }
 
     /**
