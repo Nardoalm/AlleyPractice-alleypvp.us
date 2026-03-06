@@ -228,7 +228,7 @@ public class ArenaServiceImpl implements ArenaService {
 
             case STANDALONE:
                 int heightLimit = config.getInt(name + ".height-limit", 7);
-                int voidLevel = config.getInt(name + ".void-level", 70);
+                int voidLevel = config.getInt(name + ".void-level", 0);
                 return new StandAloneArena(
                         arenaName, minimum, maximum,
                         Serializer.deserializeLocation(config.getString(name + ".team-one-portal")),

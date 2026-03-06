@@ -23,6 +23,12 @@ public class NametagContext {
         this.target = target;
 
         ProfileService profileService = KaosPractice.getInstance().getService(ProfileService.class);
+        if (profileService == null || viewer == null || target == null) {
+            this.viewerProfile = null;
+            this.targetProfile = null;
+            return;
+        }
+
         this.viewerProfile = profileService.getProfile(viewer.getUniqueId());
         this.targetProfile = profileService.getProfile(target.getUniqueId());
     }

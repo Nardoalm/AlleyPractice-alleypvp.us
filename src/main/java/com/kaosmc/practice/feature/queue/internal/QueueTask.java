@@ -16,6 +16,7 @@ import com.kaosmc.practice.feature.party.Party;
 import com.kaosmc.practice.core.profile.ProfileService;
 import com.kaosmc.practice.core.profile.Profile;
 import com.kaosmc.practice.core.profile.enums.ProfileState;
+import com.kaosmc.practice.common.reflect.utility.ReflectionUtility;
 import com.kaosmc.practice.common.logger.Logger;
 import com.kaosmc.practice.common.text.CC;
 import lombok.Getter;
@@ -221,6 +222,10 @@ public class QueueTask implements Runnable {
      * @return true if match was successfully created
      */
     private boolean createSoloMatch(Queue queue, Player firstPlayer, Player secondPlayer, QueueProfile firstProfile, QueueProfile secondProfile) {
+        if (!isPingRangeCompatible(firstPlayer, secondPlayer)) {
+            return false;
+        }
+
         GamePlayerList gamePlayerList = getGamePlayerList(firstPlayer, secondPlayer, firstProfile, secondProfile);
         GameParticipantList gameParticipantList = getSoloGameParticipantList(gamePlayerList);
 
@@ -489,6 +494,10 @@ public class QueueTask implements Runnable {
             return false;
         }
 
+        if (!isTeamPingRangeCompatible(participantA, participantB)) {
+            return false;
+        }
+
         Arena arena = this.getArena(queue);
         if (!isArenaAvailable(arena, allMatchPlayers, queue)) {
             List<UUID> allUUIDsToRemove = allMatchPlayers.stream()
@@ -508,6 +517,94 @@ public class QueueTask implements Runnable {
                 .collect(Collectors.toList());
         clearQueueProfiles(queue, allUUIDsToRemove, false);
         return true;
+    }
+
+    private boolean isTeamPingRangeCompatible(GameParticipant<MatchGamePlayer> participantA, GameParticipant<MatchGamePlayer> participantB) {
+        if (participantA == null || participantB == null) {
+            return false;
+        }
+
+        List<Player> teamAPlayers = participantA.getPlayers().stream()
+                .map(matchGamePlayer -> Bukkit.getPlayer(matchGamePlayer.getUuid()))
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+        List<Player> teamBPlayers = participantB.getPlayers().stream()
+                .map(matchGamePlayer -> Bukkit.getPlayer(matchGamePlayer.getUuid()))
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+
+        if (teamAPlayers.isEmpty() || teamBPlayers.isEmpty()) {
+            return false;
+        }
+
+        for (Player teamAPlayer : teamAPlayers) {
+            for (Player teamBPlayer : teamBPlayers) {
+                if (!isPingRangeCompatible(teamAPlayer, teamBPlayer)) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private boolean isPingRangeCompatible(Player firstPlayer, Player secondPlayer) {
+        if (firstPlayer == null || secondPlayer == null) {
+            return false;
+        }
+
+        int firstPing = getSafePing(firstPlayer);
+        int secondPing = getSafePing(secondPlayer);
+        int pingDifference = Math.abs(firstPing - secondPing);
+
+        int firstAllowedRange = getPlayerPingRange(firstPlayer);
+        int secondAllowedRange = getPlayerPingRange(secondPlayer);
+        int effectiveRange = getEffectivePingRange(firstAllowedRange, secondAllowedRange);
+
+        return effectiveRange < 0 || pingDifference <= effectiveRange;
+    }
+
+    private int getSafePing(Player player) {
+        if (player == null || !player.isOnline()) {
+            return 0;
+        }
+
+        try {
+            return Math.max(0, ReflectionUtility.getPing(player));
+        } catch (Exception exception) {
+            return 0;
+        }
+    }
+
+    private int getPlayerPingRange(Player player) {
+        if (player == null) {
+            return 100;
+        }
+
+        ProfileService profileService = KaosPractice.getInstance().getService(ProfileService.class);
+        Profile profile = profileService != null ? profileService.getProfile(player.getUniqueId()) : null;
+        if (profile == null || profile.getProfileData() == null || profile.getProfileData().getSettingData() == null) {
+            return 100;
+        }
+
+        return profile.getProfileData().getSettingData().getPingRange();
+    }
+
+    private int getEffectivePingRange(int firstAllowedRange, int secondAllowedRange) {
+        boolean firstUnlimited = firstAllowedRange <= 0;
+        boolean secondUnlimited = secondAllowedRange <= 0;
+
+        if (firstUnlimited && secondUnlimited) {
+            return -1;
+        }
+        if (firstUnlimited) {
+            return secondAllowedRange;
+        }
+        if (secondUnlimited) {
+            return firstAllowedRange;
+        }
+
+        return Math.min(firstAllowedRange, secondAllowedRange);
     }
 
     /**

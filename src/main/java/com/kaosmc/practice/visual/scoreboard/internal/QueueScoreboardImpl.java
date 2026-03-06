@@ -35,6 +35,7 @@ public class QueueScoreboardImpl implements Scoreboard {
         // Variáveis de Fila Seguras
         String queueType = "Carregando...";
         String queueKit = "Carregando...";
+        String pingRangeDisplay = "N/A";
         long elapsedTime = 0L;
 
         if (profile.getQueueProfile() != null && profile.getQueueProfile().getQueue() != null) {
@@ -47,6 +48,9 @@ public class QueueScoreboardImpl implements Scoreboard {
 
         // Variável de Nível Segura (Antiga linha 46)
         String levelDisplay = LevelBadgeUtil.getBadge(profile.getProfileData().getExperience());
+        if (profile.getProfileData().getSettingData() != null) {
+            pingRangeDisplay = profile.getProfileData().getSettingData().getPingRangeDisplay();
+        }
 
         List<String> scoreboardLines = new ArrayList<>();
         List<String> configLines = configService.getScoreboardConfig().getStringList("scoreboard.lines.waiting");
@@ -65,6 +69,7 @@ public class QueueScoreboardImpl implements Scoreboard {
                         .replace("{dot-animation}", this.dotAnimation.getCurrentFrame())
                         .replace("{queued-time}", TimeUtil.getFormattedElapsedTime(elapsedTime))
                         .replace("{queued-kit}", queueKit != null ? queueKit : "Nenhum")
+                        .replace("{ping-range}", pingRangeDisplay)
                 );
             }
         }

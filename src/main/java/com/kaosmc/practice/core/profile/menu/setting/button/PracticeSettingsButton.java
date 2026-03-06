@@ -72,6 +72,9 @@ public class PracticeSettingsButton extends Button {
             case TAB_VISIBILITY:
                 player.performCommand("toggletablist");
                 break;
+            case PING_RANGE:
+                player.performCommand("togglepingrange");
+                break;
             case PROFANITY_FILTER:
                 player.performCommand("toggleprofanityfilter");
                 break;

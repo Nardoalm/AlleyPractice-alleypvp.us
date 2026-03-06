@@ -20,14 +20,16 @@ import java.util.Collection;
 public class NametagAdapter {
     private final NametagServiceImpl engine;
     private final String name;
+    private final int sortWeight;
     private final String prefix;
     private final String suffix;
     private final NametagVisibility visibility;
     private final Reflection reflection = DefaultReflectionImpl.INSTANCE;
 
-    public NametagAdapter(NametagServiceImpl engine, String name, String prefix, String suffix, NametagVisibility visibility) {
+    public NametagAdapter(NametagServiceImpl engine, String name, int sortWeight, String prefix, String suffix, NametagVisibility visibility) {
         this.engine = engine;
         this.name = name;
+        this.sortWeight = sortWeight;
         this.prefix = prefix;
         this.suffix = suffix;
         this.visibility = visibility;
@@ -40,7 +42,10 @@ public class NametagAdapter {
      * @return True if the prefix and suffix match.
      */
     public boolean represents(NametagView view) {
-        return this.prefix.equals(view.getPrefix()) && this.suffix.equals(view.getSuffix());
+        return this.prefix.equals(view.getPrefix())
+                && this.suffix.equals(view.getSuffix())
+                && this.visibility == view.getVisibility()
+                && this.sortWeight == view.getSortWeight();
     }
 
     /**

@@ -5,6 +5,7 @@ import com.kaosmc.practice.common.text.CC;
 import com.kaosmc.practice.core.locale.internal.impl.message.GlobalMessagesLocaleImpl;
 import com.kaosmc.practice.core.profile.Profile;
 import com.kaosmc.practice.core.profile.ProfileService;
+import com.kaosmc.practice.core.profile.data.ProfileData;
 import com.kaosmc.practice.library.command.BaseCommand;
 import com.kaosmc.practice.library.command.CommandArgs;
 import com.kaosmc.practice.library.command.annotation.CommandData;
@@ -48,15 +49,23 @@ public class RankedBanCommand extends BaseCommand {
             return;
         }
 
-        if (profile.getProfileData().isRankedBanned()) {
+        ProfileData profileData = profile.getProfileData();
+        if (profileData == null) {
+            player.sendMessage(this.getString(GlobalMessagesLocaleImpl.ERROR_INVALID_PLAYER));
+            return;
+        }
+
+        String targetDisplayName = target.getName() != null ? target.getName() : targetName;
+
+        if (profileData.isRankedBanned()) {
             player.sendMessage(this.getString(GlobalMessagesLocaleImpl.RANKED_PLAYER_ALREADY_BANNED)
                     .replace("{name-color}", String.valueOf(profile.getNameColor()))
-                    .replace("{player}", target.getName())
+                    .replace("{player}", targetDisplayName)
             );
             return;
         }
 
-        profile.getProfileData().setRankedBanned(true);
+        profileData.setRankedBanned(true);
         profile.save();
 
         if (this.getBoolean(GlobalMessagesLocaleImpl.RANKED_PLAYER_BAN_BROADCAST_BOOLEAN)) {
@@ -64,7 +73,7 @@ public class RankedBanCommand extends BaseCommand {
             for (String line : message) {
                 this.plugin.getServer().broadcastMessage(CC.translate(line
                         .replace("{name-color}", String.valueOf(profile.getNameColor()))
-                        .replace("{player}", target.getName())
+                        .replace("{player}", targetDisplayName)
                         .replace("{reason}", "N/A")
                         .replace("{ban-id}", "N/A")
                         .replace("{duration}", "N/A") //TODO
@@ -79,7 +88,7 @@ public class RankedBanCommand extends BaseCommand {
                 for (String line : message) {
                     targetPlayer.sendMessage(line
                             .replace("{name-color}", String.valueOf(profile.getNameColor()))
-                            .replace("{player}", target.getName())
+                            .replace("{player}", targetDisplayName)
                             .replace("{reason}", "N/A")
                             .replace("{ban-id}", "N/A")
                             .replace("{duration}", "N/A") //TODO

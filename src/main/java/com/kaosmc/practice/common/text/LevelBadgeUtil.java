@@ -14,9 +14,10 @@ public final class LevelBadgeUtil {
     }
 
     public static String getBadgeForLevel(int level) {
-        int bracket = getDisplayBracket(level);
+        int safeLevel = Math.max(0, level);
+        int bracket = getDisplayBracket(safeLevel);
         LevelStyle style = resolveStyle(bracket);
-        return format(style.color, bracket, style.icon);
+        return format(style.color, safeLevel, style.icon);
     }
 
     public static int getLevel(int experience) {
@@ -64,10 +65,7 @@ public final class LevelBadgeUtil {
 
     public static String getProgressBar(int experience, int length) {
         int safeLength = Math.max(5, length);
-        LevelProgress progress = calculateProgress(experience);
-        double ratio = progress.requiredXp <= 0
-                ? 1.0D
-                : Math.min(1.0D, Math.max(0.0D, (double) progress.currentXp / (double) progress.requiredXp));
+        double ratio = getProgressRatio(experience);
 
         int filled = (int) Math.round(ratio * safeLength);
         StringBuilder builder = new StringBuilder();
@@ -81,6 +79,22 @@ public final class LevelBadgeUtil {
     public static String getProgressDetails(int experience) {
         LevelProgress progress = calculateProgress(experience);
         return CC.translate("&7" + progress.currentXp + "/" + progress.requiredXp + " XP");
+    }
+
+    /**
+     * Gets the progress ratio for the current level, between 0.0 and 1.0.
+     *
+     * @param experience total accumulated experience.
+     * @return ratio of current level progression.
+     */
+    public static float getProgressRatio(int experience) {
+        LevelProgress progress = calculateProgress(experience);
+        if (progress.requiredXp <= 0) {
+            return 1.0F;
+        }
+
+        double ratio = Math.min(1.0D, Math.max(0.0D, (double) progress.currentXp / (double) progress.requiredXp));
+        return (float) ratio;
     }
 
     public static int getDisplayBracket(int level) {

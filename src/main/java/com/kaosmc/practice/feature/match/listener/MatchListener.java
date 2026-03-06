@@ -74,7 +74,8 @@ public class MatchListener implements Listener {
 
             if (match.getArena() instanceof StandAloneArena) {
                 StandAloneArena arena = (StandAloneArena) match.getArena();
-                if (player.getLocation().getY() <= arena.getVoidLevel() && matchKit.isSettingEnabled(KitSettingVoidDeathImpl.class)) {
+                int effectiveVoidLevel = resolveEffectiveVoidLevel(arena, match);
+                if (player.getLocation().getY() <= effectiveVoidLevel && matchKit.isSettingEnabled(KitSettingVoidDeathImpl.class)) {
                     if (player.getGameMode() == GameMode.SPECTATOR) return;
                     if (player.getGameMode() == GameMode.CREATIVE) return;
                     if (match.getArena().getType() != ArenaType.STANDALONE) return;
@@ -120,6 +121,32 @@ public class MatchListener implements Listener {
                 // player.sendMessage(CC.translate("&cVocê não pode sair da arena."));
             }
         }
+    }
+
+    /**
+     * Resolves a safe void level threshold for standalone arenas.
+     * If the configured void-level is above the match spawn Y, players could die just by moving.
+     * In that case we clamp it to be at least two blocks below the lowest spawn.
+     */
+    private int resolveEffectiveVoidLevel(StandAloneArena arena, Match match) {
+        int configuredVoidLevel = arena.getVoidLevel();
+        Location pos1 = match.getArena().getPos1();
+        Location pos2 = match.getArena().getPos2();
+
+        double lowestSpawnY = Double.MAX_VALUE;
+        if (pos1 != null) {
+            lowestSpawnY = Math.min(lowestSpawnY, pos1.getY());
+        }
+        if (pos2 != null) {
+            lowestSpawnY = Math.min(lowestSpawnY, pos2.getY());
+        }
+
+        if (lowestSpawnY == Double.MAX_VALUE) {
+            return configuredVoidLevel;
+        }
+
+        int maxReasonableVoidLevel = (int) Math.floor(lowestSpawnY - 2.0D);
+        return Math.min(configuredVoidLevel, maxReasonableVoidLevel);
     }
 
     @EventHandler

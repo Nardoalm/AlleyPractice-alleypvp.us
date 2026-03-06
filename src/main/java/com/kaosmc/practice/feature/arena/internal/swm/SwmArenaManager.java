@@ -36,6 +36,9 @@ public class SwmArenaManager implements ArenaCopyManager {
     private static final String SWM_PLUGIN_NAME = "SlimeWorldManager";
     private static final String TEMPLATE_PREFIX = "kaos_template_";
     private static final String COPY_PREFIX = "kaos_copy_";
+    private static final String IMPORT_PREFIX = "swm_import_";
+    private static final int IMPORT_CLEANUP_RETRIES = 5;
+    private static final long IMPORT_CLEANUP_RETRY_DELAY_TICKS = 20L;
 
     private final KaosPractice plugin;
     private final ConfigService configService;
@@ -83,6 +86,7 @@ public class SwmArenaManager implements ArenaCopyManager {
             this.enabled = true;
             Logger.info("Gerenciamento de arenas via SWM ativado com loader: " + loaderId);
             this.cleanupCorruptedTemplates();
+            this.cleanupStaleImportWorlds();
         } catch (Throwable throwable) {
             this.enabled = false;
 
@@ -173,6 +177,14 @@ public class SwmArenaManager implements ArenaCopyManager {
         world.getPlayers().forEach(player -> player.teleport(Bukkit.getWorlds().get(0).getSpawnLocation()));
         Bukkit.unloadWorld(world, false);
 
+        try {
+            if (this.slimeLoader != null && this.slimeLoader.worldExists(worldName)) {
+                this.slimeLoader.deleteWorld(worldName);
+            }
+        } catch (Exception exception) {
+            Logger.logException("Falha ao remover cópia SWM do loader: " + worldName, exception);
+        }
+
         File worldFolder = new File(Bukkit.getWorldContainer(), worldName);
         if (worldFolder.exists()) {
             FileUtil.deleteWorldFolder(worldFolder);
@@ -183,6 +195,7 @@ public class SwmArenaManager implements ArenaCopyManager {
     @Override
     public void shutdown() {
         this.templateWorldCache.clear();
+        this.cleanupStaleImportWorlds();
     }
 
     private SlimeWorld getOrCreateTemplateWorld(StandAloneArena originalArena, String templateName) throws IOException, CorruptedWorldException, NewerFormatException, WorldInUseException, UnknownWorldException {
@@ -204,7 +217,7 @@ public class SwmArenaManager implements ArenaCopyManager {
     }
 
     private void importTemplateWorld(StandAloneArena originalArena, String templateName) {
-        String importWorldName = "swm_import_" + sanitizeName(originalArena.getName()) + "_" + System.currentTimeMillis();
+        String importWorldName = IMPORT_PREFIX + sanitizeName(originalArena.getName()) + "_" + System.currentTimeMillis();
         File worldFolder = new File(Bukkit.getWorldContainer(), importWorldName);
 
         cleanupWorld(importWorldName, worldFolder);
@@ -215,6 +228,7 @@ public class SwmArenaManager implements ArenaCopyManager {
 
         if (tempImportWorld == null) {
             Logger.error("Falha ao criar mundo temporário de importação para o template SWM " + templateName);
+            scheduleCleanupWorld(importWorldName, worldFolder, IMPORT_CLEANUP_RETRIES);
             return;
         }
 
@@ -222,7 +236,7 @@ public class SwmArenaManager implements ArenaCopyManager {
         File schematicFile = this.arenaSchematicService.getSchematicFile(originalArena);
         this.arenaSchematicService.paste(importOrigin, schematicFile);
 
-        Bukkit.unloadWorld(tempImportWorld, true);
+        unloadWorld(importWorldName, true);
 
         try {
             this.slimePlugin.importWorld(worldFolder, templateName, this.slimeLoader);
@@ -232,21 +246,39 @@ public class SwmArenaManager implements ArenaCopyManager {
         } catch (WorldLoadedException | WorldTooBigException | com.grinderwolf.swm.api.exceptions.InvalidWorldException | IOException exception) {
             Logger.logException("Falha ao importar template SWM: " + templateName, exception);
         } finally {
-            if (worldFolder.exists()) {
-                FileUtil.deleteWorldFolder(worldFolder);
-            }
+            scheduleCleanupWorld(importWorldName, worldFolder, IMPORT_CLEANUP_RETRIES);
         }
     }
 
     private void cleanupWorld(String worldName, File worldFolder) {
-        World loadedWorld = Bukkit.getWorld(worldName);
-        if (loadedWorld != null) {
-            loadedWorld.getPlayers().forEach(player -> player.teleport(Bukkit.getWorlds().get(0).getSpawnLocation()));
-            Bukkit.unloadWorld(loadedWorld, false);
-        }
+        unloadWorld(worldName, false);
         if (worldFolder.exists()) {
             FileUtil.deleteWorldFolder(worldFolder);
         }
+    }
+
+    private void unloadWorld(String worldName, boolean save) {
+        World loadedWorld = Bukkit.getWorld(worldName);
+        if (loadedWorld == null) {
+            return;
+        }
+
+        loadedWorld.getPlayers().forEach(player -> player.teleport(Bukkit.getWorlds().get(0).getSpawnLocation()));
+        Bukkit.unloadWorld(loadedWorld, save);
+    }
+
+    private void scheduleCleanupWorld(String worldName, File worldFolder, int remainingAttempts) {
+        cleanupWorld(worldName, worldFolder);
+        if (!worldFolder.exists() || remainingAttempts <= 0) {
+            return;
+        }
+
+        if (!this.plugin.isEnabled()) {
+            return;
+        }
+
+        Bukkit.getScheduler().runTaskLater(this.plugin, () ->
+                scheduleCleanupWorld(worldName, worldFolder, remainingAttempts - 1), IMPORT_CLEANUP_RETRY_DELAY_TICKS);
     }
 
     private SlimePropertyMap createTemplatePropertyMap() {
@@ -300,6 +332,20 @@ public class SwmArenaManager implements ArenaCopyManager {
             this.templateWorldCache.clear();
         } catch (Exception e) {
             Logger.logException("Erro ao limpar templates antigos", e);
+        }
+    }
+
+    private void cleanupStaleImportWorlds() {
+        File worldContainer = Bukkit.getWorldContainer();
+        File[] staleFolders = worldContainer.listFiles(file ->
+                file.isDirectory() && file.getName().startsWith(IMPORT_PREFIX));
+
+        if (staleFolders == null || staleFolders.length == 0) {
+            return;
+        }
+
+        for (File staleFolder : staleFolders) {
+            scheduleCleanupWorld(staleFolder.getName(), staleFolder, IMPORT_CLEANUP_RETRIES);
         }
     }
 }

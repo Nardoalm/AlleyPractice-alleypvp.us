@@ -14,7 +14,12 @@ import com.kaosmc.practice.visual.nametag.model.NametagContext;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public final class NametagFormatResolver {
+    private static final Pattern INTEGER_PATTERN = Pattern.compile("-?\\d+");
+
     private NametagFormatResolver() {
     }
 
@@ -72,6 +77,39 @@ public final class NametagFormatResolver {
 
         resolved = PlaceholderUtil.setPapiSafe(target, resolved);
         return CC.translate(resolved);
+    }
+
+    /**
+     * Resolves the target's tab sorting position from PlaceholderAPI.
+     * Expected placeholder: %kaoscore_tag_position%
+     *
+     * @param context Nametag context.
+     * @return numeric weight where lower values appear first in tablist.
+     */
+    public static int resolveSortWeight(NametagContext context) {
+        if (context == null || context.getTarget() == null) {
+            return 9999;
+        }
+
+        String raw = PlaceholderUtil.setPapiSafe(context.getTarget(), "%kaoscore_tag_position%");
+        if (raw == null || raw.trim().isEmpty()) {
+            return 9999;
+        }
+
+        Matcher matcher = INTEGER_PATTERN.matcher(raw);
+        if (!matcher.find()) {
+            return 9999;
+        }
+
+        try {
+            int parsed = Integer.parseInt(matcher.group());
+            if (parsed < 0) {
+                return 9999;
+            }
+            return Math.min(parsed, 9999);
+        } catch (NumberFormatException ignored) {
+            return 9999;
+        }
     }
 
     private static String resolveTeamColor(NametagContext context, String fallbackColor) {

@@ -44,6 +44,9 @@ import com.kaosmc.practice.feature.match.snapshot.command.InventoryCommand;
 import com.kaosmc.practice.feature.party.command.PartyCommand;
 import com.kaosmc.practice.core.profile.command.admin.PlaytimeCommand;
 import com.kaosmc.practice.core.profile.data.command.ranked.RankedCommand;
+import com.kaosmc.practice.core.profile.data.command.ranked.impl.RankedBanCommand;
+import com.kaosmc.practice.core.profile.data.command.ranked.impl.RankedBanListCommand;
+import com.kaosmc.practice.core.profile.data.command.ranked.impl.RankedUnbanCommand;
 import com.kaosmc.practice.core.profile.data.command.ResetStatsCommand;
 import com.kaosmc.practice.core.profile.data.command.coin.SetCoinsCommand;
 import com.kaosmc.practice.core.profile.command.player.setting.MatchSettingsCommand;
@@ -70,6 +73,9 @@ public class CommandUtility {
             new ArenaCommand();
             new MatchCommand();
             new RankedCommand();
+            new RankedBanCommand();
+            new RankedUnbanCommand();
+            new RankedBanListCommand();
             new QueueCommand();
             new FFACommand();
             new CosmeticCommand();
@@ -114,6 +120,7 @@ public class CommandUtility {
             new ToggleScoreboardCommand();
             new ToggleScoreboardLinesCommand();
             new ToggleTablistCommand();
+            new TogglePingRangeCommand();
             new ToggleWorldTimeCommand();
             new ToggleProfanityFilterCommand();
 

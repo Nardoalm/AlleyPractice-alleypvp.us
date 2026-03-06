@@ -22,6 +22,14 @@ import com.kaosmc.practice.core.profile.enums.ProfileState;
 public class MatchStrategyImpl implements NametagStrategy {
     @Override
     public NametagView createNametagView(NametagContext context) {
+        if (context == null
+                || context.getViewerProfile() == null
+                || context.getTargetProfile() == null
+                || context.getViewer() == null
+                || context.getTarget() == null) {
+            return null;
+        }
+
         if (context.getViewerProfile().getState() != ProfileState.PLAYING) {
             return null;
         }
@@ -35,7 +43,7 @@ public class MatchStrategyImpl implements NametagStrategy {
             return null;
         }
 
-        if (match.getKit().isSettingEnabled(KitSettingHideAndSeek.class)) {
+        if (match.getKit() != null && match.getKit().isSettingEnabled(KitSettingHideAndSeek.class)) {
             HideAndSeekMatch hideAndSeekMatch = (HideAndSeekMatch) match;
             GameParticipant<?> seekers = hideAndSeekMatch.getParticipantA();
             LocaleService localeService = KaosPractice.getInstance().getService(LocaleService.class);
@@ -46,18 +54,19 @@ public class MatchStrategyImpl implements NametagStrategy {
 
             boolean viewerIsSeeker = seekers.containsPlayer(context.getViewer().getUniqueId());
             boolean targetIsSeeker = seekers.containsPlayer(context.getTarget().getUniqueId());
+            int sortWeight = NametagFormatResolver.resolveSortWeight(context);
 
             if (viewerIsSeeker) {
                 if (targetIsSeeker) {
-                    return new NametagView(matchPrefix, "", NametagVisibility.ALWAYS);
+                    return new NametagView(matchPrefix, "", NametagVisibility.ALWAYS, sortWeight);
                 } else {
-                    return new NametagView(matchPrefix, "", NametagVisibility.NEVER);
+                    return new NametagView(matchPrefix, "", NametagVisibility.NEVER, sortWeight);
                 }
             } else {
                 if (targetIsSeeker) {
-                    return new NametagView(matchPrefix, "", NametagVisibility.ALWAYS);
+                    return new NametagView(matchPrefix, "", NametagVisibility.ALWAYS, sortWeight);
                 } else {
-                    return new NametagView(matchPrefix, "", NametagVisibility.ALWAYS);
+                    return new NametagView(matchPrefix, "", NametagVisibility.ALWAYS, sortWeight);
                 }
             }
         }
@@ -67,6 +76,6 @@ public class MatchStrategyImpl implements NametagStrategy {
                 ? localeService.getString(SettingsLocaleImpl.VISUALS_NAMETAG_MATCH_FORMAT)
                 : "{tag_color}";
         String prefix = NametagFormatResolver.resolve(matchFormat, context);
-        return new NametagView(prefix, "");
+        return new NametagView(prefix, "", NametagVisibility.ALWAYS, NametagFormatResolver.resolveSortWeight(context));
     }
 }

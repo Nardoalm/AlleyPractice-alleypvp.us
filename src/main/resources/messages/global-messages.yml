@@ -328,6 +328,7 @@ queue:
         format:
           - ''
           - '&6&l{kit}'
+          - ' &6&l│ &fFaixa de Ping: &6{ping-range}'
           - '  &7&oProcurando partida...'
           - ''
       ranked:
@@ -336,7 +337,7 @@ queue:
           - ''
           - '&6&l{kit} &6&l✫Ranked'
           - ' &6&l│ &fFaixa de ELO: &6{min-elo} &7&l» &6{max-elo}'
-          - ' &6&l│ &fFaixa de Ping: &6N/A'
+          - ' &6&l│ &fFaixa de Ping: &6{ping-range}'
           - '  &7&oProcurando partida...'
           - ''
         limit-reached:
@@ -344,6 +345,7 @@ queue:
           format:
             - ''
             - '&6&l{kit} &6&l✫Ranked'
+            - ' &6&l│ &fFaixa de Ping: &6{ping-range}'
             - '  &c&lLIMITE DE FAIXA ATINGIDO...'
             - ''
   join-message:

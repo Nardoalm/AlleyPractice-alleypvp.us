@@ -407,7 +407,13 @@ public abstract class Match {
      * @param player The player that died.
      */
     public void handleDeath(Player player, EntityDamageEvent.DamageCause cause) {
-        if (!(this.state == MatchState.STARTING || this.state == MatchState.RUNNING)) {
+        MatchGamePlayer gamePlayer = this.getFromAllGamePlayers(player);
+        if (gamePlayer == null) {
+            return;
+        }
+
+        boolean disconnectDeathDuringStarting = this.state == MatchState.STARTING && gamePlayer.isDisconnected();
+        if (this.state != MatchState.RUNNING && !disconnectDeathDuringStarting) {
             return;
         }
 
@@ -415,7 +421,10 @@ public abstract class Match {
         ProfileService profileService = this.plugin.getService(ProfileService.class);
 
         GameParticipant<MatchGamePlayer> participant = this.getParticipant(player);
-        MatchGamePlayer gamePlayer = this.getFromAllGamePlayers(player);
+        if (participant == null) {
+            return;
+        }
+
         if (participant.isAllEliminated() && !gamePlayer.isDisconnected()) {
             return;
         }
@@ -483,9 +492,17 @@ public abstract class Match {
      * @param participant The participant of the match.
      */
     private boolean handleSpectator(Player player, Profile profile, GameParticipant<MatchGamePlayer> participant) {
+        if (profile == null || profile.getMatch() == null || participant == null) {
+            return false;
+        }
+
         Kit matchKit = profile.getMatch().getKit();
 
         MatchGamePlayer gamePlayer = this.getFromAllGamePlayers(player);
+        if (gamePlayer == null) {
+            return false;
+        }
+
         if (gamePlayer.isDisconnected()) {
             return false;
         }

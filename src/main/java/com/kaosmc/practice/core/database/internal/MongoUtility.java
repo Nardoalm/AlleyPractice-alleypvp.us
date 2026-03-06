@@ -372,6 +372,7 @@ public class MongoUtility {
                 .put("receiveDuelRequestsEnabled", settingData.isReceiveDuelRequestsEnabled())
                 .put("lobbyMusicEnabled", settingData.isLobbyMusicEnabled())
                 .put("serverTitles", settingData.isServerTitles())
+                .put("pingRange", settingData.getPingRange())
                 .put("chatChannel", safeString(settingData.getChatChannel()))
                 .put("time", safeString(settingData.getTime()))
                 .build();
@@ -681,6 +682,7 @@ public class MongoUtility {
         settingData.setReceiveDuelRequestsEnabled(settingDocument.getBoolean("receiveDuelRequestsEnabled", DEFAULT_BOOLEAN_TRUE));
         settingData.setLobbyMusicEnabled(settingDocument.getBoolean("lobbyMusicEnabled", DEFAULT_BOOLEAN_TRUE));
         settingData.setServerTitles(settingDocument.getBoolean("serverTitles", DEFAULT_BOOLEAN_TRUE));
+        settingData.setPingRange(settingDocument.getInteger("pingRange", 100));
 
         String chatChannel = settingDocument.getString("chatChannel");
         settingData.setChatChannel(chatChannel != null ? chatChannel : ChatChannel.GLOBAL.toString());

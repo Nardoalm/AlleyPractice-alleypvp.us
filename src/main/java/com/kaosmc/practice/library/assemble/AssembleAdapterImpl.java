@@ -12,6 +12,7 @@ import com.kaosmc.practice.visual.scoreboard.internal.match.MatchScoreboardImpl;
 import com.kaosmc.practice.common.animation.AnimationService;
 import com.kaosmc.practice.common.animation.AnimationType;
 import com.kaosmc.practice.common.animation.internal.config.ScoreboardTitleAnimation;
+import com.kaosmc.practice.common.PlaceholderUtil;
 import com.kaosmc.practice.common.text.CC;
 import org.bukkit.entity.Player;
 
@@ -43,7 +44,8 @@ public class AssembleAdapterImpl implements AssembleAdapter {
 
     @Override
     public String getTitle(Player player) {
-        return this.animationService.getAnimation(ScoreboardTitleAnimation.class, AnimationType.CONFIG).getText();
+        String title = this.animationService.getAnimation(ScoreboardTitleAnimation.class, AnimationType.CONFIG).getText();
+        return PlaceholderUtil.setPapiSafe(player, title);
     }
 
     /**
@@ -86,7 +88,7 @@ public class AssembleAdapterImpl implements AssembleAdapter {
             footer.forEach(line -> lines.add(CC.translate(line)));
 
             lines.replaceAll(line -> line.replace("{sidebar}", this.getScoreboardLines(profile)));
-            return lines;
+            return PlaceholderUtil.setPapiSafe(player, lines);
         }
         return null;
     }

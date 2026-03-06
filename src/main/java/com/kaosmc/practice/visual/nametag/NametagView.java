@@ -11,18 +11,24 @@ import java.util.Objects;
  */
 @Getter
 public final class NametagView {
+    private final int sortWeight;
     private final String prefix;
     private final String suffix;
     private final NametagVisibility visibility;
 
     public NametagView(String prefix, String suffix) {
-        this(prefix, suffix, NametagVisibility.ALWAYS);
+        this(prefix, suffix, NametagVisibility.ALWAYS, 9999);
     }
 
     public NametagView(String prefix, String suffix, NametagVisibility visibility) {
+        this(prefix, suffix, visibility, 9999);
+    }
+
+    public NametagView(String prefix, String suffix, NametagVisibility visibility, int sortWeight) {
         this.prefix = prefix;
         this.suffix = suffix;
         this.visibility = visibility;
+        this.sortWeight = Math.max(0, sortWeight);
     }
 
     @Override
@@ -30,11 +36,14 @@ public final class NametagView {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NametagView that = (NametagView) o;
-        return Objects.equals(prefix, that.prefix) && Objects.equals(suffix, that.suffix) && visibility == that.visibility;
+        return sortWeight == that.sortWeight
+                && Objects.equals(prefix, that.prefix)
+                && Objects.equals(suffix, that.suffix)
+                && visibility == that.visibility;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(prefix, suffix, visibility);
+        return Objects.hash(sortWeight, prefix, suffix, visibility);
     }
 }

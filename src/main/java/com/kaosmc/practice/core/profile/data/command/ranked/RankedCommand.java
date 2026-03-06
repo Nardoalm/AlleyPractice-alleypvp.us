@@ -32,6 +32,7 @@ public class RankedCommand extends BaseCommand {
                 "&6&lRanked Commands Help:",
                 " &f◆ &6/ranked ban &8(&7player&8) &7| Bane um jogador das partidas ranked.",
                 " &f◆ &6/ranked unban &8(&7player&8) &7| Desbane um jogador das partidas ranked.",
+                " &f◆ &6/ranked banlist &7| Lista todos os jogadores banidos do ranked.",
                 " "
         ).forEach(message -> player.sendMessage(CC.translate(message)));
     }

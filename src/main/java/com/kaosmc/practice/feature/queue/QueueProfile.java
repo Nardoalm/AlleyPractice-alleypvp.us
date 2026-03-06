@@ -8,6 +8,8 @@ import com.kaosmc.practice.common.time.TimeUtil;
 import com.kaosmc.practice.core.locale.LocaleService;
 import com.kaosmc.practice.core.locale.internal.impl.VisualsLocaleImpl;
 import com.kaosmc.practice.core.locale.internal.impl.message.GlobalMessagesLocaleImpl;
+import com.kaosmc.practice.core.profile.Profile;
+import com.kaosmc.practice.core.profile.ProfileService;
 import lombok.Data;
 import org.bukkit.entity.Player;
 
@@ -73,7 +75,10 @@ public class QueueProfile {
             if (player != null) {
                 if (localeService.getBoolean(GlobalMessagesLocaleImpl.QUEUE_PROGRESSING_UNRANKED_BOOLEAN)) {
                     List<String> lines = localeService.getStringList(GlobalMessagesLocaleImpl.QUEUE_PROGRESSING_UNRANKED);
-                    lines.replaceAll(line -> line.replace("{kit}", this.queue.getKit().getDisplayName()));
+                    lines.replaceAll(line -> line
+                            .replace("{kit}", this.queue.getKit().getDisplayName())
+                            .replace("{ping-range}", this.getPingRangeDisplay(player))
+                    );
                     lines.forEach(line -> player.sendMessage(CC.translate(line)));
                 }
             }
@@ -94,7 +99,8 @@ public class QueueProfile {
                         for (String line : localeService.getStringList(GlobalMessagesLocaleImpl.QUEUE_PROGRESSING_RANKED_LIMIT_REACHED)) {
                             line = line.replace("{kit}", this.queue.getKit().getDisplayName())
                                     .replace("{min-elo}", String.valueOf(this.getMinimumElo()))
-                                    .replace("{max-elo}", String.valueOf(this.getMaximumElo()));
+                                    .replace("{max-elo}", String.valueOf(this.getMaximumElo()))
+                                    .replace("{ping-range}", this.getPingRangeDisplay(player));
                             player.sendMessage(CC.translate(line));
                         }
                     }
@@ -103,13 +109,32 @@ public class QueueProfile {
                         for (String line : localeService.getStringList(GlobalMessagesLocaleImpl.QUEUE_PROGRESSING_RANKED)) {
                             line = line.replace("{kit}", this.queue.getKit().getDisplayName())
                                     .replace("{min-elo}", String.valueOf(this.getMinimumElo()))
-                                    .replace("{max-elo}", String.valueOf(this.getMaximumElo()));
+                                    .replace("{max-elo}", String.valueOf(this.getMaximumElo()))
+                                    .replace("{ping-range}", this.getPingRangeDisplay(player));
                             player.sendMessage(CC.translate(line));
                         }
                     }
                 }
             }
         }
+    }
+
+    private String getPingRangeDisplay(Player player) {
+        if (player == null) {
+            return "N/A";
+        }
+
+        ProfileService profileService = KaosPractice.getInstance().getService(ProfileService.class);
+        if (profileService == null) {
+            return "N/A";
+        }
+
+        Profile profile = profileService.getProfile(player.getUniqueId());
+        if (profile == null || profile.getProfileData() == null || profile.getProfileData().getSettingData() == null) {
+            return "100ms";
+        }
+
+        return profile.getProfileData().getSettingData().getPingRangeDisplay();
     }
 
     /**

@@ -54,7 +54,12 @@ public class NametagPerspective {
             return;
         }
 
-        NametagView newView = determineView(new NametagContext(viewer, target));
+        NametagContext context = new NametagContext(viewer, target);
+        if (context.getViewerProfile() == null || context.getTargetProfile() == null) {
+            return;
+        }
+
+        NametagView newView = determineView(context);
         if (newView == null) return;
 
         NametagAdapter previousAdapter = displayedAdapters.get(target.getUniqueId());

@@ -3,6 +3,7 @@ package com.kaosmc.practice.visual.nametag.internal.strategy.impl;
 import com.kaosmc.practice.KaosPractice;
 import com.kaosmc.practice.core.locale.LocaleService;
 import com.kaosmc.practice.core.locale.internal.impl.SettingsLocaleImpl;
+import com.kaosmc.practice.visual.nametag.NametagVisibility;
 import com.kaosmc.practice.visual.nametag.model.NametagContext;
 import com.kaosmc.practice.visual.nametag.NametagView;
 import com.kaosmc.practice.visual.nametag.internal.strategy.NametagFormatResolver;
@@ -19,6 +20,13 @@ import com.kaosmc.practice.core.profile.enums.ProfileState;
 public class SpectatorStrategyImpl implements NametagStrategy {
     @Override
     public NametagView createNametagView(NametagContext context) {
+        if (context == null
+                || context.getViewerProfile() == null
+                || context.getTargetProfile() == null
+                || context.getTarget() == null) {
+            return null;
+        }
+
         if (context.getViewerProfile().getState() != ProfileState.SPECTATING) {
             return null;
         }
@@ -42,6 +50,6 @@ public class SpectatorStrategyImpl implements NametagStrategy {
                 ? localeService.getString(SettingsLocaleImpl.VISUALS_NAMETAG_MATCH_FORMAT)
                 : "{tag_color}";
         String prefix = NametagFormatResolver.resolve(matchFormat, context);
-        return new NametagView(prefix, "");
+        return new NametagView(prefix, "", NametagVisibility.ALWAYS, NametagFormatResolver.resolveSortWeight(context));
     }
 }

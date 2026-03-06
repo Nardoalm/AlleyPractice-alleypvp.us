@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 @Getter
 @Setter
 public class ProfileSettingData {
+    private static final int[] PING_RANGE_OPTIONS = {25, 50, 75, 100, 125, 150, 200, -1};
 
     //TODO: Clean this class up a bit, make generic methods for toggling settings, use an enum map to store settings, etc.
 
@@ -92,6 +93,7 @@ public class ProfileSettingData {
     private boolean receiveDuelRequestsEnabled;
     private boolean lobbyMusicEnabled;
     private boolean serverTitles;
+    private int pingRange;
     private String chatChannel;
     private String time;
 
@@ -108,8 +110,80 @@ public class ProfileSettingData {
         this.receiveDuelRequestsEnabled = true;
         this.lobbyMusicEnabled = true;
         this.serverTitles = true;
+        this.pingRange = 100;
         this.chatChannel = ChatChannel.GLOBAL.toString();
         this.time = WorldTime.DEFAULT.getName();
+    }
+
+    /**
+     * Cycles to the next configured ping range option.
+     */
+    public void cyclePingRange() {
+        int normalizedCurrent = normalizePingRange(this.pingRange);
+        int currentIndex = -1;
+
+        for (int i = 0; i < PING_RANGE_OPTIONS.length; i++) {
+            if (PING_RANGE_OPTIONS[i] == normalizedCurrent) {
+                currentIndex = i;
+                break;
+            }
+        }
+
+        if (currentIndex == -1) {
+            this.pingRange = PING_RANGE_OPTIONS[0];
+            return;
+        }
+
+        this.pingRange = PING_RANGE_OPTIONS[(currentIndex + 1) % PING_RANGE_OPTIONS.length];
+    }
+
+    /**
+     * Returns a human-readable ping range string.
+     *
+     * @return The selected ping range label.
+     */
+    public String getPingRangeDisplay() {
+        int normalized = normalizePingRange(this.pingRange);
+        if (normalized <= 0) {
+            return "ANY";
+        }
+        return normalized + "ms";
+    }
+
+    /**
+     * Custom setter with normalization to keep the value in a valid option.
+     *
+     * @param pingRange The ping range to set.
+     */
+    public void setPingRange(int pingRange) {
+        this.pingRange = normalizePingRange(pingRange);
+    }
+
+    private int normalizePingRange(int value) {
+        for (int option : PING_RANGE_OPTIONS) {
+            if (option == value) {
+                return option;
+            }
+        }
+
+        if (value <= 0) {
+            return -1;
+        }
+
+        int nearest = PING_RANGE_OPTIONS[0];
+        int smallestDiff = Integer.MAX_VALUE;
+        for (int option : PING_RANGE_OPTIONS) {
+            if (option <= 0) {
+                continue;
+            }
+            int diff = Math.abs(option - value);
+            if (diff < smallestDiff) {
+                smallestDiff = diff;
+                nearest = option;
+            }
+        }
+
+        return nearest;
     }
 
     /**

@@ -8,7 +8,6 @@ import lombok.Getter;
 import org.bukkit.entity.Player;
 
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Remi
@@ -19,7 +18,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class NametagRegistry {
     private final Cache<String, NametagAdapter> adapterCache;
     private final NametagServiceImpl service;
-    private final AtomicInteger teamIdCounter = new AtomicInteger(0);
 
     public NametagRegistry(NametagServiceImpl service) {
         this.service = service;
@@ -35,11 +33,13 @@ public class NametagRegistry {
      * @return The cached or newly created NametagAdapter.
      */
     public NametagAdapter getAdapter(NametagView view) {
-        String key = view.getPrefix() + "|" + view.getSuffix() + "|" + view.getVisibility().name();
+        String key = view.getSortWeight() + "|" + view.getPrefix() + "|" + view.getSuffix() + "|" + view.getVisibility().name();
         try {
             return adapterCache.get(key, () -> {
-                String teamName = "nt" + teamIdCounter.getAndIncrement();
-                return new NametagAdapter(service, teamName, view.getPrefix(), view.getSuffix(), view.getVisibility());
+                int clampedWeight = Math.max(0, Math.min(9999, view.getSortWeight()));
+                int styleHash = key.hashCode() & 0xFFFFFF;
+                String teamName = String.format("nt%04d%06x", clampedWeight, styleHash);
+                return new NametagAdapter(service, teamName, clampedWeight, view.getPrefix(), view.getSuffix(), view.getVisibility());
             });
         } catch (Exception e) {
             throw new RuntimeException("Failed to load nametag adapter from cache", e);

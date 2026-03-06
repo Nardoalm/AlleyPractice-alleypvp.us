@@ -66,6 +66,18 @@ public enum PracticeSettingType {
             )
     ),
 
+    PING_RANGE(15, "&6&lPing Range", Material.COMPASS,
+            settings -> Arrays.asList(
+                    CC.MENU_BAR,
+                    "&7Limit matchmaking by ping difference.",
+                    "",
+                    "&f&l│ &6Current: &f" + settings.getPingRangeDisplay(),
+                    "",
+                    "&aClick to change.",
+                    CC.MENU_BAR
+            )
+    ),
+
     WORLD_TIME(14, "&6&lWorld time", Material.WATCH, settings -> Arrays.asList(
             CC.MENU_BAR,
             "&7Change your world time.",

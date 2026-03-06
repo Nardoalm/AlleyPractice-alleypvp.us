@@ -3,6 +3,7 @@ package com.kaosmc.practice.visual.nametag.internal.strategy.impl;
 import com.kaosmc.practice.KaosPractice;
 import com.kaosmc.practice.core.locale.LocaleService;
 import com.kaosmc.practice.core.locale.internal.impl.SettingsLocaleImpl;
+import com.kaosmc.practice.visual.nametag.NametagVisibility;
 import com.kaosmc.practice.visual.nametag.model.NametagContext;
 import com.kaosmc.practice.visual.nametag.NametagView;
 import com.kaosmc.practice.visual.nametag.internal.strategy.NametagFormatResolver;
@@ -16,6 +17,10 @@ import com.kaosmc.practice.visual.nametag.internal.strategy.NametagStrategy;
 public class DefaultStrategyImpl implements NametagStrategy {
     @Override
     public NametagView createNametagView(NametagContext context) {
+        if (context == null || context.getTarget() == null) {
+            return null;
+        }
+
         LocaleService localeService = KaosPractice.getInstance().getService(LocaleService.class);
         String lobbyFormat = localeService != null
                 ? localeService.getString(SettingsLocaleImpl.VISUALS_NAMETAG_LOBBY_FORMAT)
@@ -26,6 +31,6 @@ public class DefaultStrategyImpl implements NametagStrategy {
             prefix = NametagFormatResolver.resolve("{tag_color}", context);
         }
 
-        return new NametagView(prefix, "");
+        return new NametagView(prefix, "", NametagVisibility.ALWAYS, NametagFormatResolver.resolveSortWeight(context));
     }
 }
