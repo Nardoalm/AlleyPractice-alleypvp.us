@@ -2,12 +2,11 @@ package com.kaosmc.practice.adapter.core;
 
 import com.kaosmc.practice.KaosPractice;
 import com.kaosmc.practice.common.text.CC;
+import com.kaosmc.practice.common.text.LevelBadgeUtil;
 import com.kaosmc.practice.core.locale.LocaleService;
 import com.kaosmc.practice.core.locale.internal.impl.SettingsLocaleImpl;
 import com.kaosmc.practice.core.profile.Profile;
 import com.kaosmc.practice.core.profile.ProfileService;
-import com.kaosmc.practice.feature.level.data.LevelData;
-import com.kaosmc.practice.feature.level.LevelService;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -103,7 +102,6 @@ public interface Core {
             }
         }
         LocaleService localeService = KaosPractice.getInstance().getService(LocaleService.class);
-        LevelService levelService = KaosPractice.getInstance().getService(LevelService.class);
 
         String safeEventMessage = eventMessage != null ? eventMessage : "";
         String safeSeparator = separator != null ? separator : "";
@@ -162,32 +160,12 @@ public interface Core {
         }
 
         String selectedTitle = "";
-        String level = "Unranked";
+        String level = LevelBadgeUtil.getBadge(0);
 
         if (profile != null && profile.getProfileData() != null) {
             String rawTitle = profile.getProfileData().getSelectedTitle();
             selectedTitle = rawTitle != null ? CC.translate(rawTitle) : "";
-
-            LevelData levelData = null;
-            String globalLevel = profile.getProfileData().getGlobalLevel();
-
-            if (levelService != null && globalLevel != null && !globalLevel.trim().isEmpty()) {
-                try {
-                    levelData = levelService.getLevel(globalLevel);
-                } catch (Exception ignored) {
-                    levelData = null;
-                }
-            }
-            if (levelService != null && levelData == null) {
-                try {
-                    levelData = levelService.getLevel(profile.getProfileData().getElo());
-                } catch (Exception ignored) {
-                    levelData = null;
-                }
-            }
-            if (levelData != null && levelData.getDisplayName() != null) {
-                level = CC.translate(levelData.getDisplayName());
-            }
+            level = LevelBadgeUtil.getBadge(profile.getProfileData().getExperience());
         }
 
         String tagAppearanceTemplate = localeService.getString(SettingsLocaleImpl.SERVER_CHAT_FORMAT_TAG_APPEARANCE_FORMAT);

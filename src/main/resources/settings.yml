@@ -90,11 +90,20 @@ server:
     tag-appearance:
       format: ' {tag-color}{tag-prefix}'
     party:
-      format: '&7[&6Party&7] &6{player}&7: &f{message}'
+      format: '§7[§6Party§7] {tag_prefix}{nick} §8» §f{message}'
   essentials:
     emoji-feature: true
   locations:
     spawn: world:10.0:100.0:100.0:0.0:0.0
+
+visuals:
+  nametag:
+    lobby:
+      # Placeholders: {tag_prefix}, {tag_color}, {name_color}
+      format: "{tag_prefix}"
+    match:
+      # Placeholders: {tag_prefix}, {tag_color}, {name_color}
+      format: "{tag_color}"
 
 sounds:
   match:

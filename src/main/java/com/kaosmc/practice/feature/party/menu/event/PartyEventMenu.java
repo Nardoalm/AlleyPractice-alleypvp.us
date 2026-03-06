@@ -108,13 +108,19 @@ public class PartyEventMenu extends Menu {
         public void clicked(Player player, ClickType clickType) {
             if (clickType != ClickType.LEFT) return;
 
-            Party party = KaosPractice.getInstance().getService(ProfileService.class).getProfile(player.getUniqueId()).getParty();
+            ProfileService profileService = KaosPractice.getInstance().getService(ProfileService.class);
+            if (profileService == null || profileService.getProfile(player.getUniqueId()) == null) {
+                player.sendMessage(this.getString(GlobalMessagesLocaleImpl.ERROR_YOU_NOT_IN_PARTY));
+                return;
+            }
+
+            Party party = profileService.getProfile(player.getUniqueId()).getParty();
             if (party == null) {
                 player.sendMessage(this.getString(GlobalMessagesLocaleImpl.ERROR_YOU_NOT_IN_PARTY));
                 return;
             }
 
-            if (party.getLeader() != player) {
+            if (!party.isLeader(player)) {
                 player.sendMessage(this.getString(GlobalMessagesLocaleImpl.ERROR_YOU_NOT_PARTY_LEADER));
                 return;
             }
@@ -131,7 +137,7 @@ public class PartyEventMenu extends Menu {
                 case GOLD_AXE:
                     new PartyEventFFAMenu().openMenu(player);
                     break;
-                case INK_SACK:
+                case REDSTONE:
                     // Start best of 3 sumo event
                     break;
             }

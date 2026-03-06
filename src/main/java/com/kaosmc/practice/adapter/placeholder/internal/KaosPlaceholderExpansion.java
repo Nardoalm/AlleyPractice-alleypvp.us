@@ -2,13 +2,12 @@ package com.kaosmc.practice.adapter.placeholder.internal;
 
 import com.kaosmc.practice.KaosPractice;
 import com.kaosmc.practice.common.constants.PluginConstant;
-import com.kaosmc.practice.feature.level.LevelService;
 import com.kaosmc.practice.core.profile.ProfileService;
 import com.kaosmc.practice.core.profile.Profile;
 import com.kaosmc.practice.core.profile.data.ProfileData;
 import com.kaosmc.practice.common.text.CC;
 import com.kaosmc.practice.common.animation.internal.types.DotAnimation;
-import com.kaosmc.practice.feature.level.data.LevelData;
+import com.kaosmc.practice.common.text.LevelBadgeUtil;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -124,25 +123,7 @@ public class KaosPlaceholderExpansion extends PlaceholderExpansion {
             case "level":
             case "nivel":
             case "nível":
-                LevelService levelService = this.plugin.getService(LevelService.class);
-                if (levelService != null) {
-                    String globalLevel = profileData.getGlobalLevel();
-                    LevelData levelData = null;
-                    if (globalLevel != null && !globalLevel.trim().isEmpty()) {
-                        levelData = levelService.getLevel(globalLevel);
-                    }
-                    if (levelData == null) {
-                        levelData = levelService.getLevel(profileData.getElo());
-                    }
-                    if (levelData != null && levelData.getDisplayName() != null) {
-                        return CC.translate(levelData.getDisplayName());
-                    }
-                    if (globalLevel != null && !globalLevel.trim().isEmpty()) {
-                        return globalLevel;
-                    }
-                    return "N/A";
-                }
-                return "0";
+                return LevelBadgeUtil.getBadge(profileData.getExperience());
 
             case "player-coins":
                 return String.valueOf(profileData.getCoins());

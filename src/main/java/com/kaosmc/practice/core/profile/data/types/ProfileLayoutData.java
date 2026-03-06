@@ -1,6 +1,7 @@
 package com.kaosmc.practice.core.profile.data.types;
 
 import com.kaosmc.practice.KaosPractice;
+import com.kaosmc.practice.common.InventoryUtil;
 import com.kaosmc.practice.feature.kit.KitService;
 import com.kaosmc.practice.feature.kit.Kit;
 import com.kaosmc.practice.feature.layout.data.LayoutData;
@@ -9,9 +10,9 @@ import lombok.Setter;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * @author Emmy
@@ -24,12 +25,22 @@ public class ProfileLayoutData {
     private Map<String, List<LayoutData>> layouts;
 
     public ProfileLayoutData() {
-        this.layouts = KaosPractice.getInstance().getService(KitService.class).getKits().stream()
-                .collect(Collectors.toMap(Kit::getName, kit -> {
-                    List<LayoutData> defaultLayoutList = new ArrayList<>();
-                    defaultLayoutList.add(new LayoutData("Layout1", "Layout 1", kit.getItems()));
-                    return defaultLayoutList;
-                }));
+        this.layouts = new LinkedHashMap<>();
+
+        KitService kitService = KaosPractice.getInstance().getService(KitService.class);
+        if (kitService == null || kitService.getKits() == null) {
+            return;
+        }
+
+        for (Kit kit : kitService.getKits()) {
+            if (kit == null || kit.getName() == null || kit.getName().trim().isEmpty()) {
+                continue;
+            }
+
+            List<LayoutData> defaultLayoutList = new ArrayList<>();
+            defaultLayoutList.add(new LayoutData("Layout1", "Layout 1", InventoryUtil.cloneItemStackArray(kit.getItems())));
+            this.layouts.put(kit.getName(), defaultLayoutList);
+        }
     }
 
     /**
@@ -40,15 +51,21 @@ public class ProfileLayoutData {
      * @param items       the items in the layout.
      */
     public void addLayout(String kitName, String name, String displayName, ItemStack[] items) {
-        LayoutData newLayout = new LayoutData(name, displayName, items);
-
-        if (this.layouts.containsKey(kitName)) {
-            this.layouts.get(kitName).add(newLayout);
-        } else {
-            List<LayoutData> newList = new ArrayList<>();
-            newList.add(newLayout);
-            this.layouts.put(kitName, newList);
+        if (kitName == null || kitName.trim().isEmpty()) {
+            return;
         }
+
+        if (this.layouts == null) {
+            this.layouts = new LinkedHashMap<>();
+        }
+
+        List<LayoutData> existingLayouts = this.layouts.computeIfAbsent(kitName, key -> new ArrayList<>());
+        String safeName = (name == null || name.trim().isEmpty()) ? "Layout" + (existingLayouts.size() + 1) : name;
+        String safeDisplayName = (displayName == null || displayName.trim().isEmpty()) ? safeName : displayName;
+
+        LayoutData newLayout = new LayoutData(safeName, safeDisplayName, InventoryUtil.cloneItemStackArray(items));
+
+        existingLayouts.add(newLayout);
     }
 
     /**
@@ -59,13 +76,21 @@ public class ProfileLayoutData {
      * @return the layout model if found, null otherwise.
      */
     public LayoutData getLayout(String kitName, String layoutName) {
-        if (this.layouts.containsKey(kitName)) {
-            for (LayoutData layout : this.layouts.get(kitName)) {
-                if (layout.getName().equalsIgnoreCase(layoutName)) {
-                    return layout;
-                }
+        if (this.layouts == null || kitName == null || layoutName == null) {
+            return null;
+        }
+
+        List<LayoutData> layoutsByKit = this.layouts.get(kitName);
+        if (layoutsByKit == null || layoutsByKit.isEmpty()) {
+            return null;
+        }
+
+        for (LayoutData layout : layoutsByKit) {
+            if (layout != null && layout.getName() != null && layout.getName().equalsIgnoreCase(layoutName)) {
+                return layout;
             }
         }
+
         return null;
     }
 }

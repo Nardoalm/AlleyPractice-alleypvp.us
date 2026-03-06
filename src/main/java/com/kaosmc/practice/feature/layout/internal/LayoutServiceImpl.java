@@ -19,6 +19,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Emmy
@@ -64,8 +65,12 @@ public class LayoutServiceImpl implements LayoutService {
 
     @Override
     public ItemStack getLayoutBook(LayoutData layout) {
+        String displayName = (layout != null && layout.getDisplayName() != null && !layout.getDisplayName().trim().isEmpty())
+                ? layout.getDisplayName()
+                : "&7Layout";
+
         return new ItemBuilder(Material.BOOK)
-                .name(layout.getDisplayName())
+                .name(displayName)
                 .lore("&7Click to select this layout.")
                 .hideMeta().build();
     }
@@ -73,11 +78,20 @@ public class LayoutServiceImpl implements LayoutService {
     @Override
     public void giveBooks(Player player, String kitName) {
         Profile profile = this.profileService.getProfile(player.getUniqueId());
-        if (profile == null) return;
+        if (profile == null
+                || profile.getProfileData() == null
+                || profile.getProfileData().getLayoutData() == null
+                || profile.getProfileData().getLayoutData().getLayouts() == null) {
+            return;
+        }
 
         List<LayoutData> layouts = profile.getProfileData().getLayoutData().getLayouts().get(kitName);
-        if (layouts == null) return;
+        if (layouts == null || layouts.isEmpty()) {
+            return;
+        }
 
-        layouts.forEach(layout -> player.getInventory().addItem(this.getLayoutBook(layout)));
+        layouts.stream()
+                .filter(Objects::nonNull)
+                .forEach(layout -> player.getInventory().addItem(this.getLayoutBook(layout)));
     }
 }

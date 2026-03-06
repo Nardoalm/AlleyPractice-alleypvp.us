@@ -167,11 +167,14 @@ public class MongoUtility {
     private static Document convertProfileData(ProfileData profileData) {
         return new DocumentBuilder()
                 .put("elo", profileData.getElo())
+                .put("experience", profileData.getExperience())
                 .put("coins", profileData.getCoins())
                 .put("unrankedWins", profileData.getUnrankedWins())
                 .put("unrankedLosses", profileData.getUnrankedLosses())
                 .put("rankedWins", profileData.getRankedWins())
                 .put("rankedLosses", profileData.getRankedLosses())
+                .put("winStreak", profileData.getWinStreak())
+                .put("bestWinStreak", profileData.getBestWinStreak())
                 .put("rankedBanned", profileData.isRankedBanned())
                 .put("globalLevel", safeString(profileData.getGlobalLevel()))
                 .put("selectedTitle", safeString(profileData.getSelectedTitle()))
@@ -197,11 +200,14 @@ public class MongoUtility {
         ProfileData profileData = new ProfileData();
 
         profileData.setElo(profileDataDocument.getInteger("elo", DEFAULT_ELO));
+        profileData.setExperience(profileDataDocument.getInteger("experience", DEFAULT_INT));
         profileData.setCoins(profileDataDocument.getInteger("coins", DEFAULT_COINS));
         profileData.setUnrankedWins(profileDataDocument.getInteger("unrankedWins", DEFAULT_INT));
         profileData.setUnrankedLosses(profileDataDocument.getInteger("unrankedLosses", DEFAULT_INT));
         profileData.setRankedWins(profileDataDocument.getInteger("rankedWins", DEFAULT_INT));
         profileData.setRankedLosses(profileDataDocument.getInteger("rankedLosses", DEFAULT_INT));
+        profileData.setWinStreak(profileDataDocument.getInteger("winStreak", DEFAULT_INT));
+        profileData.setBestWinStreak(profileDataDocument.getInteger("bestWinStreak", DEFAULT_INT));
         profileData.setRankedBanned(profileDataDocument.getBoolean("rankedBanned", DEFAULT_BOOLEAN_FALSE));
         profileData.setGlobalLevel(profileDataDocument.getString("globalLevel"));
         profileData.setSelectedTitle(profileDataDocument.getString("selectedTitle"));

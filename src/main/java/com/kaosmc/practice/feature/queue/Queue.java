@@ -73,6 +73,10 @@ public class Queue {
      * @param player The player to add.
      */
     public void addPlayer(Player player, int elo) {
+        if (player == null || !player.isOnline()) {
+            return;
+        }
+
         ProfileService profileService = KaosPractice.getInstance().getService(ProfileService.class);
         PartyService partyService = KaosPractice.getInstance().getService(PartyService.class);
         HotbarService hotbarService = KaosPractice.getInstance().getService(HotbarService.class);
@@ -102,7 +106,7 @@ public class Queue {
 
 
         if (this.isDuos()) {
-            if (party != null && !party.getLeader().equals(player)) {
+            if (party != null && !party.isLeader(player)) {
                 player.sendMessage(CC.translate("&cApenas o líder da party pode entrar na fila."));
                 return;
             }
@@ -159,8 +163,8 @@ public class Queue {
                             memberProfile.setQueueProfile(queueProfile);
                             memberProfile.setState(ProfileState.WAITING);
                             Player memberPlayer = Bukkit.getPlayer(memberId);
-                            hotbarService.applyHotbarItems(memberPlayer);
                             if (memberPlayer != null) {
+                                hotbarService.applyHotbarItems(memberPlayer);
                                 memberPlayer.sendMessage(CC.translate("&aO líder da sua party entrou na fila &6" + queueProfile.getQueue().getKit().getDisplayName() + " &aqueue."));
                             }
                         }
@@ -189,6 +193,10 @@ public class Queue {
      * @param queueProfile The queue profile to remove.
      */
     public void removePlayer(QueueProfile queueProfile) {
+        if (queueProfile == null) {
+            return;
+        }
+
         ProfileService profileService = KaosPractice.getInstance().getService(ProfileService.class);
         PartyService partyService = KaosPractice.getInstance().getService(PartyService.class);
         HotbarService hotbarService = KaosPractice.getInstance().getService(HotbarService.class);
@@ -197,8 +205,13 @@ public class Queue {
         Profile playerToRemoveProfile = profileService.getProfile(playerToRemoveUUID);
         Player playerToRemove = Bukkit.getPlayer(playerToRemoveUUID);
 
-        Party party = partyService.getParty(playerToRemove);
-        if (this.isDuos() && party != null && party.getLeader().getUniqueId().equals(playerToRemove.getUniqueId())) {
+        Party party = partyService.getPartyByMember(playerToRemoveUUID);
+        boolean removeWholeParty = this.isDuos()
+                && party != null
+                && party.getLeader() != null
+                && party.getLeader().getUniqueId().equals(playerToRemoveUUID);
+
+        if (removeWholeParty) {
             for (UUID memberId : party.getMembers()) {
                 Profile memberProfile = profileService.getProfile(memberId);
                 if (memberProfile != null && memberProfile.getQueueProfile() != null) {
@@ -211,9 +224,9 @@ public class Queue {
                     }
                 }
             }
-            this.profiles.remove(queueProfile);
+            this.profiles.removeIf(profile -> profile.getUuid().equals(playerToRemoveUUID));
         } else {
-            this.profiles.remove(queueProfile);
+            this.profiles.removeIf(profile -> profile.getUuid().equals(playerToRemoveUUID));
 
             if (playerToRemoveProfile != null) {
                 playerToRemoveProfile.setQueueProfile(null);
@@ -252,14 +265,9 @@ public class Queue {
 
         int count = 0;
         for (QueueProfile queueProfile : this.profiles) {
-            Player leader = Bukkit.getPlayer(queueProfile.getUuid());
-            if (leader != null) {
-                Party party = partyService.getParty(leader);
-                if (party != null && party.getMembers().size() > 1) {
-                    count += party.getMembers().size();
-                } else {
-                    count += 1;
-                }
+            Party party = partyService.getPartyByMember(queueProfile.getUuid());
+            if (party != null && party.getMembers().size() > 1) {
+                count += party.getMembers().size();
             } else {
                 count += 1;
             }

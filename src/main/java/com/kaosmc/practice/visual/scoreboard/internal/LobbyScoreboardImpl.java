@@ -3,8 +3,8 @@ package com.kaosmc.practice.visual.scoreboard.internal;
 import com.kaosmc.practice.KaosPractice;
 import com.kaosmc.practice.adapter.core.CoreAdapter;
 import com.kaosmc.practice.core.config.ConfigService;
+import com.kaosmc.practice.common.text.LevelBadgeUtil;
 import com.kaosmc.practice.feature.level.LevelService;
-import com.kaosmc.practice.feature.level.data.LevelData;
 import com.kaosmc.practice.feature.music.MusicService;
 import com.kaosmc.practice.feature.music.MusicSession;
 import com.kaosmc.practice.core.profile.ProfileService;
@@ -46,6 +46,9 @@ public class LobbyScoreboardImpl implements Scoreboard {
         LevelService levelService = KaosPractice.getInstance().getService(LevelService.class);
         MusicService musicService = KaosPractice.getInstance().getService(MusicService.class);
         CoreAdapter coreAdapter = KaosPractice.getInstance().getService(CoreAdapter.class);
+        if (configService == null || configService.getScoreboardConfig() == null || profileService == null || musicService == null) {
+            return Collections.emptyList();
+        }
 
         List<String> scoreboardLines = new ArrayList<>();
         List<String> template = (profile.getParty() != null)
@@ -55,10 +58,10 @@ public class LobbyScoreboardImpl implements Scoreboard {
         Optional<MusicSession> musicStateOptional = musicService.getMusicState(profile.getUuid());
 
         int currentElo = profile.getProfileData().getElo();
+        String levelProgressBar = levelService != null ? levelService.getProgressBar(currentElo) : "";
+        String levelProgressDetails = levelService != null ? levelService.getProgressDetails(currentElo) : "";
 
-        // 3. Prevenção: Nível não encontrado
-        LevelData currentLevel = levelService.getLevel(currentElo);
-        String levelName = (currentLevel != null) ? currentLevel.getDisplayName() : "Sem Nível";
+        String levelName = LevelBadgeUtil.getBadge(profile.getProfileData().getExperience());
 
         // 4. Prevenção: CoreAdapter ou Core ausente
         String rankStr = "";
@@ -94,8 +97,8 @@ public class LobbyScoreboardImpl implements Scoreboard {
                     .replace("{level}", levelName) // Usando a variável segura
                     .replace("{nivel}", levelName)
                     .replace("{nível}", levelName)
-                    .replace("{level_progress_bar}", levelService.getProgressBar(currentElo))
-                    .replace("{level_progress_details}", levelService.getProgressDetails(currentElo))
+                    .replace("{level_progress_bar}", levelProgressBar)
+                    .replace("{level_progress_details}", levelProgressDetails)
                     .replace("{rank}", rankStr) // Usando a variável segura
                     .replace("{playing}", String.valueOf(safeCountState(profileService, ProfileState.PLAYING)))
                     .replace("{in-queue}", String.valueOf(safeCountState(profileService, ProfileState.WAITING)));

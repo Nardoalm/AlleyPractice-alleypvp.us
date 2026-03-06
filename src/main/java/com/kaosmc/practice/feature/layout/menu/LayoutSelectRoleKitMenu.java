@@ -18,7 +18,9 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Emmy
@@ -39,6 +41,12 @@ public class LayoutSelectRoleKitMenu extends Menu {
         Map<Integer, Button> buttons = new HashMap<>();
 
         BaseRaidingService baseRaidingService = KaosPractice.getInstance().getService(BaseRaidingService.class);
+        if (baseRaidingService == null || this.kit == null) {
+            buttons.put(12, new RoleButton(BaseRaiderRole.RAIDER, null));
+            buttons.put(14, new RoleButton(BaseRaiderRole.TRAPPER, null));
+            this.addGlass(buttons, 15);
+            return buttons;
+        }
 
         Kit raiderKit = baseRaidingService.getRaidingKitByRole(this.kit, BaseRaiderRole.RAIDER);
         Kit trapperKit = baseRaidingService.getRaidingKitByRole(this.kit, BaseRaiderRole.TRAPPER);
@@ -85,9 +93,30 @@ public class LayoutSelectRoleKitMenu extends Menu {
         @Override
         public void clicked(Player player, ClickType clickType) {
             if (clickType != ClickType.LEFT) return;
+            if (this.kit == null) {
+                player.sendMessage(CC.translate("&c&lError: No kit found for this role."));
+                player.closeInventory();
+                return;
+            }
 
-            Profile profile = KaosPractice.getInstance().getService(ProfileService.class).getProfile(player.getUniqueId());
-            LayoutData layout = profile.getProfileData().getLayoutData().getLayouts().get(this.kit.getName()).get(0);
+            ProfileService profileService = KaosPractice.getInstance().getService(ProfileService.class);
+            Profile profile = profileService != null ? profileService.getProfile(player.getUniqueId()) : null;
+            if (profile == null
+                    || profile.getProfileData() == null
+                    || profile.getProfileData().getLayoutData() == null
+                    || profile.getProfileData().getLayoutData().getLayouts() == null) {
+                player.sendMessage(CC.translate("&c&lError: Layout profile not available right now."));
+                player.closeInventory();
+                return;
+            }
+
+            List<LayoutData> layouts = profile.getProfileData().getLayoutData().getLayouts().get(this.kit.getName());
+            if (layouts == null || layouts.isEmpty()) {
+                profile.getProfileData().getLayoutData().addLayout(this.kit.getName(), "Layout1", "Layout 1", this.kit.getItems());
+                layouts = profile.getProfileData().getLayoutData().getLayouts().get(this.kit.getName());
+            }
+
+            LayoutData layout = layouts == null ? null : layouts.stream().filter(Objects::nonNull).findFirst().orElse(null);
             if (layout == null) {
                 player.sendMessage(CC.translate("&c&lError: No layout found for this kit!"));
                 player.closeInventory();

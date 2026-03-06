@@ -3,12 +3,12 @@ package com.kaosmc.practice.core.profile.menu.statistic.button;
 import com.kaosmc.practice.KaosPractice;
 import com.kaosmc.practice.adapter.core.CoreAdapter;
 import com.kaosmc.practice.library.menu.Button;
-import com.kaosmc.practice.feature.level.LevelService;
 import com.kaosmc.practice.core.profile.ProfileService;
 import com.kaosmc.practice.core.profile.Profile;
 import com.kaosmc.practice.core.profile.data.types.ProfileFFAData;
 import com.kaosmc.practice.common.item.ItemBuilder;
 import com.kaosmc.practice.common.text.CC;
+import com.kaosmc.practice.common.text.LevelBadgeUtil;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -33,9 +33,14 @@ public class GlobalStatButton extends Button {
     @Override
     public ItemStack getButtonItem(Player player) {
         Profile profile = KaosPractice.getInstance().getService(ProfileService.class).getProfile(target.getUniqueId());
+        if (profile == null || profile.getProfileData() == null) {
+            return new ItemBuilder(Material.BARRIER)
+                    .name("&cDados indisponiveis")
+                    .lore("&7Nao foi possivel carregar os dados do jogador.")
+                    .build();
+        }
 
         CoreAdapter coreAdapter = KaosPractice.getInstance().getService(CoreAdapter.class);
-        LevelService levelService = KaosPractice.getInstance().getService(LevelService.class);
 
         int ffaKills = profile.getProfileData().getFfaData().values().stream()
                 .mapToInt(ProfileFFAData::getKills)
@@ -43,6 +48,13 @@ public class GlobalStatButton extends Button {
         int ffaDeaths = profile.getProfileData().getFfaData().values().stream()
                 .mapToInt(ProfileFFAData::getDeaths)
                 .sum();
+
+        String levelDisplay = LevelBadgeUtil.getBadge(profile.getProfileData().getExperience());
+        String rankDisplay = "&7N/A";
+        Player targetPlayer = target.getPlayer();
+        if (coreAdapter != null && coreAdapter.getCore() != null && targetPlayer != null) {
+            rankDisplay = String.valueOf(coreAdapter.getCore().getRankColor(targetPlayer)) + coreAdapter.getCore().getRankName(targetPlayer);
+        }
 
         return new ItemBuilder(Material.SKULL_ITEM)
                 .setSkull(target.getName())
@@ -65,9 +77,9 @@ public class GlobalStatButton extends Button {
                         "&6│ &fDeaths: &6" + ffaDeaths,
                         "",
                         "&6&lAccount",
-                        "&6│ &fRank: &6" + coreAdapter.getCore().getRankColor(target.getPlayer()) + coreAdapter.getCore().getRankName(target.getPlayer()),
+                        "&6│ &fRank: &6" + rankDisplay,
                         "&6│ &fCoins: &6$" + profile.getProfileData().getCoins(),
-                        "&6│ &fLevel: &6" + levelService.getLevel(profile.getProfileData().getGlobalLevel()).getDisplayName(),
+                        "&6│ &fLevel: &6" + levelDisplay,
                         CC.MENU_BAR
 
                 )

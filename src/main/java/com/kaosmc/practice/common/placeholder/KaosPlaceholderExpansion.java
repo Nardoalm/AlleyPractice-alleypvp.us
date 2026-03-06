@@ -4,6 +4,7 @@ import com.kaosmc.practice.KaosPractice;
 import com.kaosmc.practice.core.profile.Profile;
 import com.kaosmc.practice.core.profile.ProfileService;
 import com.kaosmc.practice.common.animation.internal.types.DotAnimation;
+import com.kaosmc.practice.common.text.LevelBadgeUtil;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -42,12 +43,12 @@ public class KaosPlaceholderExpansion extends PlaceholderExpansion {
         if (player == null) return "";
 
         ProfileService profileService = plugin.getService(ProfileService.class);
-        Profile profile = profileService.getProfile(player.getUniqueId());
+        Profile profile = profileService != null ? profileService.getProfile(player.getUniqueId()) : null;
 
         // %kaos_level%
         if (params.equalsIgnoreCase("level")) {
             if (profile != null && profile.getProfileData() != null) {
-                return String.valueOf(profile.getProfileData().getGlobalLevel());
+                return LevelBadgeUtil.getBadge(profile.getProfileData().getExperience());
             }
             return "0";
         }

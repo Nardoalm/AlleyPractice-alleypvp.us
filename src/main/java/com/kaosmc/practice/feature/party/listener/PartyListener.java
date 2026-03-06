@@ -1,12 +1,12 @@
 package com.kaosmc.practice.feature.party.listener;
 
 import com.kaosmc.practice.KaosPractice;
+import com.kaosmc.practice.common.text.CC;
+import com.kaosmc.practice.core.profile.enums.ChatChannel;
 import com.kaosmc.practice.feature.party.PartyService;
 import com.kaosmc.practice.feature.party.Party;
 import com.kaosmc.practice.core.profile.ProfileService;
 import com.kaosmc.practice.core.profile.Profile;
-import com.kaosmc.practice.core.profile.enums.ChatChannel;
-import com.kaosmc.practice.common.text.CC;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -23,48 +23,47 @@ public class PartyListener implements Listener {
     @EventHandler
     private void onAsyncPlayerChatEvent(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
-
         ProfileService profileService = KaosPractice.getInstance().getService(ProfileService.class);
         PartyService partyService = KaosPractice.getInstance().getService(PartyService.class);
 
-        Profile profile = profileService.getProfile(event.getPlayer().getUniqueId());
+        if (profileService == null || partyService == null) {
+            return;
+        }
 
-        if (profile.getProfileData().getSettingData().getChatChannel().equalsIgnoreCase(ChatChannel.PARTY.toString())) {
-            if (profile.getParty() == null) {
-                player.sendMessage(CC.translate("&cVocê não está em uma party."));
-                event.setCancelled(true);
-                return;
-            }
+        Profile profile = profileService.getProfile(player.getUniqueId());
+        if (profile == null || profile.getProfileData() == null || profile.getProfileData().getSettingData() == null) {
+            return;
+        }
 
-            if (!profile.getProfileData().getSettingData().isPartyMessagesEnabled()) {
-                player.sendMessage(CC.translate("&cVocê está com as mensagens da party desativadas."));
-                event.setCancelled(true);
-                return;
-            }
+        boolean forcedPartyMessage = event.getMessage().startsWith("#") || event.getMessage().startsWith("!");
+        boolean inPartyChannel = ChatChannel.PARTY.toString().equalsIgnoreCase(profile.getProfileData().getSettingData().getChatChannel());
+        if (!forcedPartyMessage && !inPartyChannel) {
+            return;
+        }
 
-            String partyMessage = partyService.getChatFormat().replace("{player}", player.getName()).replace("{message}", event.getMessage());
-            profile.getParty().notifyParty(partyMessage);
+        Party party = profile.getParty();
+        if (party == null
+                || party.getMembers() == null
+                || party.getMembers().isEmpty()
+                || !party.getMembers().contains(player.getUniqueId())) {
+            profile.getProfileData().getSettingData().setChatChannel(ChatChannel.GLOBAL.toString());
+            player.sendMessage(CC.translate("&eSeu chat voltou para o global, pois você não está em uma party ativa."));
             event.setCancelled(true);
             return;
         }
 
-        if (event.getMessage().startsWith("#") || event.getMessage().startsWith("!")) {
-            if (profile.getParty() == null) {
-                player.sendMessage(CC.translate("&cVocê não está em uma party."));
-                event.setCancelled(true);
-                return;
-            }
-
-            if (!profile.getProfileData().getSettingData().isPartyMessagesEnabled()) {
-                player.sendMessage(CC.translate("&cVocê está com as mensagens da party desativadas."));
-                event.setCancelled(true);
-                return;
-            }
-
-            String partyMessage = partyService.getChatFormat().replace("{player}", player.getName()).replace("{message}", event.getMessage().substring(1));
-            profile.getParty().notifyParty(partyMessage);
-            event.setCancelled(true);
+        String rawMessage = event.getMessage();
+        if (forcedPartyMessage && rawMessage.length() > 1) {
+            rawMessage = rawMessage.substring(1);
         }
+        if (rawMessage.trim().isEmpty()) {
+            event.setCancelled(true);
+            return;
+        }
+
+        String partyMessage = partyService.formatPartyChatMessage(player, rawMessage);
+        party.notifyParty(partyMessage);
+        event.setCancelled(true);
     }
 
     @EventHandler
@@ -72,13 +71,16 @@ public class PartyListener implements Listener {
         Player player = event.getPlayer();
         ProfileService profileService = KaosPractice.getInstance().getService(ProfileService.class);
         Profile profile = profileService.getProfile(player.getUniqueId());
+        if (profile == null) {
+            return;
+        }
 
         Party party = profile.getParty();
         if (party == null) {
             return;
         }
 
-        if (party.getLeader() == player) {
+        if (party.isLeader(player)) {
             KaosPractice.getInstance().getService(PartyService.class).disbandParty(player);
             return;
         }
@@ -91,13 +93,16 @@ public class PartyListener implements Listener {
         Player player = event.getPlayer();
         ProfileService profileService = KaosPractice.getInstance().getService(ProfileService.class);
         Profile profile = profileService.getProfile(player.getUniqueId());
+        if (profile == null) {
+            return;
+        }
 
         Party party = profile.getParty();
         if (party == null) {
             return;
         }
 
-        if (party.getLeader() == player) {
+        if (party.isLeader(player)) {
             KaosPractice.getInstance().getService(PartyService.class).disbandParty(player);
             return;
         }

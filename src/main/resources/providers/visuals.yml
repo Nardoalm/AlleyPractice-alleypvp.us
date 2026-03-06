@@ -108,14 +108,14 @@ titles:
     fade-out: 20
   party-left:
     enabled: true
-    header: '&c&l✖ Left {leader}''s Party'
+    header: '&c&l✖ Saiu da party de: {leader}'
     footer: '&7Você saiu da sua party.'
     fade-in: 5
     stay: 15
     fade-out: 5
   party-joined:
     enabled: true
-    header: '&a&l⚔ Joined {leader}''s Party'
+    header: '&a&l⚔ Entrou na party de {leader}'
     footer: '&7Digite /p para ajuda.'
     fade-in: 5
     stay: 15

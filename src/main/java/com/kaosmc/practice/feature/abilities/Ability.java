@@ -36,33 +36,61 @@ public abstract class Ability implements Listener {
     }
 
     public boolean isAbility(ItemStack itemStack) {
+        AbilityService abilityService = KaosPractice.getInstance().getService(AbilityService.class);
+        String displayName = abilityService != null ? abilityService.getDisplayName(ability) : null;
+        if (displayName == null || displayName.trim().isEmpty()) {
+            return false;
+        }
+
         return (itemStack != null)
                 && (itemStack.getType() != Material.AIR)
                 && (itemStack.hasItemMeta())
                 && (itemStack.getItemMeta().getDisplayName() != null)
                 && (itemStack.getItemMeta().getLore() != null)
-                && itemStack.getItemMeta().getDisplayName().equals(CC.translate(KaosPractice.getInstance().getService(AbilityService.class).getDisplayName(ability)));
+                && itemStack.getItemMeta().getDisplayName().equals(CC.translate(displayName));
     }
 
     public String getName() {
-        return KaosPractice.getInstance().getService(AbilityService.class).getDisplayName(this.getAbility());
+        AbilityService abilityService = KaosPractice.getInstance().getService(AbilityService.class);
+        String displayName = abilityService != null ? abilityService.getDisplayName(this.getAbility()) : null;
+        return displayName != null ? displayName : this.getAbility();
     }
 
     public boolean hasCooldown(Player player) {
-        return this.cooldown.contains(KaosPractice.getInstance().getService(AbilityService.class).getDisplayName(this.getAbility()), player.getUniqueId())
-                && this.cooldown.get(KaosPractice.getInstance().getService(AbilityService.class).getDisplayName(this.getAbility()), player.getUniqueId()) > System.currentTimeMillis();
+        if (player == null) {
+            return false;
+        }
+
+        String key = this.getName();
+        Long expiresAt = this.cooldown.get(key, player.getUniqueId());
+        return expiresAt != null && expiresAt > System.currentTimeMillis();
     }
 
     public void setCooldown(Player player, long time) {
+        if (player == null) {
+            return;
+        }
+
+        String key = this.getName();
         if (time < 1L) {
-            this.cooldown.remove(KaosPractice.getInstance().getService(AbilityService.class).getDisplayName(this.getAbility()), player.getUniqueId());
+            this.cooldown.remove(key, player.getUniqueId());
         }
         else {
-            this.cooldown.put(KaosPractice.getInstance().getService(AbilityService.class).getDisplayName(this.getAbility()), player.getUniqueId(), System.currentTimeMillis() + time);
+            this.cooldown.put(key, player.getUniqueId(), System.currentTimeMillis() + time);
         }
     }
+
     public String getCooldown(Player player) {
-        long cooldownLeft = this.cooldown.get(KaosPractice.getInstance().getService(AbilityService.class).getDisplayName(this.getAbility()), player.getUniqueId()) - System.currentTimeMillis();
+        if (player == null) {
+            return TimeUtil.formatLongMin(0L);
+        }
+
+        Long expiresAt = this.cooldown.get(this.getName(), player.getUniqueId());
+        if (expiresAt == null) {
+            return TimeUtil.formatLongMin(0L);
+        }
+
+        long cooldownLeft = Math.max(0L, expiresAt - System.currentTimeMillis());
         return TimeUtil.formatLongMin(cooldownLeft);
     }
 }

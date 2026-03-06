@@ -134,6 +134,10 @@ public class AntiTrapper extends Ability {
     public void onFenceInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         Block block = event.getClickedBlock();
+        if (block == null) {
+            return;
+        }
+
         if(event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             if (block.getType().equals(Material.FENCE_GATE) || block.getType().equals(Material.CHEST)) {
                 if (AntiTrapper.isOnCooldownVic(player)) {

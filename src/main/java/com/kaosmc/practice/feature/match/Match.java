@@ -2,6 +2,7 @@ package com.kaosmc.practice.feature.match;
 
 import com.kaosmc.practice.KaosPractice;
 import com.kaosmc.practice.adapter.knockback.KnockbackAdapter;
+import com.kaosmc.practice.common.InventoryUtil;
 import com.kaosmc.practice.common.ListenerUtil;
 import com.kaosmc.practice.common.PlayerUtil;
 import com.kaosmc.practice.common.SoundUtil;
@@ -366,10 +367,10 @@ public abstract class Match {
         LayoutService layoutService = this.plugin.getService(LayoutService.class);
         ProfileService profileService = this.plugin.getService(ProfileService.class);
 
-        player.getInventory().setArmorContents(kit.getArmor());
+        player.getInventory().setArmorContents(InventoryUtil.cloneItemStackArray(kit.getArmor()));
 
-        Profile profile = profileService.getProfile(player.getUniqueId());
-        ItemStack[] itemsToGive = kit.getItems();
+        Profile profile = profileService != null ? profileService.getProfile(player.getUniqueId()) : null;
+        ItemStack[] itemsToGive = InventoryUtil.cloneItemStackArray(kit.getItems());
 
         if (profile == null
                 || profile.getProfileData() == null
@@ -383,11 +384,15 @@ public abstract class Match {
             } else if (kitLayouts.size() == 1) {
                 LayoutData singleLayout = kitLayouts.get(0);
                 if (singleLayout != null && singleLayout.getItems() != null) {
-                    itemsToGive = singleLayout.getItems();
+                    itemsToGive = InventoryUtil.cloneItemStackArray(singleLayout.getItems());
                 }
                 player.getInventory().setContents(itemsToGive);
             } else {
-                layoutService.giveBooks(player, kit.getName());
+                if (layoutService != null) {
+                    layoutService.giveBooks(player, kit.getName());
+                } else {
+                    player.getInventory().setContents(itemsToGive);
+                }
             }
         }
 
@@ -436,6 +441,10 @@ public abstract class Match {
             if (this.canEndMatch()) {
                 if (killer != null) {
                     this.handleDeathEffects(player, killer);
+                }
+
+                if (player != null && player.isOnline() && !gamePlayer.isDisconnected()) {
+                    this.handleFinalDeathVisibility(player, gamePlayer);
                 }
 
                 this.state = MatchState.ENDING_MATCH;
@@ -1425,6 +1434,21 @@ public abstract class Match {
         profile.setMatch(this);
 
         PlayerUtil.reset(player, false, true);
+    }
+
+    private void handleFinalDeathVisibility(Player player, MatchGamePlayer gamePlayer) {
+        gamePlayer.setEliminated(true);
+        this.setupSpectatorProfile(player);
+
+        VisibilityService visibilityService = this.plugin.getService(VisibilityService.class);
+        if (visibilityService != null) {
+            visibilityService.updateVisibility(player);
+        }
+
+        NametagService nametagService = this.plugin.getService(NametagService.class);
+        if (nametagService != null) {
+            nametagService.updatePlayerState(player);
+        }
     }
 
     /**

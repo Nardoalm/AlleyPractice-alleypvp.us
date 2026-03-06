@@ -22,10 +22,10 @@ public class QueueListener implements Listener {
         ProfileService profileService = KaosPractice.getInstance().getService(ProfileService.class);
         Profile profile = profileService.getProfile(player.getUniqueId());
 
-        if (profile.getState() == ProfileState.WAITING) {
-            if (profile.getQueueProfile().getQueue() != null) {
-                profile.getQueueProfile().getQueue().removePlayer(profile.getQueueProfile());
-            }
+        if (profile.getState() == ProfileState.WAITING
+                && profile.getQueueProfile() != null
+                && profile.getQueueProfile().getQueue() != null) {
+            profile.getQueueProfile().getQueue().removePlayer(profile.getQueueProfile());
         }
     }
 
@@ -35,10 +35,10 @@ public class QueueListener implements Listener {
         ProfileService profileService = KaosPractice.getInstance().getService(ProfileService.class);
         Profile profile = profileService.getProfile(player.getUniqueId());
 
-        if (profile.getState() == ProfileState.WAITING) {
-            if (profile.getQueueProfile().getQueue() != null) {
-                profile.getQueueProfile().getQueue().removePlayer(profile.getQueueProfile());
-            }
+        if (profile.getState() == ProfileState.WAITING
+                && profile.getQueueProfile() != null
+                && profile.getQueueProfile().getQueue() != null) {
+            profile.getQueueProfile().getQueue().removePlayer(profile.getQueueProfile());
         }
     }
 }

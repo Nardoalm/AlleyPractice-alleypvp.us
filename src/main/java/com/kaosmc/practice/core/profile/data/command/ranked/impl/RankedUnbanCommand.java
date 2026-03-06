@@ -57,6 +57,7 @@ public class RankedUnbanCommand extends BaseCommand {
         }
 
         profile.getProfileData().setRankedBanned(false);
+        profile.save();
         if (this.getBoolean(GlobalMessagesLocaleImpl.RANKED_PLAYER_UNBAN_BROADCAST_BOOLEAN)) {
             List<String> message = this.getStringList(GlobalMessagesLocaleImpl.RANKED_PLAYER_UNBAN_BROADCAST);
             for (String line : message) {

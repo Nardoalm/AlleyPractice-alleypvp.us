@@ -115,7 +115,6 @@ public class CommandUtility {
 
             new AbilityCommand();
 
-            new ChatCommand();
             new DayCommand();
             new NightCommand();
             new SunsetCommand();

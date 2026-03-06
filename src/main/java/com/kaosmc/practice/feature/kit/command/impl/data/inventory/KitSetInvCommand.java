@@ -3,6 +3,7 @@ package com.kaosmc.practice.feature.kit.command.impl.data.inventory;
 import com.kaosmc.practice.common.InventoryUtil;
 import com.kaosmc.practice.common.text.CC;
 import com.kaosmc.practice.core.locale.internal.impl.message.GlobalMessagesLocaleImpl;
+import com.kaosmc.practice.core.profile.ProfileService;
 import com.kaosmc.practice.feature.kit.Kit;
 import com.kaosmc.practice.feature.kit.KitService;
 import com.kaosmc.practice.library.command.BaseCommand;
@@ -35,6 +36,10 @@ public class KitSetInvCommand extends BaseCommand {
         }
 
         KitService kitService = this.plugin.getService(KitService.class);
+        if (kitService == null) {
+            player.sendMessage(CC.translate("&cServico de kit indisponivel no momento."));
+            return;
+        }
         Kit kit = kitService.getKit(args[0]);
         if (kit == null) {
             player.sendMessage(CC.translate(this.getString(GlobalMessagesLocaleImpl.KIT_NOT_FOUND)));
@@ -43,12 +48,21 @@ public class KitSetInvCommand extends BaseCommand {
 
         ItemStack[] inventory = InventoryUtil.cloneItemStackArray(player.getInventory().getContents());
         ItemStack[] armor = InventoryUtil.cloneItemStackArray(player.getInventory().getArmorContents());
+        if (inventory == null) {
+            inventory = new ItemStack[player.getInventory().getSize()];
+        }
+        if (armor == null) {
+            armor = new ItemStack[4];
+        }
 
         kit.setItems(inventory);
         kit.setArmor(armor);
         kitService.saveKit(kit);
 
-        //TODO: reset saved layouts for this kit for all players
+        ProfileService profileService = this.plugin.getService(ProfileService.class);
+        if (profileService != null) {
+            profileService.resetLayoutForKit(kit);
+        }
 
         player.sendMessage(CC.translate(this.getString(GlobalMessagesLocaleImpl.KIT_INVENTORY_SET).replace("{kit-name}", kit.getName())));
     }

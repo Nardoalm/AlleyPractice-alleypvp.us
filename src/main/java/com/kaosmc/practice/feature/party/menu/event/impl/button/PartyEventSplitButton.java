@@ -6,6 +6,7 @@ import com.kaosmc.practice.common.text.CC;
 import com.kaosmc.practice.core.locale.LocaleService;
 import com.kaosmc.practice.core.locale.internal.impl.SettingsLocaleImpl;
 import com.kaosmc.practice.core.locale.internal.impl.message.GlobalMessagesLocaleImpl;
+import com.kaosmc.practice.core.profile.Profile;
 import com.kaosmc.practice.core.profile.ProfileService;
 import com.kaosmc.practice.feature.arena.Arena;
 import com.kaosmc.practice.feature.arena.ArenaService;
@@ -52,7 +53,9 @@ public class PartyEventSplitButton extends Button {
             return;
         }
 
-        Party party = KaosPractice.getInstance().getService(ProfileService.class).getProfile(player.getUniqueId()).getParty();
+        ProfileService profileService = KaosPractice.getInstance().getService(ProfileService.class);
+        Profile profile = profileService != null ? profileService.getProfile(player.getUniqueId()) : null;
+        Party party = profile != null ? profile.getParty() : null;
         if (party == null) {
             player.closeInventory();
             player.sendMessage(KaosPractice.getInstance().getService(LocaleService.class).getString(GlobalMessagesLocaleImpl.ERROR_YOU_NOT_IN_PARTY));
@@ -60,6 +63,11 @@ public class PartyEventSplitButton extends Button {
         }
 
         Arena arena = KaosPractice.getInstance().getService(ArenaService.class).getRandomArena(this.kit);
+        if (arena == null) {
+            player.closeInventory();
+            player.sendMessage(CC.translate("&cNenhuma arena disponível para este kit no momento."));
+            return;
+        }
         KaosPractice.getInstance().getService(PartyService.class).startMatch(this.kit, arena, party);
     }
 }

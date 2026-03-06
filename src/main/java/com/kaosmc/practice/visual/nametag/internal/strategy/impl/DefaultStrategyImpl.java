@@ -1,10 +1,12 @@
 package com.kaosmc.practice.visual.nametag.internal.strategy.impl;
 
+import com.kaosmc.practice.KaosPractice;
+import com.kaosmc.practice.core.locale.LocaleService;
+import com.kaosmc.practice.core.locale.internal.impl.SettingsLocaleImpl;
 import com.kaosmc.practice.visual.nametag.model.NametagContext;
 import com.kaosmc.practice.visual.nametag.NametagView;
+import com.kaosmc.practice.visual.nametag.internal.strategy.NametagFormatResolver;
 import com.kaosmc.practice.visual.nametag.internal.strategy.NametagStrategy;
-import com.kaosmc.practice.common.text.CC;
-import org.bukkit.ChatColor;
 
 /**
  * @author Remi
@@ -14,12 +16,16 @@ import org.bukkit.ChatColor;
 public class DefaultStrategyImpl implements NametagStrategy {
     @Override
     public NametagView createNametagView(NametagContext context) {
-        String prefix = context.getTargetProfile().getNameColor().toString();
+        LocaleService localeService = KaosPractice.getInstance().getService(LocaleService.class);
+        String lobbyFormat = localeService != null
+                ? localeService.getString(SettingsLocaleImpl.VISUALS_NAMETAG_LOBBY_FORMAT)
+                : "{tag_prefix}";
+        String prefix = NametagFormatResolver.resolve(lobbyFormat, context);
 
-        if (prefix == null || prefix.isEmpty()) {
-            prefix = ChatColor.GRAY.toString();
+        if (prefix == null || prefix.trim().isEmpty()) {
+            prefix = NametagFormatResolver.resolve("{name_color}", context);
         }
 
-        return new NametagView(CC.translate(prefix), "");
+        return new NametagView(prefix, "");
     }
 }

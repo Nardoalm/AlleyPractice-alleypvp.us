@@ -1,6 +1,7 @@
 package com.kaosmc.practice.feature.layout.menu;
 
 import com.kaosmc.practice.KaosPractice;
+import com.kaosmc.practice.common.InventoryUtil;
 import com.kaosmc.practice.feature.layout.menu.button.editor.*;
 import com.kaosmc.practice.library.menu.Button;
 import com.kaosmc.practice.library.menu.Menu;
@@ -13,7 +14,9 @@ import lombok.AllArgsConstructor;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Emmy
@@ -28,19 +31,37 @@ public class LayoutEditorMenu extends Menu {
 
     @Override
     public void onOpen(Player player) {
-        KaosPractice.getInstance().getService(ProfileService.class).getProfile(player.getUniqueId()).setState(ProfileState.EDITING);
-        player.getInventory().setContents(this.layout.getItems());
+        ProfileService profileService = KaosPractice.getInstance().getService(ProfileService.class);
+        Profile profile = profileService != null ? profileService.getProfile(player.getUniqueId()) : null;
+        if (profile != null) {
+            profile.setState(ProfileState.EDITING);
+        }
+
+        if (this.layout != null && this.layout.getItems() != null) {
+            player.getInventory().setContents(InventoryUtil.cloneItemStackArray(this.layout.getItems()));
+        } else if (this.kit != null && this.kit.getItems() != null) {
+            player.getInventory().setContents(InventoryUtil.cloneItemStackArray(this.kit.getItems()));
+        } else {
+            player.getInventory().clear();
+        }
     }
 
     @Override
     public void onClose(Player player) {
-        KaosPractice.getInstance().getService(ProfileService.class).getProfile(player.getUniqueId()).setState(ProfileState.LOBBY);
+        ProfileService profileService = KaosPractice.getInstance().getService(ProfileService.class);
+        Profile profile = profileService != null ? profileService.getProfile(player.getUniqueId()) : null;
+        if (profile != null) {
+            profile.setState(ProfileState.LOBBY);
+        }
         super.onClose(player);
     }
 
     @Override
     public String getTitle(Player player) {
-        return "&6&lEditing " + this.layout.getDisplayName();
+        String layoutName = this.layout != null && this.layout.getDisplayName() != null
+                ? this.layout.getDisplayName()
+                : "Layout";
+        return "&6&lEditing " + layoutName;
     }
 
     @Override
@@ -48,7 +69,7 @@ public class LayoutEditorMenu extends Menu {
         Map<Integer, Button> buttons = new HashMap<>();
 
         ProfileService profileService = KaosPractice.getInstance().getService(ProfileService.class);
-        Profile profile = profileService.getProfile(player.getUniqueId());
+        Profile profile = profileService != null ? profileService.getProfile(player.getUniqueId()) : null;
 
         buttons.put(11, new LayoutSaveButton(this.kit, this.layout));
         buttons.put(13, new LayoutResetItemsButton(this.kit));
@@ -57,7 +78,11 @@ public class LayoutEditorMenu extends Menu {
         /*
          * If kit isn't the first/default one stored in profile, add the following buttons:
          */
-        if (!this.layout.getName().equals(profile.getProfileData().getLayoutData().getLayouts().get(this.kit.getName()).get(0).getName())) {
+        LayoutData firstLayout = this.getFirstLayout(profile);
+        if (firstLayout != null
+                && this.layout != null
+                && this.layout.getName() != null
+                && !this.layout.getName().equals(firstLayout.getName())) {
             buttons.put(21, new LayoutDeleteButton(this.layout));
             buttons.put(23, new LayoutRenameButton(this.layout));
         }
@@ -76,5 +101,22 @@ public class LayoutEditorMenu extends Menu {
     @Override
     public boolean isUpdateAfterClick() {
         return false;
+    }
+
+    private LayoutData getFirstLayout(Profile profile) {
+        if (profile == null
+                || profile.getProfileData() == null
+                || profile.getProfileData().getLayoutData() == null
+                || profile.getProfileData().getLayoutData().getLayouts() == null
+                || this.kit == null) {
+            return null;
+        }
+
+        List<LayoutData> layouts = profile.getProfileData().getLayoutData().getLayouts().get(this.kit.getName());
+        if (layouts == null || layouts.isEmpty()) {
+            return null;
+        }
+
+        return layouts.stream().filter(Objects::nonNull).findFirst().orElse(null);
     }
 }

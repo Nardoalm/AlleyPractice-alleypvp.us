@@ -7,6 +7,7 @@ import com.kaosmc.practice.common.text.CC;
 import com.kaosmc.practice.common.text.Symbol;
 import com.kaosmc.practice.core.profile.Profile;
 import com.kaosmc.practice.core.profile.ProfileService;
+import com.kaosmc.practice.core.profile.enums.ProfileState;
 import com.kaosmc.practice.feature.kit.Kit;
 import com.kaosmc.practice.feature.kit.setting.types.mode.KitSettingRaiding;
 import com.kaosmc.practice.feature.layout.data.LayoutData;
@@ -14,9 +15,13 @@ import com.kaosmc.practice.feature.layout.menu.LayoutEditorMenu;
 import com.kaosmc.practice.feature.layout.menu.LayoutSelectRoleKitMenu;
 import com.kaosmc.practice.library.menu.Button;
 import lombok.AllArgsConstructor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Emmy
@@ -29,6 +34,14 @@ public class LayoutButton extends Button {
 
     @Override
     public ItemStack getButtonItem(Player player) {
+        if (this.kit == null) {
+            return new ItemBuilder(Material.BARRIER)
+                    .name("&cKit indisponivel")
+                    .lore(CC.MENU_BAR, "&7Nao foi possivel carregar este kit.", CC.MENU_BAR)
+                    .hideMeta()
+                    .build();
+        }
+
         return new ItemBuilder(this.kit.getIcon())
                 .name("&6&l" + this.kit.getDisplayName())
                 .durability(this.kit.getDurability())
@@ -46,7 +59,17 @@ public class LayoutButton extends Button {
 
     @Override
     public void clicked(Player player, ClickType clickType) {
-        Profile profile = KaosPractice.getInstance().getService(ProfileService.class).getProfile(player.getUniqueId());
+        ProfileService profileService = KaosPractice.getInstance().getService(ProfileService.class);
+        Profile profile = profileService != null ? profileService.getProfile(player.getUniqueId()) : null;
+        if (profile == null || this.kit == null) {
+            player.sendMessage(CC.translate("&cNao foi possivel abrir este layout agora."));
+            return;
+        }
+
+        if (profile.getState() == ProfileState.WAITING) {
+            player.sendMessage(CC.translate("&cSaia da fila para editar o layout."));
+            return;
+        }
 
         if (clickType == ClickType.LEFT) {
             if (this.kit.isSettingEnabled(KitSettingRaiding.class)) {
@@ -54,10 +77,31 @@ public class LayoutButton extends Button {
                 return;
             }
 
-            LayoutData layout = profile.getProfileData().getLayoutData().getLayouts().get(this.kit.getName()).get(0);
+            LayoutData layout = this.getFirstLayout(profile, this.kit.getName());
+            if (layout == null) {
+                player.sendMessage(CC.translate("&cNenhum layout encontrado para este kit."));
+                return;
+            }
             new LayoutEditorMenu(this.kit, layout).openMenu(player);
         } else if (clickType == ClickType.SHIFT_LEFT) {
             player.sendMessage(MessageConstant.IN_DEVELOPMENT);
         }
+    }
+
+    private LayoutData getFirstLayout(Profile profile, String kitName) {
+        if (profile == null
+                || profile.getProfileData() == null
+                || profile.getProfileData().getLayoutData() == null
+                || profile.getProfileData().getLayoutData().getLayouts() == null
+                || kitName == null) {
+            return null;
+        }
+
+        List<LayoutData> layouts = profile.getProfileData().getLayoutData().getLayouts().get(kitName);
+        if (layouts == null || layouts.isEmpty()) {
+            return null;
+        }
+
+        return layouts.stream().filter(Objects::nonNull).findFirst().orElse(null);
     }
 }

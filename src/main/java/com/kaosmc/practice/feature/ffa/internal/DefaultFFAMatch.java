@@ -2,6 +2,7 @@ package com.kaosmc.practice.feature.ffa.internal;
 
 import com.kaosmc.practice.KaosPractice;
 import com.kaosmc.practice.adapter.knockback.KnockbackAdapter;
+import com.kaosmc.practice.common.InventoryUtil;
 import com.kaosmc.practice.common.PlayerUtil;
 import com.kaosmc.practice.common.reflect.ReflectionService;
 import com.kaosmc.practice.common.reflect.internal.types.ActionBarReflectionServiceImpl;
@@ -155,8 +156,10 @@ public class DefaultFFAMatch extends FFAMatch {
         player.teleport(arena.getPos1());
 
         Kit kit = this.getKit();
-        player.getInventory().setArmorContents(kit.getArmor());
-        player.getInventory().setContents(kit.getItems());
+        if (kit != null) {
+            player.getInventory().setArmorContents(InventoryUtil.cloneItemStackArray(kit.getArmor()));
+            player.getInventory().setContents(InventoryUtil.cloneItemStackArray(kit.getItems()));
+        }
     }
 
     /**
@@ -177,8 +180,10 @@ public class DefaultFFAMatch extends FFAMatch {
 
             Kit kit = this.getKit();
             player.getInventory().clear();
-            player.getInventory().setArmorContents(kit.getArmor());
-            player.getInventory().setContents(kit.getItems());
+            if (kit != null) {
+                player.getInventory().setArmorContents(InventoryUtil.cloneItemStackArray(kit.getArmor()));
+                player.getInventory().setContents(InventoryUtil.cloneItemStackArray(kit.getItems()));
+            }
             player.updateInventory();
         }, 1L);
 

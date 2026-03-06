@@ -1,5 +1,6 @@
 package com.kaosmc.practice.feature.layout.data;
 
+import com.kaosmc.practice.common.InventoryUtil;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.inventory.ItemStack;
@@ -26,6 +27,14 @@ public class LayoutData {
     public LayoutData(String name, String displayName, ItemStack[] items) {
         this.name = name;
         this.displayName = displayName;
-        this.items = items;
+        this.setItems(items);
+    }
+
+    public ItemStack[] getItems() {
+        return InventoryUtil.cloneItemStackArray(this.items);
+    }
+
+    public void setItems(ItemStack[] items) {
+        this.items = InventoryUtil.cloneItemStackArray(items);
     }
 }

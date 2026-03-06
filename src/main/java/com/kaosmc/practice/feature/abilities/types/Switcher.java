@@ -97,6 +97,9 @@ public class Switcher extends Ability {
 
             if (projectile instanceof Egg && projectile.hasMetadata(this.getAbility())) {
                 Player player = (Player) event.getEntity();
+                if (!(projectile.getShooter() instanceof Player)) {
+                    return;
+                }
                 Player shooter = (Player) projectile.getShooter();
 
                 Location playerLocation = player.getLocation().clone();
@@ -109,6 +112,9 @@ public class Switcher extends Ability {
             }
             else if (projectile instanceof Snowball && projectile.hasMetadata(this.getAbility())) {
                 Player player = (Player) event.getEntity();
+                if (!(projectile.getShooter() instanceof Player)) {
+                    return;
+                }
                 Player shooter = (Player) projectile.getShooter();
 
                 Location playerLocation = player.getLocation().clone();

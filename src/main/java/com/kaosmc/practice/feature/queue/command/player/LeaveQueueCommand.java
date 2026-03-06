@@ -35,6 +35,11 @@ public class LeaveQueueCommand extends BaseCommand {
             return;
         }
 
+        if (profile.getQueueProfile() == null || profile.getQueueProfile().getQueue() == null) {
+            player.sendMessage(CC.translate("&cVocê não está em nenhuma fila."));
+            return;
+        }
+
         profile.getQueueProfile().getQueue().removePlayer(profile.getQueueProfile());
     }
 }

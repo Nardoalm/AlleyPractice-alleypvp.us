@@ -49,11 +49,14 @@ public class ProfileData {
     private String globalLevel = "";
 
     private int elo = 1000;
+    private int experience = 0;
     private int coins = 100;
     private int unrankedWins = 0;
     private int unrankedLosses = 0;
     private int rankedWins = 0;
     private int rankedLosses = 0;
+    private int winStreak = 0;
+    private int bestWinStreak = 0;
 
     private boolean rankedBanned = false;
 
@@ -207,5 +210,23 @@ public class ProfileData {
 
     public void incrementCoins(int amount) {
         this.coins += amount;
+    }
+
+    public void addExperience(int amount) {
+        if (amount <= 0) {
+            return;
+        }
+        this.experience += amount;
+    }
+
+    public void incrementWinStreak() {
+        this.winStreak++;
+        if (this.winStreak > this.bestWinStreak) {
+            this.bestWinStreak = this.winStreak;
+        }
+    }
+
+    public void resetWinStreak() {
+        this.winStreak = 0;
     }
 }

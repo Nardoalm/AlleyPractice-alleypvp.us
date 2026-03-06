@@ -71,6 +71,11 @@ public class NinjaStar extends Ability {
             PlayerUtil.decrement(player);
 
             Player target = Bukkit.getPlayer(TAGGED.get(player.getUniqueId()));
+            if (target == null || !target.isOnline()) {
+                player.sendMessage(CC.translate("&cNenhum alvo recente encontrado para o Ninja Star."));
+                TAGGED.remove(player.getUniqueId());
+                return;
+            }
 
             profile.getCooldown(NinjaStar.class).applyCooldown(player, 60 * 1000);
             profile.getGlobalCooldown(GlobalCooldown.PARTNER_ITEM).applyCooldown(player, 10 * 1000);
@@ -84,7 +89,7 @@ public class NinjaStar extends Ability {
                     player.teleport(target.getLocation());
                     player.sendMessage(CC.translate("&7Você foi teleportado com sucesso")); // you just got teleported back
                 }
-            }.runTaskLaterAsynchronously(this.plugin, (5 * 10));
+            }.runTaskLater(this.plugin, (5 * 10));
 
             abilityService.sendCooldownExpiredMessage(player, this.getName(), this.getAbility());
             abilityService.sendPlayerMessage(player, this.getAbility());

@@ -20,6 +20,7 @@ import com.kaosmc.practice.feature.kit.KitService;
 import com.kaosmc.practice.feature.leaderboard.LeaderboardType;
 import com.kaosmc.practice.feature.match.Match;
 import com.kaosmc.practice.feature.party.Party;
+import com.kaosmc.practice.feature.party.PartyService;
 import com.kaosmc.practice.feature.queue.QueueProfile;
 import com.kaosmc.practice.feature.queue.QueueType;
 import lombok.Getter;
@@ -94,6 +95,19 @@ public class Profile {
 
     public String getFancyName() {
         return (this.nameColor != null ? this.nameColor : ChatColor.WHITE) + this.name;
+    }
+
+    public Party getParty() {
+        PartyService partyService = KaosPractice.getInstance().getService(PartyService.class);
+        if (partyService == null) {
+            return this.party;
+        }
+
+        Party activeParty = partyService.getPartyByMember(this.uuid);
+        if (this.party != activeParty) {
+            this.party = activeParty;
+        }
+        return this.party;
     }
 
     public boolean isBusy() {

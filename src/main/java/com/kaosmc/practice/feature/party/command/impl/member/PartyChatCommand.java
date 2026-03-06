@@ -6,6 +6,7 @@ import com.kaosmc.practice.core.profile.Profile;
 import com.kaosmc.practice.core.profile.ProfileService;
 import com.kaosmc.practice.core.profile.enums.ChatChannel;
 import com.kaosmc.practice.feature.party.PartyService;
+import com.kaosmc.practice.feature.party.Party;
 import com.kaosmc.practice.library.command.BaseCommand;
 import com.kaosmc.practice.library.command.CommandArgs;
 import com.kaosmc.practice.library.command.annotation.CommandData;
@@ -24,7 +25,7 @@ public class PartyChatCommand extends BaseCommand {
             name = "party.chat",
             aliases = {"p.chat", "pc"},
             usage = "party chat [message]",
-            description = "Alterna ou envia mensagem no chat da party."
+            description = "Envia mensagem no chat da party."
     )
     @Override
     public void onCommand(CommandArgs command) {
@@ -33,29 +34,46 @@ public class PartyChatCommand extends BaseCommand {
 
         ProfileService profileService = this.plugin.getService(ProfileService.class);
         Profile profile = profileService.getProfile(player.getUniqueId());
+        if (profile == null || profile.getProfileData() == null || profile.getProfileData().getSettingData() == null) {
+            player.sendMessage(CC.translate("&cNão foi possível alterar o canal da party agora."));
+            return;
+        }
         String message = Arrays.stream(args).collect(Collectors.joining(" ")).trim();
 
         if (args.length == 0) {
-            if (profile.getProfileData().getSettingData().getChatChannel().equals(ChatChannel.PARTY.toString())) {
+            if (!this.hasActiveParty(profile)) {
                 profile.getProfileData().getSettingData().setChatChannel(ChatChannel.GLOBAL.toString());
-                player.sendMessage(CC.translate("&aSeu canal de chat foi definido para &6global&a."));
+                player.sendMessage(this.getString(GlobalMessagesLocaleImpl.ERROR_YOU_NOT_IN_PARTY));
+                return;
+            }
+
+            if (ChatChannel.PARTY.toString().equalsIgnoreCase(profile.getProfileData().getSettingData().getChatChannel())) {
+                profile.getProfileData().getSettingData().setChatChannel(ChatChannel.GLOBAL.toString());
+                player.sendMessage(CC.translate("&eSeu chat foi alterado para &fGlobal&e."));
             } else {
                 profile.getProfileData().getSettingData().setChatChannel(ChatChannel.PARTY.toString());
-                player.sendMessage(CC.translate("&aSeu canal de chat foi definido para &6party&a."));
+                player.sendMessage(CC.translate("&aSeu chat foi alterado para &6Party&a."));
             }
             return;
         }
 
-        if (profile.getParty() == null) {
+        if (!this.hasActiveParty(profile)) {
+            profile.getProfileData().getSettingData().setChatChannel(ChatChannel.GLOBAL.toString());
             player.sendMessage(this.getString(GlobalMessagesLocaleImpl.ERROR_YOU_NOT_IN_PARTY));
             return;
         }
 
-        String chatFormat = this.plugin.getService(PartyService.class).getChatFormat();
-        if (chatFormat == null || chatFormat.trim().isEmpty()) {
-            chatFormat = "&7[&6Party&7] &6{player}&7: &f{message}";
-        }
-        String partyMessage = chatFormat.replace("{player}", player.getName()).replace("{message}", message);
+        profile.getProfileData().getSettingData().setChatChannel(ChatChannel.PARTY.toString());
+        String partyMessage = this.plugin.getService(PartyService.class).formatPartyChatMessage(player, message);
         profile.getParty().notifyParty(partyMessage);
+    }
+
+    private boolean hasActiveParty(Profile profile) {
+        Party party = profile != null ? profile.getParty() : null;
+        return profile != null
+                && party != null
+                && party.getMembers() != null
+                && !party.getMembers().isEmpty()
+                && party.getMembers().contains(profile.getUuid());
     }
 }

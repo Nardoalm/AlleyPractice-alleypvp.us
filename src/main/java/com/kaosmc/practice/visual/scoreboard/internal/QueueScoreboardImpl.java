@@ -2,9 +2,8 @@ package com.kaosmc.practice.visual.scoreboard.internal;
 
 import com.kaosmc.practice.KaosPractice;
 import com.kaosmc.practice.common.animation.internal.types.DotAnimation;
+import com.kaosmc.practice.common.text.LevelBadgeUtil;
 import com.kaosmc.practice.core.config.ConfigService;
-import com.kaosmc.practice.feature.level.LevelService;
-import com.kaosmc.practice.feature.level.data.LevelData;
 import com.kaosmc.practice.core.profile.ProfileService;
 import com.kaosmc.practice.core.profile.Profile;
 import com.kaosmc.practice.core.profile.enums.ProfileState;
@@ -30,7 +29,6 @@ public class QueueScoreboardImpl implements Scoreboard {
 
         ConfigService configService = KaosPractice.getInstance().getService(ConfigService.class);
         ProfileService profileService = KaosPractice.getInstance().getService(ProfileService.class);
-        LevelService levelService = KaosPractice.getInstance().getService(LevelService.class);
 
         if (configService == null || configService.getScoreboardConfig() == null) return Collections.emptyList();
 
@@ -48,11 +46,7 @@ public class QueueScoreboardImpl implements Scoreboard {
         }
 
         // Variável de Nível Segura (Antiga linha 46)
-        String levelDisplay = "N/A";
-        if (levelService != null && profile.getProfileData().getGlobalLevel() != null) {
-            LevelData levelData = levelService.getLevel(profile.getProfileData().getGlobalLevel());
-            if (levelData != null) levelDisplay = levelData.getDisplayName();
-        }
+        String levelDisplay = LevelBadgeUtil.getBadge(profile.getProfileData().getExperience());
 
         List<String> scoreboardLines = new ArrayList<>();
         List<String> configLines = configService.getScoreboardConfig().getStringList("scoreboard.lines.waiting");

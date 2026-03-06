@@ -1,5 +1,6 @@
 package com.kaosmc.practice.feature.layout.menu.button.editor;
 
+import com.kaosmc.practice.common.InventoryUtil;
 import com.kaosmc.practice.library.menu.Button;
 import com.kaosmc.practice.feature.kit.Kit;
 import com.kaosmc.practice.common.item.ItemBuilder;
@@ -38,9 +39,13 @@ public class LayoutResetItemsButton extends Button {
     @Override
     public void clicked(Player player, ClickType clickType) {
         if (clickType != ClickType.LEFT) return;
+        if (this.kit == null) {
+            player.sendMessage(CC.translate("&cNao foi possivel resetar os itens deste layout."));
+            return;
+        }
 
         player.getInventory().clear();
-        player.getInventory().setContents(this.kit.getItems());
+        player.getInventory().setContents(InventoryUtil.cloneItemStackArray(this.kit.getItems()));
         player.updateInventory();
     }
 }

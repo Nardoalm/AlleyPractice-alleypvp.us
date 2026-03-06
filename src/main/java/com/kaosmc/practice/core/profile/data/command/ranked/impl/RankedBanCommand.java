@@ -57,6 +57,7 @@ public class RankedBanCommand extends BaseCommand {
         }
 
         profile.getProfileData().setRankedBanned(true);
+        profile.save();
 
         if (this.getBoolean(GlobalMessagesLocaleImpl.RANKED_PLAYER_BAN_BROADCAST_BOOLEAN)) {
             List<String> message = this.getStringList(GlobalMessagesLocaleImpl.RANKED_PLAYER_BAN_BROADCAST);

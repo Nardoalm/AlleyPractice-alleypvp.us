@@ -1,7 +1,6 @@
 package com.kaosmc.practice.bootstrap.listener.internal;
 
 import com.kaosmc.practice.KaosPractice;
-import com.kaosmc.practice.adapter.core.listener.CoreChatListener;
 import com.kaosmc.practice.feature.cosmetic.CosmeticListener;
 import com.kaosmc.practice.feature.match.listener.types.*;
 import com.kaosmc.practice.library.menu.MenuListener;
@@ -55,7 +54,6 @@ public class ListenerServiceImpl implements ListenerService {
                 new EmojiListener(),
                 new CombatListener(),
                 new QueueListener(),
-                new CoreChatListener(),
                 new LayoutListener(),
                 new SnapshotListener(),
                 new CraftingListener(),

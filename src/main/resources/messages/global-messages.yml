@@ -318,8 +318,8 @@ queue:
   error:
     temporarily-disabled: '&cAs filas estão temporariamente desativadas. Tente novamente mais tarde.'
   command:
-    toggled: '&aYou''ve temporarily {status} &aas filas para todos os jogadores.'
-    reloaded: '&aRecarregou all queues!'
+    toggled: '&aVocê congelou {status} &aas filas para todos os jogadores.'
+    reloaded: '&aRecarregou todas filas!'
     forced-player: '&aForçou &6{player} &ana fila &6{ranked} {kit}&a!'
   joined:
     progressing:
@@ -328,7 +328,6 @@ queue:
         format:
           - ''
           - '&6&l{kit}'
-          - ' &6&l│ &fFaixa de Ping: &6N/A'
           - '  &7&oProcurando partida...'
           - ''
       ranked:
@@ -345,7 +344,6 @@ queue:
           format:
             - ''
             - '&6&l{kit} &6&l✫Ranked'
-            - ' &6&l│ &fFaixa de Ping: &6N/A'
             - '  &c&lLIMITE DE FAIXA ATINGIDO...'
             - ''
   join-message:
@@ -404,10 +402,26 @@ snapshot:
   error:
     inventory-expired: '&cEste inventário expirou.'
 tips:
-  - '&6Dica: &fUse F5 para olhar seu oponente uma última vez antes de ser eliminado.'
-  - '&6Dica: &fFaça W-tap como se sua vida dependesse disso. Porque depende.'
-  - '&6Dica: &fMantenha a mira na altura da cabeça... a menos que você goste de acertar os pés.'
-  - '&6Dica: &fTreine o espaçamento - ou só abrace o oponente e reze.'
+  - '&6Dica: &fO Void é um lugar solitário. Tente não visitá-lo tão cedo.'
+  - '&6Dica: &fSe o combo estiver muito longo, talvez seja hora de aceitar o destino.'
+  - '&6Dica: &fStrafing não é dança, mas se você fizer certo, seu oponente vai ficar tonto.'
+  - '&6Dica: &fBlocos servem para construir, mas servem melhor ainda para travar o inimigo.'
+  - '&6Dica: &fComer uma Maçã Dourada antes da luta ajuda. Comer depois é só lanche.'
+  - '&6Dica: &fO S-tap existe. Use-o para não virar um saco de pancadas voador.'
+  - '&6Dica: &fFazer Speed Bridge é arte, cair no meio dela é entretenimento para os outros.'
+  - '&6Dica: &fSe você vir um Steve sem skin vindo em sua direção... corra.'
+  - '&6Dica: &fA física do Minecraft é opcional, mas o dano de queda é bem real.'
+  - '&6Dica: &fHitbox é vida. Aprenda onde ela termina e onde seu sofrimento começa.'
+  - '&6Dica: &fTer 20 CPS é bom, mas saber para onde está olhando é fundamental.'
+  - '&6Dica: &fPoções de força não compensam falta de habilidade, mas ajudam a disfarçar.'
+  - '&6Dica: &fSe o oponente está parado, ou ele caiu, ou você já está morto e não sabe.'
+  - '&6Dica: &fO KB (Knockback) é uma via de mão dupla. Cuidado para não ser o passageiro.'
+  - '&6Dica: &fInventário bagunçado é o primeiro passo para um respawn precoce.'
+  - '&6Dica: &fProjéteis não servem só para dar dano, servem para tirar o ritmo do inimigo.'
+  - '&6Dica: &fCorrer em linha reta é o jeito mais rápido de ser acertado por uma flecha.'
+  - '&6Dica: &fA distância de 3 blocos é sua melhor amiga. Não deixe ninguém quebrar essa amizade.'
+  - '&6Dica: &fSe você está lendo isso enquanto joga, provavelmente acabou de ser combado.'
+  - '&6Dica: &fO botão de Shift não é só para amizades falsas, use-o para não cair.'
 troll:
   player-donuted: '&aVocê aplicou donut com sucesso em &6{name-color}{player}&a!'
   player-fake-exploded: '&aVocê simulou uma explosão em &6{name-color}{player}&a!'

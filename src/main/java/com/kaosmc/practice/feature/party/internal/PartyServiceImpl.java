@@ -1,6 +1,7 @@
 package com.kaosmc.practice.feature.party.internal;
 
 import com.kaosmc.practice.KaosPractice;
+import com.kaosmc.practice.adapter.core.CoreAdapter;
 import com.kaosmc.practice.bootstrap.KaosContext;
 import com.kaosmc.practice.bootstrap.annotation.Service;
 import com.kaosmc.practice.common.SoundUtil;
@@ -15,6 +16,7 @@ import com.kaosmc.practice.core.locale.internal.impl.message.GameMessagesLocaleI
 import com.kaosmc.practice.core.locale.internal.impl.message.GlobalMessagesLocaleImpl;
 import com.kaosmc.practice.core.profile.Profile;
 import com.kaosmc.practice.core.profile.ProfileService;
+import com.kaosmc.practice.core.profile.enums.ChatChannel;
 import com.kaosmc.practice.core.profile.enums.ProfileState;
 import com.kaosmc.practice.feature.arena.Arena;
 import com.kaosmc.practice.feature.arena.ArenaService;
@@ -43,6 +45,7 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -93,6 +96,9 @@ public class PartyServiceImpl implements PartyService {
     @Override
     public void initialize(KaosContext context) {
         this.chatFormat = this.localeService.getString(SettingsLocaleImpl.SERVER_CHAT_FORMAT_PARTY);
+        if (this.chatFormat == null || this.chatFormat.trim().isEmpty()) {
+            this.chatFormat = "§7[§6Party§7] {tag_prefix}{nick} §8» §f{message}";
+        }
     }
 
     @Override
@@ -102,9 +108,21 @@ public class PartyServiceImpl implements PartyService {
 
     @Override
     public void startMatch(Kit kit, Arena arena, Party party) {
+        if (kit == null || arena == null || party == null) {
+            return;
+        }
+
         List<Player> allPartyPlayers = party.getMembers().stream()
                 .map(Bukkit::getPlayer)
+                .filter(Objects::nonNull)
                 .collect(Collectors.toList());
+
+        if (allPartyPlayers.size() < 2) {
+            if (party.getLeader() != null) {
+                party.getLeader().sendMessage(CC.translate("&cTodos os membros da party precisam estar online para iniciar o party split."));
+            }
+            return;
+        }
 
         Collections.shuffle(allPartyPlayers);
 
@@ -392,7 +410,7 @@ public class PartyServiceImpl implements PartyService {
             return;
         }
 
-        if (party.getLeader() == player) {
+        if (party.isLeader(player)) {
             player.sendMessage(CC.translate("&cVocê não pode entrar na sua própria party."));
             return;
         }
@@ -475,6 +493,31 @@ public class PartyServiceImpl implements PartyService {
         return chatFormat;
     }
 
+    @Override
+    public String formatPartyChatMessage(Player player, String message) {
+        String format = this.chatFormat;
+        if (format == null || format.trim().isEmpty()) {
+            format = "§7[§6Party§7] {tag_prefix}{nick} §8» §f{message}";
+        }
+
+        String tagPrefix = "";
+        CoreAdapter coreAdapter = KaosPractice.getInstance().getService(CoreAdapter.class);
+        if (coreAdapter != null && coreAdapter.getCore() != null && player != null) {
+            String rawTagPrefix = coreAdapter.getCore().getTagPrefix(player);
+            if (rawTagPrefix != null) {
+                tagPrefix = CC.translate(rawTagPrefix);
+            }
+        }
+
+        String nick = player != null ? player.getName() : "Unknown";
+        return CC.translate(format
+                .replace("{tag_prefix}", tagPrefix)
+                .replace("{tag-prefix}", tagPrefix)
+                .replace("{nick}", nick)
+                .replace("{player}", nick)
+                .replace("{message}", message != null ? message : ""));
+    }
+
     /**
      * Sets up the profile of a player.
      *
@@ -482,8 +525,23 @@ public class PartyServiceImpl implements PartyService {
      * @param join   Whether the player is joining a party.
      */
     private void setupProfile(Player player, boolean join) {
+        if (player == null) {
+            return;
+        }
+
         Profile profile = this.profileService.getProfile(player.getUniqueId());
+        if (profile == null) {
+            return;
+        }
         profile.setParty(join ? this.getPartyByMember(player.getUniqueId()) : null);
+
+        if (!join
+                && profile.getProfileData() != null
+                && profile.getProfileData().getSettingData() != null
+                && ChatChannel.PARTY.toString().equalsIgnoreCase(profile.getProfileData().getSettingData().getChatChannel())) {
+            profile.getProfileData().getSettingData().setChatChannel(ChatChannel.GLOBAL.toString());
+            player.sendMessage(CC.translate("&eVocê saiu da party, então seu chat voltou para o global."));
+        }
 
         if (profile.getMatch() != null) {
             return;
@@ -540,8 +598,12 @@ public class PartyServiceImpl implements PartyService {
 
     @Override
     public Party getPartyByLeader(Player player) {
+        if (player == null) {
+            return null;
+        }
         return this.parties.stream()
-                .filter(party -> party.getLeader().equals(player))
+                .filter(party -> party.getLeader() != null
+                        && party.getLeader().getUniqueId().equals(player.getUniqueId()))
                 .findFirst()
                 .orElse(null);
     }
@@ -556,11 +618,21 @@ public class PartyServiceImpl implements PartyService {
 
     @Override
     public Party getParty(Player player) {
+        if (player == null) {
+            return null;
+        }
+
         Party party = getPartyByLeader(player);
         if (party != null) {
             return party;
         }
-        return getPartyByMember(player.getUniqueId());
+
+        Party byMember = getPartyByMember(player.getUniqueId());
+        Profile profile = this.profileService.getProfile(player.getUniqueId());
+        if (profile != null && profile.getParty() != byMember) {
+            profile.setParty(byMember);
+        }
+        return byMember;
     }
 
     @Override
@@ -619,7 +691,7 @@ public class PartyServiceImpl implements PartyService {
         if (queue.isDuos()) {
             Player leader = Bukkit.getPlayer(associatedQueueProfile.getUuid());
             Party party = getPartyByLeader(leader);
-            if (party.getMembers().size() < 2) {
+            if (leader != null && party != null && party.getMembers().size() < 2) {
                 leader.sendMessage(CC.translate("&eUm membro da party saiu/desconectou. Agora você está na fila solo para duos."));
             }
         }

@@ -4,6 +4,7 @@ import com.mongodb.client.MongoCollection;
 import com.kaosmc.practice.KaosPractice;
 import com.kaosmc.practice.bootstrap.KaosContext;
 import com.kaosmc.practice.bootstrap.annotation.Service;
+import com.kaosmc.practice.common.InventoryUtil;
 import com.kaosmc.practice.common.logger.Logger;
 import com.kaosmc.practice.common.text.CC;
 import com.kaosmc.practice.core.database.MongoService;
@@ -102,13 +103,35 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public void resetLayoutForKit(Kit kit) {
+        if (kit == null || kit.getName() == null) {
+            return;
+        }
+
         //TODO: in DOCUMENT, not only loaded profiles
         this.profiles.values().forEach(profile -> {
+            if (profile == null
+                    || profile.getProfileData() == null
+                    || profile.getProfileData().getLayoutData() == null
+                    || profile.getProfileData().getLayoutData().getLayouts() == null) {
+                return;
+            }
+
             List<LayoutData> layouts = profile.getProfileData().getLayoutData().getLayouts().get(kit.getName());
-            if (layouts != null) {
-                layouts.forEach(layout -> layout.setItems(kit.getItems()));
+            if (layouts == null || layouts.isEmpty()) {
+                profile.getProfileData().getLayoutData().addLayout(
+                        kit.getName(),
+                        "Layout1",
+                        "Layout 1",
+                        InventoryUtil.cloneItemStackArray(kit.getItems())
+                );
+            } else {
+                layouts.stream()
+                        .filter(Objects::nonNull)
+                        .forEach(layout -> layout.setItems(InventoryUtil.cloneItemStackArray(kit.getItems())));
                 profile.getProfileData().getLayoutData().getLayouts().put(kit.getName(), layouts);
             }
+
+            profile.save();
         });
 
         Bukkit.broadcastMessage(CC.translate("&c&lRESET DE LAYOUT: &cO layout do kit " + kit.getName() + " foi resetado para todos os jogadores."));

@@ -136,4 +136,13 @@ public interface PartyService extends Service {
      * @return The chat format
      */
     String getChatFormat();
+
+    /**
+     * Formats a party chat message using the configured format.
+     *
+     * @param player  The player sending the message.
+     * @param message The raw message content.
+     * @return The formatted party chat message.
+     */
+    String formatPartyChatMessage(Player player, String message);
 }

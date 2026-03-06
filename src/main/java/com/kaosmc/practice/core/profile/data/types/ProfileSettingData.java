@@ -20,7 +20,6 @@ public class ProfileSettingData {
     /**
      * public class ProfileSettingData {
      * private final EnumMap<ProfileSetting, ToggleState> settings = new EnumMap<>(ProfileSetting.class);
-     * private ChatChannel chatChannel = ChatChannel.GLOBAL;
      * private WorldTime worldTime = WorldTime.DEFAULT;
      * <p>
      * public ProfileSettingData() {

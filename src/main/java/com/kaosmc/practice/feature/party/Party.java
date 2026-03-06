@@ -65,7 +65,9 @@ public class Party {
      * @return True if the specified player is the leader of the party, false otherwise.
      */
     public boolean isLeader(Player player) {
-        return leader == player;
+        return player != null
+                && this.leader != null
+                && this.leader.getUniqueId().equals(player.getUniqueId());
     }
 
     /**

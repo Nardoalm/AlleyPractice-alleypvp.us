@@ -2,8 +2,10 @@ package com.kaosmc.practice.feature.party.menu.event.impl.button;
 
 import com.kaosmc.practice.KaosPractice;
 import com.kaosmc.practice.common.item.ItemBuilder;
+import com.kaosmc.practice.common.text.CC;
 import com.kaosmc.practice.core.locale.LocaleService;
 import com.kaosmc.practice.core.locale.internal.impl.message.GlobalMessagesLocaleImpl;
+import com.kaosmc.practice.core.profile.Profile;
 import com.kaosmc.practice.core.profile.ProfileService;
 import com.kaosmc.practice.feature.arena.Arena;
 import com.kaosmc.practice.feature.kit.Kit;
@@ -45,10 +47,18 @@ public class PartyEventSplitArenaSelectorButton extends Button {
     public void clicked(Player player, ClickType clickType) {
         if (clickType != ClickType.LEFT) return;
 
-        Party party = KaosPractice.getInstance().getService(ProfileService.class).getProfile(player.getUniqueId()).getParty();
+        ProfileService profileService = KaosPractice.getInstance().getService(ProfileService.class);
+        Profile profile = profileService != null ? profileService.getProfile(player.getUniqueId()) : null;
+        Party party = profile != null ? profile.getParty() : null;
         if (party == null) {
             player.closeInventory();
             player.sendMessage(KaosPractice.getInstance().getService(LocaleService.class).getString(GlobalMessagesLocaleImpl.ERROR_YOU_NOT_IN_PARTY));
+            return;
+        }
+
+        if (this.arena == null || !this.arena.isEnabled()) {
+            player.closeInventory();
+            player.sendMessage(CC.translate("&cEssa arena está indisponível agora."));
             return;
         }
 

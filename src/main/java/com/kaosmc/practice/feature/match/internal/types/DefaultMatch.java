@@ -10,6 +10,7 @@ import com.kaosmc.practice.common.elo.OldEloResult;
 import com.kaosmc.practice.common.logger.Logger;
 import com.kaosmc.practice.common.reflect.ReflectionService;
 import com.kaosmc.practice.common.reflect.internal.types.TitleReflectionServiceImpl;
+import com.kaosmc.practice.common.text.CC;
 import com.kaosmc.practice.core.locale.LocaleService;
 import com.kaosmc.practice.core.locale.internal.impl.VisualsLocaleImpl;
 import com.kaosmc.practice.core.locale.internal.impl.message.GameMessagesLocaleImpl;
@@ -28,6 +29,7 @@ import com.kaosmc.practice.feature.kit.setting.types.mode.KitSettingRespawnTimer
 import com.kaosmc.practice.feature.layout.data.LayoutData;
 import com.kaosmc.practice.feature.match.Match;
 import com.kaosmc.practice.feature.match.MatchState;
+import com.kaosmc.practice.feature.match.internal.MatchExperienceCalculator;
 import com.kaosmc.practice.feature.match.model.BaseRaiderRole;
 import com.kaosmc.practice.feature.match.model.GameParticipant;
 import com.kaosmc.practice.feature.match.model.MatchGamePlayerData;
@@ -185,10 +187,30 @@ public class DefaultMatch extends Match {
         }
 
         handleMatchData(winner, loser); // 9 wins, increases to 10, as the player won
+        rewardExperience(winner);
 
         if (!this.isRanked()) {
             this.sendProgressToWinner(winner.getLeader().getTeamPlayer());
         }
+    }
+
+    private void rewardExperience(GameParticipant<MatchGamePlayer> winner) {
+        Player winnerPlayer = winner != null ? winner.getLeader().getTeamPlayer() : null;
+        if (winnerPlayer == null) {
+            return;
+        }
+
+        Profile winnerProfile = KaosPractice.getInstance().getService(ProfileService.class).getProfile(winnerPlayer.getUniqueId());
+        if (winnerProfile == null || winnerProfile.getProfileData() == null) {
+            return;
+        }
+
+        int streak = Math.max(0, winnerProfile.getProfileData().getWinStreak());
+        int gainedXp = MatchExperienceCalculator.calculateWinXp(this.isRanked(), streak);
+
+        winnerProfile.getProfileData().addExperience(gainedXp);
+        winnerProfile.save();
+        winnerPlayer.sendMessage(CC.translate("&a+" + gainedXp + " XP &7(por vencer a partida, streak: &f" + streak + "&7)"));
     }
 
     /**
@@ -249,6 +271,7 @@ public class DefaultMatch extends Match {
                 .computeIfAbsent(kitName, key -> new ProfileUnrankedKitData());
         winnerKitData.incrementWins();
         winnerProfile.getProfileData().incrementUnrankedWins();
+        winnerProfile.getProfileData().incrementWinStreak();
         winnerProfile.getProfileData().determineTitles();
 
         Profile loserProfile = profileService.getProfile(loser.getLeader().getUuid());
@@ -261,6 +284,7 @@ public class DefaultMatch extends Match {
                 .computeIfAbsent(kitName, key -> new ProfileUnrankedKitData());
         loserKitData.incrementLosses();
         loserProfile.getProfileData().incrementUnrankedLosses();
+        loserProfile.getProfileData().resetWinStreak();
     }
 
     /**
@@ -496,6 +520,7 @@ public class DefaultMatch extends Match {
         winnerKitData.setElo(elo);
         winnerKitData.incrementWins();
         winnerProfile.getProfileData().incrementRankedWins();
+        winnerProfile.getProfileData().incrementWinStreak();
         winnerProfile.getProfileData().updateElo(winnerProfile);
     }
 
@@ -522,6 +547,7 @@ public class DefaultMatch extends Match {
         loserKitData.setElo(elo);
         loserKitData.incrementLosses();
         loserProfile.getProfileData().incrementRankedLosses();
+        loserProfile.getProfileData().resetWinStreak();
         loserProfile.getProfileData().updateElo(loserProfile);
     }
 
@@ -616,18 +642,27 @@ public class DefaultMatch extends Match {
         data.setRole(role);
 
         ProfileService profileService = KaosPractice.getInstance().getService(ProfileService.class);
-        Profile profile = profileService.getProfile(player.getUniqueId());
-        LayoutData layout = profile.getProfileData().getLayoutData().getLayouts().get(kitToGive.getName()).get(0);
+        Profile profile = profileService != null ? profileService.getProfile(player.getUniqueId()) : null;
+        LayoutData layout = null;
+        if (profile != null
+                && profile.getProfileData() != null
+                && profile.getProfileData().getLayoutData() != null
+                && profile.getProfileData().getLayoutData().getLayouts() != null) {
+            List<LayoutData> layouts = profile.getProfileData().getLayoutData().getLayouts().get(kitToGive.getName());
+            if (layouts != null && !layouts.isEmpty()) {
+                layout = layouts.stream().filter(java.util.Objects::nonNull).findFirst().orElse(null);
+            }
+        }
 
         //TODO: after implementing multiple layouts, we need to give the books here, if multiple layouts are present in profile.
 
-        if (layout != null) {
-            player.getInventory().setContents(layout.getItems());
+        if (layout != null && layout.getItems() != null) {
+            player.getInventory().setContents(InventoryUtil.cloneItemStackArray(layout.getItems()));
         } else {
-            player.getInventory().setContents(kitToGive.getItems());
+            player.getInventory().setContents(InventoryUtil.cloneItemStackArray(kitToGive.getItems()));
         }
 
-        player.getInventory().setArmorContents(kitToGive.getArmor());
+        player.getInventory().setArmorContents(InventoryUtil.cloneItemStackArray(kitToGive.getArmor()));
         player.updateInventory();
     }
 }

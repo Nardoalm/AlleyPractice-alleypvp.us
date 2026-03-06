@@ -62,7 +62,10 @@ public enum SettingsLocaleImpl implements LocaleEntry {
     SERVER_CHAT_FORMAT_TAG_APPEARANCE_FORMAT("settings.yml", "server.chat-format.tag-appearance.format", " {tag-color}{tag-prefix}"),
     SERVER_CHAT_FORMAT_SEPARATOR("settings.yml", "server.chat-format.global.separator", "&7: &f"),
 
-    SERVER_CHAT_FORMAT_PARTY("settings.yml", "server.chat-format.party.format", "&7[&6Party&7] &6{player}&7: &f{message}"),
+    SERVER_CHAT_FORMAT_PARTY("settings.yml", "server.chat-format.party.format", "§7[§6Party§7] {tag_prefix}{nick} §8» §f{message}"),
+
+    VISUALS_NAMETAG_LOBBY_FORMAT("settings.yml", "visuals.nametag.lobby.format", "{tag_prefix}"),
+    VISUALS_NAMETAG_MATCH_FORMAT("settings.yml", "visuals.nametag.match.format", "{tag_color}"),
 
     SERVER_ESSENTIAL_EMOJI_FEATURE_BOOLEAN("settings.yml", "server.essentials.emoji-feature", true),
     SERVER_SPAWN_LOCATION("settings.yml", "server.locations.spawn", "world:0.5:73.0:0.5:90.0:0.0"),

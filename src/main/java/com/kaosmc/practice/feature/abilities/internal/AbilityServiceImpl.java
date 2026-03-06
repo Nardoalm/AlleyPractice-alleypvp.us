@@ -18,6 +18,7 @@ import org.bukkit.inventory.ItemStack;
 import org.reflections.Reflections;
 
 import java.lang.reflect.Modifier;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -79,16 +80,27 @@ public class AbilityServiceImpl implements AbilityService {
 
     @Override
     public String getDisplayName(String abilityKey) {
-        return configService.getAbilityConfig().getString(abilityKey + ".ICON.DISPLAYNAME");
+        String displayName = configService.getAbilityConfig().getString(abilityKey + ".ICON.DISPLAYNAME");
+        return displayName != null ? displayName : abilityKey;
     }
 
     @Override
     public List<String> getDescription(String abilityKey) {
-        return configService.getAbilityConfig().getStringList(abilityKey + ".ICON.DESCRIPTION");
+        List<String> description = configService.getAbilityConfig().getStringList(abilityKey + ".ICON.DESCRIPTION");
+        return description != null ? description : Collections.emptyList();
     }
 
     public Material getMaterial(String ability) {
-        return Material.valueOf(configService.getAbilityConfig().getString(ability + ".ICON.MATERIAL"));
+        String materialName = configService.getAbilityConfig().getString(ability + ".ICON.MATERIAL");
+        if (materialName == null) {
+            return Material.PAPER;
+        }
+
+        try {
+            return Material.valueOf(materialName.toUpperCase());
+        } catch (IllegalArgumentException ignored) {
+            return Material.PAPER;
+        }
     }
 
     public int getData(String ability) {
@@ -101,6 +113,9 @@ public class AbilityServiceImpl implements AbilityService {
 
     @Override
     public Set<String> getAbilityKeys() {
+        if (configService.getAbilityConfig().getConfigurationSection("") == null) {
+            return Collections.emptySet();
+        }
         return configService.getAbilityConfig().getConfigurationSection("").getKeys(false);
     }
 
@@ -124,6 +139,10 @@ public class AbilityServiceImpl implements AbilityService {
 
     @Override
     public void sendPlayerMessage(Player player, String abilityKey) {
+        if (player == null) {
+            return;
+        }
+
         String displayName = getDisplayName(abilityKey);
         String cooldown = String.valueOf(getCooldown(abilityKey));
 
@@ -135,6 +154,10 @@ public class AbilityServiceImpl implements AbilityService {
 
     @Override
     public void sendTargetMessage(Player target, Player player, String abilityKey) {
+        if (target == null || player == null) {
+            return;
+        }
+
         String displayName = getDisplayName(abilityKey);
 
         configService.getAbilityConfig().getStringList(abilityKey + ".MESSAGE.TARGET").forEach(
@@ -146,15 +169,33 @@ public class AbilityServiceImpl implements AbilityService {
 
     @Override
     public void sendCooldownMessage(Player player, String abilityName, String cooldown) {
-        CC.message(player, configService.getAbilityConfig().getString("STILL_ON_COOLDOWN")
-                .replace("%ABILITY%", abilityName)
-                .replace("%COOLDOWN%", cooldown));
+        if (player == null) {
+            return;
+        }
+
+        String message = configService.getAbilityConfig().getString("STILL_ON_COOLDOWN");
+        if (message == null) {
+            message = "&c%ABILITY% em cooldown por %COOLDOWN%.";
+        }
+
+        CC.message(player, message
+                .replace("%ABILITY%", abilityName != null ? abilityName : "Ability")
+                .replace("%COOLDOWN%", cooldown != null ? cooldown : "0s"));
     }
 
     @Override
     public void sendCooldownExpiredMessage(Player player, String abilityName, String ability) {
+        if (player == null) {
+            return;
+        }
+
+        String message = configService.getAbilityConfig().getString("COOLDOWN_EXPIRED");
+        if (message == null) {
+            message = "&a%ABILITY% pronto para uso novamente.";
+        }
+
         TaskUtil.runLaterAsync(() ->
-                CC.message(player, configService.getAbilityConfig().getString("COOLDOWN_EXPIRED")
-                        .replace("%ABILITY%", abilityName)), getCooldown(ability) * 20L);
+                CC.message(player, message
+                        .replace("%ABILITY%", abilityName != null ? abilityName : "Ability")), getCooldown(ability) * 20L);
     }
 }

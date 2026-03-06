@@ -1,9 +1,11 @@
 package com.kaosmc.practice.feature.layout.listener;
 
 import com.kaosmc.practice.KaosPractice;
-import com.kaosmc.practice.feature.layout.data.LayoutData;
-import com.kaosmc.practice.core.profile.ProfileService;
+import com.kaosmc.practice.common.InventoryUtil;
 import com.kaosmc.practice.common.text.CC;
+import com.kaosmc.practice.core.profile.Profile;
+import com.kaosmc.practice.core.profile.ProfileService;
+import com.kaosmc.practice.feature.layout.data.LayoutData;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -29,14 +31,35 @@ public class LayoutListener implements Listener {
         if (!item.hasItemMeta() || !item.getItemMeta().hasDisplayName()) return;
 
         String clickedName = ChatColor.stripColor(item.getItemMeta().getDisplayName());
+        if (clickedName == null || clickedName.trim().isEmpty()) {
+            return;
+        }
 
-        for (List<LayoutData> layoutList : KaosPractice.getInstance().getService(ProfileService.class)
-                .getProfile(player.getUniqueId())
-                .getProfileData().getLayoutData().getLayouts().values()) {
+        ProfileService profileService = KaosPractice.getInstance().getService(ProfileService.class);
+        if (profileService == null) {
+            return;
+        }
+        Profile profile = profileService.getProfile(player.getUniqueId());
+        if (profile == null
+                || profile.getProfileData() == null
+                || profile.getProfileData().getLayoutData() == null
+                || profile.getProfileData().getLayoutData().getLayouts() == null) {
+            return;
+        }
+
+        for (List<LayoutData> layoutList : profile.getProfileData().getLayoutData().getLayouts().values()) {
+            if (layoutList == null || layoutList.isEmpty()) {
+                continue;
+            }
 
             for (LayoutData layout : layoutList) {
-                if (ChatColor.stripColor(layout.getDisplayName()).equalsIgnoreCase(clickedName)) {
-                    player.getInventory().setContents(layout.getItems());
+                if (layout == null || layout.getDisplayName() == null) {
+                    continue;
+                }
+
+                String layoutName = ChatColor.stripColor(layout.getDisplayName());
+                if (layoutName != null && layoutName.equalsIgnoreCase(clickedName)) {
+                    player.getInventory().setContents(InventoryUtil.cloneItemStackArray(layout.getItems()));
                     player.sendMessage(CC.translate("&aYou have selected the layout &6" + layout.getDisplayName() + "&a."));
                     event.setCancelled(true);
                     return;
