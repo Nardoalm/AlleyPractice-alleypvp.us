@@ -1,6 +1,7 @@
 package com.kaosmc.practice.feature.layout.menu.button;
 
 import com.kaosmc.practice.KaosPractice;
+import com.kaosmc.practice.common.InventoryUtil;
 import com.kaosmc.practice.common.constants.MessageConstant;
 import com.kaosmc.practice.common.item.ItemBuilder;
 import com.kaosmc.practice.common.text.CC;
@@ -77,7 +78,7 @@ public class LayoutButton extends Button {
                 return;
             }
 
-            LayoutData layout = this.getFirstLayout(profile, this.kit.getName());
+            LayoutData layout = this.getOrCreateFirstLayout(profile, this.kit);
             if (layout == null) {
                 player.sendMessage(CC.translate("&cNenhum layout encontrado para este kit."));
                 return;
@@ -88,18 +89,25 @@ public class LayoutButton extends Button {
         }
     }
 
-    private LayoutData getFirstLayout(Profile profile, String kitName) {
+    private LayoutData getOrCreateFirstLayout(Profile profile, Kit kit) {
         if (profile == null
                 || profile.getProfileData() == null
                 || profile.getProfileData().getLayoutData() == null
                 || profile.getProfileData().getLayoutData().getLayouts() == null
-                || kitName == null) {
+                || kit == null
+                || kit.getName() == null) {
             return null;
         }
 
-        List<LayoutData> layouts = profile.getProfileData().getLayoutData().getLayouts().get(kitName);
+        List<LayoutData> layouts = profile.getProfileData().getLayoutData().getLayouts().get(kit.getName());
         if (layouts == null || layouts.isEmpty()) {
-            return null;
+            profile.getProfileData().getLayoutData().addLayout(
+                    kit.getName(),
+                    "Layout1",
+                    "Layout 1",
+                    InventoryUtil.getEditableKitItems(kit)
+            );
+            layouts = profile.getProfileData().getLayoutData().getLayouts().get(kit.getName());
         }
 
         return layouts.stream().filter(Objects::nonNull).findFirst().orElse(null);

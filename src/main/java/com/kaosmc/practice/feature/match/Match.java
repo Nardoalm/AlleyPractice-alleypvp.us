@@ -11,6 +11,7 @@ import com.kaosmc.practice.common.SoundUtil;
 import com.kaosmc.practice.common.logger.Logger;
 import com.kaosmc.practice.common.reflect.ReflectionService;
 import com.kaosmc.practice.common.reflect.internal.types.ActionBarReflectionServiceImpl;
+import com.kaosmc.practice.common.reflect.internal.types.DeathReflectionServiceImpl;
 import com.kaosmc.practice.common.reflect.internal.types.TitleReflectionServiceImpl;
 import com.kaosmc.practice.common.text.CC;
 import com.kaosmc.practice.common.time.TimeUtil;
@@ -34,6 +35,7 @@ import com.kaosmc.practice.feature.cosmetic.model.CosmeticType;
 import com.kaosmc.practice.feature.hotbar.HotbarService;
 import com.kaosmc.practice.feature.kit.Kit;
 import com.kaosmc.practice.feature.kit.setting.types.mechanic.KitSettingCampProtectionImpl;
+import com.kaosmc.practice.feature.kit.setting.types.mechanic.KitSettingNoDamageImpl;
 import com.kaosmc.practice.feature.kit.setting.types.mode.*;
 import com.kaosmc.practice.feature.kit.setting.types.visual.KitSettingHealthBar;
 import com.kaosmc.practice.feature.layout.LayoutService;
@@ -362,7 +364,26 @@ public abstract class Match {
 
         gamePlayer.setDead(false);
         PlayerUtil.reset(player, true, true);
+        this.configureDamageTicks(player);
         this.giveLoadout(player, this.kit);
+    }
+
+    private void configureDamageTicks(Player player) {
+        if (player == null) {
+            return;
+        }
+
+        if (this.kit.isSettingEnabled(KitSettingBoxing.class)
+                || this.kit.isSettingEnabled(KitSettingSumo.class)
+                || this.kit.isSettingEnabled(KitSettingSpleef.class)
+                || this.kit.isSettingEnabled(KitSettingNoDamageImpl.class)) {
+            player.setMaximumNoDamageTicks(0);
+            player.setNoDamageTicks(0);
+            return;
+        }
+
+        player.setMaximumNoDamageTicks(20);
+        player.setNoDamageTicks(0);
     }
 
     /**
@@ -390,7 +411,7 @@ public abstract class Match {
                 player.getInventory().setContents(itemsToGive);
             } else if (kitLayouts.size() == 1) {
                 LayoutData singleLayout = kitLayouts.get(0);
-                if (singleLayout != null && singleLayout.getItems() != null && singleLayout.getItems().length > 0) {
+                if (singleLayout != null && InventoryUtil.hasAnyItem(singleLayout.getItems())) {
                     itemsToGive = InventoryUtil.cloneItemStackArray(singleLayout.getItems());
                 }
                 player.getInventory().setContents(itemsToGive);
@@ -455,7 +476,11 @@ public abstract class Match {
             this.handleRoundEnd();
 
             if (this.canEndMatch()) {
-                if (killer != null) {
+                if (player != null && player.isOnline() && !gamePlayer.isDisconnected()) {
+                    this.playFinalDeathAnimation(player);
+                }
+
+                if (killer != null && player != null && player.isOnline()) {
                     this.handleDeathEffects(player, killer);
                 }
 
@@ -685,6 +710,36 @@ public abstract class Match {
 
         this.applyCosmetic(CosmeticType.KILL_EFFECT, selectedKillEffectName, player);
         this.applyCosmetic(CosmeticType.SOUND_EFFECT, selectedSoundEffectName, killer);
+    }
+
+    private void playFinalDeathAnimation(Player victim) {
+        ReflectionService reflectionService = this.plugin.getService(ReflectionService.class);
+        if (reflectionService == null || victim == null) {
+            return;
+        }
+
+        DeathReflectionServiceImpl deathReflection = reflectionService.getReflectionService(DeathReflectionServiceImpl.class);
+        if (deathReflection == null) {
+            return;
+        }
+
+        Set<Player> viewers = new LinkedHashSet<>();
+        this.getParticipants().forEach(participant -> participant.getAllPlayers().forEach(matchGamePlayer -> {
+            Player viewer = this.plugin.getServer().getPlayer(matchGamePlayer.getUuid());
+            if (viewer != null && viewer.isOnline() && !viewer.getUniqueId().equals(victim.getUniqueId())) {
+                viewers.add(viewer);
+            }
+        }));
+        this.getSpectators().stream()
+                .map(uuid -> this.plugin.getServer().getPlayer(uuid))
+                .filter(Objects::nonNull)
+                .filter(Player::isOnline)
+                .filter(viewer -> !viewer.getUniqueId().equals(victim.getUniqueId()))
+                .forEach(viewers::add);
+
+        if (!viewers.isEmpty()) {
+            deathReflection.animateDeath(victim, viewers);
+        }
     }
 
     /**

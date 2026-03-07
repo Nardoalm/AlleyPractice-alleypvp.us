@@ -133,7 +133,11 @@ public class MatchServiceImpl implements MatchService {
             match = new DefaultMatch(matchingQueue, kit, arena, isRanked, participantA, participantB);
         }
 
-        match.setTeamMatch(teamMatch);
+        boolean actualTeamMatch = participantA != null
+                && participantB != null
+                && (participantA.getPlayerSize() > 1 || participantB.getPlayerSize() > 1);
+
+        match.setTeamMatch(actualTeamMatch);
         match.setAffectStatistics(affectStatistics);
 
         this.addMatch(match);

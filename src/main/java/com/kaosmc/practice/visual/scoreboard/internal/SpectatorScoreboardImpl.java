@@ -103,12 +103,12 @@ public class SpectatorScoreboardImpl implements Scoreboard {
 
         if (!participant.getPlayers().isEmpty()) {
             MatchGamePlayer gamePlayer = participant.getPlayers().get(0);
-            return PlayerDisplayUtil.resolveDisplayName(gamePlayer.getTeamPlayer(), gamePlayer.getUsername());
+            return PlayerDisplayUtil.resolveCurrentNick(gamePlayer.getTeamPlayer(), gamePlayer.getUsername());
         }
 
         if (!participant.getAllPlayers().isEmpty()) {
             MatchGamePlayer gamePlayer = participant.getAllPlayers().get(0);
-            String displayName = PlayerDisplayUtil.resolveDisplayName(gamePlayer.getTeamPlayer(), gamePlayer.getUsername());
+            String displayName = PlayerDisplayUtil.resolveCurrentNick(gamePlayer.getTeamPlayer(), gamePlayer.getUsername());
             return "&7" + displayName + " &c(DC)";
         }
 

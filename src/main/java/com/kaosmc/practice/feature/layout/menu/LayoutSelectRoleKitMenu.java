@@ -1,6 +1,7 @@
 package com.kaosmc.practice.feature.layout.menu;
 
 import com.kaosmc.practice.KaosPractice;
+import com.kaosmc.practice.common.InventoryUtil;
 import com.kaosmc.practice.library.menu.Button;
 import com.kaosmc.practice.library.menu.Menu;
 import com.kaosmc.practice.feature.kit.Kit;
@@ -112,7 +113,7 @@ public class LayoutSelectRoleKitMenu extends Menu {
 
             List<LayoutData> layouts = profile.getProfileData().getLayoutData().getLayouts().get(this.kit.getName());
             if (layouts == null || layouts.isEmpty()) {
-                profile.getProfileData().getLayoutData().addLayout(this.kit.getName(), "Layout1", "Layout 1", this.kit.getItems());
+                profile.getProfileData().getLayoutData().addLayout(this.kit.getName(), "Layout1", "Layout 1", InventoryUtil.getEditableKitItems(this.kit));
                 layouts = profile.getProfileData().getLayoutData().getLayouts().get(this.kit.getName());
             }
 

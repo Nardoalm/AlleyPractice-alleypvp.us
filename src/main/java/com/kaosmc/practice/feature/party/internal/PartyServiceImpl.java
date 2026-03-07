@@ -35,6 +35,7 @@ import com.kaosmc.practice.feature.party.PartyRequest;
 import com.kaosmc.practice.feature.party.PartyService;
 import com.kaosmc.practice.feature.queue.Queue;
 import com.kaosmc.practice.feature.queue.QueueProfile;
+import com.kaosmc.practice.feature.queue.QueueType;
 import com.kaosmc.practice.feature.visibility.VisibilityService;
 import lombok.Getter;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -526,6 +527,9 @@ public class PartyServiceImpl implements PartyService {
             return;
         }
         profile.setParty(join ? this.getPartyByMember(player.getUniqueId()) : null);
+        if (!join) {
+            profile.setQueueType(QueueType.UNRANKED);
+        }
 
         if (!join
                 && profile.getProfileData() != null
@@ -677,17 +681,22 @@ public class PartyServiceImpl implements PartyService {
         QueueProfile associatedQueueProfile = profile.getQueueProfile();
         Queue queue = associatedQueueProfile.getQueue();
         if (queue == null) {
+            profile.setQueueProfile(null);
             return;
         }
 
-        if (queue.isDuos()) {
-            Player leader = Bukkit.getPlayer(associatedQueueProfile.getUuid());
-            Party party = getPartyByLeader(leader);
-            if (leader != null && party != null && party.getMembers().size() < 2) {
-                leader.sendMessage(CC.translate("&eUm membro da party saiu/desconectou. Agora você está na fila solo para duos."));
-            }
-        }
+        Player leader = Bukkit.getPlayer(associatedQueueProfile.getUuid());
+        Party party = getPartyByLeader(leader);
+        boolean leaderWillBecomeSolo = queue.isDuos()
+                && leader != null
+                && party != null
+                && !leader.getUniqueId().equals(player.getUniqueId())
+                && party.getMembers().size() == 2;
 
-        profile.setQueueProfile(null);
+        queue.removePlayer(associatedQueueProfile);
+
+        if (leaderWillBecomeSolo && leader.isOnline()) {
+            leader.sendMessage(CC.translate("&eUm membro da party saiu/desconectou. Sua fila de duos foi cancelada."));
+        }
     }
 }

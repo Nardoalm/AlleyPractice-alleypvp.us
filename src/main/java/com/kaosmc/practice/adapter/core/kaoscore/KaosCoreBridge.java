@@ -28,5 +28,7 @@ public interface KaosCoreBridge extends Service {
 
     int getTagPosition(Player player);
 
+    String getClanTag(Player player);
+
     void applyClanMatchResult(Player winner, Player loser, boolean ranked, int winnerEloDelta, int loserEloDelta);
 }

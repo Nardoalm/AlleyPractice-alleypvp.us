@@ -145,7 +145,7 @@ public class ProfileSettingData {
     public String getPingRangeDisplay() {
         int normalized = normalizePingRange(this.pingRange);
         if (normalized <= 0) {
-            return "ANY";
+            return "§cOFF";
         }
         return normalized + "ms";
     }

@@ -580,7 +580,7 @@ public class MongoUtility {
                                     }
                                 }
 
-                                if (items == null || items.length == 0) {
+                                if (!InventoryUtil.hasAnyItem(items)) {
                                     items = InventoryUtil.cloneItemStackArray(fallbackItems);
                                 }
 
@@ -626,11 +626,11 @@ public class MongoUtility {
                 .findFirst()
                 .orElse(null);
 
-        if (matchedKit == null || matchedKit.getItems() == null) {
+        if (matchedKit == null) {
             return new ItemStack[0];
         }
 
-        return InventoryUtil.cloneItemStackArray(matchedKit.getItems());
+        return InventoryUtil.getEditableKitItems(matchedKit);
     }
 
     /**

@@ -2,6 +2,7 @@ package com.kaosmc.practice.feature.duel.internal;
 
 import com.kaosmc.practice.KaosPractice;
 import com.kaosmc.practice.bootstrap.annotation.Service;
+import com.kaosmc.practice.common.PlayerDisplayUtil;
 import com.kaosmc.practice.common.text.CC;
 import com.kaosmc.practice.common.text.ClickableUtil;
 import com.kaosmc.practice.core.locale.LocaleService;
@@ -169,8 +170,14 @@ public class DuelRequestServiceImpl implements DuelRequestService {
                 return;
             }
 
-            MatchGamePlayer leaderA = new MatchGamePlayer(duelRequest.getSender().getUniqueId(), duelRequest.getSender().getName());
-            MatchGamePlayer leaderB = new MatchGamePlayer(duelRequest.getTarget().getUniqueId(), duelRequest.getTarget().getName());
+            MatchGamePlayer leaderA = new MatchGamePlayer(
+                    duelRequest.getSender().getUniqueId(),
+                    PlayerDisplayUtil.resolveCurrentNick(duelRequest.getSender(), duelRequest.getSender().getName())
+            );
+            MatchGamePlayer leaderB = new MatchGamePlayer(
+                    duelRequest.getTarget().getUniqueId(),
+                    PlayerDisplayUtil.resolveCurrentNick(duelRequest.getTarget(), duelRequest.getTarget().getName())
+            );
 
             GameParticipant<MatchGamePlayer> participantA = new TeamGameParticipant<>(leaderA);
             GameParticipant<MatchGamePlayer> participantB = new TeamGameParticipant<>(leaderB);
@@ -180,7 +187,7 @@ public class DuelRequestServiceImpl implements DuelRequestService {
                 if (!memberUUID.equals(leaderAUUID)) {
                     Player memberPlayer = Bukkit.getPlayer(memberUUID);
                     if (memberPlayer != null) {
-                        participantA.addPlayer(new MatchGamePlayer(memberPlayer.getUniqueId(), memberPlayer.getName()));
+                        participantA.addPlayer(new MatchGamePlayer(memberPlayer.getUniqueId(), PlayerDisplayUtil.resolveCurrentNick(memberPlayer, memberPlayer.getName())));
                     }
                 }
             }
@@ -190,12 +197,12 @@ public class DuelRequestServiceImpl implements DuelRequestService {
                 if (!memberUUID.equals(leaderBUUID)) {
                     Player memberPlayer = Bukkit.getPlayer(memberUUID);
                     if (memberPlayer != null) {
-                        participantB.addPlayer(new MatchGamePlayer(memberPlayer.getUniqueId(), memberPlayer.getName()));
+                        participantB.addPlayer(new MatchGamePlayer(memberPlayer.getUniqueId(), PlayerDisplayUtil.resolveCurrentNick(memberPlayer, memberPlayer.getName())));
                     }
                 }
             }
 
-            boolean isTeamMatch = (!participantA.getPlayers().isEmpty() || !participantB.getPlayers().isEmpty());
+            boolean isTeamMatch = participantA.getPlayerSize() > 1 || participantB.getPlayerSize() > 1;
             Arena selectedArena = this.arenaService.selectArenaWithPotentialTemporaryCopy(duelRequest.getArena());
             if (duelRequest.getKit() == null || selectedArena == null) {
                 duelRequest.getSender().sendMessage(this.localeService.getString(GlobalMessagesLocaleImpl.ERROR_DUEL_REQUESTS_NO_ARENA));
@@ -209,8 +216,14 @@ public class DuelRequestServiceImpl implements DuelRequestService {
             );
 
         } else {
-            MatchGamePlayer playerA = new MatchGamePlayer(duelRequest.getSender().getUniqueId(), duelRequest.getSender().getName());
-            MatchGamePlayer playerB = new MatchGamePlayer(duelRequest.getTarget().getUniqueId(), duelRequest.getTarget().getName());
+            MatchGamePlayer playerA = new MatchGamePlayer(
+                    duelRequest.getSender().getUniqueId(),
+                    PlayerDisplayUtil.resolveCurrentNick(duelRequest.getSender(), duelRequest.getSender().getName())
+            );
+            MatchGamePlayer playerB = new MatchGamePlayer(
+                    duelRequest.getTarget().getUniqueId(),
+                    PlayerDisplayUtil.resolveCurrentNick(duelRequest.getTarget(), duelRequest.getTarget().getName())
+            );
 
             GameParticipant<MatchGamePlayer> participantA = new GameParticipant<>(playerA);
             GameParticipant<MatchGamePlayer> participantB = new GameParticipant<>(playerB);

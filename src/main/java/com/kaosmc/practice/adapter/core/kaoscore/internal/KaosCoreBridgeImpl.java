@@ -134,6 +134,23 @@ public class KaosCoreBridgeImpl implements KaosCoreBridge {
     }
 
     @Override
+    public String getClanTag(Player player) {
+        KaosCoreAPI resolvedApi = this.resolveApi();
+        Clan clan = safeGetClan(resolvedApi, player);
+        if (clan == null) {
+            return "";
+        }
+
+        String formattedTag = clan.getFormattedTag();
+        if (isUsable(formattedTag)) {
+            return formattedTag.trim();
+        }
+
+        String tag = clan.getTag();
+        return isUsable(tag) ? tag.trim() : "";
+    }
+
+    @Override
     public void applyClanMatchResult(Player winner, Player loser, boolean ranked, int winnerEloDelta, int loserEloDelta) {
         KaosCoreAPI resolvedApi = this.resolveApi();
         if (resolvedApi == null) {

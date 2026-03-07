@@ -1,15 +1,12 @@
 package com.kaosmc.practice.core.profile.data.command.ranked.impl;
 
-import com.kaosmc.practice.common.PlayerUtil;
 import com.kaosmc.practice.common.text.CC;
 import com.kaosmc.practice.core.locale.internal.impl.message.GlobalMessagesLocaleImpl;
 import com.kaosmc.practice.core.profile.Profile;
-import com.kaosmc.practice.core.profile.ProfileService;
 import com.kaosmc.practice.core.profile.data.ProfileData;
 import com.kaosmc.practice.library.command.BaseCommand;
 import com.kaosmc.practice.library.command.CommandArgs;
 import com.kaosmc.practice.library.command.annotation.CommandData;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -37,13 +34,13 @@ public class RankedBanCommand extends BaseCommand {
         }
 
         String targetName = args[0];
-        OfflinePlayer target = PlayerUtil.getOfflinePlayerByName(targetName);
-        if (target == null) {
+        RankedBanCommandSupport.ResolvedRankedProfile resolvedTarget = RankedBanCommandSupport.resolveTarget(this.plugin, targetName);
+        if (resolvedTarget == null) {
             player.sendMessage(this.getString(GlobalMessagesLocaleImpl.ERROR_INVALID_PLAYER));
             return;
         }
 
-        Profile profile = this.plugin.getService(ProfileService.class).getProfile(target.getUniqueId());
+        Profile profile = resolvedTarget.getProfile();
         if (profile == null) {
             player.sendMessage(this.getString(GlobalMessagesLocaleImpl.ERROR_INVALID_PLAYER));
             return;
@@ -55,7 +52,7 @@ public class RankedBanCommand extends BaseCommand {
             return;
         }
 
-        String targetDisplayName = target.getName() != null ? target.getName() : targetName;
+        String targetDisplayName = resolvedTarget.getDisplayName();
 
         if (profileData.isRankedBanned()) {
             player.sendMessage(this.getString(GlobalMessagesLocaleImpl.RANKED_PLAYER_ALREADY_BANNED)
@@ -82,8 +79,8 @@ public class RankedBanCommand extends BaseCommand {
         }
 
         if (this.getBoolean(GlobalMessagesLocaleImpl.RANKED_BAN_MESSAGE_NOTICE_BOOLEAN)) {
-            if (target.isOnline()) {
-                Player targetPlayer = (Player) target;
+            Player targetPlayer = this.plugin.getServer().getPlayer(profile.getUuid());
+            if (targetPlayer != null && targetPlayer.isOnline()) {
                 List<String> message = this.getStringList(GlobalMessagesLocaleImpl.RANKED_BAN_MESSAGE_NOTICE);
                 for (String line : message) {
                     targetPlayer.sendMessage(line

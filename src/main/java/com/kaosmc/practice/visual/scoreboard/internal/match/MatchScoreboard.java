@@ -41,7 +41,7 @@ public interface MatchScoreboard {
 
         ChatColor nameColor = profile.getNameColor();
         Player onlineTarget = Bukkit.getPlayer(profile.getUuid());
-        String name = PlayerDisplayUtil.resolveDisplayName(onlineTarget, profile.getName());
+        String name = PlayerDisplayUtil.resolveCurrentNick(onlineTarget, profile.getName());
 
         if (nameColor != null) {
             return nameColor + name;

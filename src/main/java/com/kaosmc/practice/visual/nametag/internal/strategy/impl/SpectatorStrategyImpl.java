@@ -48,8 +48,18 @@ public class SpectatorStrategyImpl implements NametagStrategy {
         LocaleService localeService = KaosPractice.getInstance().getService(LocaleService.class);
         String matchFormat = localeService != null
                 ? localeService.getString(SettingsLocaleImpl.VISUALS_NAMETAG_MATCH_FORMAT)
-                : "{tag_color}";
+                : "{team_color}";
+        String matchSuffix = localeService != null
+                ? localeService.getString(SettingsLocaleImpl.VISUALS_NAMETAG_MATCH_SUFFIX)
+                : "";
         String prefix = NametagFormatResolver.resolve(matchFormat, context);
-        return new NametagView(prefix, "", NametagVisibility.ALWAYS, NametagFormatResolver.resolveSortWeight(context));
+        String suffix = NametagFormatResolver.resolve(matchSuffix, context);
+        return new NametagView(
+                prefix,
+                suffix,
+                NametagVisibility.ALWAYS,
+                NametagFormatResolver.resolveSortWeight(context),
+                NametagFormatResolver.resolveMatchGroupKey(context)
+        );
     }
 }

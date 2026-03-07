@@ -38,7 +38,7 @@ public class ProfileLayoutData {
             }
 
             List<LayoutData> defaultLayoutList = new ArrayList<>();
-            defaultLayoutList.add(new LayoutData("Layout1", "Layout 1", InventoryUtil.cloneItemStackArray(kit.getItems())));
+            defaultLayoutList.add(new LayoutData("Layout1", "Layout 1", InventoryUtil.getEditableKitItems(kit)));
             this.layouts.put(kit.getName(), defaultLayoutList);
         }
     }

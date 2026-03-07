@@ -41,6 +41,8 @@ public final class NametagFormatResolver {
         }
 
         String tagPrefix = PlayerDisplayUtil.resolveTagPrefix(target);
+        String tagSuffix = resolveTagSuffix(target);
+        String clanTag = PlayerDisplayUtil.resolveClanTag(target);
         String tagColor = ChatColor.WHITE.toString();
 
         if (core != null) {
@@ -62,12 +64,16 @@ public final class NametagFormatResolver {
         String resolved = safeFormat
                 .replace("{tag_prefix}", tagPrefix)
                 .replace("{tag-prefix}", tagPrefix)
+                .replace("{tag_suffix}", tagSuffix)
+                .replace("{tag-suffix}", tagSuffix)
                 .replace("{tag_color}", tagColor)
                 .replace("{tag-color}", tagColor)
                 .replace("{name_color}", nameColor)
                 .replace("{name-color}", nameColor)
                 .replace("{team_color}", teamColor)
                 .replace("{team-color}", teamColor)
+                .replace("{clan_tag}", clanTag)
+                .replace("{clan-tag}", clanTag)
                 .replace("{nick}", displayName)
                 .replace("{name}", displayName)
                 .replace("{player}", displayName);
@@ -136,6 +142,40 @@ public final class NametagFormatResolver {
 
         ChatColor color = defaultMatch.getTeamColor(targetParticipant);
         return color != null ? color.toString() : fallbackColor;
+    }
+
+    public static String resolveMatchGroupKey(NametagContext context) {
+        if (context == null || context.getTargetProfile() == null) {
+            return "";
+        }
+
+        Match match = context.getTargetProfile().getMatch();
+        if (match == null || context.getTarget() == null) {
+            return "";
+        }
+
+        GameParticipant<MatchGamePlayer> participant = match.getParticipant(context.getTarget());
+        if (participant == null) {
+            return "";
+        }
+
+        int participantIndex = match.getParticipants().indexOf(participant);
+        if (participantIndex >= 0) {
+            return "match:" + participantIndex;
+        }
+
+        MatchGamePlayer leader = participant.getLeader();
+        return leader != null ? "match:" + leader.getUuid() : "";
+    }
+
+    private static String resolveTagSuffix(Player player) {
+        KaosCoreBridge kaosCoreBridge = getKaosCoreBridge();
+        if (kaosCoreBridge == null || player == null) {
+            return "";
+        }
+
+        String tagSuffix = kaosCoreBridge.getTagSuffix(player);
+        return tagSuffix != null ? tagSuffix : "";
     }
 
     private static KaosCoreBridge getKaosCoreBridge() {

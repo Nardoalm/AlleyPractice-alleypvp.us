@@ -39,11 +39,11 @@ public class LayoutEditorMenu extends Menu {
 
         if (this.hasLayoutItems(this.layout)) {
             player.getInventory().setContents(InventoryUtil.cloneItemStackArray(this.layout.getItems()));
-        } else if (this.kit != null && this.kit.getItems() != null) {
-            player.getInventory().setContents(InventoryUtil.cloneItemStackArray(this.kit.getItems()));
         } else {
-            player.getInventory().clear();
+            player.getInventory().setContents(InventoryUtil.getEditableKitItems(this.kit));
         }
+
+        player.updateInventory();
     }
 
     @Override
@@ -104,7 +104,7 @@ public class LayoutEditorMenu extends Menu {
     }
 
     private boolean hasLayoutItems(LayoutData layoutData) {
-        return layoutData != null && layoutData.getItems() != null && layoutData.getItems().length > 0;
+        return layoutData != null && InventoryUtil.hasAnyItem(layoutData.getItems());
     }
 
     private LayoutData getFirstLayout(Profile profile) {

@@ -23,7 +23,6 @@ import com.kaosmc.practice.adapter.core.CoreAdapter;
 import com.kaosmc.practice.common.PlayerDisplayUtil;
 import com.kaosmc.practice.common.reflect.ReflectionService;
 import com.kaosmc.practice.common.reflect.internal.types.ActionBarReflectionServiceImpl;
-import com.kaosmc.practice.common.reflect.internal.types.DeathReflectionServiceImpl;
 import com.kaosmc.practice.common.text.CC;
 import com.kaosmc.practice.common.text.Symbol;
 import org.bukkit.entity.Arrow;
@@ -34,8 +33,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
-
-import java.util.Collections;
 
 /**
  * @author Emmy
@@ -96,6 +93,8 @@ public class MatchDamageListener implements Listener {
                     || matchKit.isSettingEnabled(KitSettingSpleef.class)
                     || matchKit.isSettingEnabled(KitSettingNoDamageImpl.class)) {
                 event.setDamage(0);
+                player.setNoDamageTicks(0);
+                player.setMaximumNoDamageTicks(0);
                 player.setHealth(player.getMaxHealth());
                 player.updateInventory();
             }
@@ -209,19 +208,10 @@ public class MatchDamageListener implements Listener {
                         int requiredHits = lowestPlayerCount * 100;
 
                         if (participant.getTeamHits() >= requiredHits) {
-                            ReflectionService reflectionService = KaosPractice.getInstance().getService(ReflectionService.class);
-                            DeathReflectionServiceImpl deathReflection = reflectionService != null
-                                    ? reflectionService.getReflectionService(DeathReflectionServiceImpl.class)
-                                    : null;
-
                             opponent.getPlayers().forEach(matchGamePlayer -> {
                                 Player loser = matchGamePlayer.getTeamPlayer();
                                 if (loser == null) {
                                     return;
-                                }
-
-                                if (deathReflection != null) {
-                                    deathReflection.animateDeath(loser, Collections.singleton(attacker));
                                 }
 
                                 match.handleDeath(loser, EntityDamageEvent.DamageCause.ENTITY_ATTACK);
@@ -237,12 +227,22 @@ public class MatchDamageListener implements Listener {
     private void onEntityDamageByEntityMonitor(EntityDamageByEntityEvent event) {
         if (event.getEntity() instanceof Player && event.getDamager() instanceof Player) {
             Profile profile = KaosPractice.getInstance().getService(ProfileService.class).getProfile(event.getEntity().getUniqueId());
+            if (profile == null) {
+                event.setCancelled(true);
+                return;
+            }
+
             if (profile.getState() == ProfileState.SPECTATING) {
                 event.setCancelled(true);
                 return;
             }
 
             if (profile.getState() == ProfileState.PLAYING) {
+                if (profile.getMatch() == null) {
+                    event.setCancelled(true);
+                    return;
+                }
+
                 Player player = (Player) event.getEntity();
                 Player attacker = (Player) event.getDamager();
 

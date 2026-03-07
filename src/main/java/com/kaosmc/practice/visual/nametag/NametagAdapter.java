@@ -24,15 +24,17 @@ public class NametagAdapter {
     private final String prefix;
     private final String suffix;
     private final NametagVisibility visibility;
+    private final String adapterKey;
     private final Reflection reflection = DefaultReflectionImpl.INSTANCE;
 
-    public NametagAdapter(NametagServiceImpl engine, String name, int sortWeight, String prefix, String suffix, NametagVisibility visibility) {
+    public NametagAdapter(NametagServiceImpl engine, String name, int sortWeight, String prefix, String suffix, NametagVisibility visibility, String adapterKey) {
         this.engine = engine;
         this.name = name;
         this.sortWeight = sortWeight;
         this.prefix = prefix;
         this.suffix = suffix;
         this.visibility = visibility;
+        this.adapterKey = adapterKey != null ? adapterKey : "";
     }
 
     /**
@@ -45,7 +47,8 @@ public class NametagAdapter {
         return this.prefix.equals(view.getPrefix())
                 && this.suffix.equals(view.getSuffix())
                 && this.visibility == view.getVisibility()
-                && this.sortWeight == view.getSortWeight();
+                && this.sortWeight == view.getSortWeight()
+                && this.adapterKey.equals(view.getAdapterKey());
     }
 
     /**
@@ -87,7 +90,7 @@ public class NametagAdapter {
                 reflection.getField(PacketPlayOutScoreboardTeam.class, "b").set(packet, name);
                 reflection.getField(PacketPlayOutScoreboardTeam.class, "c").set(packet, prefix);
                 reflection.getField(PacketPlayOutScoreboardTeam.class, "d").set(packet, suffix);
-                reflection.getField(PacketPlayOutScoreboardTeam.class, "i").set(packet, 1);
+                reflection.getField(PacketPlayOutScoreboardTeam.class, "i").set(packet, 3);
                 reflection.getField(PacketPlayOutScoreboardTeam.class, "e").set(packet, visibility.getValue());
             }
             if (mode == 0 || mode == 3 || mode == 4) {

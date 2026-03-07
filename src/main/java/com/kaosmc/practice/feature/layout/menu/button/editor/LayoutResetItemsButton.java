@@ -45,7 +45,7 @@ public class LayoutResetItemsButton extends Button {
         }
 
         player.getInventory().clear();
-        player.getInventory().setContents(InventoryUtil.cloneItemStackArray(this.kit.getItems()));
+        player.getInventory().setContents(InventoryUtil.getEditableKitItems(this.kit));
         player.updateInventory();
     }
 }

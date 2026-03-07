@@ -7,7 +7,7 @@ arena-management:
     # Ativa o gerenciamento de arenas standalone via SlimeWorldManager.
     enabled: true
     # Loader registrado no SWM (ex.: file, mysql, mongodb...).
-    loader: file
+    loader: mongodb
 
 crafting-operations:
   blocked-items: [ ]
@@ -99,11 +99,15 @@ server:
 visuals:
   nametag:
     lobby:
-      # Placeholders: {tag_prefix}, {tag_color}, {name_color}, {team_color}, {nick}/{name}/{player}, %placeholderapi%
+      # Prefix placeholders: {tag_prefix}, {tag_suffix}, {tag_color}, {name_color}, {team_color}, {clan_tag}, {nick}/{name}/{player}, %placeholderapi%
       format: "{tag_prefix}"
+      # Example: " %kaoscore_clan_tag%"
+      suffix: ""
     match:
-      # Placeholders: {tag_prefix}, {tag_color}, {name_color}, {team_color}, {nick}/{name}/{player}, %placeholderapi%
-      format: "{tag_color}"
+      # Prefix placeholders: {tag_prefix}, {tag_suffix}, {tag_color}, {name_color}, {team_color}, {clan_tag}, {nick}/{name}/{player}, %placeholderapi%
+      # Use {team_color} to avoid opponents sharing the same client-side nametag team.
+      format: "{team_color}"
+      suffix: ""
 
 sounds:
   match:

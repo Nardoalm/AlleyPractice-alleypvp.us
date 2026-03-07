@@ -5,6 +5,8 @@ import com.kaosmc.practice.common.InventoryUtil;
 import com.kaosmc.practice.common.text.CC;
 import com.kaosmc.practice.core.profile.Profile;
 import com.kaosmc.practice.core.profile.ProfileService;
+import com.kaosmc.practice.feature.kit.Kit;
+import com.kaosmc.practice.feature.kit.KitService;
 import com.kaosmc.practice.feature.layout.data.LayoutData;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -47,7 +49,10 @@ public class LayoutListener implements Listener {
             return;
         }
 
-        for (List<LayoutData> layoutList : profile.getProfileData().getLayoutData().getLayouts().values()) {
+        KitService kitService = KaosPractice.getInstance().getService(KitService.class);
+
+        for (java.util.Map.Entry<String, List<LayoutData>> entry : profile.getProfileData().getLayoutData().getLayouts().entrySet()) {
+            List<LayoutData> layoutList = entry.getValue();
             if (layoutList == null || layoutList.isEmpty()) {
                 continue;
             }
@@ -59,7 +64,13 @@ public class LayoutListener implements Listener {
 
                 String layoutName = ChatColor.stripColor(layout.getDisplayName());
                 if (layoutName != null && layoutName.equalsIgnoreCase(clickedName)) {
-                    player.getInventory().setContents(InventoryUtil.cloneItemStackArray(layout.getItems()));
+                    if (InventoryUtil.hasAnyItem(layout.getItems())) {
+                        player.getInventory().setContents(InventoryUtil.cloneItemStackArray(layout.getItems()));
+                    } else {
+                        Kit kit = kitService != null ? kitService.getKit(entry.getKey()) : null;
+                        ItemStack[] fallback = InventoryUtil.getEditableKitItems(kit);
+                        player.getInventory().setContents(InventoryUtil.cloneItemStackArray(fallback));
+                    }
                     player.sendMessage(CC.translate("&aYou have selected the layout &6" + layout.getDisplayName() + "&a."));
                     event.setCancelled(true);
                     return;

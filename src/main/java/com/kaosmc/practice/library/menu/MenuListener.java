@@ -76,6 +76,12 @@ public class MenuListener implements Listener {
         Player player = (Player) event.getPlayer();
         Menu openMenu = Menu.currentlyOpenedMenus.get(player.getName());
         if (openMenu != null) {
+            if (openMenu.isClosedByMenu()) {
+                openMenu.setClosedByMenu(false);
+                Menu.currentlyOpenedMenus.remove(player.getName());
+                return;
+            }
+
             openMenu.onClose(player);
             Menu.currentlyOpenedMenus.remove(player.getName());
         }

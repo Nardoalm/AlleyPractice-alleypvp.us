@@ -25,12 +25,16 @@ public class DefaultStrategyImpl implements NametagStrategy {
         String lobbyFormat = localeService != null
                 ? localeService.getString(SettingsLocaleImpl.VISUALS_NAMETAG_LOBBY_FORMAT)
                 : "{tag_prefix}";
+        String lobbySuffix = localeService != null
+                ? localeService.getString(SettingsLocaleImpl.VISUALS_NAMETAG_LOBBY_SUFFIX)
+                : "";
         String prefix = NametagFormatResolver.resolve(lobbyFormat, context);
+        String suffix = NametagFormatResolver.resolve(lobbySuffix, context);
 
         if (prefix == null || prefix.trim().isEmpty()) {
-            prefix = NametagFormatResolver.resolve("{tag_color}", context);
+            prefix = NametagFormatResolver.resolve("{tag_prefix}", context);
         }
 
-        return new NametagView(prefix, "", NametagVisibility.ALWAYS, NametagFormatResolver.resolveSortWeight(context));
+        return new NametagView(prefix, suffix, NametagVisibility.ALWAYS, NametagFormatResolver.resolveSortWeight(context));
     }
 }

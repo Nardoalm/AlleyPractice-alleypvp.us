@@ -15,6 +15,7 @@ public class PlayerDisplayUtil {
     private static final String TAG_PREFIX_PLACEHOLDER = "%kaoscore_tag_prefix%";
     private static final String NICK_PLACEHOLDER = "%kaoscore_player-nick%";
     private static final String VANISH_PLACEHOLDER = "%kaoscore_player-isvanish%";
+    private static final String CLAN_TAG_PLACEHOLDER = "%kaoscore_clan_tag%";
 
     public String resolveDisplayName(Player player) {
         String fallback = player != null ? player.getName() : "Unknown";
@@ -109,6 +110,32 @@ public class PlayerDisplayUtil {
                 || cleaned.equalsIgnoreCase("yes")
                 || cleaned.equalsIgnoreCase("on")
                 || cleaned.equals("1");
+    }
+
+    public String resolveClanTag(Player player) {
+        if (player == null) {
+            return "";
+        }
+
+        KaosCoreBridge kaosCoreBridge = getKaosCoreBridge();
+        if (kaosCoreBridge != null) {
+            String clanTag = kaosCoreBridge.getClanTag(player);
+            if (clanTag != null && !clanTag.trim().isEmpty()) {
+                return CC.translate(clanTag);
+            }
+        }
+
+        String resolved = PlaceholderUtil.setPapiSafe(player, CLAN_TAG_PLACEHOLDER);
+        if (resolved == null) {
+            return "";
+        }
+
+        String cleaned = CC.translate(resolved);
+        if (cleaned.isEmpty() || cleaned.equalsIgnoreCase(CLAN_TAG_PLACEHOLDER)) {
+            return "";
+        }
+
+        return cleaned;
     }
 
     private String sanitizeFallback(String fallback) {

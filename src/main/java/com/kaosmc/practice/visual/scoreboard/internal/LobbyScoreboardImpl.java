@@ -109,7 +109,7 @@ public class LobbyScoreboardImpl implements Scoreboard {
                 if (leaderProfile != null) {
                     Player leaderPlayer = Bukkit.getPlayer(leaderProfile.getUuid());
                     String leaderColor = leaderProfile.getNameColor() != null ? leaderProfile.getNameColor().toString() : "";
-                    leaderName = leaderColor + PlayerDisplayUtil.resolveDisplayName(leaderPlayer, leaderProfile.getName());
+                    leaderName = leaderColor + PlayerDisplayUtil.resolveCurrentNick(leaderPlayer, leaderProfile.getName());
                 }
 
                 processedLine = CC.translate(processedLine)

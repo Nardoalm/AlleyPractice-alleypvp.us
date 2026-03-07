@@ -40,12 +40,12 @@ public class MatchScoreboardEndingImpl implements MatchScoreboard {
         Match match = profile.getMatch();
         if (match == null) return scoreboardLines;
 
-        String opponentName = PlayerDisplayUtil.resolveDisplayName(
+        String opponentName = PlayerDisplayUtil.resolveCurrentNick(
                 opponent.getLeader().getTeamPlayer(),
                 opponent.getLeader().getUsername()
         );
         String winnerName = opponent.getLeader().isDead()
-                ? PlayerDisplayUtil.resolveDisplayName(you.getLeader().getTeamPlayer(), you.getLeader().getUsername())
+                ? PlayerDisplayUtil.resolveCurrentNick(you.getLeader().getTeamPlayer(), you.getLeader().getUsername())
                 : opponentName;
 
         for (String line : configService.getScoreboardConfig().getStringList("scoreboard.lines.ending")) {

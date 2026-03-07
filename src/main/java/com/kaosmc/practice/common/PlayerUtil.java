@@ -42,6 +42,7 @@ public class PlayerUtil {
         player.setFoodLevel(20);
         player.setFireTicks(0);
         player.setMaximumNoDamageTicks(20);
+        player.setNoDamageTicks(0);
 
         if (canFly(player)) {
             player.setAllowFlight(true);
@@ -138,7 +139,7 @@ public class PlayerUtil {
      */
     public OfflinePlayer getOfflinePlayerByName(String name) {
         for (OfflinePlayer offlinePlayer : Bukkit.getOfflinePlayers()) {
-            if (offlinePlayer.getName().equalsIgnoreCase(name)) {
+            if (offlinePlayer.getName() != null && offlinePlayer.getName().equalsIgnoreCase(name)) {
                 return offlinePlayer;
             }
         }

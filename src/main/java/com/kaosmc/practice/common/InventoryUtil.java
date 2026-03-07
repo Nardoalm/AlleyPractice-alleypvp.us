@@ -1,5 +1,6 @@
 package com.kaosmc.practice.common;
 
+import com.kaosmc.practice.feature.kit.Kit;
 import lombok.Getter;
 import lombok.experimental.UtilityClass;
 import org.bukkit.ChatColor;
@@ -87,6 +88,36 @@ public class InventoryUtil {
             cloned[i] = items[i] != null ? items[i].clone() : null;
         }
         return cloned;
+    }
+
+    public boolean hasAnyItem(ItemStack[] items) {
+        if (items == null || items.length == 0) {
+            return false;
+        }
+
+        for (ItemStack item : items) {
+            if (item != null && item.getType() != Material.AIR) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public ItemStack[] getEditableKitItems(Kit kit) {
+        if (kit == null) {
+            return new ItemStack[0];
+        }
+
+        if (hasAnyItem(kit.getEditorItems())) {
+            return cloneItemStackArray(kit.getEditorItems());
+        }
+
+        if (hasAnyItem(kit.getItems())) {
+            return cloneItemStackArray(kit.getItems());
+        }
+
+        return new ItemStack[0];
     }
 
     /**

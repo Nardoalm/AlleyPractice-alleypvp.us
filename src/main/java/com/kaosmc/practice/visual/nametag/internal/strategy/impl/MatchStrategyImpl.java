@@ -49,24 +49,29 @@ public class MatchStrategyImpl implements NametagStrategy {
             LocaleService localeService = KaosPractice.getInstance().getService(LocaleService.class);
             String matchFormat = localeService != null
                     ? localeService.getString(SettingsLocaleImpl.VISUALS_NAMETAG_MATCH_FORMAT)
-                    : "{tag_color}";
+                    : "{team_color}";
+            String matchSuffix = localeService != null
+                    ? localeService.getString(SettingsLocaleImpl.VISUALS_NAMETAG_MATCH_SUFFIX)
+                    : "";
             String matchPrefix = NametagFormatResolver.resolve(matchFormat, context);
+            String suffix = NametagFormatResolver.resolve(matchSuffix, context);
 
             boolean viewerIsSeeker = seekers.containsPlayer(context.getViewer().getUniqueId());
             boolean targetIsSeeker = seekers.containsPlayer(context.getTarget().getUniqueId());
             int sortWeight = NametagFormatResolver.resolveSortWeight(context);
+            String groupKey = NametagFormatResolver.resolveMatchGroupKey(context);
 
             if (viewerIsSeeker) {
                 if (targetIsSeeker) {
-                    return new NametagView(matchPrefix, "", NametagVisibility.ALWAYS, sortWeight);
+                    return new NametagView(matchPrefix, suffix, NametagVisibility.ALWAYS, sortWeight, groupKey);
                 } else {
-                    return new NametagView(matchPrefix, "", NametagVisibility.NEVER, sortWeight);
+                    return new NametagView(matchPrefix, suffix, NametagVisibility.NEVER, sortWeight, groupKey);
                 }
             } else {
                 if (targetIsSeeker) {
-                    return new NametagView(matchPrefix, "", NametagVisibility.ALWAYS, sortWeight);
+                    return new NametagView(matchPrefix, suffix, NametagVisibility.ALWAYS, sortWeight, groupKey);
                 } else {
-                    return new NametagView(matchPrefix, "", NametagVisibility.ALWAYS, sortWeight);
+                    return new NametagView(matchPrefix, suffix, NametagVisibility.ALWAYS, sortWeight, groupKey);
                 }
             }
         }
@@ -74,8 +79,23 @@ public class MatchStrategyImpl implements NametagStrategy {
         LocaleService localeService = KaosPractice.getInstance().getService(LocaleService.class);
         String matchFormat = localeService != null
                 ? localeService.getString(SettingsLocaleImpl.VISUALS_NAMETAG_MATCH_FORMAT)
-                : "{tag_color}";
+                : "{team_color}";
+        String matchSuffix = localeService != null
+                ? localeService.getString(SettingsLocaleImpl.VISUALS_NAMETAG_MATCH_SUFFIX)
+                : "";
         String prefix = NametagFormatResolver.resolve(matchFormat, context);
-        return new NametagView(prefix, "", NametagVisibility.ALWAYS, NametagFormatResolver.resolveSortWeight(context));
+        String suffix = NametagFormatResolver.resolve(matchSuffix, context);
+
+        if (prefix == null || prefix.trim().isEmpty()) {
+            prefix = NametagFormatResolver.resolve("{team_color}", context);
+        }
+
+        return new NametagView(
+                prefix,
+                suffix,
+                NametagVisibility.ALWAYS,
+                NametagFormatResolver.resolveSortWeight(context),
+                NametagFormatResolver.resolveMatchGroupKey(context)
+        );
     }
 }

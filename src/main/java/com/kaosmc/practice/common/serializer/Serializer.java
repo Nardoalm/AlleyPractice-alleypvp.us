@@ -1,5 +1,6 @@
 package com.kaosmc.practice.common.serializer;
 
+import com.kaosmc.practice.common.logger.Logger;
 import lombok.experimental.UtilityClass;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -64,11 +65,12 @@ public class Serializer {
      */
     public String serializeItemStack(ItemStack[] items) {
         try {
+            ItemStack[] safeItems = items != null ? items : new ItemStack[0];
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             BukkitObjectOutputStream dataOutput = new BukkitObjectOutputStream(outputStream);
 
-            dataOutput.writeInt(items.length);
-            for (ItemStack item : items) {
+            dataOutput.writeInt(safeItems.length);
+            for (ItemStack item : safeItems) {
                 dataOutput.writeObject(item);
             }
 
@@ -86,6 +88,10 @@ public class Serializer {
      * @return the deserialized ItemStack array
      */
     public ItemStack[] deserializeItemStack(String data) {
+        if (data == null || data.trim().isEmpty()) {
+            return new ItemStack[0];
+        }
+
         try {
             ByteArrayInputStream inputStream = new ByteArrayInputStream(Base64.getDecoder().decode(data));
             BukkitObjectInputStream dataInput = new BukkitObjectInputStream(inputStream);
@@ -98,7 +104,8 @@ public class Serializer {
             dataInput.close();
             return items;
         } catch (Exception exception) {
-            throw new RuntimeException("Unable to deserialize item stacks.", exception);
+            Logger.logException("Unable to deserialize item stacks.", exception);
+            return new ItemStack[0];
         }
     }
 
