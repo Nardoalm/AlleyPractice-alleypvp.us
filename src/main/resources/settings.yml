@@ -79,12 +79,13 @@ profanity-filter:
     - shit
     - fuck
     - bitch
+    - caralho
   staff-notification-format: '&6[S] &f(&6Kaos: &fPalavrão Detectado) &c{player}&f: &7{message}'
 
 server:
   chat-format:
     global:
-      enabled: true
+      enabled: false
       format: '&7[{nivel}&7]&r {prefix}{rank-color}{name-color}{player}{suffix}{tag}{separator}{message}'
       separator: '&7: &f'
     tag-appearance:
