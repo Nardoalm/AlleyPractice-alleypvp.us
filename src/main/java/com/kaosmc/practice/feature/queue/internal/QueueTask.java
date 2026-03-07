@@ -1,6 +1,7 @@
 package com.kaosmc.practice.feature.queue.internal;
 
 import com.kaosmc.practice.KaosPractice;
+import com.kaosmc.practice.common.PlayerDisplayUtil;
 import com.kaosmc.practice.feature.arena.Arena;
 import com.kaosmc.practice.feature.arena.ArenaService;
 import com.kaosmc.practice.feature.arena.ArenaType;
@@ -615,7 +616,7 @@ public class QueueTask implements Runnable {
      * @return Team game participant
      */
     private GameParticipant<MatchGamePlayer> createTeamParticipant(Player leader, QueueProfile leaderProfile) {
-        MatchGamePlayer gameLeader = new MatchGamePlayer(leader.getUniqueId(), leader.getName(), leaderProfile.getElo());
+        MatchGamePlayer gameLeader = new MatchGamePlayer(leader.getUniqueId(), getCurrentMatchUsername(leader), leaderProfile.getElo());
         return new TeamGameParticipant<>(gameLeader);
     }
 
@@ -640,7 +641,7 @@ public class QueueTask implements Runnable {
             }
 
             int playerElo = getPlayerElo(player, validQueueProfiles);
-            MatchGamePlayer gamePlayer = new MatchGamePlayer(player.getUniqueId(), player.getName(), playerElo);
+            MatchGamePlayer gamePlayer = new MatchGamePlayer(player.getUniqueId(), getCurrentMatchUsername(player), playerElo);
 
             assignPlayerToTeam(player, gamePlayer, team1Party, team2Party, participantA, participantB);
         }
@@ -826,9 +827,17 @@ public class QueueTask implements Runnable {
      */
     private @NotNull GamePlayerList getGamePlayerList(Player firstPlayer, Player secondPlayer, QueueProfile firstProfile, QueueProfile secondProfile) {
         return new GamePlayerList(
-                new MatchGamePlayer(firstPlayer.getUniqueId(), firstPlayer.getName(), firstProfile.getElo()),
-                new MatchGamePlayer(secondPlayer.getUniqueId(), secondPlayer.getName(), secondProfile.getElo())
+                new MatchGamePlayer(firstPlayer.getUniqueId(), getCurrentMatchUsername(firstPlayer), firstProfile.getElo()),
+                new MatchGamePlayer(secondPlayer.getUniqueId(), getCurrentMatchUsername(secondPlayer), secondProfile.getElo())
         );
+    }
+
+    private String getCurrentMatchUsername(Player player) {
+        if (player == null) {
+            return "Unknown";
+        }
+
+        return PlayerDisplayUtil.resolveCurrentNick(player, player.getName());
     }
 
     /**

@@ -1,9 +1,11 @@
 package com.kaosmc.practice.feature.match;
 
 import com.kaosmc.practice.KaosPractice;
+import com.kaosmc.practice.adapter.core.kaoscore.KaosCoreBridge;
 import com.kaosmc.practice.adapter.knockback.KnockbackAdapter;
 import com.kaosmc.practice.common.InventoryUtil;
 import com.kaosmc.practice.common.ListenerUtil;
+import com.kaosmc.practice.common.PlayerDisplayUtil;
 import com.kaosmc.practice.common.PlayerUtil;
 import com.kaosmc.practice.common.SoundUtil;
 import com.kaosmc.practice.common.logger.Logger;
@@ -226,11 +228,16 @@ public abstract class Match {
     private void initializeParticipant(GameParticipant<MatchGamePlayer> gameParticipant) {
         VisibilityService visibilityService = this.plugin.getService(VisibilityService.class);
         KnockbackAdapter knockbackAdapter = this.plugin.getService(KnockbackAdapter.class);
+        KaosCoreBridge kaosCoreBridge = this.plugin.getService(KaosCoreBridge.class);
 
         gameParticipant.getPlayers().forEach(gamePlayer -> {
             Player player = this.plugin.getServer().getPlayer(gamePlayer.getUuid());
             if (player == null) {
                 return;
+            }
+
+            if (kaosCoreBridge != null) {
+                kaosCoreBridge.removeVanish(player);
             }
 
             this.updatePlayerProfileForMatch(player);
@@ -584,9 +591,11 @@ public abstract class Match {
         if (messageTemplate != null) {
             String victimColor = String.valueOf(victimProfile.getNameColor());
             String killerColor = String.valueOf(killerProfile.getNameColor());
+            String victimName = PlayerDisplayUtil.resolveCurrentNick(victim, victim.getName());
+            String killerName = PlayerDisplayUtil.resolveCurrentNick(killer, killer.getName());
 
-            String finalMessage = messageTemplate.replace("{victim}", victimColor + victim.getName() + "&f");
-            finalMessage = finalMessage.replace("{killer}", killerColor + killer.getName() + "&f");
+            String finalMessage = messageTemplate.replace("{victim}", victimColor + victimName + "&f");
+            finalMessage = finalMessage.replace("{killer}", killerColor + killerName + "&f");
             finalMessage = finalMessage.replace("{victim-name-color}", victimColor);
             finalMessage = finalMessage.replace("{victim-color}", victimColor);
             finalMessage = finalMessage.replace("{killer-name-color}", killerColor);
@@ -608,8 +617,9 @@ public abstract class Match {
      */
     private void handleDefaultDeathMessages(Player victim, Player killer, Profile victimProfile) {
         if (killer == null) {
+            String victimName = PlayerDisplayUtil.resolveCurrentNick(victim, victimProfile.getName());
             this.notifyAll(CC.translate(this.plugin.getService(LocaleService.class).getString(GameMessagesLocaleImpl.MATCH_DEATH_MESSAGE_GENERIC)
-                    .replace("{player}", victimProfile.getName())
+                    .replace("{player}", victimName)
                     .replace("{name-color}", String.valueOf(victimProfile.getNameColor())))
             );
         } else {
@@ -631,12 +641,14 @@ public abstract class Match {
         ReflectionService reflectionService = this.plugin.getService(ReflectionService.class);
 
         Profile killerProfile = profileService.getProfile(killer.getUniqueId());
+        String victimName = PlayerDisplayUtil.resolveCurrentNick(victim, victim.getName());
+        String killerName = PlayerDisplayUtil.resolveCurrentNick(killer, killer.getName());
 
         reflectionService.getReflectionService(ActionBarReflectionServiceImpl.class).sendDeathMessage(killer, victim);
 
         this.notifyAll(this.plugin.getService(LocaleService.class).getString(GameMessagesLocaleImpl.MATCH_DEATH_MESSAGE_GENERIC_KILLER)
-                .replace("{victim}", victimProfile.getNameColor() + victim.getName() + "&f")
-                .replace("{killer}", killerProfile.getNameColor() + killer.getName() + "&f")
+                .replace("{victim}", victimProfile.getNameColor() + victimName + "&f")
+                .replace("{killer}", killerProfile.getNameColor() + killerName + "&f")
                 .replace("{name-color}", String.valueOf(victimProfile.getNameColor()))
                 .replace("{victim-name-color}", String.valueOf(victimProfile.getNameColor()))
                 .replace("{victim-color}", String.valueOf(victimProfile.getNameColor()))
@@ -982,7 +994,7 @@ public abstract class Match {
                 .map(uuid -> this.plugin.getServer().getPlayer(uuid))
                 .filter(Objects::nonNull)
                 .limit(3)
-                .forEach(player -> firstThreeSpectatorNames.add(player.getName()));
+                .forEach(player -> firstThreeSpectatorNames.add(PlayerDisplayUtil.resolveCurrentNick(player, player.getName())));
 
         List<Integer> remainingSpectators = new ArrayList<>();
         this.spectators.stream()
@@ -1231,10 +1243,22 @@ public abstract class Match {
      * @return If the attacker is in the same participant team as the victim.
      */
     public boolean isInSameTeam(Player attacker, Player victim) {
+        if (attacker == null || victim == null || attacker.getUniqueId().equals(victim.getUniqueId())) {
+            return false;
+        }
+
+        if (!this.isTeamMatch()) {
+            return false;
+        }
+
         GameParticipant<MatchGamePlayer> attackerParticipant = this.getParticipant(attacker);
         GameParticipant<MatchGamePlayer> victimParticipant = this.getParticipant(victim);
 
-        return attackerParticipant.equals(victimParticipant);
+        if (attackerParticipant == null || victimParticipant == null) {
+            return false;
+        }
+
+        return attackerParticipant == victimParticipant;
     }
 
     /**

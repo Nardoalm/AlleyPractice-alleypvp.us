@@ -1,6 +1,7 @@
 package com.kaosmc.practice.visual.tablist.task;
 
 import com.kaosmc.practice.KaosPractice;
+import com.kaosmc.practice.common.PlayerDisplayUtil;
 import com.kaosmc.practice.common.PlaceholderUtil;
 import com.kaosmc.practice.common.logger.Logger;
 import com.kaosmc.practice.common.text.CC;
@@ -44,8 +45,9 @@ public class TablistImpl implements TablistAdapter {
         }
 
         List<String> message = localeService.getStringList(VisualsLocaleImpl.TAB_LIST_HEADER);
+        String displayName = PlayerDisplayUtil.resolveDisplayName(player, player.getName());
         message = message.stream()
-                .map(line -> line.replace("{player}", player.getName()))
+                .map(line -> line.replace("{player}", displayName))
                 .map(line -> line.replace("{online-players}", String.valueOf(this.plugin.getServer().getOnlinePlayers().size())))
                 .map(line -> line.replace("{max-players}", String.valueOf(this.plugin.getServer().getMaxPlayers())))
                 .map(line -> line.replace("{description}", this.plugin.getDescription().getDescription()))
@@ -62,8 +64,9 @@ public class TablistImpl implements TablistAdapter {
         }
 
         List<String> message = localeService.getStringList(VisualsLocaleImpl.TAB_LIST_FOOTER);
+        String displayName = PlayerDisplayUtil.resolveDisplayName(player, player.getName());
         message = message.stream()
-                .map(line -> line.replace("{player}", player.getName()))
+                .map(line -> line.replace("{player}", displayName))
                 .map(line -> line.replace("{online-players}", String.valueOf(this.plugin.getServer().getOnlinePlayers().size())))
                 .map(line -> line.replace("{max-players}", String.valueOf(this.plugin.getServer().getMaxPlayers())))
                 .map(line -> line.replace("{description}", this.plugin.getDescription().getDescription()))

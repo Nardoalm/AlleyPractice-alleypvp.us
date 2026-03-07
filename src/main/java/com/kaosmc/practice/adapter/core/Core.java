@@ -1,6 +1,7 @@
 package com.kaosmc.practice.adapter.core;
 
 import com.kaosmc.practice.KaosPractice;
+import com.kaosmc.practice.common.PlayerDisplayUtil;
 import com.kaosmc.practice.common.text.CC;
 import com.kaosmc.practice.common.text.LevelBadgeUtil;
 import com.kaosmc.practice.core.locale.LocaleService;
@@ -105,9 +106,10 @@ public interface Core {
 
         String safeEventMessage = eventMessage != null ? eventMessage : "";
         String safeSeparator = separator != null ? separator : "";
+        String currentNick = PlayerDisplayUtil.resolveCurrentNick(player, player.getName());
 
         if (localeService == null) {
-            return player.getName() + safeSeparator + " " + safeEventMessage;
+            return currentNick + safeSeparator + " " + safeEventMessage;
         }
 
         String rawPrefix = "";
@@ -191,7 +193,7 @@ public interface Core {
                 .replace("{prefix}", prefix)
                 .replace("{rank-color}", String.valueOf(rankColor))
                 .replace("{name-color}", String.valueOf(nameColor))
-                .replace("{player}", player.getName())
+                .replace("{player}", currentNick)
                 .replace("{suffix}", suffix)
                 .replace("{tag}", tagPrefix.isEmpty() ? "" : tagAppearanceFormat)
                 .replace("{separator}", safeSeparator)

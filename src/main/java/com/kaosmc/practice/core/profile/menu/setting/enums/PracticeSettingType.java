@@ -66,7 +66,7 @@ public enum PracticeSettingType {
             )
     ),
 
-    PING_RANGE(15, "&6&lPing Range", Material.COMPASS,
+    PING_RANGE(23, "&6&lPing Range", Material.COMPASS,
             settings -> Arrays.asList(
                     CC.MENU_BAR,
                     "&7Limit matchmaking by ping difference.",

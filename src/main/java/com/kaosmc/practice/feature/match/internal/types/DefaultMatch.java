@@ -1,6 +1,7 @@
 package com.kaosmc.practice.feature.match.internal.types;
 
 import com.kaosmc.practice.KaosPractice;
+import com.kaosmc.practice.adapter.core.kaoscore.KaosCoreBridge;
 import com.kaosmc.practice.common.InventoryUtil;
 import com.kaosmc.practice.common.ListenerUtil;
 import com.kaosmc.practice.common.PlayerDisplayUtil;
@@ -265,13 +266,18 @@ public class DefaultMatch extends Match {
     private void updateRankedStats(GameParticipant<MatchGamePlayer> winner, GameParticipant<MatchGamePlayer> loser) {
         OldEloResult result = this.getOldEloResult(winner, loser);
         EloResult eloResult = this.getEloResult(result.getOldWinnerElo(), result.getOldLoserElo());
+        Player winnerPlayer = winner.getLeader().getTeamPlayer();
+        Player loserPlayer = loser.getLeader().getTeamPlayer();
+        int winnerDelta = Math.max(0, eloResult.getNewWinnerElo() - result.getOldWinnerElo());
+        int loserDelta = Math.max(0, result.getOldLoserElo() - eloResult.getNewLoserElo());
 
         this.handleWinner(eloResult.getNewWinnerElo(), winner);
         this.handleLoser(eloResult.getNewLoserElo(), loser);
+        this.updateClanStats(winnerPlayer, loserPlayer, true, winnerDelta, loserDelta);
 
         this.sendEloResult(
-                winner.getLeader().getTeamPlayer().getName(),
-                loser.getLeader().getTeamPlayer().getName(),
+                PlayerDisplayUtil.resolveDisplayName(winnerPlayer, winner.getLeader().getUsername()),
+                PlayerDisplayUtil.resolveDisplayName(loserPlayer, loser.getLeader().getUsername()),
                 result.getOldWinnerElo(),
                 result.getOldLoserElo(),
                 eloResult.getNewWinnerElo(),
@@ -313,6 +319,8 @@ public class DefaultMatch extends Match {
         loserKitData.incrementLosses();
         loserProfile.getProfileData().incrementUnrankedLosses();
         loserProfile.getProfileData().resetWinStreak();
+
+        this.updateClanStats(winner.getLeader().getTeamPlayer(), loser.getLeader().getTeamPlayer(), false, 0, 0);
     }
 
     /**
@@ -585,6 +593,15 @@ public class DefaultMatch extends Match {
         loserProfile.getProfileData().incrementRankedLosses();
         loserProfile.getProfileData().resetWinStreak();
         loserProfile.getProfileData().updateElo(loserProfile);
+    }
+
+    private void updateClanStats(Player winner, Player loser, boolean ranked, int winnerEloDelta, int loserEloDelta) {
+        KaosCoreBridge kaosCoreBridge = KaosPractice.getInstance().getService(KaosCoreBridge.class);
+        if (kaosCoreBridge == null) {
+            return;
+        }
+
+        kaosCoreBridge.applyClanMatchResult(winner, loser, ranked, winnerEloDelta, loserEloDelta);
     }
 
     @Override

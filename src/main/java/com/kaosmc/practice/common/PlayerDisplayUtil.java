@@ -1,5 +1,7 @@
 package com.kaosmc.practice.common;
 
+import com.kaosmc.practice.KaosPractice;
+import com.kaosmc.practice.adapter.core.kaoscore.KaosCoreBridge;
 import com.kaosmc.practice.common.text.CC;
 import lombok.experimental.UtilityClass;
 import org.bukkit.ChatColor;
@@ -10,6 +12,7 @@ import org.bukkit.entity.Player;
  */
 @UtilityClass
 public class PlayerDisplayUtil {
+    private static final String TAG_PREFIX_PLACEHOLDER = "%kaoscore_tag_prefix%";
     private static final String NICK_PLACEHOLDER = "%kaoscore_player-nick%";
     private static final String VANISH_PLACEHOLDER = "%kaoscore_player-isvanish%";
 
@@ -19,9 +22,28 @@ public class PlayerDisplayUtil {
     }
 
     public String resolveDisplayName(Player player, String fallback) {
+        String nick = resolveCurrentNick(player, fallback);
+        String tagPrefix = resolveTagPrefix(player);
+        return CC.translate(tagPrefix + nick).trim();
+    }
+
+    public String resolveCurrentNick(Player player) {
+        String fallback = player != null ? player.getName() : "Unknown";
+        return resolveCurrentNick(player, fallback);
+    }
+
+    public String resolveCurrentNick(Player player, String fallback) {
         String safeFallback = sanitizeFallback(fallback);
         if (player == null) {
             return safeFallback;
+        }
+
+        KaosCoreBridge kaosCoreBridge = getKaosCoreBridge();
+        if (kaosCoreBridge != null) {
+            String currentNick = kaosCoreBridge.resolveCurrentNick(player, safeFallback);
+            if (currentNick != null && !currentNick.trim().isEmpty()) {
+                return CC.translate(currentNick).trim();
+            }
         }
 
         String resolved = PlaceholderUtil.setPapiSafe(player, NICK_PLACEHOLDER);
@@ -37,9 +59,40 @@ public class PlayerDisplayUtil {
         return cleaned;
     }
 
+    public String resolveTagPrefix(Player player) {
+        if (player == null) {
+            return "";
+        }
+
+        KaosCoreBridge kaosCoreBridge = getKaosCoreBridge();
+        if (kaosCoreBridge != null) {
+            String tagPrefix = kaosCoreBridge.getTagPrefix(player);
+            if (tagPrefix != null && !tagPrefix.trim().isEmpty()) {
+                return CC.translate(tagPrefix);
+            }
+        }
+
+        String resolved = PlaceholderUtil.setPapiSafe(player, TAG_PREFIX_PLACEHOLDER);
+        if (resolved == null) {
+            return "";
+        }
+
+        String cleaned = CC.translate(resolved);
+        if (cleaned.isEmpty() || cleaned.equalsIgnoreCase(TAG_PREFIX_PLACEHOLDER)) {
+            return "";
+        }
+
+        return cleaned;
+    }
+
     public boolean isVanished(Player player) {
         if (player == null) {
             return false;
+        }
+
+        KaosCoreBridge kaosCoreBridge = getKaosCoreBridge();
+        if (kaosCoreBridge != null && kaosCoreBridge.isVanished(player)) {
+            return true;
         }
 
         String resolved = PlaceholderUtil.setPapiSafe(player, VANISH_PLACEHOLDER);
@@ -64,5 +117,18 @@ public class PlayerDisplayUtil {
         }
 
         return fallback;
+    }
+
+    private KaosCoreBridge getKaosCoreBridge() {
+        KaosPractice instance = KaosPractice.getInstance();
+        if (instance == null) {
+            return null;
+        }
+
+        try {
+            return instance.getService(KaosCoreBridge.class);
+        } catch (Exception ignored) {
+            return null;
+        }
     }
 }

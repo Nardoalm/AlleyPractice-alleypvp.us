@@ -2,6 +2,7 @@ package com.kaosmc.practice.feature.match.internal.types;
 
 import com.kaosmc.practice.KaosPractice;
 import com.kaosmc.practice.common.ListenerUtil;
+import com.kaosmc.practice.common.PlayerDisplayUtil;
 import com.kaosmc.practice.common.PlayerUtil;
 import com.kaosmc.practice.core.locale.LocaleService;
 import com.kaosmc.practice.core.locale.internal.impl.VisualsLocaleImpl;
@@ -136,7 +137,7 @@ public class RoundsMatch extends DefaultMatch {
 
                 this.setScorer(opponent.getLeader().getUsername());
             } else {
-                this.setScorer(lastAttacker.getName());
+                this.setScorer(PlayerDisplayUtil.resolveCurrentNick(lastAttacker, lastAttacker.getName()));
             }
 
             if (this.participantA.containsPlayer(player.getUniqueId())) {

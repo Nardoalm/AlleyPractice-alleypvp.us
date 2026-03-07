@@ -1,6 +1,7 @@
 package com.kaosmc.practice.feature.ffa.listener;
 
 import com.kaosmc.practice.KaosPractice;
+import com.kaosmc.practice.common.PlayerDisplayUtil;
 import com.kaosmc.practice.feature.combat.CombatService;
 import com.kaosmc.practice.feature.kit.setting.types.visual.KitSettingBowShotIndicator;
 import com.kaosmc.practice.feature.kit.setting.types.visual.KitSettingHealthBar;
@@ -82,7 +83,8 @@ public class FFADamageListener implements Listener {
                 finalHealth = Math.max(0, finalHealth);
 
                 if (finalHealth > 0) {
-                    attacker.sendMessage(CC.translate(profile.getNameColor() + victim.getName() + " &7&l" + Symbol.ARROW_R + " &6" + String.format("%.1f", finalHealth) + " &c" + Symbol.HEART));
+                    String victimName = PlayerDisplayUtil.resolveCurrentNick(victim, victim.getName());
+                    attacker.sendMessage(CC.translate(profile.getNameColor() + victimName + " &7&l" + Symbol.ARROW_R + " &6" + String.format("%.1f", finalHealth) + " &c" + Symbol.HEART));
                 }
             }
         }

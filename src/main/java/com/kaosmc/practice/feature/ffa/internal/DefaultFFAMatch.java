@@ -3,6 +3,7 @@ package com.kaosmc.practice.feature.ffa.internal;
 import com.kaosmc.practice.KaosPractice;
 import com.kaosmc.practice.adapter.knockback.KnockbackAdapter;
 import com.kaosmc.practice.common.InventoryUtil;
+import com.kaosmc.practice.common.PlayerDisplayUtil;
 import com.kaosmc.practice.common.PlayerUtil;
 import com.kaosmc.practice.common.reflect.ReflectionService;
 import com.kaosmc.practice.common.reflect.internal.types.ActionBarReflectionServiceImpl;
@@ -58,7 +59,7 @@ public class DefaultFFAMatch extends FFAMatch {
         if (this.getArena().getPos1() == null) return;
 
         Profile profile = this.plugin.getService(ProfileService.class).getProfile(player.getUniqueId());
-        GameFFAPlayer gameFFAPlayer = new GameFFAPlayer(player.getUniqueId(), player.getName());
+        GameFFAPlayer gameFFAPlayer = new GameFFAPlayer(player.getUniqueId(), PlayerDisplayUtil.resolveCurrentNick(player, player.getName()));
         if (this.getPlayers().size() >= this.getMaxPlayers()) return;
 
         this.getPlayers().add(gameFFAPlayer);
@@ -89,7 +90,7 @@ public class DefaultFFAMatch extends FFAMatch {
         if (this.getArena() == null) return;
         if (this.getArena().getPos1() == null) return;
 
-        GameFFAPlayer gameFFAPlayer = new GameFFAPlayer(player.getUniqueId(), player.getName());
+        GameFFAPlayer gameFFAPlayer = new GameFFAPlayer(player.getUniqueId(), PlayerDisplayUtil.resolveCurrentNick(player, player.getName()));
         this.getPlayers().add(gameFFAPlayer);
         this.setupPlayer(player);
     }

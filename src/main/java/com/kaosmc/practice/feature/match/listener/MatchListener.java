@@ -2,6 +2,7 @@ package com.kaosmc.practice.feature.match.listener;
 
 import com.kaosmc.practice.KaosPractice;
 import com.kaosmc.practice.common.ListenerUtil;
+import com.kaosmc.practice.common.PlayerDisplayUtil;
 import com.kaosmc.practice.common.text.CC;
 import com.kaosmc.practice.core.locale.LocaleService;
 import com.kaosmc.practice.core.locale.internal.impl.message.GameMessagesLocaleImpl;
@@ -293,7 +294,7 @@ public class MatchListener implements Listener {
                     opponent.getPlayers().forEach(matchGamePlayer -> matchGamePlayer.setDead(true));
 
                     if (match.canEndRound()) {
-                        match.setScorer(player.getName());
+                        match.setScorer(PlayerDisplayUtil.resolveCurrentNick(player, player.getName()));
                         match.handleRoundEnd();
 
                         if (match.canEndMatch()) {

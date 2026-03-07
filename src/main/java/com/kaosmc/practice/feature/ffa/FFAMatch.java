@@ -1,6 +1,7 @@
 package com.kaosmc.practice.feature.ffa;
 
 import com.kaosmc.practice.KaosPractice;
+import com.kaosmc.practice.common.PlayerDisplayUtil;
 import com.kaosmc.practice.common.text.CC;
 import com.kaosmc.practice.core.locale.LocaleService;
 import com.kaosmc.practice.core.locale.internal.impl.message.GameMessagesLocaleImpl;
@@ -165,8 +166,8 @@ public abstract class FFAMatch {
         killerFfaData.incrementKillstreak();
 
         String combatLogMessage = this.plugin.getService(LocaleService.class).getString(GameMessagesLocaleImpl.FFA_COMBAT_LOG_DEATH_MESSAGE)
-                .replace("{player}", player.getName())
-                .replace("{killer}", killer.getName())
+                .replace("{player}", PlayerDisplayUtil.resolveCurrentNick(player, player.getName()))
+                .replace("{killer}", PlayerDisplayUtil.resolveCurrentNick(killer, killer.getName()))
                 .replace("{name-color}", String.valueOf(profile.getNameColor()))
                 .replace("{killer-name-color}", String.valueOf(killerProfile.getNameColor()));
         this.getPlayers().forEach(ffaPlayer -> ffaPlayer.getPlayer().sendMessage(CC.translate(combatLogMessage)));
@@ -214,7 +215,7 @@ public abstract class FFAMatch {
             this.getPlayers().forEach(ffaPlayer -> {
                 for (String message : messages) {
                     ffaPlayer.getPlayer().sendMessage(CC.translate(message
-                            .replace("{player}", player.getName())
+                            .replace("{player}", PlayerDisplayUtil.resolveCurrentNick(player, player.getName()))
                             .replace("{name-color}", String.valueOf(profile.getNameColor()))
                             .replace("{killstreak}", String.valueOf(ffaData.getKillstreak()))));
                 }

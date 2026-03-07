@@ -1,5 +1,6 @@
 package com.kaosmc.practice.feature.match.internal.types;
 
+import com.kaosmc.practice.common.PlayerDisplayUtil;
 import com.kaosmc.practice.common.ListenerUtil;
 import com.kaosmc.practice.common.PlayerUtil;
 import com.kaosmc.practice.common.reflect.ReflectionService;
@@ -142,7 +143,7 @@ public class BedMatch extends DefaultMatch {
                         .replace("{bed-color}", String.valueOf(this.getTeamColor(opponentParticipant)))
                         .replace("{breaker-color}", String.valueOf(this.getTeamColor(breakerParticipant)))
                         .replace("{bed}", this.getParticipantA() == opponentParticipant ? "Blue Bed" : "Red Bed")
-                        .replace("{breaker}", breaker.getName());
+                        .replace("{breaker}", PlayerDisplayUtil.resolveCurrentNick(breaker, breaker.getName()));
                 this.sendMessage(formattedLine);
             });
         }

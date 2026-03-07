@@ -1,7 +1,6 @@
 package com.kaosmc.practice.feature.party.internal;
 
 import com.kaosmc.practice.KaosPractice;
-import com.kaosmc.practice.adapter.core.CoreAdapter;
 import com.kaosmc.practice.bootstrap.KaosContext;
 import com.kaosmc.practice.bootstrap.annotation.Service;
 import com.kaosmc.practice.common.PlayerDisplayUtil;
@@ -130,8 +129,8 @@ public class PartyServiceImpl implements PartyService {
         Player leaderA = allPartyPlayers.get(0);
         Player leaderB = allPartyPlayers.get(1);
 
-        MatchGamePlayer gameLeaderA = new MatchGamePlayer(leaderA.getUniqueId(), leaderA.getName());
-        MatchGamePlayer gameLeaderB = new MatchGamePlayer(leaderB.getUniqueId(), leaderB.getName());
+        MatchGamePlayer gameLeaderA = new MatchGamePlayer(leaderA.getUniqueId(), PlayerDisplayUtil.resolveCurrentNick(leaderA, leaderA.getName()));
+        MatchGamePlayer gameLeaderB = new MatchGamePlayer(leaderB.getUniqueId(), PlayerDisplayUtil.resolveCurrentNick(leaderB, leaderB.getName()));
 
         GameParticipant<MatchGamePlayer> participantA = new TeamGameParticipant<>(gameLeaderA);
         GameParticipant<MatchGamePlayer> participantB = new TeamGameParticipant<>(gameLeaderB);
@@ -142,7 +141,7 @@ public class PartyServiceImpl implements PartyService {
 
         for (int i = 2; i < allPartyPlayers.size(); i++) {
             Player currentPlayer = allPartyPlayers.get(i);
-            MatchGamePlayer gamePlayer = new MatchGamePlayer(currentPlayer.getUniqueId(), currentPlayer.getName());
+            MatchGamePlayer gamePlayer = new MatchGamePlayer(currentPlayer.getUniqueId(), PlayerDisplayUtil.resolveCurrentNick(currentPlayer, currentPlayer.getName()));
 
             if (currentTeamACount < teamATargetSize) {
                 participantA.addPlayer(gamePlayer);
@@ -501,16 +500,8 @@ public class PartyServiceImpl implements PartyService {
             format = "§7[§6Party§7] {tag_prefix}{nick} §8» §f{message}";
         }
 
-        String tagPrefix = "";
-        CoreAdapter coreAdapter = KaosPractice.getInstance().getService(CoreAdapter.class);
-        if (coreAdapter != null && coreAdapter.getCore() != null && player != null) {
-            String rawTagPrefix = coreAdapter.getCore().getTagPrefix(player);
-            if (rawTagPrefix != null) {
-                tagPrefix = CC.translate(rawTagPrefix);
-            }
-        }
-
-        String nick = PlayerDisplayUtil.resolveDisplayName(player, player != null ? player.getName() : "Unknown");
+        String tagPrefix = PlayerDisplayUtil.resolveTagPrefix(player);
+        String nick = PlayerDisplayUtil.resolveCurrentNick(player, player != null ? player.getName() : "Unknown");
         return CC.translate(format
                 .replace("{tag_prefix}", tagPrefix)
                 .replace("{tag-prefix}", tagPrefix)

@@ -20,6 +20,7 @@ import com.kaosmc.practice.core.profile.ProfileService;
 import com.kaosmc.practice.core.profile.Profile;
 import com.kaosmc.practice.core.profile.enums.ProfileState;
 import com.kaosmc.practice.adapter.core.CoreAdapter;
+import com.kaosmc.practice.common.PlayerDisplayUtil;
 import com.kaosmc.practice.common.reflect.ReflectionService;
 import com.kaosmc.practice.common.reflect.internal.types.ActionBarReflectionServiceImpl;
 import com.kaosmc.practice.common.reflect.internal.types.DeathReflectionServiceImpl;
@@ -48,10 +49,25 @@ public class MatchDamageListener implements Listener {
         Player player = (Player) event.getEntity();
         ProfileService profileService = KaosPractice.getInstance().getService(ProfileService.class);
         Profile profile = profileService.getProfile(player.getUniqueId());
+        if (profile == null) {
+            return;
+        }
 
         if (profile.getState() == ProfileState.SPECTATING) event.setCancelled(true);
         if (profile.getState() == ProfileState.PLAYING) {
-            Kit matchKit = profile.getMatch().getKit();
+            Match match = profile.getMatch();
+            if (match == null) {
+                event.setCancelled(true);
+                return;
+            }
+
+            MatchGamePlayer gamePlayer = match.getGamePlayer(player);
+            if (gamePlayer == null) {
+                event.setCancelled(true);
+                return;
+            }
+
+            Kit matchKit = match.getKit();
 
             if (matchKit.isSettingEnabled(KitSettingNoFallDamageImpl.class)
                     && event.getCause() == EntityDamageEvent.DamageCause.FALL) {
@@ -65,12 +81,12 @@ public class MatchDamageListener implements Listener {
                 event.setCancelled(true);
             }
 
-            if (profile.getMatch().getState() != MatchState.RUNNING) {
+            if (match.getState() != MatchState.RUNNING) {
                 event.setCancelled(true);
                 return;
             }
 
-            if (profile.getMatch().getGamePlayer(player).isDead()) {
+            if (gamePlayer.isDead()) {
                 event.setCancelled(true);
                 return;
             }
@@ -112,6 +128,10 @@ public class MatchDamageListener implements Listener {
 
         Profile damagedProfile = profileService.getProfile(damaged.getUniqueId());
         Profile attackerProfile = profileService.getProfile(attacker.getUniqueId());
+        if (damagedProfile == null || attackerProfile == null) {
+            event.setCancelled(true);
+            return;
+        }
 
         if (damagedProfile.getState() == ProfileState.SPECTATING || attackerProfile.getState() == ProfileState.SPECTATING) {
             event.setCancelled(true);
@@ -130,12 +150,15 @@ public class MatchDamageListener implements Listener {
                 return;
             }
 
-            if (match.getGamePlayer(damaged).isDead() || match.getGamePlayer(attacker).isDead()) {
+            MatchGamePlayer damagedGamePlayer = match.getGamePlayer(damaged);
+            MatchGamePlayer attackerGamePlayer = match.getGamePlayer(attacker);
+
+            if (damagedGamePlayer == null || attackerGamePlayer == null) {
                 event.setCancelled(true);
                 return;
             }
 
-            if (match.getGamePlayer(attacker).isDead()) {
+            if (damagedGamePlayer.isDead() || attackerGamePlayer.isDead()) {
                 event.setCancelled(true);
                 return;
             }
@@ -171,7 +194,8 @@ public class MatchDamageListener implements Listener {
                         finalHealth = Math.max(0, finalHealth);
 
                         if (finalHealth > 0) {
-                            attacker.sendMessage(CC.translate(KaosPractice.getInstance().getService(CoreAdapter.class).getCore().getPlayerColor(damaged) + damaged.getName() + " &7&l" + Symbol.ARROW_R + " &6" + String.format("%.1f", finalHealth) + " &c" + Symbol.HEART));
+                            String damagedName = PlayerDisplayUtil.resolveCurrentNick(damaged, damaged.getName());
+                            attacker.sendMessage(CC.translate(KaosPractice.getInstance().getService(CoreAdapter.class).getCore().getPlayerColor(damaged) + damagedName + " &7&l" + Symbol.ARROW_R + " &6" + String.format("%.1f", finalHealth) + " &c" + Symbol.HEART));
                         }
                     }
 

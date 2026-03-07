@@ -1,5 +1,6 @@
 package com.kaosmc.practice.feature.match.command.admin.impl;
 
+import com.kaosmc.practice.common.PlayerDisplayUtil;
 import com.kaosmc.practice.core.locale.internal.impl.message.GlobalMessagesLocaleImpl;
 import com.kaosmc.practice.feature.arena.Arena;
 import com.kaosmc.practice.feature.arena.ArenaService;
@@ -95,8 +96,8 @@ public class MatchStartCommand extends BaseCommand {
             return;
         }
 
-        MatchGamePlayer playerA = new MatchGamePlayer(player1.getUniqueId(), player1.getName());
-        MatchGamePlayer playerB = new MatchGamePlayer(player2.getUniqueId(), player2.getName());
+        MatchGamePlayer playerA = new MatchGamePlayer(player1.getUniqueId(), PlayerDisplayUtil.resolveCurrentNick(player1, player1.getName()));
+        MatchGamePlayer playerB = new MatchGamePlayer(player2.getUniqueId(), PlayerDisplayUtil.resolveCurrentNick(player2, player2.getName()));
 
         GameParticipant<MatchGamePlayer> participantA = new GameParticipant<>(playerA);
         GameParticipant<MatchGamePlayer> participantB = new GameParticipant<>(playerB);
