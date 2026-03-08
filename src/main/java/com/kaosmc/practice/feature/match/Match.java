@@ -35,7 +35,6 @@ import com.kaosmc.practice.feature.cosmetic.model.CosmeticType;
 import com.kaosmc.practice.feature.hotbar.HotbarService;
 import com.kaosmc.practice.feature.kit.Kit;
 import com.kaosmc.practice.feature.kit.setting.types.mechanic.KitSettingCampProtectionImpl;
-import com.kaosmc.practice.feature.kit.setting.types.mechanic.KitSettingNoDamageImpl;
 import com.kaosmc.practice.feature.kit.setting.types.mode.*;
 import com.kaosmc.practice.feature.kit.setting.types.visual.KitSettingHealthBar;
 import com.kaosmc.practice.feature.layout.LayoutService;
@@ -346,26 +345,7 @@ public abstract class Match {
 
         gamePlayer.setDead(false);
         PlayerUtil.reset(player, true, true);
-        this.configureDamageTicks(player);
         this.giveLoadout(player, this.kit);
-    }
-
-    private void configureDamageTicks(Player player) {
-        if (player == null) {
-            return;
-        }
-
-        if (this.kit.isSettingEnabled(KitSettingBoxing.class)
-                || this.kit.isSettingEnabled(KitSettingSumo.class)
-                || this.kit.isSettingEnabled(KitSettingSpleef.class)
-                || this.kit.isSettingEnabled(KitSettingNoDamageImpl.class)) {
-            player.setMaximumNoDamageTicks(0);
-            player.setNoDamageTicks(0);
-            return;
-        }
-
-        player.setMaximumNoDamageTicks(20);
-        player.setNoDamageTicks(0);
     }
 
     /**

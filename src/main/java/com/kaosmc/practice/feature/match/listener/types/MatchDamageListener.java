@@ -93,8 +93,6 @@ public class MatchDamageListener implements Listener {
                     || matchKit.isSettingEnabled(KitSettingSpleef.class)
                     || matchKit.isSettingEnabled(KitSettingNoDamageImpl.class)) {
                 event.setDamage(0);
-                player.setNoDamageTicks(0);
-                player.setMaximumNoDamageTicks(0);
                 player.setHealth(player.getMaxHealth());
                 player.updateInventory();
             }
