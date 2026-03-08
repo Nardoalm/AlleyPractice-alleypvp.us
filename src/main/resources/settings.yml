@@ -82,6 +82,10 @@ profanity-filter:
     - caralho
   staff-notification-format: '&6[S] &f(&6Kaos: &fPalavrão Detectado) &c{player}&f: &7{message}'
 
+practice-api:
+  nametag:
+    priority: 100
+
 server:
   chat-format:
     global:
@@ -96,19 +100,6 @@ server:
     emoji-feature: true
   locations:
     spawn: world:10.0:100.0:100.0:0.0:0.0
-
-visuals:
-  nametag:
-    lobby:
-      # Prefix placeholders: {tag_prefix}, {tag_suffix}, {tag_color}, {name_color}, {team_color}, {clan_tag}, {nick}/{name}/{player}, %placeholderapi%
-      format: "{tag_prefix}"
-      # Example: " %kaoscore_clan_tag%"
-      suffix: ""
-    match:
-      # Prefix placeholders: {tag_prefix}, {tag_suffix}, {tag_color}, {name_color}, {team_color}, {clan_tag}, {nick}/{name}/{player}, %placeholderapi%
-      # Use {team_color} to avoid opponents sharing the same client-side nametag team.
-      format: "{team_color}"
-      suffix: ""
 
 sounds:
   match:

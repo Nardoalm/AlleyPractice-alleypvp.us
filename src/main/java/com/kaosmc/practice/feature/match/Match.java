@@ -56,7 +56,6 @@ import com.kaosmc.practice.feature.match.task.other.MatchRespawnTask;
 import com.kaosmc.practice.feature.queue.Queue;
 import com.kaosmc.practice.feature.spawn.SpawnService;
 import com.kaosmc.practice.feature.visibility.VisibilityService;
-import com.kaosmc.practice.visual.nametag.NametagService;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.*;
@@ -89,6 +88,7 @@ public abstract class Match {
     private final Kit kit;
     private final Arena arena;
     private final boolean ranked;
+    private final String matchId = UUID.randomUUID().toString();
 
     private final Map<BlockState, Location> brokenBlocks = new ConcurrentHashMap<>();
     private final Map<BlockState, Location> placedBlocks = new ConcurrentHashMap<>();
@@ -180,7 +180,6 @@ public abstract class Match {
         this.handleMatchTasks();
 
         this.getParticipants().forEach(this::initializeParticipant);
-        this.updateParticipantNametags();
 
         this.startTime = System.currentTimeMillis();
     }
@@ -189,7 +188,6 @@ public abstract class Match {
         deleteArenaCopyIfStandalone();
 
         this.getParticipants().forEach(this::finalizeParticipant);
-        this.updateParticipantNametags();
 
         this.cleanupTasks();
         this.cleanupHealthDisplay();
@@ -204,22 +202,6 @@ public abstract class Match {
 
         ArenaService arenaService = this.plugin.getService(ArenaService.class);
         arenaService.deleteTemporaryArena((StandAloneArena) this.arena);
-    }
-
-    /**
-     * Helper method to trigger a nametag update for all participants in the match.
-     */
-    private void updateParticipantNametags() {
-        NametagService nametagService = this.plugin.getService(NametagService.class);
-
-        getParticipants().forEach(participant -> {
-            List<MatchGamePlayer> playersToUpdate = participant.getAllPlayers();
-
-            playersToUpdate.stream()
-                    .map(gamePlayer -> plugin.getServer().getPlayer(gamePlayer.getUuid()))
-                    .filter(Objects::nonNull)
-                    .forEach(nametagService::updatePlayerState);
-        });
     }
 
     /**
@@ -913,11 +895,9 @@ public abstract class Match {
             this.spectators.add(player.getUniqueId());
         }
 
-        NametagService nametagService = this.plugin.getService(NametagService.class);
         VisibilityService visibilityService = this.plugin.getService(VisibilityService.class);
         HotbarService hotbarService = this.plugin.getService(HotbarService.class);
 
-        nametagService.updatePlayerState(player);
         visibilityService.updateVisibility(player);
         hotbarService.applyHotbarItems(player);
 
@@ -947,10 +927,8 @@ public abstract class Match {
         profile.setState(ProfileState.LOBBY);
         profile.setMatch(null);
 
-        NametagService nametagService = this.plugin.getService(NametagService.class);
         VisibilityService visibilityService = this.plugin.getService(VisibilityService.class);
 
-        nametagService.updatePlayerState(player);
         visibilityService.updateVisibility(player);
 
         player.setAllowFlight(false);
@@ -1541,10 +1519,6 @@ public abstract class Match {
             visibilityService.updateVisibility(player);
         }
 
-        NametagService nametagService = this.plugin.getService(NametagService.class);
-        if (nametagService != null) {
-            nametagService.updatePlayerState(player);
-        }
     }
 
     /**

@@ -1,17 +1,17 @@
 package com.kaosmc.practice;
 
+import com.kaosmc.practice.api.KaosPracticeAPI;
+import com.kaosmc.practice.api.internal.KaosPracticeAPIImpl;
 import com.kaosmc.practice.bootstrap.KaosContext;
 import com.kaosmc.practice.bootstrap.lifecycle.Service;
 import com.kaosmc.practice.common.logger.Logger;
 import com.kaosmc.practice.common.logger.PluginLogger;
 import com.kaosmc.practice.core.database.task.RepositoryCleanupTask;
-import com.kaosmc.practice.core.locale.LocaleService;
-import com.kaosmc.practice.core.locale.internal.impl.VisualsLocaleImpl;
 import com.kaosmc.practice.feature.cosmetic.task.CosmeticTask;
 import com.kaosmc.practice.feature.match.task.other.ArrowRemovalTask;
 import com.kaosmc.practice.feature.match.task.other.MatchPearlCooldownTask;
-import com.kaosmc.practice.visual.tablist.task.TablistUpdateTask;
 import lombok.Getter;
+import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.*;
@@ -37,6 +37,7 @@ public class KaosPractice extends JavaPlugin {
     private static KaosPractice instance;
 
     private final Kaos api;
+    private KaosPracticeAPI practiceAPI;
     private KaosContext context;
 
     public static KaosPractice getInstance() {
@@ -57,6 +58,7 @@ public class KaosPractice extends JavaPlugin {
         try {
             this.context = new KaosContext(this);
             this.context.initialize();
+            this.registerPublicApi();
 
             if (this.getServer().getPluginManager().isPluginEnabled("PlaceholderAPI")) {
                 new com.kaosmc.practice.adapter.placeholder.internal.KaosPlaceholderExpansion(this).register();
@@ -79,6 +81,8 @@ public class KaosPractice extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        this.unregisterPublicApi();
+
         if (this.context != null) {
             this.context.shutdown();
         }
@@ -104,6 +108,10 @@ public class KaosPractice extends JavaPlugin {
                 .orElseThrow(() -> new IllegalStateException("Could not find a registered service for: " + serviceInterface.getSimpleName()));
     }
 
+    public KaosPracticeAPI getAPI() {
+        return this.practiceAPI;
+    }
+
     private void validatePluginMetadata() {
         List<String> authors = this.getDescription().getAuthors();
         if (authors == null || authors.isEmpty()) {
@@ -119,10 +127,20 @@ public class KaosPractice extends JavaPlugin {
         tasks.put(ArrowRemovalTask.class.getSimpleName(), () -> new ArrowRemovalTask().runTaskTimer(this, 20L, 20L));
         tasks.put(CosmeticTask.class.getSimpleName(), () -> new CosmeticTask(this).runTaskTimerAsynchronously(this, 0L, 4L));
 
-        if (this.getService(LocaleService.class).getBoolean(VisualsLocaleImpl.TAB_LIST_ENABLED_BOOLEAN)) {
-            tasks.put(TablistUpdateTask.class.getSimpleName(), () -> new TablistUpdateTask().runTaskTimer(this, 0L, 20L));
+        tasks.forEach(Logger::logTimeTask);
+    }
+
+    private void registerPublicApi() {
+        this.practiceAPI = new KaosPracticeAPIImpl(this);
+        this.getServer().getServicesManager().register(KaosPracticeAPI.class, this.practiceAPI, this, ServicePriority.Normal);
+    }
+
+    private void unregisterPublicApi() {
+        if (this.practiceAPI == null) {
+            return;
         }
 
-        tasks.forEach(Logger::logTimeTask);
+        this.getServer().getServicesManager().unregister(KaosPracticeAPI.class, this.practiceAPI);
+        this.practiceAPI = null;
     }
 }
