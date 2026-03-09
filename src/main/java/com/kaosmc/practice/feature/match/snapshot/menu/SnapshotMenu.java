@@ -41,10 +41,11 @@ public class SnapshotMenu extends Menu {
     public Map<Integer, Button> getButtons(Player player) {
         Map<Integer, Button> buttons = new HashMap<>();
 
-        buttons.put(53, new SnapshotOpponentButton(this.snapshot));
-
         FileConfiguration config = KaosPractice.getInstance().getService(ConfigService.class).getMenusConfig();
         String path = "menus.snapshot-menu.buttons";
+        int opponentSlot = config.getInt(path + ".opponent.slot", 53);
+
+        buttons.put(opponentSlot, new SnapshotOpponentButton(this.snapshot));
 
         this.getInventoryContents(buttons);
         this.getArmorContents(config, path, buttons);

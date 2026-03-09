@@ -69,9 +69,6 @@ public class PracticeSettingsButton extends Button {
             case SCOREBOARD_LINES:
                 player.performCommand("togglescoreboardlines");
                 break;
-            case TAB_VISIBILITY:
-                player.performCommand("toggletablist");
-                break;
             case PING_RANGE:
                 player.performCommand("togglepingrange");
                 break;

@@ -54,18 +54,6 @@ public enum PracticeSettingType {
             )
     ),
 
-    TAB_VISIBILITY(13, "&6&lVisibilidade da Tablist", Material.ITEM_FRAME,
-            settings -> Arrays.asList(
-                    CC.MENU_BAR,
-                    "&7Ver a tablist.",
-                    "",
-                    LoreHelper.displayShown(settings.isTablistEnabled()),
-                    "",
-                    "&aClique para alternar.",
-                    CC.MENU_BAR
-            )
-    ),
-
     PING_RANGE(23, "&6&lFaixa de Ping", Material.STICK,
             settings -> Arrays.asList(
                     CC.MENU_BAR,

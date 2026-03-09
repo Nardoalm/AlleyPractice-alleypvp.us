@@ -54,8 +54,6 @@ public interface ConfigService extends Service {
 
     FileConfiguration getScoreboardConfig();
 
-    FileConfiguration getTabListConfig();
-
     FileConfiguration getTexturesConfig();
 
     FileConfiguration getDivisionsConfig();

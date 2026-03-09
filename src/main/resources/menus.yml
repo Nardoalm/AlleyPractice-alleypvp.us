@@ -1,6 +1,3 @@
-queues-menu:
-  type: MODERN # MODERN, DEFAULT
-
 layout-menu:
   type: DEFAULT
 

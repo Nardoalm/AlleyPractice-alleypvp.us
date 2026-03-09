@@ -1,5 +1,4 @@
 scoreboard:
-  enabled: true
   sidebar-format: "&7&m----------------------"
   team-displays:
     red: "&c&l[V] &fVermelho"

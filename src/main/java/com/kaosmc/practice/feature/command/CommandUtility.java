@@ -119,7 +119,6 @@ public class CommandUtility {
             new TogglePartyMessagesCommand();
             new ToggleScoreboardCommand();
             new ToggleScoreboardLinesCommand();
-            new ToggleTablistCommand();
             new TogglePingRangeCommand();
             new ToggleWorldTimeCommand();
             new ToggleProfanityFilterCommand();

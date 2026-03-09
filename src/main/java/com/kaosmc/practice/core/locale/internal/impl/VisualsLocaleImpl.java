@@ -28,10 +28,6 @@ public enum VisualsLocaleImpl implements LocaleEntry {
     ACTIONBAR_DEATH_MESSAGE_ENABLED_BOOLEAN("providers/visuals.yml", "action-bars.death-message.enabled", true),
     ACTIONBAR_DEATH_MESSAGE_FORMAT("providers/visuals.yml", "action-bars.death-message.format", "&c&lKILL! &f{victim-name-color}{victim}"),
 
-    TAB_LIST_ENABLED_BOOLEAN("providers/tab-list.yml", "tab-list.enabled", true),
-    TAB_LIST_HEADER("providers/tab-list.yml", "tab-list.header", Arrays.asList("", "&6&lKaosPractice", "")),
-    TAB_LIST_FOOTER("providers/tab-list.yml", "tab-list.footer", Arrays.asList("", "&fJogando no &6&lKaosPractice &fpor &6&lysubz", "")),
-
     TITLE_JOIN_MESSAGE_ENABLED("providers/visuals.yml", "titles.join-message.enabled", true),
     TITLE_JOIN_MESSAGE_HEADER("providers/visuals.yml", "titles.join-message.header", "&6&lBem-vindo ao KaosPractice"),
     TITLE_JOIN_MESSAGE_SUBHEADER("providers/visuals.yml", "titles.join-message.subheader", "&fCriado por &6ysubz"),

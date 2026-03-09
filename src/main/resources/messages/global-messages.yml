@@ -155,7 +155,6 @@ profile-messages:
     party-messages: '&aVocê {status} &amensagens de party.'
     scoreboard: '&aVocê {status} &aa scoreboard.'
     scoreboard-lines: '&aVocê {status} &aas linhas da scoreboard.'
-    tab-list: '&aVocê {status} &aa tablist.'
     profanity-filter: '&aVocê {status} &ao filtro de palavras.'
     duel-requests: '&aVocê {status} &arecebimento de pedidos de duelo.'
     lobby-music: '&aVocê {status} &amúsica do lobby.'
