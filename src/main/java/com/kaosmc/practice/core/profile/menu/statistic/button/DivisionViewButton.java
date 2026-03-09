@@ -25,9 +25,9 @@ public class DivisionViewButton extends Button {
     @Override
     public ItemStack getButtonItem(Player player) {
         return new ItemBuilder(Material.DIAMOND)
-                .name("&6&lDivisions")
+                .name("&6&lDivisões")
                 .lore(
-                        "&aClick to view your division progress."
+                        "&aClique para ver seu progresso de divisão."
                 )
                 .build();
     }

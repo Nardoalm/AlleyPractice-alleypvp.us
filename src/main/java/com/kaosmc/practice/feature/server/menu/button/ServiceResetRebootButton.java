@@ -23,13 +23,13 @@ public class ServiceResetRebootButton extends Button {
     @Override
     public ItemStack getButtonItem(Player player) {
         return new ItemBuilder(Material.EMERALD)
-                .name("&a&lUnprepare Reboot")
+                .name("&a&lCancelar Reinício")
                 .lore(
-                        "&fThis will undo the preparation",
-                        "&ffor a reboot by allowing",
-                        "&fqueueing again.",
+                        "&fIsso cancelará a preparação",
+                        "&fpara um reinício, liberando",
+                        "&fas filas novamente.",
                         "",
-                        "&aClick to allow queueing again!"
+                        "&aClique para liberar as filas novamente!"
                 )
                 .build();
     }
@@ -46,7 +46,7 @@ public class ServiceResetRebootButton extends Button {
         KaosPractice.getInstance().getService(ServerService.class).setQueueingAllowed(true);
         Arrays.asList(
                 "",
-                "&a&lQUEUEING IS NO LONGER DISABLED!",
+                "&a&lAS FILAS NÃO ESTÃO MAIS DESATIVADAS!",
                 ""
         ).forEach(line -> Bukkit.broadcastMessage(CC.translate(line)));
     }

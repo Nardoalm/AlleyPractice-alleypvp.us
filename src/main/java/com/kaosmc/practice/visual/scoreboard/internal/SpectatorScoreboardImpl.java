@@ -57,13 +57,13 @@ public class SpectatorScoreboardImpl implements Scoreboard {
                         .replace("{colorA}", String.valueOf(((DefaultMatch) profile.getMatch()).getTeamAColor()))
                         .replace("{colorB}", String.valueOf(((DefaultMatch) profile.getMatch()).getTeamBColor()))
                         .replace("{duration}", profile.getMatch().getDuration())
-                        .replace("{arena}", profile.getMatch().getArena().getDisplayName() == null ? "&c&lNULL" : profile.getMatch().getArena().getDisplayName())
+                        .replace("{arena}", profile.getMatch().getArena().getDisplayName() == null ? "&c&lINDEFINIDO" : profile.getMatch().getArena().getDisplayName())
                         .replace("{kit}", profile.getMatch().getKit().getDisplayName()));
             }
         } else if (profile.getFfaMatch() != null) {
             for (String line : configService.getScoreboardConfig().getStringList("scoreboard.lines.spectating.ffa")) {
                 scoreboardLines.add(CC.translate(line)
-                        .replace("{arena}", profile.getFfaMatch().getArena().getDisplayName() == null ? "&c&lNULL" : profile.getFfaMatch().getArena().getDisplayName())
+                        .replace("{arena}", profile.getFfaMatch().getArena().getDisplayName() == null ? "&c&lINDEFINIDO" : profile.getFfaMatch().getArena().getDisplayName())
                         .replace("{kit}", profile.getFfaMatch().getKit().getDisplayName()));
             }
         }

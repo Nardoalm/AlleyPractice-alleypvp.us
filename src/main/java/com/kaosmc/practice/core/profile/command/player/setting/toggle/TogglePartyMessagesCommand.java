@@ -28,7 +28,7 @@ public class TogglePartyMessagesCommand extends BaseCommand {
         profile.getProfileData().getSettingData().setPartyMessagesEnabled(!profile.getProfileData().getSettingData().isPartyMessagesEnabled());
 
         player.sendMessage(CC.translate(this.getString(GlobalMessagesLocaleImpl.PROFILE_TOGGLED_PARTY_MESSAGES)
-                .replace("{status}", profile.getProfileData().getSettingData().isPartyMessagesEnabled() ? "&aenabled" : "&cdisabled"))
+                .replace("{status}", profile.getProfileData().getSettingData().isPartyMessagesEnabled() ? "&aativou" : "&cdesativou"))
         );
     }
 }

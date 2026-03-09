@@ -50,12 +50,12 @@ public class PageFilterButton<T> extends Button {
         }
 
         lore.add(CC.MENU_BAR);
-        lore.add("&eLeft click to scroll.");
-        lore.add("&eRight click to toggle a filter.");
+        lore.add("&eClique esquerdo para rolar.");
+        lore.add("&eClique direito para ativar ou desativar um filtro.");
         lore.add(CC.MENU_BAR);
 
         return new ItemBuilder(Material.HOPPER)
-                .name("&7Filters")
+                .name("&7Filtros")
                 .lore(lore)
                 .build();
     }
@@ -63,7 +63,7 @@ public class PageFilterButton<T> extends Button {
     @Override
     public void clicked(Player player, ClickType clickType) {
         if (menu.getFilters() == null || menu.getFilters().isEmpty()) {
-            player.sendMessage(ChatColor.RED + "There are no filters.");
+            player.sendMessage(ChatColor.RED + "Não há filtros.");
         } else {
             if (clickType == ClickType.LEFT) {
                 if (menu.getScrollIndex() == menu.getFilters().size() - 1) {

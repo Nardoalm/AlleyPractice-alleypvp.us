@@ -36,7 +36,7 @@ public class PartyEventSplitButton extends Button {
                 .name("&6&l" + this.kit.getDisplayName())
                 .lore(
                         CC.MENU_BAR,
-                        "&aClick to select!",
+                        "&aClique para selecionar!",
                         CC.MENU_BAR
                 )
                 .durability(this.kit.getDurability())

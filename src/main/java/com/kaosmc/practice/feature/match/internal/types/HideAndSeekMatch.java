@@ -62,7 +62,7 @@ public class HideAndSeekMatch extends DefaultMatch {
         super(queue, kit, arena, ranked, participantA, participantB);
 
         if (arena == null) {
-            throw new IllegalArgumentException("IntermissionArena cannot be null for MatchHideAndSeekImpl");
+            throw new IllegalArgumentException("IntermissionArena nao pode ser nula para MatchHideAndSeekImpl");
         }
 
         List<MatchGamePlayer> allPlayers = new ArrayList<>();

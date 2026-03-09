@@ -54,7 +54,7 @@ public class AbilityServiceImpl implements AbilityService {
                 Ability instance = clazz.getDeclaredConstructor().newInstance();
                 this.abilities.add(instance);
             } catch (Exception e) {
-                Logger.logException("Failed to instantiate ability: " + clazz.getName(), e);
+                Logger.logException("Falha ao instanciar a ability: " + clazz.getName(), e);
             }
         }
     }

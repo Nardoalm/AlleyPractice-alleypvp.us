@@ -418,7 +418,7 @@ public class MatchBlockListener implements Listener {
 
     private void breakSignAndNotifyPlayer(SignChangeEvent event) {
         event.getBlock().breakNaturally();
-        event.getPlayer().sendMessage(CC.translate("&cInvalid direction."));
+        event.getPlayer().sendMessage(CC.translate("&cDireção inválida."));
     }
 
     private void createElevatorSign(SignChangeEvent event, String direction) {

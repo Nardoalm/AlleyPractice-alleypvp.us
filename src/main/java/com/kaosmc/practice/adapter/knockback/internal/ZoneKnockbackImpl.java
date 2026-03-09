@@ -37,7 +37,7 @@ public class ZoneKnockbackImpl implements Knockback {
 
         boolean success = KnockbackAPI.setPlayerProfile(player.getUniqueId(), profile);
         if (!success) {
-            Logger.error("Failed to apply the " + profile + " knockback profile for " + player.getName());
+            Logger.error("Falha ao aplicar o perfil de knockback " + profile + " em " + player.getName());
         }
     }
 }

@@ -8,6 +8,6 @@ import com.kaosmc.practice.feature.kit.setting.annotation.KitSettingData;
  * @project Kaos
  * @date 07/06/2024 - 19:31
  */
-@KitSettingData(name = "Sumo", description = "This is the sumo kit type", enabled = false)
+@KitSettingData(name = "Sumo", description = "Ativa o modo Sumo.", enabled = false)
 public class KitSettingSumo extends KitSetting {
 }

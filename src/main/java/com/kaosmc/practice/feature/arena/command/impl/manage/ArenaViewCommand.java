@@ -49,42 +49,42 @@ public class ArenaViewCommand extends BaseCommand {
         //TODO: add remaining arena details
 
         sender.sendMessage("");
-        sender.sendMessage(CC.translate("&6&lArena " + arena.getName() + " &f(" + (arena.isEnabled() ? "&aEnabled" : "&cDisabled") + "&f)"));
-        sender.sendMessage(CC.translate(" &6&l│ &rDisplay Name: &6" + arena.getDisplayName()));
-        sender.sendMessage(CC.translate(" &6&l│ &rType: &6" + arena.getType()));
-        sender.sendMessage(CC.translate(" &6&l│ &rKits: &6" + (arena.getKits().isEmpty() ? "None" : String.join(", ", arena.getKits()))));
+        sender.sendMessage(CC.translate("&6&lArena " + arena.getName() + " &f(" + (arena.isEnabled() ? "&aAtivada" : "&cDesativada") + "&f)"));
+        sender.sendMessage(CC.translate(" &6&l│ &rNome de Exibição: &6" + arena.getDisplayName()));
+        sender.sendMessage(CC.translate(" &6&l│ &rTipo: &6" + arena.getType()));
+        sender.sendMessage(CC.translate(" &6&l│ &rKits: &6" + (arena.getKits().isEmpty() ? "Nenhum" : String.join(", ", arena.getKits()))));
         if (arena instanceof FreeForAllArena) {
             FreeForAllArena ffaArena = (FreeForAllArena) arena;
-            sender.sendMessage(CC.translate(" &6&l│ &rSafe Zones:"));
-            sender.sendMessage(CC.translate("   &6&l◆ &fPos1 &7(Minimum)&f: &6" + (ffaArena.getMinimum() != null ? this.formatBlockLocation(ffaArena.getMinimum()) : "Not Set")));
-            sender.sendMessage(CC.translate("   &6&l◆ &fPos2 &7(Maximum)&f: &6" + (ffaArena.getMaximum() != null ? this.formatBlockLocation(ffaArena.getMaximum()) : "Not Set")));
-            sender.sendMessage(CC.translate(" &6&l│ &rPositions:"));
-            sender.sendMessage(CC.translate("   &6&l◆ &fCenter &7(Spectator)&f: &6" + (ffaArena.getCenter() != null ? formatFullLocation(ffaArena.getCenter()) : "&cNull")));
-            sender.sendMessage(CC.translate("   &6&l◆ &fPos1: &6" + (ffaArena.getPos1() != null ? this.formatFullLocation(ffaArena.getPos1()) : "&cNull")));
+            sender.sendMessage(CC.translate(" &6&l│ &rZonas Seguras:"));
+            sender.sendMessage(CC.translate("   &6&l◆ &fPos1 &7(Mínimo)&f: &6" + (ffaArena.getMinimum() != null ? this.formatBlockLocation(ffaArena.getMinimum()) : "Não Definido")));
+            sender.sendMessage(CC.translate("   &6&l◆ &fPos2 &7(Máximo)&f: &6" + (ffaArena.getMaximum() != null ? this.formatBlockLocation(ffaArena.getMaximum()) : "Não Definido")));
+            sender.sendMessage(CC.translate(" &6&l│ &rPosições:"));
+            sender.sendMessage(CC.translate("   &6&l◆ &fCentro &7(Espectador)&f: &6" + (ffaArena.getCenter() != null ? formatFullLocation(ffaArena.getCenter()) : "&cNulo")));
+            sender.sendMessage(CC.translate("   &6&l◆ &fPos1: &6" + (ffaArena.getPos1() != null ? this.formatFullLocation(ffaArena.getPos1()) : "&cNulo")));
         } else {
-            sender.sendMessage(CC.translate(" &6&l│ &rMinimum: &6" + (arena.getMinimum() != null ? this.formatBlockLocation(arena.getMinimum()) : "Not Set")));
-            sender.sendMessage(CC.translate(" &6&l│ &rMaximum: &6" + (arena.getMaximum() != null ? this.formatBlockLocation(arena.getMaximum()) : "Not Set")));
-            sender.sendMessage(CC.translate(" &6&l│ &rPositions:"));
-            sender.sendMessage(CC.translate("   &6&l◆ &fCenter &7(Spectator)&f: &6" + (arena.getCenter() != null ? this.formatFullLocation(arena.getCenter()) : "&cNull")));
-            sender.sendMessage(CC.translate("   &6&l◆ &fBlue: &6" + (arena.getPos1() != null ? this.formatFullLocation(arena.getPos1()) : "&cNull")));
-            sender.sendMessage(CC.translate("   &6&l◆ &fRed: &6" + (arena.getPos2() != null ? this.formatFullLocation(arena.getPos2()) : "&cNull")));
+            sender.sendMessage(CC.translate(" &6&l│ &rMínimo: &6" + (arena.getMinimum() != null ? this.formatBlockLocation(arena.getMinimum()) : "Não Definido")));
+            sender.sendMessage(CC.translate(" &6&l│ &rMáximo: &6" + (arena.getMaximum() != null ? this.formatBlockLocation(arena.getMaximum()) : "Não Definido")));
+            sender.sendMessage(CC.translate(" &6&l│ &rPosições:"));
+            sender.sendMessage(CC.translate("   &6&l◆ &fCentro &7(Espectador)&f: &6" + (arena.getCenter() != null ? this.formatFullLocation(arena.getCenter()) : "&cNulo")));
+            sender.sendMessage(CC.translate("   &6&l◆ &fAzul: &6" + (arena.getPos1() != null ? this.formatFullLocation(arena.getPos1()) : "&cNulo")));
+            sender.sendMessage(CC.translate("   &6&l◆ &fVermelho: &6" + (arena.getPos2() != null ? this.formatFullLocation(arena.getPos2()) : "&cNulo")));
         }
 
         if (arena instanceof StandAloneArena) {
             StandAloneArena standaloneArena = (StandAloneArena) arena;
-            sender.sendMessage(CC.translate(" &6&l│ &rTeam Portals:"));
-            sender.sendMessage(CC.translate("   &6&l◆ &fBlue: &6" + (standaloneArena.getTeam1Portal() != null ? this.formatBlockLocation(standaloneArena.getTeam1Portal()) : "&cNull")));
-            sender.sendMessage(CC.translate("   &6&l◆ &fRed: &6" + (standaloneArena.getTeam2Portal() != null ? this.formatBlockLocation(standaloneArena.getTeam2Portal()) : "&cNull")));
-            sender.sendMessage(CC.translate(" &6&l│ &rPortal Radius: &6" + standaloneArena.getPortalRadius()));
-            sender.sendMessage(CC.translate(" &6&l│ &rHeight Limit: &6" + standaloneArena.getHeightLimit()));
-            sender.sendMessage(CC.translate(" &6&l│ &rVoid Level: &6" + standaloneArena.getVoidLevel()));
+            sender.sendMessage(CC.translate(" &6&l│ &rPortais dos Times:"));
+            sender.sendMessage(CC.translate("   &6&l◆ &fAzul: &6" + (standaloneArena.getTeam1Portal() != null ? this.formatBlockLocation(standaloneArena.getTeam1Portal()) : "&cNulo")));
+            sender.sendMessage(CC.translate("   &6&l◆ &fVermelho: &6" + (standaloneArena.getTeam2Portal() != null ? this.formatBlockLocation(standaloneArena.getTeam2Portal()) : "&cNulo")));
+            sender.sendMessage(CC.translate(" &6&l│ &rRaio do Portal: &6" + standaloneArena.getPortalRadius()));
+            sender.sendMessage(CC.translate(" &6&l│ &rLimite de Altura: &6" + standaloneArena.getHeightLimit()));
+            sender.sendMessage(CC.translate(" &6&l│ &rNível do Void: &6" + standaloneArena.getVoidLevel()));
         }
 
         sender.sendMessage("");
     }
 
     private String formatBlockLocation(Location loc) {
-        if (loc == null) return "Not Set";
+        if (loc == null) return "Não Definido";
 
         return String.format(Locale.ENGLISH, "%.1f, %.1f, %.1f &7[%s]",
                 loc.getX(),
@@ -95,7 +95,7 @@ public class ArenaViewCommand extends BaseCommand {
     }
 
     private String formatFullLocation(Location loc) {
-        if (loc == null) return "&cNull";
+        if (loc == null) return "&cNulo";
 
         return String.format(Locale.ENGLISH, "%.1f, %.1f, %.1f, &7%.0f, %.0f &7[%s]",
                 loc.getX(),

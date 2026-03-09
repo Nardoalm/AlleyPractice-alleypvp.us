@@ -33,7 +33,7 @@ public class StatisticsMenu extends Menu {
 
     @Override
     public String getTitle(Player player) {
-        return this.target == player ? "&6&lYour Stats" : "&6&l" + this.target.getName() + "'s Stats";
+        return this.target == player ? "&6&lSuas Estatísticas" : "&6&lEstatísticas de " + this.target.getName();
     }
 
     @Override
@@ -101,8 +101,12 @@ public class StatisticsMenu extends Menu {
             String divisionName = "Unranked";
             String tierName = "I";
             if (profileUnrankedKitData != null) {
-                if (profileUnrankedKitData.getDivision() != null && profileUnrankedKitData.getDivision().getName() != null) {
-                    divisionName = profileUnrankedKitData.getDivision().getName();
+                if (profileUnrankedKitData.getDivision() != null) {
+                    if (profileUnrankedKitData.getDivision().getDisplayName() != null && !profileUnrankedKitData.getDivision().getDisplayName().isEmpty()) {
+                        divisionName = profileUnrankedKitData.getDivision().getDisplayName();
+                    } else if (profileUnrankedKitData.getDivision().getName() != null) {
+                        divisionName = profileUnrankedKitData.getDivision().getName();
+                    }
                 }
                 DivisionTier tier = profileUnrankedKitData.getTier();
                 if (tier != null && tier.getName() != null) {
@@ -113,18 +117,18 @@ public class StatisticsMenu extends Menu {
             List<String> lore = new ArrayList<>(Arrays.asList(
                     CC.MENU_BAR,
                     "&6&lUnranked &6⭐" + divisionName + " " + tierName,
-                    "&6│ &fWins: &6" + unrankedWins,
+                    "&6│ &fVitórias: &6" + unrankedWins,
                     //"&f● &6Losses: &f" + profileUnrankedKitData.getLosses(),
                     "",
-                    "&6│ &fWin Streak: " + "&6N/A",
-                    "    &fBest: " + "&6N/A" + " &7(N/A Daily)"
+                    "&6│ &fWin Streak: " + "&6N/D",
+                    "    &fMelhor: " + "&6N/D" + " &7(N/D Diário)"
             ));
 
             if (targetProfile != null && targetProfile.hasParticipatedInRanked()) {
                 lore.addAll(Arrays.asList(
                         "",
                         "&6&lRanked",
-                        "&6│ &fWins: &6" + rankedWins,
+                        "&6│ &fVitórias: &6" + rankedWins,
                         //"&f● &6Losses: &f" + profileRankedKitData.getLosses(),
                         "&6│ &fElo: &6" + rankedElo
                 ));
@@ -133,9 +137,9 @@ public class StatisticsMenu extends Menu {
             if (targetProfile != null && targetProfile.hasParticipatedInTournament()) {
                 lore.addAll(Arrays.asList(
                         "",
-                        "&6&lTournament",
-                        "&f● &6Wins: &f" + "N/A",
-                        "&f● &6Losses: &f" + "N/A"
+                        "&6&lTorneio",
+                        "&f● &6Vitórias: &f" + "N/D",
+                        "&f● &6Derrotas: &f" + "N/D"
                 ));
             }
 

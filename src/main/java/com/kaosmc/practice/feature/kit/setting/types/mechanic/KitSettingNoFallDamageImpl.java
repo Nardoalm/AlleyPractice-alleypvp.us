@@ -8,6 +8,6 @@ import com.kaosmc.practice.feature.kit.setting.annotation.KitSettingData;
  * @project Kaos
  * @date 16/10/2024 - 14:01
  */
-@KitSettingData(name = "NoFallDamage", description = "Prevent the player from taking fall damage", enabled = false)
+@KitSettingData(name = "NoFallDamage", description = "Impede que o jogador receba dano de queda.", enabled = false)
 public class KitSettingNoFallDamageImpl extends KitSetting {
 }

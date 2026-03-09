@@ -30,16 +30,16 @@ public class RemoveEnchantsCommand extends BaseCommand {
         }
 
         if (player.getInventory().getItemInHand().getEnchantments().isEmpty()) {
-            player.sendMessage(CC.translate("&cThe item you're holding doesn't have any enchantments."));
+            player.sendMessage(CC.translate("&cO item que você está segurando não possui encantamentos."));
             return;
         }
 
-        player.sendMessage(CC.translate("&cEnchantsments: &f" + player.getInventory().getItemInHand().getEnchantments().keySet()));
+        player.sendMessage(CC.translate("&cEncantamentos: &f" + player.getInventory().getItemInHand().getEnchantments().keySet()));
 
         player.getInventory().getItemInHand().getEnchantments().keySet().forEach(enchant -> {
             player.getInventory().getItemInHand().removeEnchantment(enchant);
         });
 
-        player.sendMessage(CC.translate("&aSuccessfully removed all enchantments from the &6" + player.getInventory().getItemInHand().getType().name() + " &aitem."));
+        player.sendMessage(CC.translate("&aRemoveu todos os encantamentos do item &6" + player.getInventory().getItemInHand().getType().name() + "&a."));
     }
 }

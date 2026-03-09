@@ -27,11 +27,11 @@ public class BotButton extends Button {
                 .name(kit.getName())
                 //TODO: This is just temporary, we're going to make this dynamic for all type of bots, not only a statically defined one. FOR TESTING PURPOSES ONLY.
                 .lore(
-                        "&7Click to fight a bot!",
+                        "&7Clique para lutar contra um bot!",
                         "",
                         "&7Kit: &6" + kit.getName(),
                         "",
-                        "&7Click to start the fight!"
+                        "&7Clique para iniciar a luta!"
                 )
                 .build();
     }
@@ -40,7 +40,7 @@ public class BotButton extends Button {
     public void clicked(Player player, ClickType clickType) {
         Arena arena = KaosPractice.getInstance().getService(ArenaService.class).getRandomArena(this.kit);
         if (arena == null) {
-            player.sendMessage("No arena available.");
+            player.sendMessage("Nenhuma arena disponível.");
             return;
         }
 

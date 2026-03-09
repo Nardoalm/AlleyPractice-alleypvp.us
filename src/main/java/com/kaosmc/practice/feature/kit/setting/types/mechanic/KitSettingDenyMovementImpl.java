@@ -8,6 +8,6 @@ import com.kaosmc.practice.feature.kit.setting.annotation.KitSettingData;
  * @project Kaos
  * @date 27/08/2024 - 19:08
  */
-@KitSettingData(name = "DenyMovement", description = "This denies the player movement during countdown.", enabled = false)
+@KitSettingData(name = "DenyMovement", description = "Impede o movimento do jogador durante a contagem regressiva.", enabled = false)
 public class KitSettingDenyMovementImpl extends KitSetting {
 }

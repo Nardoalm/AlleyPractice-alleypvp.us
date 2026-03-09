@@ -84,7 +84,7 @@ public class HotbarServiceImpl implements HotbarService {
             ConfigurationSection itemSection = hotbarSection.getConfigurationSection(key);
             if (itemSection == null) continue;
 
-            String displayName = itemSection.getString("display-name", "&fNULL");
+            String displayName = itemSection.getString("display-name", "&fINDEFINIDO");
             displayName = CC.translate(displayName);
 
             List<String> lore = itemSection.getStringList("lore");
@@ -124,7 +124,7 @@ public class HotbarServiceImpl implements HotbarService {
                     try {
                         actionData.setMenuName(menuName);
                     } catch (Exception exception) {
-                        Logger.error("Failed to set menu for hotbar item: " + key + ". Menu: " + menuName + " does not exist or is not properly configured.");
+                        Logger.error("Falha ao definir o menu do item de hotbar: " + key + ". O menu " + menuName + " não existe ou não está configurado corretamente.");
                     }
                 } else {
                     Logger.error("Menu name is missing for hotbar item: " + key);

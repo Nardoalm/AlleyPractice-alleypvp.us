@@ -121,12 +121,12 @@ public class QueueProfile {
 
     private String getPingRangeDisplay(Player player) {
         if (player == null) {
-            return "N/A";
+            return "N/D";
         }
 
         ProfileService profileService = KaosPractice.getInstance().getService(ProfileService.class);
         if (profileService == null) {
-            return "N/A";
+            return "N/D";
         }
 
         Profile profile = profileService.getProfile(player.getUniqueId());

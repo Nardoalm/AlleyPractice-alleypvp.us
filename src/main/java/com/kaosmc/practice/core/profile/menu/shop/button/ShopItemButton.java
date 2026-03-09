@@ -38,11 +38,11 @@ public class ShopItemButton extends Button {
         lore.add("");
 
         if (hasPermission) {
-            lore.add("&aYou already own this item.");
+            lore.add("&aVocê já possui este item.");
         } else {
-            lore.add(" &fPrice: &6$" + cosmetic.getPrice());
+            lore.add(" &fPreço: &6$" + cosmetic.getPrice());
             lore.add("");
-            lore.add("&aClick to purchase.");
+            lore.add("&aClique para comprar.");
         }
         lore.add(CC.MENU_BAR);
 

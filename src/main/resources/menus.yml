@@ -6,27 +6,27 @@ layout-menu:
 
 menus:
   snapshot-menu:
-    title: "&6&l{name}'s Inventory"
+    title: "&6&lInventário de {name}"
     buttons:
       hits:
         name: "&6&lHits: {hits}"
         lore:
-          - " &fCritical: &6{critical_hits}"
-          - " &fBlocked: &6{blocked_hits}"
-          - " &fBest Combo: &6{longest_combo}"
+          - " &fCríticos: &6{critical_hits}"
+          - " &fBloqueados: &6{blocked_hits}"
+          - " &fMelhor Combo: &6{longest_combo}"
           - ""
-          - "&6&lPlayer"
+          - "&6&lJogador"
           - " &fW-Taps: &6{w_taps}"
         item: "DIAMOND_SWORD"
         durability: 0
       potions:
         name: "&6&lPoções de Vida"
         lore:
-          - " &fRemaining: &6{potions_remaining}"
-          - " &fThrown: &6{potions_thrown}"
-          - " &fWasted: &6{potions_wasted}{heart}"
-          - " &fMissed: &6{potions_missed}"
-          - " &fAccuracy: &6{potion_accuracy}"
+          - " &fRestantes: &6{potions_remaining}"
+          - " &fArremessadas: &6{potions_thrown}"
+          - " &fDesperdiçadas: &6{potions_wasted}{heart}"
+          - " &fErradas: &6{potions_missed}"
+          - " &fPrecisão: &6{potion_accuracy}"
         item: "POTION"
         durability: 16421
       potion_effects:
@@ -40,8 +40,8 @@ menus:
       food:
         name: "&6&lNível de Fome"
         lore:
-          - " &fLevel: &6{food_level}"
-          - " &fSaturation: &6{saturation}"
+          - " &fNível: &6{food_level}"
+          - " &fSaturação: &6{saturation}"
         item: "COOKED_BEEF"
         durability: 0
       health:
@@ -65,12 +65,12 @@ menus:
         lore:
           - " &f◆ &6Kit: &f{kit}"
           - " &f◆ &6Arena: &f{arena}"
-          - " &f◆ &6Players: &f{players}"
+          - " &f◆ &6Jogadores: &f{players}"
       spectator-teleport-button:
         name: "{player-color}{username}"
         lore:
           - " &f◆ &6Ping: &f{ping}ms"
-          - " &f◆ &6Team: &f{team}"
+          - " &f◆ &6Time: &f{team}"
           - " &f◆ &6ELO: &f{elo}"
           - ""
           - "&6&lCLIQUE ESQUERDO &fpara se teleportar até este jogador."

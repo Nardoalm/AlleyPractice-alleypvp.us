@@ -16,12 +16,12 @@ public class ServiceClearLagButton extends Button {
     @Override
     public ItemStack getButtonItem(Player player) {
         return new ItemBuilder(Material.FEATHER)
-                .name("&c&lClear Lag")
+                .name("&c&lLimpar Lag")
                 .lore(
-                        "&fThis will clear the lag",
-                        "&ffor all players on the server.",
+                        "&fIsso executará a limpeza",
+                        "&fde lag para o servidor.",
                         "",
-                        "&cClick to clear!"
+                        "&cClique para limpar!"
                 )
                 .build();
     }

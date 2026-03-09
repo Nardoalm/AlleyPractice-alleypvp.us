@@ -23,13 +23,13 @@ public class LayoutResetItemsButton extends Button {
     @Override
     public ItemStack getButtonItem(Player player) {
         return new ItemBuilder(Material.WOOL)
-                .name("&6&lReset Items")
+                .name("&6&lResetar Itens")
                 .durability(4)
                 .lore(
                         CC.MENU_BAR,
-                        "&7Reset items to default.",
+                        "&7Reseta os itens para o padrão.",
                         "",
-                        "&aClick to reset.",
+                        "&aClique para resetar.",
                         CC.MENU_BAR
                 )
                 .hideMeta()

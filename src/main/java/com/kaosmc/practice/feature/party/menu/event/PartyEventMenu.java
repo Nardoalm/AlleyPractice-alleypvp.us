@@ -30,7 +30,7 @@ import java.util.Map;
 public class PartyEventMenu extends Menu {
     @Override
     public String getTitle(Player player) {
-        return "&6&lChoose a party event type";
+        return "&6&lEscolha o tipo de evento da party";
     }
 
     @Override
@@ -39,40 +39,40 @@ public class PartyEventMenu extends Menu {
 
         buttons.put(11, new PartyEventButton(
                 Material.DIAMOND_SWORD, 0,
-                "&6&lTeam split",
+                "&6&lDivisão de Times",
                 Arrays.asList(
                         CC.MENU_BAR,
-                        "&7Split the party into",
-                        "&72 teams and fight",
-                        "&7against each other.",
+                        "&7Divide a party em",
+                        "&72 times para lutar",
+                        "&7um contra o outro.",
                         "",
-                        "&aClick to select a kit.",
+                        "&aClique para selecionar um kit.",
                         CC.MENU_BAR
                 )
         ));
 
         buttons.put(13, new PartyEventButton(
                 Material.GOLD_AXE, 0,
-                "&6&lFree for all",
+                "&6&lFree for All",
                 Arrays.asList(
                         CC.MENU_BAR,
-                        "&7Every player fights",
-                        "&7against each other.",
+                        "&7Todos os jogadores lutam",
+                        "&7entre si.",
                         "",
-                        "&aClick to select a kit.",
+                        "&aClique para selecionar um kit.",
                         CC.MENU_BAR
                 )
         ));
 
         buttons.put(15, new PartyEventButton(
                 Material.REDSTONE, 0,
-                "&cBest of 3 Sumo",
+                "&cMelhor de 3 Sumo",
                 Arrays.asList(
                         CC.MENU_BAR,
-                        "&7This event is not",
-                        "&7implemented yet.",
+                        "&7Este evento ainda",
+                        "&7não foi implementado.",
                         "",
-                        "&c&mClick to start the event.",
+                        "&c&mClique para iniciar o evento.",
                         CC.MENU_BAR
                 )
         ));

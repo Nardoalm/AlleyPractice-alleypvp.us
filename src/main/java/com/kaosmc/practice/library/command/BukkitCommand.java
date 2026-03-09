@@ -40,7 +40,7 @@ public class BukkitCommand extends Command {
         try {
             success = executor.onCommand(sender, this, commandLabel, args);
         } catch (Throwable ex) {
-            throw new CommandException("Unhandled exception executing command '" + commandLabel + "' in bootstrap "
+            throw new CommandException("Excecao nao tratada ao executar o comando '" + commandLabel + "' no bootstrap "
                     + plugin.getDescription().getFullName(), ex);
         }
 
@@ -56,9 +56,9 @@ public class BukkitCommand extends Command {
     @Override
     public List<String> tabComplete(CommandSender sender, String alias, String[] args)
             throws CommandException, IllegalArgumentException {
-        Validate.notNull(sender, "Sender cannot be null");
-        Validate.notNull(args, "Arguments cannot be null");
-        Validate.notNull(alias, "Alias cannot be null");
+        Validate.notNull(sender, "Remetente nao pode ser nulo");
+        Validate.notNull(args, "Argumentos nao podem ser nulos");
+        Validate.notNull(alias, "Alias nao pode ser nulo");
 
         List<String> completions = null;
         try {
@@ -70,11 +70,11 @@ public class BukkitCommand extends Command {
             }
         } catch (Throwable ex) {
             StringBuilder message = new StringBuilder();
-            message.append("Unhandled exception during tab completion for command '/").append(alias).append(' ');
+            message.append("Excecao nao tratada durante a autocompletacao do comando '/").append(alias).append(' ');
             for (String arg : args) {
                 message.append(arg).append(' ');
             }
-            message.deleteCharAt(message.length() - 1).append("' in bootstrap ")
+            message.deleteCharAt(message.length() - 1).append("' no bootstrap ")
                     .append(plugin.getDescription().getFullName());
             throw new CommandException(message.toString(), ex);
         }

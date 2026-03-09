@@ -70,7 +70,7 @@ public class ArenaToggleCommand extends BaseCommand {
 
         player.sendMessage(this.getString(GlobalMessagesLocaleImpl.ARENA_TOGGLED)
                 .replace("{arena-name}", arena.getName())
-                .replace("{status}", arena.isEnabled() ? "enabled" : "disabled")
+                .replace("{status}", arena.isEnabled() ? "ativada" : "desativada")
         );
     }
 }

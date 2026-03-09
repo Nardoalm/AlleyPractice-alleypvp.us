@@ -36,7 +36,7 @@ public class ArenaListCommand extends BaseCommand {
         ArenaService arenaService = this.plugin.getService(ArenaService.class);
 
         player.sendMessage("");
-        player.sendMessage(CC.translate("     &6&lArena List &f(" + arenaService.getArenas().size() + "&f)"));
+        player.sendMessage(CC.translate("     &6&lLista de Arenas &f(" + arenaService.getArenas().size() + "&f)"));
 
         if (arenaService.getArenas().isEmpty()) {
             player.sendMessage(CC.translate("      &f◆ &cNenhuma arena disponível."));
@@ -47,10 +47,10 @@ public class ArenaListCommand extends BaseCommand {
                 .sorted(Comparator.comparing(Arena::getName))
                 .forEach(arena -> {
                     ComponentBuilder hover = new ComponentBuilder("")
-                            .append(CC.translate("&6&lArena Info" + LoreHelper.displayEnabled(arena.isEnabled()) + "\n"))
-                            .append(CC.translate(" &f● Display Name: &6" + arena.getDisplayName() + "\n"))
-                            .append(CC.translate(" &f● Type: &6" + arena.getType().name() + "\n"))
-                            .append(CC.translate(" &f● Center: &6" + TextFormatter.formatLocation(arena.getCenter()) + "\n"))
+                            .append(CC.translate("&6&lInformações da Arena" + LoreHelper.displayEnabled(arena.isEnabled()) + "\n"))
+                            .append(CC.translate(" &f● Nome de Exibição: &6" + arena.getDisplayName() + "\n"))
+                            .append(CC.translate(" &f● Tipo: &6" + arena.getType().name() + "\n"))
+                            .append(CC.translate(" &f● Centro: &6" + TextFormatter.formatLocation(arena.getCenter()) + "\n"))
                             .append(CC.translate(" &f● Pos1: &6" + TextFormatter.formatLocation(arena.getPos1()) + "\n"))
                             .append(CC.translate(" &f● Pos2: &6" + TextFormatter.formatLocation(arena.getPos2()) + "\n"));
 
@@ -64,17 +64,17 @@ public class ArenaListCommand extends BaseCommand {
                     message.append("[TP] ")
                             .color(ChatColor.GREEN.asBungee())
                             .event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/arena teleport " + arena.getName()))
-                            .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click to teleport to " + arena.getName()).color(ChatColor.GREEN.asBungee()).create()));
+                            .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Clique para teleportar até " + arena.getName()).color(ChatColor.GREEN.asBungee()).create()));
 
                     message.append("[X] ")
                             .color(ChatColor.RED.asBungee())
                             .event(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/arena delete " + arena.getName()))
-                            .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click to delete " + arena.getName()).color(ChatColor.RED.asBungee()).create()));
+                            .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Clique para excluir " + arena.getName()).color(ChatColor.RED.asBungee()).create()));
 
                     message.append("[i]")
                             .color(ChatColor.GRAY.asBungee())
                             .event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/arena view " + arena.getName()))
-                            .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click to view more detailed info for " + arena.getName()).color(ChatColor.GRAY.asBungee()).create()));
+                            .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Clique para ver informações detalhadas de " + arena.getName()).color(ChatColor.GRAY.asBungee()).create()));
 
                     player.spigot().sendMessage(message.create());
                 });

@@ -112,7 +112,7 @@ public class MusicServiceImpl implements MusicService {
                     try {
                         return MusicDisc.valueOf(name);
                     } catch (IllegalArgumentException e) {
-                        Logger.logException("Invalid music disc: " + name + " for " + profile.getUuid(), e);
+                        Logger.logException("Disco de música inválido: " + name + " para " + profile.getUuid(), e);
                         return null;
                     }
                 })

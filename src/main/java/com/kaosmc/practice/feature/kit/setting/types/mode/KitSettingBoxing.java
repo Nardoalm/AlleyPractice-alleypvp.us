@@ -8,6 +8,6 @@ import com.kaosmc.practice.feature.kit.setting.annotation.KitSettingData;
  * @project Kaos
  * @date 5/21/2024
  */
-@KitSettingData(name = "Boxing", description = "This is the boxing kit type", enabled = false)
+@KitSettingData(name = "Boxing", description = "Ativa o modo Boxing.", enabled = false)
 public class KitSettingBoxing extends KitSetting {
 }

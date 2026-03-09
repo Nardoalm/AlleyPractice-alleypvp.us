@@ -30,7 +30,7 @@ public class DuelRequestMenu extends Menu {
 
     @Override
     public String getTitle(Player player) {
-        return "&6&lDuel " + this.targetPlayer.getName();
+        return "&6&lDuelo " + this.targetPlayer.getName();
     }
 
     @Override
@@ -67,7 +67,7 @@ public class DuelRequestMenu extends Menu {
                     .name(this.kit.getMenuTitle())
                     .lore(
                             "",
-                            "&aClick to select!"
+                            "&aClique para selecionar!"
                     )
                     .durability(this.kit.getDurability())
                     .hideMeta()

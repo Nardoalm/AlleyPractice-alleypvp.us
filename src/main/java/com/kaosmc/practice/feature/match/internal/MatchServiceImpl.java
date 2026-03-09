@@ -144,7 +144,7 @@ public class MatchServiceImpl implements MatchService {
     private void loadBlockedCommands() {
         List<String> blockedCommands = this.localeService.getStringListRaw(SettingsLocaleImpl.GAME_BLOCKED_COMMANDS_DURING_MATCH_LIST);
         if (blockedCommands.isEmpty()) {
-            Logger.info("No blocked commands found in the configuration. Please check your settings.yml file.");
+            Logger.info("Nenhum comando bloqueado foi encontrado na configuracao. Verifique o arquivo settings.yml.");
             return;
         }
 

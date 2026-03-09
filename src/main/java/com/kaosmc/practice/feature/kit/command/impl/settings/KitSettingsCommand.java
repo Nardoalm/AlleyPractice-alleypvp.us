@@ -25,7 +25,7 @@ public class KitSettingsCommand extends BaseCommand {
         KitSettingService kitSettingService = this.plugin.getService(KitSettingService.class);
 
         player.sendMessage("");
-        player.sendMessage(CC.translate("&6&lKit Settings List &f(" + kitSettingService.getSettings().size() + "&f)"));
+        player.sendMessage(CC.translate("&6&lLista de Configurações de Kit &f(" + kitSettingService.getSettings().size() + "&f)"));
         if (kitSettingService.getSettings().isEmpty()) {
             player.sendMessage(CC.translate(" &f● &cNenhuma configuração de kit disponível."));
         }

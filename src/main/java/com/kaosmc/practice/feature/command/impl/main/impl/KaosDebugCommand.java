@@ -128,7 +128,7 @@ public class KaosDebugCommand extends BaseCommand {
         String banned = profile.getProfileData().isRankedBanned() ? "&c&lBANIDO" : "&a&lNAO BANIDO";
         Arrays.asList(
                 "",
-                "     &6&lProfile &7│ &f" + profile.getName(),
+                "     &6&lPerfil &7│ &f" + profile.getName(),
                 "      &6&l│ &fUUID: &6" + profile.getUuid(),
                 "      &6&l│ &fElo: &6" + this.formatNumber(profile.getProfileData().getElo()),
                 "      &6&l│ &fCoins: &6" + this.formatNumber(profile.getProfileData().getCoins()),
@@ -136,7 +136,7 @@ public class KaosDebugCommand extends BaseCommand {
                 "      &6&l│ &fFila atual: &6" + (profile.getQueueProfile() != null ? profile.getQueueProfile().getQueue().getKit().getName() : "&c&lNULO"),
                 "      &6&l│ &fRanked: &6" + banned,
                 ""
-        ).forEach(line -> player.sendMessage(CC.translate(line).replace("The player", profile.getName())));
+        ).forEach(line -> player.sendMessage(CC.translate(line).replace("O jogador", profile.getName())));
     }
 
     /**

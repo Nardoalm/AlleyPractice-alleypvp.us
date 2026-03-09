@@ -143,14 +143,14 @@ public class ProfileData {
 
         int previousElo = this.elo;
         LevelData prevLevelData = levelService.getLevel(previousElo);
-        String previousLevel = (prevLevelData != null) ? prevLevelData.getName() : "N/A";
+        String previousLevel = (prevLevelData != null) ? prevLevelData.getName() : "N/D";
 
         this.elo = this.calculateGlobalElo(profile);
 
         LevelData newLevelData = levelService.getLevel(this.elo);
-        String newLevel = (newLevelData != null) ? newLevelData.getName() : "N/A";
+        String newLevel = (newLevelData != null) ? newLevelData.getName() : "N/D";
 
-        if (!newLevel.equals(previousLevel) && !newLevel.equals("N/A")) {
+        if (!newLevel.equals(previousLevel) && !newLevel.equals("N/D")) {
             this.sendLevelUpMessage(profile, newLevel);
         }
     }
@@ -158,8 +158,8 @@ public class ProfileData {
     private void sendLevelUpMessage(Profile profile, String newLevel) {
         Arrays.asList(
                 "",
-                "&6&lNEW LEVEL &f| &a&lCONGRATULATIONS!",
-                " &fYou have reached &6" + newLevel + " &fin the global ranking system.",
+                "&6&lNOVO NÍVEL &f| &a&lPARABÉNS!",
+                " &fVocê alcançou &6" + newLevel + " &fno sistema global de ranking.",
                 ""
         ).forEach(line -> Bukkit.getPlayer(profile.getUuid()).sendMessage(CC.translate(line)));
     }

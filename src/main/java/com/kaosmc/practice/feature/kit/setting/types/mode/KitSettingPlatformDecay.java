@@ -8,6 +8,6 @@ import com.kaosmc.practice.feature.kit.setting.annotation.KitSettingData;
  * @project Kaos
  * @since 21/05/2025
  */
-@KitSettingData(name = "PlatformDecay", description = "The arena will decade from the outside in", enabled = false)
+@KitSettingData(name = "PlatformDecay", description = "A arena irá decair das bordas para o centro.", enabled = false)
 public class KitSettingPlatformDecay extends KitSetting {
 }

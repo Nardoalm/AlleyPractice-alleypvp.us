@@ -47,15 +47,15 @@ public class LevelAdminCommand extends BaseCommand {
     public void onCommand(CommandArgs command) {
         Arrays.asList(
                 "",
-                "&6&lLevel Admin Commands Help:",
+                "&6&lAjuda dos Comandos Administrativos de Nível:",
                 " &f◆ &6/leveladmin create &8(&7levelName&8) &8(&7minElo&8) &8(&7maxElo&8) &7| Cria um novo nível",
                 " &f◆ &6/leveladmin delete &8(&7levelName&8) &7| Exclui um nível",
-                " &f◆ &6/leveladmin list &7| List all levels",
-                " &f◆ &6/leveladmin view &8(&7levelName&8) &7| View level info",
-                " &f◆ &6/leveladmin setminelo &8(&7levelName&8) &8(&7minElo&8) &7| Set minimum Elo for a level",
-                " &f◆ &6/leveladmin setmaxelo &8(&7levelName&8) &8(&7maxElo&8) &7| Set maximum Elo for a level",
-                " &f◆ &6/leveladmin setdisplayname &8(&7levelName&8) &8(&7displayName&8) &7| Set display name for a level",
-                " &f◆ &6/leveladmin seticon &8(&7levelName&8) &7| Set material for a level",
+                " &f◆ &6/leveladmin list &7| Lista todos os níveis",
+                " &f◆ &6/leveladmin view &8(&7levelName&8) &7| Mostra as informações de um nível",
+                " &f◆ &6/leveladmin setminelo &8(&7levelName&8) &8(&7minElo&8) &7| Define o Elo mínimo de um nível",
+                " &f◆ &6/leveladmin setmaxelo &8(&7levelName&8) &8(&7maxElo&8) &7| Define o Elo máximo de um nível",
+                " &f◆ &6/leveladmin setdisplayname &8(&7levelName&8) &8(&7displayName&8) &7| Define o nome de exibição de um nível",
+                " &f◆ &6/leveladmin seticon &8(&7levelName&8) &7| Define o material de um nível",
                 ""
         ).forEach(line -> command.getSender().sendMessage(CC.translate(line)));
     }

@@ -51,8 +51,8 @@ public class KaosCommand extends BaseCommand {
                 "      &6&l│ &fWebsite: &6kaosmc.com",
                 "      &6&l│ &fEquipe: &6" + this.plugin.getDescription().getAuthors().toString().replace("[", "").replace("]", "").replace(",", "&7,&6"),
                 "",
-                "      &6&l│ &fLicense: &6CC BY-NC-SA 4.0",
-                "      &6&l│ &fVersion: &6" + this.plugin.getDescription().getVersion(),
+                "      &6&l│ &fLicença: &6CC BY-NC-SA 4.0",
+                "      &6&l│ &fVersão: &6" + this.plugin.getDescription().getVersion(),
                 ""
         ).forEach(line -> sender.sendMessage(CC.translate(line)));
 

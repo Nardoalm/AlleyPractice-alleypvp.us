@@ -112,7 +112,7 @@ public class TablistImpl implements TablistAdapter {
 
                 ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
             } catch (Exception e) {
-                Logger.error("Failed to update tablist for " + player.getName());
+                Logger.error("Falha ao atualizar a tablist de " + player.getName());
             }
         } else {
             PacketPlayOutPlayerListHeaderFooter packet = new PacketPlayOutPlayerListHeaderFooter();
@@ -127,7 +127,7 @@ public class TablistImpl implements TablistAdapter {
 
                 ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
             } catch (Exception e) {
-                Logger.error("Failed to update tablist for " + player.getName());
+                Logger.error("Falha ao atualizar a tablist de " + player.getName());
             }
         }
     }

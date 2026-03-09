@@ -24,7 +24,7 @@ public class TitleMenu extends PaginatedMenu {
 
     @Override
     public String getPrePaginatedTitle(Player player) {
-        return "&6&lYour Titles";
+        return "&6&lSeus Títulos";
     }
 
     @Override

@@ -54,7 +54,7 @@ public class KitSettingServiceImpl implements KitSettingService {
                 this.settings.add(instance);
                 this.settingClasses.put(instance.getName(), clazz);
             } catch (Exception exception) {
-                Logger.logException("Failed to register setting class " + clazz.getSimpleName() + "!", exception);
+                Logger.logException("Falha ao registrar a classe de configuração " + clazz.getSimpleName() + "!", exception);
             }
         }
     }
@@ -66,7 +66,7 @@ public class KitSettingServiceImpl implements KitSettingService {
             try {
                 return clazz.getDeclaredConstructor().newInstance();
             } catch (Exception e) {
-                Logger.logException("Failed to create setting instance for " + name + "!", e);
+                Logger.logException("Falha ao criar a instância da configuração " + name + "!", e);
             }
         }
         return null;

@@ -21,7 +21,7 @@ import java.util.Map;
 @CosmeticData(
         type = CosmeticType.SUIT,
         name = "Spiderman",
-        description = "Your friendly neighborhood Spiderman!",
+        description = "Seu amigável Homem-Aranha da vizinhança!",
         icon = Material.WEB,
         slot = 12,
         price = 1000

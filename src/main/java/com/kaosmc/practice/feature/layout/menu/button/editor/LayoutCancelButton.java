@@ -22,14 +22,14 @@ public class LayoutCancelButton extends Button {
     @Override
     public ItemStack getButtonItem(Player player) {
         return new ItemBuilder(Material.WOOL)
-                .name("&6&lCancel")
+                .name("&6&lCancelar")
                 .durability(14)
                 .lore(
                         CC.MENU_BAR,
-                        "&7Cancel changes &",
-                        "&7return to main menu.",
+                        "&7Cancela as alterações e",
+                        "&7volta ao menu principal.",
                         "",
-                        "&aClick to cancel.",
+                        "&aClique para cancelar.",
                         CC.MENU_BAR
                 )
                 .hideMeta()

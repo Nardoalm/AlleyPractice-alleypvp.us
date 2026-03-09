@@ -28,34 +28,34 @@ public class ArenaTestCommand extends BaseCommand {
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();
 
-        player.sendMessage("World: " + player.getWorld());
-        player.sendMessage("Location: " + player.getLocation());
+        player.sendMessage("Mundo: " + player.getWorld());
+        player.sendMessage("Localização: " + player.getLocation());
 
         ArenaService arenaService = this.plugin.getService(ArenaService.class);
-        player.sendMessage("Copied arenas: " + arenaService.getTemporaryArenas().size());
+        player.sendMessage("Arenas copiadas: " + arenaService.getTemporaryArenas().size());
 
         ProfileService profileService = this.plugin.getService(ProfileService.class);
         Profile profile = profileService.getProfile(player.getUniqueId());
         Match match = profile.getMatch();
         if (match != null) {
-            player.sendMessage("Match Arena: " + match.getArena());
+            player.sendMessage("Arena da Partida: " + match.getArena());
 
             StandAloneArena arena = (StandAloneArena) match.getArena();
             if (arena != null) {
-                player.sendMessage("Arena Name: " + arena.getName());
-                player.sendMessage("Arena Type: " + arena.getType());
-                player.sendMessage("Arena Positions: " + arena.getPos1() + " - " + arena.getPos2());
-                player.sendMessage("Arena Display Name: " + arena.getDisplayName());
-                player.sendMessage("Arena World " + Objects.requireNonNull(arena.getMinimum().getWorld()).getName());
-                player.sendMessage("Is copied: " + arena.isTemporaryCopy());
-                player.sendMessage("Arena Center: " + arena.getCenter());
-                player.sendMessage("Arena Enabled: " + arena.isEnabled());
+                player.sendMessage("Nome da Arena: " + arena.getName());
+                player.sendMessage("Tipo da Arena: " + arena.getType());
+                player.sendMessage("Posições da Arena: " + arena.getPos1() + " - " + arena.getPos2());
+                player.sendMessage("Nome de Exibição da Arena: " + arena.getDisplayName());
+                player.sendMessage("Mundo da Arena: " + Objects.requireNonNull(arena.getMinimum().getWorld()).getName());
+                player.sendMessage("É cópia temporária: " + arena.isTemporaryCopy());
+                player.sendMessage("Centro da Arena: " + arena.getCenter());
+                player.sendMessage("Arena ativada: " + arena.isEnabled());
                 arena.verifyArenaExists();
             } else {
-                player.sendMessage("No arena found for this match.");
+                player.sendMessage("Nenhuma arena encontrada para esta partida.");
             }
         } else {
-            player.sendMessage("No match found for this profile.");
+            player.sendMessage("Nenhuma partida encontrada para este perfil.");
         }
     }
 }

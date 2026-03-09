@@ -37,7 +37,7 @@ duel:
         clickable:
           format: ' &a(Clique para aceitar)'
           command: /accept {sender}
-          hover: '&aClique para aceitar &6{sender}&a''s pedido de duelo de party.'
+          hover: '&aClique para aceitar o pedido de duelo de party de &6{sender}&a.'
         format:
           - ''
           - '&6&lPedido de Duelo de Party'
@@ -211,26 +211,25 @@ match:
     team:
       enabled: true
       format:
-        - '&7[&6Partida&7] &6{teamA-leader} (Time) &7(&a{teamA-size}&7) &avs &6{teamB-leader}''s
-        Time B &7(&a{teamB-size}&7)'
+        - '&7[&6Partida&7] &6{teamA-leader} (Time) &7(&a{teamA-size}&7) &avs &6{teamB-leader} (Time) &7(&a{teamB-size}&7)'
 party:
   invitation:
     received:
       clickable:
         format: ' &a(Clique para aceitar)'
         command: /party accept {sender}
-        hover: '&aClique para aceitar &6{sender}&a''s party invitation.'
+        hover: '&aClique para aceitar o convite de party de &6{sender}&a.'
       format:
         - ''
         - '&6&lConvite de Party'
         - ' &6&l│ &fDe: &6{name-color}{sender}'
-        - ' &6&l│ &fPlayers: &6{party-size}&f/&6N/A'
+        - ' &6&l│ &fJogadores: &6{party-size}&f/&6N/D'
         - '{clickable}'
         - ''
     sent:
       format:
         - ''
-        - '&6&lConvite de Party Sent'
+        - '&6&lConvite de Party Enviado'
         - ' &6&l│ &fAlvo: &6{name-color}{target}'
         - ''
   announcement:
@@ -241,8 +240,8 @@ party:
     format:
       - ''
       - '&6&lConvite Público de Party'
-      - ' &6&l│ &fLeader: &6{name-color}{leader}'
-      - ' &6&l│ &fPlayers: &6{party-size}&f/&6N/A'
+      - ' &6&l│ &fLíder: &6{name-color}{leader}'
+      - ' &6&l│ &fJogadores: &6{party-size}&f/&6N/D'
       - '{clickable}'
       - ''
   request:

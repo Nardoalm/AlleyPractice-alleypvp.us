@@ -698,7 +698,7 @@ public final class ReflectionUtility {
             profileField.setAccessible(true);
             profileField.set(meta, profile);
         } catch (NoSuchFieldException | IllegalAccessException exception) {
-            Logger.logException("Failed to set skull texture", exception);
+            Logger.logException("Falha ao definir a textura da cabeca", exception);
         }
         return meta;
     }

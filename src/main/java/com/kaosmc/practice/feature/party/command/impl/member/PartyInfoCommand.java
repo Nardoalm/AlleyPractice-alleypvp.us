@@ -56,7 +56,7 @@ public class PartyInfoCommand extends BaseCommand {
                     .replace("{leader}", this.plugin.getServer().getPlayer(leaderUUID).getName())
                     .replace("{privacy-desc}", party.getState().getDescription())
                     .replace("{privacy}", party.getState().getName())
-                    .replace("{size}", "N/A") //TODO: implement max party size
+                    .replace("{size}", "N/D") //TODO: implementar tamanho maximo da party
                     .replace("{members-amount}", String.valueOf(party.getMembers().size() - 1))
                     .replace("{members}", members.isEmpty() ? noMembersFormat : members));
         }

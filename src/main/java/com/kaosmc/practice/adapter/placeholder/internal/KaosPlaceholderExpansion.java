@@ -33,7 +33,7 @@ public class KaosPlaceholderExpansion extends PlaceholderExpansion {
      */
     public KaosPlaceholderExpansion(KaosPractice plugin) {
         this.plugin = plugin;
-        this.notAvailableString = CC.translate("&cN/A");
+        this.notAvailableString = CC.translate("&cN/D");
     }
 
     @Override

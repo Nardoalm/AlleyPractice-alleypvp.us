@@ -8,6 +8,6 @@ import com.kaosmc.practice.feature.kit.setting.annotation.KitSettingData;
  * @project Kaos
  * @since 21/05/2025
  */
-@KitSettingData(name = "RespawnTimer", description = "Kit setting for respawn with timer", enabled = false)
+@KitSettingData(name = "RespawnTimer", description = "Ativa respawn com temporizador.", enabled = false)
 public class KitSettingRespawnTimer extends KitSetting {
 }

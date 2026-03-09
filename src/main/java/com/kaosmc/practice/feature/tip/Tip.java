@@ -31,7 +31,7 @@ public class Tip {
      */
     public String getRandomTip() {
         if (this.tips.isEmpty()) {
-            return "&cThe list of tips appears to be empty at the moment. Well at this point we can only apologize and hit you up with this tip: &ePractice makes perfect!";
+            return "&cA lista de dicas está vazia no momento. Então fica a dica: &eA prática leva à perfeição!";
         }
 
         return this.tips.get(ThreadLocalRandom.current().nextInt(this.tips.size()));

@@ -32,7 +32,7 @@ public class BaseRaidingKitData {
         } else if (role == BaseRaiderRole.TRAPPER) {
             this.trapperKit = kit;
         } else {
-            throw new IllegalArgumentException("Invalid role: " + role);
+            throw new IllegalArgumentException("Função inválida: " + role);
         }
     }
 
@@ -49,7 +49,7 @@ public class BaseRaidingKitData {
         } else if (role == BaseRaiderRole.TRAPPER) {
             return this.trapperKit;
         } else {
-            throw new IllegalArgumentException("Invalid role: " + role);
+            throw new IllegalArgumentException("Função inválida: " + role);
         }
     }
 }

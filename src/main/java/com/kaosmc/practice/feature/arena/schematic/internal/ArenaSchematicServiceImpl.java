@@ -59,7 +59,7 @@ public class ArenaSchematicServiceImpl implements ArenaSchematicService {
             if (schematicsDir.mkdirs()) {
                 Logger.info("Created schematics directory: " + schematicsDir.getPath());
             } else {
-                Logger.error("Failed to create schematics directory: " + schematicsDir.getPath());
+                Logger.error("Falha ao criar o diretório de schematics: " + schematicsDir.getPath());
             }
         }
     }
@@ -100,12 +100,12 @@ public class ArenaSchematicServiceImpl implements ArenaSchematicService {
             try (ClipboardWriter writer = ClipboardFormat.SCHEMATIC.getWriter(Files.newOutputStream(schematicFile.toPath()))) {
                 writer.write(clipboard, session.getWorld().getWorldData());
             } catch (Exception e) {
-                Logger.logException("Failed to write schematic to file: " + schematicFile.getPath(), e);
+                Logger.logException("Falha ao gravar a schematic no arquivo: " + schematicFile.getPath(), e);
             }
 
             Logger.info("Saved schematic for arena: " + arena.getName());
         } catch (Exception exception) {
-            Logger.logException("Failed to save schematic for arena " + arena.getName(), exception);
+            Logger.logException("Falha ao salvar a schematic da arena " + arena.getName(), exception);
         }
     }
 
@@ -138,7 +138,7 @@ public class ArenaSchematicServiceImpl implements ArenaSchematicService {
 
             session.flushQueue();
         } catch (Exception exception) {
-            Logger.logException("Failed to paste schematic at " + location, exception);
+            Logger.logException("Falha ao colar a schematic em " + location, exception);
         }
     }
 
@@ -169,7 +169,7 @@ public class ArenaSchematicServiceImpl implements ArenaSchematicService {
             session.setBlocks(new CuboidRegion(minVector, maxVector), new BaseBlock(0));
             session.flushQueue();
         } catch (Exception exception) {
-            Logger.logException("Failed to delete arena " + arena.getName(), exception);
+            Logger.logException("Falha ao deletar a arena " + arena.getName(), exception);
         }
     }
 

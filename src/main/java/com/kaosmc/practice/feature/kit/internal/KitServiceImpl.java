@@ -233,7 +233,7 @@ public class KitServiceImpl implements KitService {
             List<PotionEffect> potionEffects = Serializer.deserializePotionEffects(config.getStringList(key + ".potion-effects"));
             kit.setPotionEffects(potionEffects);
         } catch (Exception exception) {
-            Logger.logException("Failed to load potion effects for kit " + kit.getName() + ": " + exception.getMessage(), exception);
+            Logger.logException("Falha ao carregar os efeitos de poção do kit " + kit.getName() + ": " + exception.getMessage(), exception);
         }
     }
 

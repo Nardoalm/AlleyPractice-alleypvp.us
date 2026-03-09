@@ -165,7 +165,7 @@ public class Queue {
                             Player memberPlayer = Bukkit.getPlayer(memberId);
                             if (memberPlayer != null) {
                                 hotbarService.applyHotbarItems(memberPlayer);
-                                memberPlayer.sendMessage(CC.translate("&aO líder da sua party entrou na fila &6" + queueProfile.getQueue().getKit().getDisplayName() + " &aqueue."));
+                                memberPlayer.sendMessage(CC.translate("&aO líder da sua party entrou na fila &6" + queueProfile.getQueue().getKit().getDisplayName() + "&a."));
                             }
                         }
                     }

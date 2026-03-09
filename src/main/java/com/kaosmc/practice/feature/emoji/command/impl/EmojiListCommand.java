@@ -26,7 +26,7 @@ public class EmojiListCommand extends BaseCommand {
             TextComponent emojiComponent = new TextComponent(CC.translate(" " + emoji.getIdentifier() + " &7" + Symbol.ARROW_R + " &f" + emoji.getFormat()));
             emojiComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, emoji.getIdentifier()));
 
-            String hoverText = "&7Click to apply &f" + emoji.getFormat() + " &7to your chat input.";
+            String hoverText = "&7Clique para aplicar &f" + emoji.getFormat() + " &7na entrada do chat.";
             BaseComponent[] hoverComponent = new ComponentBuilder(CC.translate(hoverText)).create();
             emojiComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, hoverComponent));
 

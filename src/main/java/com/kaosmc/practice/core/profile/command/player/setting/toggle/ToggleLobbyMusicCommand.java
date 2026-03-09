@@ -41,7 +41,7 @@ public class ToggleLobbyMusicCommand extends BaseCommand {
         }
 
         player.sendMessage(CC.translate(this.getString(GlobalMessagesLocaleImpl.PROFILE_TOGGLED_LOBBY_MUSIC)
-                .replace("{status}", isEnabled ? "&aenabled" : "&cdisabled"))
+                .replace("{status}", isEnabled ? "&aativou" : "&cdesativou"))
         );
     }
 }

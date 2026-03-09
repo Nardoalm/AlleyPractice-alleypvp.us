@@ -55,24 +55,24 @@ public class MatchHistoryViewButton extends Button {
                     .lore(
                             "&7" + date,
                             "",
-                            "&6&lParticipants",
-                            " &f● Winner: &a" + winnerName,
-                            " &f● Loser: &c" + loserName,
+                            "&6&lParticipantes",
+                            " &f● Vencedor: &a" + winnerName,
+                            " &f● Perdedor: &c" + loserName,
                             "",
-                            "&6&lMatch Details",
+                            "&6&lDetalhes da Partida",
                             " &f● Kit: &6" + kit.getDisplayName(),
                             " &f● Arena: &6" + arena.getDisplayName(),
                             "",
-                            "&aClick to view more details!"
+                            "&aClique para ver mais detalhes!"
                     )
                     .hideMeta()
                     .durability(3)
                     .build();
         } else {
             return new ItemBuilder(Material.BARRIER)
-                    .name("&c&lNot implemented")
+                    .name("&c&lNão implementado")
                     .lore(
-                            "&fThis is not implemented for team matches yet."
+                            "&fIsso ainda não foi implementado para partidas em equipe."
                     )
                     .hideMeta()
                     .build();

@@ -22,29 +22,29 @@ import java.util.Map;
 public class HostMenu extends Menu {
     @Override
     public String getTitle(Player player) {
-        return "&6&lHost Event";
+        return "&6&lHospedar Evento";
     }
 
     @Override
     public Map<Integer, Button> getButtons(Player player) {
         Map<Integer, Button> buttons = new HashMap<>();
 
-        buttons.put(11, new HostButton("&6&lEvent", new ItemStack(Material.EMPTY_MAP), Arrays.asList(
-                "&fHost an event with different",
-                "&funique implementations.",
+        buttons.put(11, new HostButton("&6&lEvento", new ItemStack(Material.EMPTY_MAP), Arrays.asList(
+                "&fHospede um evento com",
+                "&fimplementações diferentes.",
                 "",
-                " &f◆ &6Types: &7Sumo",
-                " &f● &cMore soon...",
+                " &f◆ &6Tipos: &7Sumo",
+                " &f● &cMais em breve...",
                 "",
-                "&aClick to host!"
+                "&aClique para hospedar!"
         )));
 
-        buttons.put(15, new HostButton("&6&lTournament", new ItemStack(Material.BOW), Arrays.asList(
-                "&fHost a tournament to",
-                "&fcompete in a number",
-                "&fof duels to win.",
+        buttons.put(15, new HostButton("&6&lTorneio", new ItemStack(Material.BOW), Arrays.asList(
+                "&fHospede um torneio para",
+                "&fcompetir em uma série",
+                "&fde duelos até vencer.",
                 "",
-                "&aClick to host!"
+                "&aClique para hospedar!"
         )));
 
         this.addGlass(buttons, 15);

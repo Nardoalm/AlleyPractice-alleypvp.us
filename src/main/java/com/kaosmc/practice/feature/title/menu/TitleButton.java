@@ -45,9 +45,9 @@ public class TitleButton extends Button {
                 .name("&6&l" + this.title.getKit().getName())
                 .lore(
                         CC.MENU_BAR,
-                        " &a&lUNLOCKED",
+                        " &a&lDESBLOQUEADO",
                         "",
-                        "&aClick to select!",
+                        "&aClique para selecionar!",
                         CC.MENU_BAR
                 )
                 .durability(this.title.getKit().getDurability())
@@ -60,7 +60,7 @@ public class TitleButton extends Button {
         if (clickType != ClickType.LEFT) return;
 
         if (!this.profile.getProfileData().getUnlockedTitles().contains(this.title.getKit().getName())) {
-            player.sendMessage(CC.translate("&cTo select this title, you need to unlock it first."));
+            player.sendMessage(CC.translate("&cPara selecionar este título, você precisa desbloqueá-lo primeiro."));
             return;
         }
 
@@ -70,7 +70,7 @@ public class TitleButton extends Button {
         }
 
         this.profile.getProfileData().setSelectedTitle(this.title.getKit().getName());
-        player.sendMessage(CC.translate("&aYou have selected the &6" + this.title.getKit().getName() + " &atitle."));
+        player.sendMessage(CC.translate("&aVocê selecionou o título &6" + this.title.getKit().getName() + "&a."));
     }
 
     /**
@@ -83,16 +83,16 @@ public class TitleButton extends Button {
 
         return Arrays.asList(
                 CC.MENU_BAR,
-                " &c&lLOCKED",
+                " &c&lBLOQUEADO",
                 "",
-                String.format(" &fUnlock &6%s &fwith %d more %s.",
+                String.format(" &fDesbloqueie &6%s &fcom mais %d %s.",
                         progress.getNextRankName(),
                         progress.getWinsRequired(),
                         progress.getWinOrWins()
                 ),
                 "&f " + progress.getProgressBar(12, "■") + " &7" + progress.getProgressPercentage(),
                 "",
-                "&fRequires &c&l" + this.title.getRequiredDivision().getName().toUpperCase() + " &fdivision.",
+                "&fRequer a divisão &c&l" + this.title.getRequiredDivision().getName().toUpperCase() + "&f.",
                 CC.MENU_BAR
         );
     }

@@ -52,13 +52,13 @@ public class Combo extends Ability {
             Profile profile = profileService.getProfile(player.getUniqueId());
 
             if (profile.getCooldown(Combo.class).onCooldown(player)) {
-                player.sendMessage(CC.translate("&fYou are on &6&lCombo &7cooldown for &4" + DurationFormatter.getRemaining(profile.getCooldown(Combo.class).getRemainingMillis(player), true, true)));
+                player.sendMessage(CC.translate("&fVocê está no cooldown de &6&lCombo &7por &4" + DurationFormatter.getRemaining(profile.getCooldown(Combo.class).getRemainingMillis(player), true, true)));
                 player.updateInventory();
                 return;
             }
 
             if(profile.getGlobalCooldown(GlobalCooldown.PARTNER_ITEM).onCooldown(player)){
-                player.sendMessage(CC.translate("&fYou are on &6&lPartner Item &fcooldown for &6" + DurationFormatter.getRemaining(profile.getGlobalCooldown(GlobalCooldown.PARTNER_ITEM).getRemainingMillis(player), true, true)));
+                player.sendMessage(CC.translate("&fVocê está no cooldown de &6&lPartner Item &fpor &6" + DurationFormatter.getRemaining(profile.getGlobalCooldown(GlobalCooldown.PARTNER_ITEM).getRemainingMillis(player), true, true)));
                 player.updateInventory();
                 return;
             }
@@ -97,7 +97,7 @@ public class Combo extends Ability {
 
             player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20 * hits, 1));
             player.playSound(player.getLocation(), Sound.ZOMBIE_INFECT, 1F, 1F);
-            player.sendMessage(CC.translate("&7You've received Strength II for &4" + hits + " &7seconds."));
+            player.sendMessage(CC.translate("&7Você recebeu Strength II por &4" + hits + " &7segundos."));
 
             HITS.remove(player.getUniqueId());
             COMBO.remove(player.getUniqueId());
@@ -115,7 +115,7 @@ public class Combo extends Ability {
             Profile profile = profileService.getProfile(player.getUniqueId());
 
             if (profile.getCooldown(Combo.class).onCooldown(player)) {
-                player.sendMessage(CC.translate("&fYou are on cooldown for &4" + DurationFormatter.getRemaining(profile.getCooldown(Combo.class).getRemainingMillis(player), true)));
+                player.sendMessage(CC.translate("&fVocê está em cooldown por &4" + DurationFormatter.getRemaining(profile.getCooldown(Combo.class).getRemainingMillis(player), true)));
                 event.setCancelled(true);
                 player.updateInventory();
             }

@@ -8,6 +8,6 @@ import com.kaosmc.practice.feature.kit.setting.annotation.KitSettingData;
  * @project Kaos
  * @since 02/06/2025
  */
-@KitSettingData(name = "BowShotIndicator", description = "Shows how your opponent's health when you shoot them with a bow via message.", enabled = true)
+@KitSettingData(name = "BowShotIndicator", description = "Mostra a vida do oponente em mensagem quando ele é atingido por flecha.", enabled = true)
 public class KitSettingBowShotIndicator extends KitSetting {
 }

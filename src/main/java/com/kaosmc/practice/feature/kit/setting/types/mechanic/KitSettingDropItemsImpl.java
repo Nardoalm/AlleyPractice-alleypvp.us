@@ -8,6 +8,6 @@ import com.kaosmc.practice.feature.kit.setting.annotation.KitSettingData;
  * @project kaos-practice
  * @date 27/06/2025
  */
-@KitSettingData(name = "DropItems", description = "This decides whether items should drop on death", enabled = false)
+@KitSettingData(name = "DropItems", description = "Define se os itens devem dropar ao morrer.", enabled = false)
 public class KitSettingDropItemsImpl extends KitSetting {
 }

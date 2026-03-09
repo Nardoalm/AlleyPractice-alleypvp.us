@@ -31,7 +31,7 @@ public abstract class BaseCosmeticRepository<T extends BaseCosmetic> implements 
             T instance = clazz.getDeclaredConstructor().newInstance();
             this.cosmeticsByName.put(instance.getName(), instance);
         } catch (Exception e) {
-            Logger.error("Failed to register cosmetic class " + clazz.getSimpleName() + ": " + e.getMessage());
+            Logger.error("Falha ao registrar a classe de cosmético " + clazz.getSimpleName() + ": " + e.getMessage());
         }
     }
 

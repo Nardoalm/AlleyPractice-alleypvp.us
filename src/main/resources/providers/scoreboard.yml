@@ -93,7 +93,7 @@ scoreboard:
       - "&6&lFila {queued-type}"
       - "&6&l│ &rKit: &6{queued-kit}"
       - "&6&l│ &rDuração: &6{queued-time}"
-      - "&6&l│ &rPing Range: &6{ping-range}"
+      - "&6&l│ &rFaixa de Ping: &6{ping-range}"
       - ""
       - "&fProcurando partida{dot-animation}"
     starting:

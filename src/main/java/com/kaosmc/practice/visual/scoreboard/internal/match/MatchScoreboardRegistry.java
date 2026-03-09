@@ -55,7 +55,7 @@ public class MatchScoreboardRegistry {
                         matchTypeScoreboards.put(annotation.match(), scoreboard);
                     }
                 } catch (Exception e) {
-                    Logger.logException("Failed to instantiate scoreboard visual: " + classInfo.getName(), e);
+                    Logger.logException("Falha ao instanciar o visual da scoreboard: " + classInfo.getName(), e);
                 }
             }
         }

@@ -43,6 +43,6 @@ public class UnbreakableCommand extends BaseCommand {
         ItemStack unbreakAbleItem = ReflectionUtility.setUnbreakable(item, unbreakable);
         player.setItemInHand(unbreakAbleItem);
 
-        player.sendMessage(CC.translate("&aSuccessfully set the unbreakable state of the item to &6" + unbreakable + "&a."));
+        player.sendMessage(CC.translate("&aDefiniu o estado inquebrável do item para &6" + unbreakable + "&a."));
     }
 }

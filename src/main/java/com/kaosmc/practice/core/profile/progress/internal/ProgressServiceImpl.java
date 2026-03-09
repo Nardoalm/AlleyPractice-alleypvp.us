@@ -20,7 +20,7 @@ import java.util.Objects;
  */
 @Service(provides = ProgressService.class, priority = 410)
 public class ProgressServiceImpl implements ProgressService {
-    private static final String FALLBACK_NEXT_RANK = "N/A";
+    private static final String FALLBACK_NEXT_RANK = "N/D";
 
     @Override
     public PlayerProgress calculateProgress(Profile profile, String kitName) {

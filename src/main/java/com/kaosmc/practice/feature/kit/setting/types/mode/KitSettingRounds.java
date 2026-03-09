@@ -8,6 +8,6 @@ import com.kaosmc.practice.feature.kit.setting.annotation.KitSettingData;
  * @project Kaos
  * @date 05/10/2024 - 10:41
  */
-@KitSettingData(name = "Rounds", description = "The Rounds Kit Setting, first to have specific amount of scores, wins.", enabled = false)
+@KitSettingData(name = "Rounds", description = "Ativa partidas por rounds; quem atingir a quantidade definida primeiro vence.", enabled = false)
 public class KitSettingRounds extends KitSetting {
 }

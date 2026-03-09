@@ -58,7 +58,7 @@ public class TimeWarp extends Ability {
             }
             if (isAbility(player.getItemInHand())) {
                 if (this.hasCooldown(player)) {
-                    player.sendMessage(CC.translate("&fYou are on cooldown for &4" + DurationFormatter.getRemaining(profile.getCooldown(TimeWarp.class).getRemainingMillis(player), true)));
+                    player.sendMessage(CC.translate("&fVocê está em cooldown por &4" + DurationFormatter.getRemaining(profile.getCooldown(TimeWarp.class).getRemainingMillis(player), true)));
                     event.setCancelled(true);
                     player.updateInventory();
                 }
@@ -109,14 +109,14 @@ public class TimeWarp extends Ability {
 
         if (profile.getCooldown(TimeWarp.class).onCooldown(player)) {
             event.setCancelled(true);
-            player.sendMessage(CC.translate("&fYou are on &6&lTime Warp &7cooldown for &4" + DurationFormatter.getRemaining(profile.getCooldown(TimeWarp.class).getRemainingMillis(player), true, true)));
+            player.sendMessage(CC.translate("&fVocê está no cooldown de &6&lTime Warp &7por &4" + DurationFormatter.getRemaining(profile.getCooldown(TimeWarp.class).getRemainingMillis(player), true, true)));
             player.updateInventory();
             event.setCancelled(true);
             return;
         }
 
         if (profile.getGlobalCooldown(GlobalCooldown.PARTNER_ITEM).onCooldown(player)) {
-            player.sendMessage(CC.translate("&fYou are on &6&lPartner Item &fcooldown for &6" + DurationFormatter.getRemaining(profile.getGlobalCooldown(GlobalCooldown.PARTNER_ITEM).getRemainingMillis(player), true, true)));
+            player.sendMessage(CC.translate("&fVocê está no cooldown de &6&lPartner Item &fpor &6" + DurationFormatter.getRemaining(profile.getGlobalCooldown(GlobalCooldown.PARTNER_ITEM).getRemainingMillis(player), true, true)));
             player.updateInventory();
             event.setCancelled(true);
             return;
@@ -135,7 +135,7 @@ public class TimeWarp extends Ability {
         profile.getGlobalCooldown(GlobalCooldown.PARTNER_ITEM).applyCooldown(player, 10 * 1000);
 
         player.sendMessage(CC.translate(
-                "&7You &a4ctivated &7a Time Warp, so you will be teleported to your last thrown enderpearl's location in &43 &7seconds!"));
+                "&7Você ativou o Time Warp e será teleportado para a localização da sua última ender pearl em &43 &7segundos!"));
 
         Bukkit.getScheduler().runTaskLater(KaosPractice.getInstance(), () -> {
             player.teleport(location);

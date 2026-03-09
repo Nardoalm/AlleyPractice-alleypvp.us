@@ -44,7 +44,7 @@ public class KitSetEditableCommand extends BaseCommand {
         try {
             editable = Boolean.parseBoolean(args[1]);
         } catch (Exception exception) {
-            sender.sendMessage(CC.translate("&cInvalid value for editable! Use true or false."));
+            sender.sendMessage(CC.translate("&cValor inválido para editable! Use true ou false."));
             return;
         }
 

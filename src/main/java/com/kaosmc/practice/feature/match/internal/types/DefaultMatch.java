@@ -453,7 +453,7 @@ public class DefaultMatch extends Match {
             String progressLine;
 
             if (progress.isMaxRank() && progress.getCurrentWins() >= progress.getWinsForNextTier()) {
-                progressLine = " &6&l● &fCONGRATULATIONS! You have reached the maximum rank!";
+                progressLine = " &6&l● &fPARABÉNS! Você alcançou o rank máximo!";
             } else {
                 progressLine = String.format(" &6&l● &fUnlock &6%s &fwith %d more %s!",
                         progress.getNextRankName(),
@@ -677,7 +677,7 @@ public class DefaultMatch extends Match {
 
         Kit parentKit = this.getKit();
         if (parentKit == null) {
-            Logger.error("&cCould not determine the parent kit for the raiding match.");
+            Logger.error("&cNao foi possivel determinar o kit pai para a partida de raiding.");
             return;
         }
 
@@ -687,7 +687,7 @@ public class DefaultMatch extends Match {
 
         Kit kitToGive = KaosPractice.getInstance().getService(BaseRaidingService.class).getRaidingKitByRole(parentKit, role);
         if (kitToGive == null) {
-            Logger.info("&cNo kit found for role: " + role.name() + " linked to parent kit.");
+            Logger.info("&cNenhum kit encontrado para o papel: " + role.name() + " vinculado ao kit pai.");
             return;
         }
 

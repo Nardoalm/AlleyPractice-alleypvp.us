@@ -38,13 +38,13 @@ public class TankIngot extends Ability {
             Profile profile = profileService.getProfile(player.getUniqueId());
 
             if (profile.getCooldown(TankIngot.class).onCooldown(player)) {
-                player.sendMessage(CC.translate("&fYou are on &6&lTank Ingot &7cooldown for &4" + DurationFormatter.getRemaining(profile.getCooldown(TankIngot.class).getRemainingMillis(player), true, true)));
+                player.sendMessage(CC.translate("&fVocê está no cooldown de &6&lTank Ingot &7por &4" + DurationFormatter.getRemaining(profile.getCooldown(TankIngot.class).getRemainingMillis(player), true, true)));
                 player.updateInventory();
                 return;
             }
 
             if (profile.getGlobalCooldown(GlobalCooldown.PARTNER_ITEM).onCooldown(player)) {
-                player.sendMessage(CC.translate("&fYou are on &6&lPartner Item &fcooldown for &6" + DurationFormatter.getRemaining(profile.getGlobalCooldown(GlobalCooldown.PARTNER_ITEM).getRemainingMillis(player), true, true)));
+                player.sendMessage(CC.translate("&fVocê está no cooldown de &6&lPartner Item &fpor &6" + DurationFormatter.getRemaining(profile.getGlobalCooldown(GlobalCooldown.PARTNER_ITEM).getRemainingMillis(player), true, true)));
                 player.updateInventory();
                 return;
             }
@@ -73,7 +73,7 @@ public class TankIngot extends Ability {
             }
             if (isAbility(player.getItemInHand())) {
                 if (this.hasCooldown(player)) {
-                    player.sendMessage(CC.translate("&fYou are on cooldown for &4" + DurationFormatter.getRemaining(profile.getCooldown(TankIngot.class).getRemainingMillis(player), true)));
+                    player.sendMessage(CC.translate("&fVocê está em cooldown por &4" + DurationFormatter.getRemaining(profile.getCooldown(TankIngot.class).getRemainingMillis(player), true)));
                     event.setCancelled(true);
                     player.updateInventory();
                 }

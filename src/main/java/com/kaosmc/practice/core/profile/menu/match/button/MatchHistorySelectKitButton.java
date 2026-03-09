@@ -47,7 +47,7 @@ public class MatchHistorySelectKitButton extends Button {
                         " &f● Ranked: &6" + rankedCount,
                         " &f● Unranked: &6" + unrankedCount,
                         "",
-                        "&aClick to view!"
+                        "&aClique para visualizar!"
                 )
                 .durability(this.kit.getDurability())
                 .hideMeta()

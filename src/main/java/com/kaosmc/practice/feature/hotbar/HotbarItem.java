@@ -37,8 +37,8 @@ public class HotbarItem {
      */
     public HotbarItem(String name) {
         this.name = name;
-        this.displayName = "&6&l" + name + " &7(Right-Click)";
-        this.lore = Collections.singletonList("&f" + name + " hotbar item.");
+        this.displayName = "&6&l" + name + " &7(Clique Direito)";
+        this.lore = Collections.singletonList("&fItem de hotbar: " + name + ".");
 
         this.material = Material.STONE;
         this.durability = 0;

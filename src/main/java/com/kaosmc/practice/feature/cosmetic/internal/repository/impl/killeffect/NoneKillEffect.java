@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
  * @project Kaos
  * @date 01/06/2024
  */
-@CosmeticData(type = CosmeticType.KILL_EFFECT, name = "None", description = "Remover your kill effect", icon = Material.BARRIER, slot = 10)
+@CosmeticData(type = CosmeticType.KILL_EFFECT, name = "None", description = "Remova seu efeito de kill", icon = Material.BARRIER, slot = 10)
 public class NoneKillEffect extends BaseKillEffect {
     @Override
     public void execute(Player player) {

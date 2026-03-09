@@ -21,7 +21,7 @@ public class KitViewCommand extends BaseCommand {
             aliases = "kit.info",
             isAdminOnly = true,
             usage = "kit view <kitName>",
-            description = "Ver information about a kit."
+            description = "Ver informações sobre um kit."
     )
     @Override
     public void onCommand(CommandArgs command) {
@@ -40,17 +40,17 @@ public class KitViewCommand extends BaseCommand {
         }
 
         player.sendMessage("");
-        player.sendMessage(CC.translate("&6&lKit " + kit.getName() + " &f(" + (kit.isEnabled() ? "&aEnabled" : "&cDisabled") + "&f)"));
-        player.sendMessage(CC.translate(" &f◆ &6Display Name: &f" + kit.getDisplayName()));
+        player.sendMessage(CC.translate("&6&lKit " + kit.getName() + " &f(" + (kit.isEnabled() ? "&aAtivado" : "&cDesativado") + "&f)"));
+        player.sendMessage(CC.translate(" &f◆ &6Nome de Exibição: &f" + kit.getDisplayName()));
         player.sendMessage(CC.translate(" &f◆ &6Name: &f" + kit.getName()));
         player.sendMessage(CC.translate(" &f◆ &6Icon: &f" + kit.getIcon().name().toLowerCase() + " &7(" + kit.getDurability() + ")"));
-        player.sendMessage(CC.translate(" &f◆ &6Disclaimer: &f" + kit.getDisclaimer()));
-        player.sendMessage(CC.translate(" &f◆ &6Description: &f" + kit.getDescription()));
-        player.sendMessage(CC.translate(" &f◆ &6FFA: &f" + (kit.isFfaEnabled() ? "&aEnabled" : "&cDisabled")));
+        player.sendMessage(CC.translate(" &f◆ &6Aviso: &f" + kit.getDisclaimer()));
+        player.sendMessage(CC.translate(" &f◆ &6Descrição: &f" + kit.getDescription()));
+        player.sendMessage(CC.translate(" &f◆ &6FFA: &f" + (kit.isFfaEnabled() ? "&aAtivado" : "&cDesativado")));
         player.spigot().sendMessage(ClickableUtil.createComponent(
-                "  &a(Click here to view the kit settings)",
+                "  &a(Clique aqui para ver as configurações do kit)",
                 "/kit viewsettings " + kit.getName(),
-                "&7Click to view the settings of the kit &6" + kit.getName())
+                "&7Clique para ver as configurações do kit &6" + kit.getName())
         );
         player.sendMessage("");
     }

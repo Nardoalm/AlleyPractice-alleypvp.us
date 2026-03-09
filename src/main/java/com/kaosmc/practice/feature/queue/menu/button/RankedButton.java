@@ -62,15 +62,15 @@ public class RankedButton extends Button {
             );
         }
         Collections.addAll(lore,
-                "&6│ &rPlaying: &6" + this.queue.getQueueFightCount(),
-                "&6│ &rQueueing: &6" + this.queue.getProfiles().size(),
+                "&6│ &rJogando: &6" + this.queue.getQueueFightCount(),
+                "&6│ &rNa fila: &6" + this.queue.getProfiles().size(),
                 "",
-                "&f&lYour ELO: &6" + KaosPractice.getInstance().getService(ProfileService.class).getProfile(player.getUniqueId()).getProfileData().getRankedKitData().get(kit.getName()).getElo(),
-                " &f1. &6NULL &f- &6N/A",
-                " &f2. &6NULL &f- &6N/A",
-                " &f3. &6NULL &f- &6N/A",
+                "&f&lSeu ELO: &6" + KaosPractice.getInstance().getService(ProfileService.class).getProfile(player.getUniqueId()).getProfileData().getRankedKitData().get(kit.getName()).getElo(),
+                " &f1. &6INDEFINIDO &f- &6N/D",
+                " &f2. &6INDEFINIDO &f- &6N/D",
+                " &f3. &6INDEFINIDO &f- &6N/D",
                 "",
-                "&aClick to play.",
+                "&aClique para jogar.",
                 CC.MENU_BAR
         );
 
@@ -94,9 +94,9 @@ public class RankedButton extends Button {
             player.closeInventory();
             Arrays.asList(
                     "",
-                    "&c&lRANKED BAN",
-                    "&cYou are currently banned from ranked queues.",
-                    "&7You may appeal at &6&ndiscord.gg/kaos-practice&7.",
+                    "&c&lBANIMENTO RANKED",
+                    "&cVocê está banido das filas ranked no momento.",
+                    "&7Você pode recorrer em &6&ndiscord.gg/kaos-practice&7.",
                     ""
             ).forEach(line -> player.sendMessage(CC.translate(line)));
             return;

@@ -34,7 +34,7 @@ public class LayoutSelectRoleKitMenu extends Menu {
 
     @Override
     public String getTitle(Player player) {
-        return "&6&lSelect a Role";
+        return "&6&lSelecione uma Função";
     }
 
     @Override
@@ -74,16 +74,16 @@ public class LayoutSelectRoleKitMenu extends Menu {
         public ItemStack getButtonItem(Player player) {
             if (this.kit == null) {
                 return new ItemBuilder(Material.BARRIER)
-                        .name("&cNo Kit Available")
-                        .lore("&cSomething went wrong!")
+                        .name("&cNenhum kit disponível")
+                        .lore("&cAlgo deu errado!")
                         .build();
             }
 
             return new ItemBuilder(this.kit.getIcon())
-                    .name(this.role.getDisplayName() + " Kit &7(" + this.kit.getDisplayName() + ")")
+                    .name("Kit " + this.role.getDisplayName() + " &7(" + this.kit.getDisplayName() + ")")
                     .lore(
                             CC.MENU_BAR,
-                            "&aClick to edit.",
+                            "&aClique para editar.",
                             CC.MENU_BAR
                     )
                     .durability(this.kit.getDurability())
@@ -95,7 +95,7 @@ public class LayoutSelectRoleKitMenu extends Menu {
         public void clicked(Player player, ClickType clickType) {
             if (clickType != ClickType.LEFT) return;
             if (this.kit == null) {
-                player.sendMessage(CC.translate("&c&lError: No kit found for this role."));
+                player.sendMessage(CC.translate("&c&lErro: nenhum kit encontrado para esta função."));
                 player.closeInventory();
                 return;
             }
@@ -106,20 +106,20 @@ public class LayoutSelectRoleKitMenu extends Menu {
                     || profile.getProfileData() == null
                     || profile.getProfileData().getLayoutData() == null
                     || profile.getProfileData().getLayoutData().getLayouts() == null) {
-                player.sendMessage(CC.translate("&c&lError: Layout profile not available right now."));
+                player.sendMessage(CC.translate("&c&lErro: o perfil de layout não está disponível agora."));
                 player.closeInventory();
                 return;
             }
 
             List<LayoutData> layouts = profile.getProfileData().getLayoutData().getLayouts().get(this.kit.getName());
             if (layouts == null || layouts.isEmpty()) {
-                profile.getProfileData().getLayoutData().addLayout(this.kit.getName(), "Layout1", "Layout 1", InventoryUtil.getEditableKitItems(this.kit));
+                profile.getProfileData().getLayoutData().addLayout(this.kit.getName(), "Layout1", "Modelo 1", InventoryUtil.getEditableKitItems(this.kit));
                 layouts = profile.getProfileData().getLayoutData().getLayouts().get(this.kit.getName());
             }
 
             LayoutData layout = layouts == null ? null : layouts.stream().filter(Objects::nonNull).findFirst().orElse(null);
             if (layout == null) {
-                player.sendMessage(CC.translate("&c&lError: No layout found for this kit!"));
+                player.sendMessage(CC.translate("&c&lErro: nenhum layout encontrado para este kit!"));
                 player.closeInventory();
                 return;
             }

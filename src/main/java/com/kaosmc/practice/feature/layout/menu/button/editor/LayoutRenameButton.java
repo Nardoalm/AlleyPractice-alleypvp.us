@@ -23,13 +23,13 @@ public class LayoutRenameButton extends Button {
     @Override
     public ItemStack getButtonItem(Player player) {
         return new ItemBuilder(Material.NAME_TAG)
-                .name("&6&lRename Layout")
+                .name("&6&lRenomear Layout")
                 .lore(
                         CC.MENU_BAR,
-                        "&7Change the display",
-                        "&7name of the layout.",
+                        "&7Altera o nome",
+                        "&7de exibição do layout.",
                         "",
-                        "&aClick to rename",
+                        "&aClique para renomear",
                         CC.MENU_BAR
                 )
                 .hideMeta()

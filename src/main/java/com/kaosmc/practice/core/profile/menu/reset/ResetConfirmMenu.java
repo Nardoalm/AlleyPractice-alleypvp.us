@@ -27,7 +27,7 @@ public class ResetConfirmMenu extends Menu {
 
     @Override
     public String getTitle(Player player) {
-        return "&cReset stats?";
+        return "&cResetar estatísticas?";
     }
 
     @Override
@@ -54,19 +54,19 @@ public class ResetConfirmMenu extends Menu {
         @Override
         public ItemStack getButtonItem(Player player) {
             return new ItemBuilder(Material.EMERALD_BLOCK)
-                    .name("&aConfirm")
+                    .name("&aConfirmar")
                     .lore(
                             "",
-                            "&7Click here to confirm the stat",
-                            "&7reset of " + Bukkit.getOfflinePlayer(this.uuid).getName() + ".",
+                            "&7Clique aqui para confirmar o reset",
+                            "&7das estatísticas de " + Bukkit.getOfflinePlayer(this.uuid).getName() + ".",
                             "",
-                            "&c&lWARNING:",
-                            "&fThis is &nbig responsibility&f.",
-                            "&fYou cannot undo this action",
-                            "&fand if you abuse this, you will be",
-                            "&fpermanently &c&l&nBLACKLISTED&f!",
+                            "&c&lAVISO:",
+                            "&fIsso é uma &ngrande responsabilidade&f.",
+                            "&fVocê não pode desfazer esta ação",
+                            "&fe se abusar disso, será",
+                            "&fpermanentemente &c&l&nBLACKLISTED&f!",
                             "",
-                            "&4You may only reset stats with confirmation of an owner."
+                            "&4Você só pode resetar estatísticas com confirmação de um dono."
                     )
                     .build();
         }
@@ -85,10 +85,10 @@ public class ResetConfirmMenu extends Menu {
         @Override
         public ItemStack getButtonItem(Player player) {
             return new ItemBuilder(Material.REDSTONE_BLOCK)
-                    .name("&cCancel")
+                    .name("&cCancelar")
                     .lore(
                             "",
-                            "&7Click here to cancel the reset."
+                            "&7Clique aqui para cancelar o reset."
                     )
                     .build();
         }

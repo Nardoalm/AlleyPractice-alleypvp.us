@@ -50,7 +50,7 @@ public abstract class KillMessagePack extends BaseCosmetic {
 
         FileConfiguration config = configService.getConfig(configPath);
         if (config == null) {
-            Logger.error("Could not load kill message config: " + configPath);
+            Logger.error("Não foi possível carregar a configuração de kill message: " + configPath);
             Logger.error("Make sure the file is added to ConfigService.configFileNames array!");
             return;
         }
@@ -69,7 +69,7 @@ public abstract class KillMessagePack extends BaseCosmetic {
                 }
             }
         } catch (Exception e) {
-            Logger.logException("Failed to load kill message pack: " + fileName, e);
+            Logger.logException("Falha ao carregar o pacote de kill message: " + fileName, e);
         }
     }
 

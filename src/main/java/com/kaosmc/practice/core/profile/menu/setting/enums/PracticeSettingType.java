@@ -18,157 +18,157 @@ import java.util.function.Function;
  * @since 21/04/2025
  */
 public enum PracticeSettingType {
-    PARTY_MESSAGES(10, "&6&lToggle Party Messages", Material.FEATHER,
+    PARTY_MESSAGES(10, "&6&lMensagens da Party", Material.FEATHER,
             settings -> Arrays.asList(
                     CC.MENU_BAR,
-                    "&7See party chat messages.",
+                    "&7Ver mensagens do chat da party.",
                     "",
                     LoreHelper.displayEnabled(settings.isPartyMessagesEnabled()),
                     "",
-                    "&aClick to toggle.",
+                    "&aClique para alternar.",
                     CC.MENU_BAR
             )
     ),
 
-    PARTY_INVITES(11, "&6&lToggle Party Invites", Material.NAME_TAG,
+    PARTY_INVITES(11, "&6&lConvites de Party", Material.NAME_TAG,
             settings -> Arrays.asList(
                     CC.MENU_BAR,
-                    "&7Receive party invites.",
+                    "&7Receber convites de party.",
                     "",
                     LoreHelper.displayEnabled(settings.isPartyInvitesEnabled()),
                     "",
-                    "&aClick to toggle.",
+                    "&aClique para alternar.",
                     CC.MENU_BAR
             )
     ),
 
-    SIDEBAR_VISIBILITY(12, "&6&lSidebar Visibility", Material.CARPET, 5,
+    SIDEBAR_VISIBILITY(12, "&6&lVisibilidade da Sidebar", Material.CARPET, 5,
             settings -> Arrays.asList(
                     CC.MENU_BAR,
-                    "&7See the scoreboard.",
+                    "&7Ver a scoreboard.",
                     "",
                     LoreHelper.displayShown(settings.isScoreboardEnabled()),
                     "",
-                    "&aClick to toggle.",
+                    "&aClique para alternar.",
                     CC.MENU_BAR
             )
     ),
 
-    TAB_VISIBILITY(13, "&6&lTablist Visibility", Material.ITEM_FRAME,
+    TAB_VISIBILITY(13, "&6&lVisibilidade da Tablist", Material.ITEM_FRAME,
             settings -> Arrays.asList(
                     CC.MENU_BAR,
-                    "&7See the tablist.",
+                    "&7Ver a tablist.",
                     "",
                     LoreHelper.displayShown(settings.isTablistEnabled()),
                     "",
-                    "&aClick to toggle.",
+                    "&aClique para alternar.",
                     CC.MENU_BAR
             )
     ),
 
-    PING_RANGE(23, "&6&lPing Range", Material.STICK,
+    PING_RANGE(23, "&6&lFaixa de Ping", Material.STICK,
             settings -> Arrays.asList(
                     CC.MENU_BAR,
-                    "&7Limit matchmaking by ping difference.",
+                    "&7Limita o pareamento pela diferença de ping.",
                     "",
-                    "&f&l│ &6Current: &f" + settings.getPingRangeDisplay(),
+                    "&f&l│ &6Atual: &f" + settings.getPingRangeDisplay(),
                     "",
-                    "&aClick to change.",
+                    "&aClique para alterar.",
                     CC.MENU_BAR
             )
     ),
 
-    WORLD_TIME(14, "&6&lWorld time", Material.WATCH, settings -> Arrays.asList(
+    WORLD_TIME(14, "&6&lHorário do Mundo", Material.WATCH, settings -> Arrays.asList(
             CC.MENU_BAR,
-            "&7Change your world time.",
+            "&7Altere o horário do seu mundo.",
             "",
-            formatTime("Default", settings.isDefaultTime(), "&a&l"),
-            formatTime("Day", settings.isDayTime(), "&e&l"),
-            formatTime("Sunset", settings.isSunsetTime(), "&6&l"),
-            formatTime("Night", settings.isNightTime(), "&4&l"),
+            formatTime("Padrão", settings.isDefaultTime(), "&a&l"),
+            formatTime("Dia", settings.isDayTime(), "&e&l"),
+            formatTime("Pôr do Sol", settings.isSunsetTime(), "&6&l"),
+            formatTime("Noite", settings.isNightTime(), "&4&l"),
             "",
-            "&aClick to toggle.",
+            "&aClique para alternar.",
             CC.MENU_BAR
     )),
 
-    SCOREBOARD_LINES(19, "&6&lShow Scoreboard Lines", Material.STRING,
+    SCOREBOARD_LINES(19, "&6&lLinhas da Scoreboard", Material.STRING,
             settings -> Arrays.asList(
                     CC.MENU_BAR,
-                    "&7Show scoreboard lines.",
+                    "&7Exibir linhas da scoreboard.",
                     "",
                     LoreHelper.displayShown(settings.isShowScoreboardLines()),
                     "",
-                    "&aClick to toggle.",
+                    "&aClique para alternar.",
                     CC.MENU_BAR
             )
     ),
 
-    PROFANITY_FILTER(20, "&6&lProfanity Filter", Material.ROTTEN_FLESH,
+    PROFANITY_FILTER(20, "&6&lFiltro de Palavrões", Material.ROTTEN_FLESH,
             settings -> Arrays.asList(
                     CC.MENU_BAR,
-                    "&7Hide rude and offensive words.",
+                    "&7Oculta palavras ofensivas e inadequadas.",
                     "",
                     KaosPractice.getInstance().getService(LocaleService.class).getBoolean(SettingsLocaleImpl.SERVER_CHAT_FORMAT_ENABLED_BOOLEAN)
                             ?
                             LoreHelper.displayEnabled(settings.isProfanityFilterEnabled())
                             :
-                            "&cServer has disabled this setting."
+                            "&cO servidor desativou esta opção."
                     ,
                     "",
-                    "&aClick to toggle.",
+                    "&aClique para alternar.",
                     CC.MENU_BAR
             )
     ),
 
-    DUEL_REQUESTS(21, "&6&lDuel Requests", Material.DIAMOND_SWORD,
+    DUEL_REQUESTS(21, "&6&lPedidos de Duel", Material.DIAMOND_SWORD,
             settings -> Arrays.asList(
                     CC.MENU_BAR,
-                    "&7Receive duel requests.",
+                    "&7Receber pedidos de duel.",
                     "",
                     LoreHelper.displayEnabled(settings.isReceiveDuelRequestsEnabled()),
                     "",
-                    "&aClick to toggle.",
+                    "&aClique para alternar.",
                     CC.MENU_BAR
             )
     ),
-    SERVER_TITLES(22, "&6&lServer Titles", Material.PAPER,
+    SERVER_TITLES(22, "&6&lTítulos do Servidor", Material.PAPER,
             settings -> Arrays.asList(
                     CC.MENU_BAR,
-                    "&7Display titles sent by the server.",
+                    "&7Exibe títulos enviados pelo servidor.",
                     "",
                     LoreHelper.displayShown(settings.isServerTitles()),
                     "",
-                    "&aClick to toggle.",
+                    "&aClique para alternar.",
                     CC.MENU_BAR
             )
     ),
 
-    MATCH_SETTINGS(16, "&6&lMatch Settings", Material.BOOK,
+    MATCH_SETTINGS(16, "&6&lConfigurações de Match", Material.BOOK,
             settings -> Arrays.asList(
                     CC.MENU_BAR,
-                    "&7Adjust your match settings.",
+                    "&7Ajuste suas configurações de match.",
                     "",
-                    "&aClick to view.",
+                    "&aClique para visualizar.",
                     CC.MENU_BAR
             )
     ),
 
-    COSMETICS(25, "&6&lCosmetics", Material.NETHER_STAR,
+    COSMETICS(25, "&6&lCosméticos", Material.NETHER_STAR,
             settings -> Arrays.asList(
                     CC.MENU_BAR,
-                    "&7Customize your cosmetics.",
+                    "&7Personalize seus cosméticos.",
                     "",
-                    "&aClick to view.",
+                    "&aClique para visualizar.",
                     CC.MENU_BAR
             )
     ),
 
-    LOBBY_MUSIC(34, "&6&lLobby Music", Material.JUKEBOX,
+    LOBBY_MUSIC(34, "&6&lMúsica do Lobby", Material.JUKEBOX,
             settings -> Arrays.asList(
                     CC.MENU_BAR,
-                    "&7Customize your lobby music.",
+                    "&7Personalize sua música do lobby.",
                     "",
-                    "&aClick to view.",
+                    "&aClique para visualizar.",
                     CC.MENU_BAR
             )
     ),

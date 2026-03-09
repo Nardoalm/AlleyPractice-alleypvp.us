@@ -23,13 +23,13 @@ public class KitHelperCommand extends BaseCommand {
     public void onCommand(CommandArgs command) {
         Arrays.asList(
                 "",
-                "&6&lKit Helper Commands Help:",
-                " &f◆ &6/enchant &8(&7enchantment&8) &8(&7level&8) &7| &fEnchant item in hand.",
-                " &f◆ &6/glow &8(&7true|false&8) &7| &fSet item glow.",
-                " &f◆ &6/potionduration &8(&7duration&8) &7| &fSet duration of a potion.",
-                " &f◆ &6/removeenchants &7| &fRemoves enchants from item.",
-                " &f◆ &6/rename &8(&7name&8) &7| &fRename item in hand.",
-                " &f◆ &6/unbreakable &8(&7true|false&8) &7| &fSet item unbreakable.",
+                "&6&lAjuda dos Comandos Auxiliares de Kit:",
+                " &f◆ &6/enchant &8(&7enchantment&8) &8(&7level&8) &7| &fEncanta o item na mão.",
+                " &f◆ &6/glow &8(&7true|false&8) &7| &fDefine o glow do item.",
+                " &f◆ &6/potionduration &8(&7duration&8) &7| &fDefine a duração de uma poção.",
+                " &f◆ &6/removeenchants &7| &fRemove os encantamentos do item.",
+                " &f◆ &6/rename &8(&7name&8) &7| &fRenomeia o item na mão.",
+                " &f◆ &6/unbreakable &8(&7true|false&8) &7| &fDefine o item como inquebrável.",
                 ""
         ).forEach(message -> command.getSender().sendMessage(CC.translate(message)));
     }

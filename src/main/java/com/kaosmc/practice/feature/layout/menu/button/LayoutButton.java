@@ -48,10 +48,10 @@ public class LayoutButton extends Button {
                 .durability(this.kit.getDurability())
                 .lore(
                         CC.MENU_BAR,
-                        "&7Shift-Click: &c(Not implemented)",
-                        " &7" + Symbol.SINGULAR_ARROW_R_2 + " More Layouts",
+                        "&7Shift-Clique: &c(Não implementado)",
+                        " &7" + Symbol.SINGULAR_ARROW_R_2 + " Mais layouts",
                         "",
-                        "&aClick to edit.",
+                        "&aClique para editar.",
                         CC.MENU_BAR
                 )
                 .hideMeta()
@@ -104,7 +104,7 @@ public class LayoutButton extends Button {
             profile.getProfileData().getLayoutData().addLayout(
                     kit.getName(),
                     "Layout1",
-                    "Layout 1",
+                    "Modelo 1",
                     InventoryUtil.getEditableKitItems(kit)
             );
             layouts = profile.getProfileData().getLayoutData().getLayouts().get(kit.getName());

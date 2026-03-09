@@ -388,8 +388,8 @@ public class PartyServiceImpl implements PartyService {
         }
 
         party.getBannedPlayers().remove(target.getUniqueId());
-        party.notifyParty(CC.translate("&6" + target.getName() + " &ahas been unbanned from the party and is now able to join again."));
-        target.sendMessage(CC.translate("&aYou have been unbanned from &6" + party.getLeader().getName() + "'s &aparty."));
+        party.notifyParty(CC.translate("&6" + target.getName() + " &afoi desbanido da party e agora pode entrar novamente."));
+        target.sendMessage(CC.translate("&aVocê foi desbanido da party de &6" + party.getLeader().getName() + "&a."));
     }
 
     @Override

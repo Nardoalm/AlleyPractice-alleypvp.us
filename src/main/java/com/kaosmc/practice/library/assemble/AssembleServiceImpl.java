@@ -90,7 +90,7 @@ public class AssembleServiceImpl implements AssembleService {
             }
         }
         this.boards.clear();
-        Logger.info("Assemble scoreboard has been shut down.");
+        Logger.info("A scoreboard do Assemble foi encerrada.");
     }
 
     @Override

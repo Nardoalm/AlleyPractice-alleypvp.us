@@ -70,7 +70,7 @@ public class MatchScoreboardBoxing extends BaseMatchScoreboard {
         } else if (opponentCombo > 1) {
             format = config.getString("boxing-combo-display.negative-combo", "&c{combo} Combo").replace("{combo}", String.valueOf(opponentCombo));
         } else {
-            format = config.getString("boxing-combo-display.no-combo", "&fNo Combo");
+            format = config.getString("boxing-combo-display.no-combo", "&fSem Combo");
         }
         return CC.translate(format);
     }

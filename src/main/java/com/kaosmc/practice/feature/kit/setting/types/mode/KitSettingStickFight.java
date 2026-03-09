@@ -8,6 +8,6 @@ import com.kaosmc.practice.feature.kit.setting.annotation.KitSettingData;
  * @project Kaos
  * @date 16/10/2024 - 17:40
  */
-@KitSettingData(name = "StickFight", description = "The Stick Fight Kit Setting.", enabled = false)
+@KitSettingData(name = "StickFight", description = "Ativa o modo Stick Fight.", enabled = false)
 public class KitSettingStickFight extends KitSetting {
 }

@@ -22,7 +22,7 @@ public class PracticeSettingsMenu extends Menu {
 
     @Override
     public String getTitle(Player player) {
-        return "&6&lPractice Settings";
+        return "&6&lConfigurações do Practice";
     }
 
     @Override

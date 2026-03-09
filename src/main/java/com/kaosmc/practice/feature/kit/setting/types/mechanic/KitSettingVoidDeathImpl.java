@@ -8,6 +8,6 @@ import com.kaosmc.practice.feature.kit.setting.annotation.KitSettingData;
  * @project kaos-practice
  * @date 21/06/2025
  */
-@KitSettingData(name = "VoidDeath", description = "Kill the player on certain void level", enabled = false)
+@KitSettingData(name = "VoidDeath", description = "Mata o jogador ao atingir determinado nível do void.", enabled = false)
 public class KitSettingVoidDeathImpl extends KitSetting {
 }

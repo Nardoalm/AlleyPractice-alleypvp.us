@@ -85,13 +85,13 @@ public class ExplosiveCommand extends BaseCommand {
     private void sendHelpMessage(CommandSender sender) {
         List<String> helpMessage = Arrays.asList(
                 "",
-                "&6&lExplosive Commands Help:",
-                " &f◆ &6/explosive explosion <value> &8- &7Set range of explosion blocks removal.",
-                " &f◆ &6/explosive range <value> &8- &7Set explosion range that affects players.",
-                " &f◆ &6/explosive horizontal <value> &8- &7Set horizontal knockback.",
-                " &f◆ &6/explosive vertical <value> &8- &7Set vertical knockback.",
-                " &f◆ &6/explosive speed <value> &8- &7Set fireball launch speed.",
-                " &f◆ &6/explosive fuse <value> &8- &7Set TNT fuse ticks.",
+                "&6&lAjuda dos Comandos de Explosivos:",
+                " &f◆ &6/explosive explosion <value> &8- &7Define o alcance de remoção dos blocos da explosão.",
+                " &f◆ &6/explosive range <value> &8- &7Define o alcance da explosão que afeta jogadores.",
+                " &f◆ &6/explosive horizontal <value> &8- &7Define o knockback horizontal.",
+                " &f◆ &6/explosive vertical <value> &8- &7Define o knockback vertical.",
+                " &f◆ &6/explosive speed <value> &8- &7Define a velocidade de lançamento da fireball.",
+                " &f◆ &6/explosive fuse <value> &8- &7Define os ticks do pavio da TNT.",
                 ""
         );
 

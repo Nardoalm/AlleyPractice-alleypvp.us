@@ -27,17 +27,17 @@ public class DivisionButton extends Button {
     public ItemStack getButtonItem(Player player) {
         return new ItemBuilder(this.division.getIcon())
                 .durability(this.division.getDurability())
-                .name("&6&l" + this.division.getDisplayName() + " Division")
+                .name("&6&lDivisão " + this.division.getDisplayName())
                 .lore(
                         CC.MENU_BAR,
                         "&f&l● &6Tiers: &f" + this.division.getTiers().size(),
-                        "  &7▶ (" + this.division.getTiers().get(0).getRequiredWins() + " - " + this.division.getTotalWins() + " Wins)",
+                        "  &7▶ (" + this.division.getTiers().get(0).getRequiredWins() + " - " + this.division.getTotalWins() + " vitórias)",
                         "",
-                        " &fFor each kit, you will have",
-                        " &fa division based on your",
-                        " &6Unranked &fwins.",
+                        " &fPara cada kit, você terá",
+                        " &fuma divisão com base nas",
+                        " &6vitórias unranked&f.",
                         "",
-                        "&aClick to see your titles.",
+                        "&aClique para ver seus títulos.",
                         CC.MENU_BAR
                 )
                 .hideMeta()

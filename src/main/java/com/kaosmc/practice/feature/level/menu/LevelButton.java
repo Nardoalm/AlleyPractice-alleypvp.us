@@ -27,7 +27,7 @@ public class LevelButton extends Button {
                     .name(this.level.getDisplayName())
                     .lore(
                             CC.MENU_BAR,
-                            "&a&lUNLOCKED",
+                            "&a&lDESBLOQUEADO",
                             CC.MENU_BAR
                     )
                     .durability(this.level.getDurability())
@@ -41,10 +41,10 @@ public class LevelButton extends Button {
                 .name(this.level.getDisplayName())
                 .lore(
                         CC.MENU_BAR,
-                        " &c&lLOCKED",
+                        " &c&lBLOQUEADO",
                         "",
-                        " &fUnlock with &6" + requiredElo + " &fmore Elo!",
-                        " &fCurrent Elo: &6" + this.profile.getProfileData().getElo(),
+                        " &fDesbloqueie com mais &6" + requiredElo + " &fde Elo!",
+                        " &fElo Atual: &6" + this.profile.getProfileData().getElo(),
                         CC.MENU_BAR
                 )
                 .durability(14)

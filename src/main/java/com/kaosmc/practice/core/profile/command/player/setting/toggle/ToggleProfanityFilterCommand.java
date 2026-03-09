@@ -39,7 +39,7 @@ public class ToggleProfanityFilterCommand extends BaseCommand {
         }
 
         player.sendMessage(CC.translate(this.getString(GlobalMessagesLocaleImpl.PROFILE_TOGGLED_PROFANITY_FILTER)
-                .replace("{status}", profile.getProfileData().getSettingData().isProfanityFilterEnabled() ? "&aenabled" : "&cdisabled"))
+                .replace("{status}", profile.getProfileData().getSettingData().isProfanityFilterEnabled() ? "&aativou" : "&cdesativou"))
         );
     }
 }

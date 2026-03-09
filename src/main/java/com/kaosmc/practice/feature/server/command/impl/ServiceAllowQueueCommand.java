@@ -43,7 +43,7 @@ public class ServiceAllowQueueCommand extends BaseCommand {
         serverService.setQueueingAllowed(allowQueue);
 
         player.sendMessage(this.getString(GlobalMessagesLocaleImpl.QUEUE_TOGGLED)
-                .replace("{status}", allowQueue ? CC.translate("&aallowed") : CC.translate("&cdisallowed"))
+                .replace("{status}", allowQueue ? CC.translate("&apermitiu") : CC.translate("&cbloqueou"))
         );
     }
 }

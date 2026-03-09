@@ -43,7 +43,7 @@ public class CosmeticGetSelectedCommand extends BaseCommand {
         }
 
         Profile profile = this.plugin.getService(ProfileService.class).getProfile(target.getUniqueId());
-        player.sendMessage(CC.translate("     &6&lSelected Cosmetics for " + target.getName()));
+        player.sendMessage(CC.translate("     &6&lCosméticos selecionados de " + target.getName()));
 
         ProfileCosmeticData cosmeticData = profile.getProfileData().getCosmeticData();
 

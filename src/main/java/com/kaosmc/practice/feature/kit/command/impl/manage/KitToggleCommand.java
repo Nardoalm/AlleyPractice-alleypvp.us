@@ -57,7 +57,7 @@ public class KitToggleCommand extends BaseCommand {
 
         kit.setEnabled(!kit.isEnabled());
         kitService.saveKit(kit);
-        String status = kit.isEnabled() ? CC.translate("&aenabled") : CC.translate("&cdisabled");
-        sender.sendMessage(CC.translate("&aSuccessfully " + status + " &athe kit &6" + kit.getName() + "&a."));
+        String status = kit.isEnabled() ? CC.translate("&aativou") : CC.translate("&cdesativou");
+        sender.sendMessage(CC.translate("&aVocê " + status + " &ao kit &6" + kit.getName() + "&a."));
     }
 }

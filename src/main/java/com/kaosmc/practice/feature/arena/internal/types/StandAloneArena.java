@@ -184,7 +184,7 @@ public class StandAloneArena extends Arena {
         Bukkit.broadcastMessage("[Arena] Verification complete: " + nonAirBlocks + "/" + totalSampled + " sampled blocks are non-air");
 
         if (nonAirBlocks == 0) {
-            Bukkit.broadcastMessage("[Arena] WARNING: No non-air blocks found! Arena may not have pasted correctly.");
+            Bukkit.broadcastMessage("[Arena] AVISO: Nenhum bloco solido encontrado. A arena pode nao ter sido colada corretamente.");
         } else {
             Bukkit.broadcastMessage("[Arena] Arena appears to exist with " + nonAirBlocks + " non-air blocks sampled.");
         }

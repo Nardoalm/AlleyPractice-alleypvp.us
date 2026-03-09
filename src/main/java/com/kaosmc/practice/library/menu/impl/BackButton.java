@@ -17,12 +17,12 @@ public class BackButton extends Button {
     @Override
     public ItemStack getButtonItem(Player player) {
         return new ItemBuilder(Material.ARROW)
-                .name("&c&lBack")
+                .name("&c&lVoltar")
                 .durability(0)
                 .lore(
                         CC.MENU_BAR,
-                        " &cClick here to return to",
-                        " &cthe previous menu.",
+                        " &cClique aqui para voltar",
+                        " &cao menu anterior.",
                         CC.MENU_BAR
                 )
                 .build();

@@ -43,14 +43,14 @@ public class PotionDurationCommand extends BaseCommand {
 
         PotionMeta potionMeta = (PotionMeta) itemInHand.getItemMeta();
         if (potionMeta == null) {
-            player.sendMessage(CC.translate("&cThe potion has no effects to modify."));
+            player.sendMessage(CC.translate("&cA poção não possui efeitos para modificar."));
             return;
         }
 
         if (args[0].equalsIgnoreCase("infinite")) {
             PotionEffectType effectType = PotionUtil.getPotionEffectType(itemInHand);
             if (effectType == null) {
-                player.sendMessage(CC.translate("&cThe potion has no effects to modify."));
+                player.sendMessage(CC.translate("&cA poção não possui efeitos para modificar."));
                 return;
             }
 
@@ -59,7 +59,7 @@ public class PotionDurationCommand extends BaseCommand {
             potionMeta.addCustomEffect(newEffect, true);
             itemInHand.setItemMeta(potionMeta);
 
-            player.sendMessage(CC.translate("&aPotion duration updated to &6infinite&a."));
+            player.sendMessage(CC.translate("&aDuração da poção alterada para &6infinita&a."));
             return;
         }
 
@@ -72,13 +72,13 @@ public class PotionDurationCommand extends BaseCommand {
         }
 
         if (duration < 1) {
-            player.sendMessage(CC.translate("&cInvalid duration."));
+            player.sendMessage(CC.translate("&cDuração inválida."));
             return;
         }
 
         PotionEffectType effectType = PotionUtil.getPotionEffectType(itemInHand);
         if (effectType == null) {
-            player.sendMessage(CC.translate("&cThe potion has no effects to modify."));
+            player.sendMessage(CC.translate("&cA poção não possui efeitos para modificar."));
             return;
         }
 
@@ -87,7 +87,7 @@ public class PotionDurationCommand extends BaseCommand {
         potionMeta.addCustomEffect(newEffect, true);
         itemInHand.setItemMeta(potionMeta);
 
-        String seconds = duration == 1 ? "second" : "seconds";
-        player.sendMessage(CC.translate("&aPotion duration updated to &6" + duration + " &a" + seconds + "."));
+        String seconds = duration == 1 ? "segundo" : "segundos";
+        player.sendMessage(CC.translate("&aDuração da poção alterada para &6" + duration + " &a" + seconds + "."));
     }
 }

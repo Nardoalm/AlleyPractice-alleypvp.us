@@ -38,7 +38,7 @@ import java.util.Optional;
 
 public class MatchPearlListener implements Listener {
 
-    //TODO: Locale (im not touching pearls, thats on you mr insurant)
+    //TODO: Locale
 
     @EventHandler
     public void onPearlLaunch(ProjectileLaunchEvent event) {
@@ -119,7 +119,7 @@ public class MatchPearlListener implements Listener {
         }
 
         if (profile.getMatch().getState() != MatchState.RUNNING) {
-            cancelPearlAndRefund(player, event, "&cYou cannot use ender pearls right now.");
+            cancelPearlAndRefund(player, event, "&cVocê não pode usar ender pearls agora.");
             return false;
         }
 
@@ -138,7 +138,7 @@ public class MatchPearlListener implements Listener {
 
         if (optionalCooldown.isPresent() && optionalCooldown.get().isActive()) {
             cancelPearlAndRefund(player, event,
-                    "&cYou must wait " + optionalCooldown.get().remainingTime() + " seconds before using another ender pearl.");
+                    "&cVocê precisa esperar " + optionalCooldown.get().remainingTime() + " segundos antes de usar outra ender pearl.");
             return true;
         }
 

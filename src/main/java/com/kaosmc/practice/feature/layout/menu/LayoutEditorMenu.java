@@ -61,7 +61,7 @@ public class LayoutEditorMenu extends Menu {
         String layoutName = this.layout != null && this.layout.getDisplayName() != null
                 ? this.layout.getDisplayName()
                 : "Layout";
-        return "&6&lEditing " + layoutName;
+        return "&6&lEditando " + layoutName;
     }
 
     @Override

@@ -8,6 +8,6 @@ import com.kaosmc.practice.feature.kit.setting.annotation.KitSettingData;
  * @project Kaos
  * @date 5/21/2024
  */
-@KitSettingData(name = "Bridge", description = "This is the bridge kit type", enabled = false)
+@KitSettingData(name = "Bridge", description = "Ativa o modo Bridge.", enabled = false)
 public class KitSettingBridges extends KitSetting {
 }

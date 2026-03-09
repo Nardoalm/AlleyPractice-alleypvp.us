@@ -1,36 +1,36 @@
 levels:
   amateur:
-    display-name: "&7&lAmateur"
+    display-name: "&7&lAmador"
     material: COAL
     durability: 0
     min-elo: 0
     max-elo: 1050
   fighter:
-    display-name: "&a&lFighter"
+    display-name: "&a&lLutador"
     material: EMERALD
     durability: 0
     min-elo: 1051
     max-elo: 1150
   experienced:
-    display-name: "&2&lExperienced"
+    display-name: "&2&lExperiente"
     material: REDSTONE
     durability: 0
     min-elo: 1151
     max-elo: 1250
   gladiator:
-    display-name: "&f&lGladiator"
+    display-name: "&f&lGladiador"
     material: INK_SACK
     durability: 4
     min-elo: 1251
     max-elo: 1350
   champion:
-    display-name: "&9&lChampion"
+    display-name: "&9&lCampeão"
     material: QUARTZ
     durability: 0
     min-elo: 1351
     max-elo: 1450
   legend:
-    display-name: "&e&lLegend"
+    display-name: "&e&lLenda"
     material: GOLD_INGOT
     durability: 0
     min-elo: 1451
@@ -42,13 +42,13 @@ levels:
     min-elo: 1551
     max-elo: 1650
   immortal:
-    display-name: "&c&lImmortal"
+    display-name: "&c&lImortal"
     material: NETHER_STAR
     durability: 0
     min-elo: 1651
     max-elo: 1750
   threat:
-    display-name: "&4&lThreat"
+    display-name: "&4&lAmeaça"
     material: SKULL_ITEM
     durability: 1
     min-elo: 1751

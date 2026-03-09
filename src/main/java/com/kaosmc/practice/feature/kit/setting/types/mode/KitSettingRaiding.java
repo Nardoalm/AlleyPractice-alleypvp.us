@@ -8,6 +8,6 @@ import com.kaosmc.practice.feature.kit.setting.annotation.KitSettingData;
  * @project Kaos
  * @since 13/06/2025
  */
-@KitSettingData(name = "Raiding", description = "The HCF Trapping kit setting.", enabled = false)
+@KitSettingData(name = "Raiding", description = "Ativa o modo de HCF Trapping.", enabled = false)
 public class KitSettingRaiding extends KitSetting {
 }

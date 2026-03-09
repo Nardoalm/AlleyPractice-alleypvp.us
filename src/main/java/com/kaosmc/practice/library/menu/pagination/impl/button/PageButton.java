@@ -27,24 +27,24 @@ public class PageButton extends Button {
         if (this.offset > 0) {
             if (MenuUtil.hasNext(player, offset, this.menu)) {
                 return new ItemBuilder(Material.MELON)
-                        .name("&6&lNext Page &7" + (this.menu.getPage() + "/" + this.menu.getPages(player)))
+                        .name("&6&lPróxima Página &7" + (this.menu.getPage() + "/" + this.menu.getPages(player)))
                         .lore(
                                 CC.MENU_BAR,
-                                "&7Right-Click:",
-                                " &7▶ View all",
+                                "&7Clique direito:",
+                                " &7▶ Ver todas",
                                 "",
-                                "&aClick to view.",
+                                "&aClique para visualizar.",
                                 CC.MENU_BAR
                         )
                         .hideMeta()
                         .build();
             } else {
                 return new ItemBuilder(Material.MELON)
-                        .name(CC.translate("&c&lNext Page"))
+                        .name(CC.translate("&c&lPróxima Página"))
                         .lore(
                                 CC.MENU_BAR,
-                                " &cThere is no available",
-                                " &cnext page.",
+                                " &cNão existe",
+                                " &cpróxima página.",
                                 CC.MENU_BAR
                         )
                         .hideMeta()
@@ -53,24 +53,24 @@ public class PageButton extends Button {
         } else {
             if (MenuUtil.hasPrevious(offset, this.menu)) {
                 return new ItemBuilder(Material.SPECKLED_MELON)
-                        .name("&6&lLast Page &7" + (this.menu.getPage() + "/" + this.menu.getPages(player)))
+                        .name("&6&lPágina Anterior &7" + (this.menu.getPage() + "/" + this.menu.getPages(player)))
                         .lore(
                                 CC.MENU_BAR,
-                                "&7Right-Click:",
-                                " &7▶ View all",
+                                "&7Clique direito:",
+                                " &7▶ Ver todas",
                                 "",
-                                "&aClick to view.",
+                                "&aClique para visualizar.",
                                 CC.MENU_BAR
                         )
                         .hideMeta()
                         .build();
             } else {
                 return new ItemBuilder(Material.SPECKLED_MELON)
-                        .name(CC.translate("&c&lLast Page"))
+                        .name(CC.translate("&c&lPágina Anterior"))
                         .lore(
                                 CC.MENU_BAR,
-                                " &cThere is no available",
-                                " &clast page.",
+                                " &cNão existe",
+                                " &cpágina anterior.",
                                 CC.MENU_BAR
                         )
                         .hideMeta()

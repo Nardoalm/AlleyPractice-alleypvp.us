@@ -35,8 +35,8 @@ public class EnchantCommand extends BaseCommand {
 
         Enchantment enchantment = EnchantUtil.getEnchantment(args[0]);
         if (enchantment == null) {
-            player.sendMessage(CC.translate("&cInvalid enchantment name!"));
-            player.sendMessage(CC.translate("&cValid enchantments: &7" + EnchantUtil.getSortedEnchantments().toUpperCase()));
+            player.sendMessage(CC.translate("&cNome de encantamento inválido!"));
+            player.sendMessage(CC.translate("&cEncantamentos válidos: &7" + EnchantUtil.getSortedEnchantments().toUpperCase()));
             return;
         }
 

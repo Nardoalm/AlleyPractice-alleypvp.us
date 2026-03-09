@@ -8,6 +8,6 @@ import com.kaosmc.practice.feature.kit.setting.annotation.KitSettingData;
  * @project Kaos
  * @date 5/21/2024
  */
-@KitSettingData(name = "CampProtection", description = "Adds camp protection to your gamemode", enabled = false)
+@KitSettingData(name = "CampProtection", description = "Adiciona proteção contra camp ao modo de jogo.", enabled = false)
 public class KitSettingCampProtectionImpl extends KitSetting {
 }

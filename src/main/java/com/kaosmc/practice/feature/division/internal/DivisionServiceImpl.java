@@ -56,7 +56,7 @@ public class DivisionServiceImpl implements DivisionService {
         ConfigurationSection divisionsSection = config.getConfigurationSection("divisions");
 
         if (divisionsSection == null) {
-            Logger.error("No divisions found in the configuration file.");
+            Logger.error("Nenhuma divisão encontrada no arquivo de configuração.");
             return;
         }
 
@@ -128,7 +128,7 @@ public class DivisionServiceImpl implements DivisionService {
 
     @Override
     public void createDivision(String name, int requiredWins) {
-        Division division = new Division(name, "&6&l" + name, "The " + name + " Division", 0, Material.DIRT, Arrays.asList(
+        Division division = new Division(name, "&6&l" + name, "Divisão " + name, 0, Material.DIRT, Arrays.asList(
                 new DivisionTier("I", requiredWins),
                 new DivisionTier("II", (int) (requiredWins * 1.25)),
                 new DivisionTier("III", (int) (requiredWins * 1.5)),

@@ -66,7 +66,7 @@ public class KaosPractice extends JavaPlugin {
             }
 
         } catch (Exception exception) {
-            Logger.logException("A fatal error occurred during service initialization. Kaos will be disabled.", exception);
+            Logger.logException("Ocorreu um erro fatal durante a inicialização dos serviços. O Kaos será desativado.", exception);
             this.getServer().getPluginManager().disablePlugin(this);
             return;
         }
@@ -100,12 +100,12 @@ public class KaosPractice extends JavaPlugin {
      * @throws IllegalStateException if the service is not found.
      */
     public <T extends Service> T getService(Class<T> serviceInterface) {
-        Objects.requireNonNull(serviceInterface, "Service interface cannot be null");
+        Objects.requireNonNull(serviceInterface, "A interface do serviço não pode ser nula");
         if (this.context == null) {
-            throw new IllegalStateException("KaosContext is not available. The bootstrap may be disabling or failed to load.");
+            throw new IllegalStateException("KaosContext não está disponível. O bootstrap pode estar desativando ou falhou ao carregar.");
         }
         return this.context.getService(serviceInterface)
-                .orElseThrow(() -> new IllegalStateException("Could not find a registered service for: " + serviceInterface.getSimpleName()));
+                .orElseThrow(() -> new IllegalStateException("Não foi possível encontrar um serviço registrado para: " + serviceInterface.getSimpleName()));
     }
 
     public KaosPracticeAPI getAPI() {

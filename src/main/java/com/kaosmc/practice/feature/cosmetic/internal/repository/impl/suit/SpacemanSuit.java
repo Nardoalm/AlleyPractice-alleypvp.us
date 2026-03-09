@@ -19,7 +19,7 @@ import java.util.Map;
 @CosmeticData(
         type = CosmeticType.SUIT,
         name = "Spaceman",
-        description = "Wear a cool spacesuit to explore the universe.",
+        description = "Use um traje espacial estiloso para explorar o universo.",
         icon = Material.GLASS,
         slot = 11
 )

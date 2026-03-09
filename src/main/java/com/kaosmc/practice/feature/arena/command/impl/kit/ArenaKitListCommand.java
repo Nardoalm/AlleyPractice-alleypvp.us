@@ -55,7 +55,7 @@ public class ArenaKitListCommand extends BaseCommand {
         }
 
         player.sendMessage("");
-        player.sendMessage(CC.translate("     &6&l" + arenaName + " Kit List &f(" + arena.getKits().size() + "&f)"));
+        player.sendMessage(CC.translate("     &6&lLista de Kits da Arena " + arenaName + " &f(" + arena.getKits().size() + "&f)"));
         if (arena.getKits().isEmpty()) {
             player.sendMessage(CC.translate("      &f◆ &cNenhum kit de arena disponível."));
         }

@@ -142,11 +142,11 @@ public class SpectatorTeleportMenu extends PaginatedMenu {
 
             FileConfiguration config = KaosPractice.getInstance().getService(ConfigService.class).getMenusConfig();
             String path = "menus.spectator-teleport.buttons.match-info-button";
-            String name = config.getString(path + ".name", "&6&lMatch Info");
+            String name = config.getString(path + ".name", "&6&lInformações da Partida");
             List<String> lore = config.getStringList(path + ".lore");
             if (lore.isEmpty()) {
                 lore = Collections.singletonList(
-                        "&cSomething went wrong with your config."
+                        "&cAlgo deu errado com a sua configuração."
                 );
             }
 

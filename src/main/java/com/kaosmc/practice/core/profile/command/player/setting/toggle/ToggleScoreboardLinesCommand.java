@@ -28,7 +28,7 @@ public class ToggleScoreboardLinesCommand extends BaseCommand {
         profile.getProfileData().getSettingData().setShowScoreboardLines(!profile.getProfileData().getSettingData().isShowScoreboardLines());
 
         player.sendMessage(CC.translate(this.getString(GlobalMessagesLocaleImpl.PROFILE_TOGGLED_SCOREBOARD_LINES)
-                .replace("{status}", profile.getProfileData().getSettingData().isShowScoreboardLines() ? "&aenabled" : "&cdisabled"))
+                .replace("{status}", profile.getProfileData().getSettingData().isShowScoreboardLines() ? "&aativou" : "&cdesativou"))
         );
     }
 }

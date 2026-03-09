@@ -64,7 +64,7 @@ public class LeaderboardServiceImpl implements LeaderboardService {
     public void shutdown(KaosContext context) {
         if (executorService != null && !executorService.isShutdown()) {
             executorService.shutdown();
-            Logger.info("Leaderboard executor service has been shut down.");
+            Logger.info("O serviço executor da leaderboard foi encerrado.");
         }
     }
 

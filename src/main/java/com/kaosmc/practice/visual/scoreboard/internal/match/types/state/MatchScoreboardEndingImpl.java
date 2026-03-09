@@ -53,7 +53,7 @@ public class MatchScoreboardEndingImpl implements MatchScoreboard {
                     .replace("{opponent}", opponentName)
                     .replace("{duration}", match.getDuration())
                     .replace("{winner}", winnerName)
-                    .replace("{end-result}", opponent.getLeader().isDead() ? "&a&lVICTORY!" : "&c&lDEFEAT!"));
+                    .replace("{end-result}", opponent.getLeader().isDead() ? "&a&lVITÓRIA!" : "&c&lDERROTA!"));
         }
 
         return scoreboardLines;

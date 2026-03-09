@@ -77,16 +77,16 @@ public class MongoUtility {
         List<String> errors = new ArrayList<>();
 
         if (profile == null) {
-            errors.add("Profile cannot be null");
+            errors.add("Perfil nao pode ser nulo");
             return ValidationResult.invalid(errors);
         }
 
         if (profile.getUuid() == null) {
-            errors.add("Profile UUID cannot be null");
+            errors.add("UUID do perfil nao pode ser nulo");
         }
 
         if (profile.getName() == null || profile.getName().trim().isEmpty()) {
-            errors.add("Profile name cannot be null or empty");
+            errors.add("Nome do perfil nao pode ser nulo ou vazio");
         }
 
         return errors.isEmpty() ? ValidationResult.valid() : ValidationResult.invalid(errors);
@@ -102,7 +102,7 @@ public class MongoUtility {
     public Document toDocument(Profile profile) {
         ValidationResult validation = validateProfile(profile);
         if (!validation.isValid()) {
-            throw new IllegalArgumentException("Profile validation failed: " + validation.getErrors());
+            throw new IllegalArgumentException("Falha na validacao do perfil: " + validation.getErrors());
         }
 
         try {
@@ -115,14 +115,14 @@ public class MongoUtility {
             if (profileData != null) {
                 document.put("profileData", convertProfileData(profileData));
             } else {
-                Logger.warn(String.format("ProfileData is null for profile: %s, using empty document", profile.getUuid()));
+                Logger.warn(String.format("ProfileData esta nulo para o perfil: %s, usando documento vazio", profile.getUuid()));
                 document.put("profileData", new Document());
             }
 
             return document;
         } catch (Exception e) {
-            Logger.logException(String.format("Failed to convert profile to document for UUID: %s", profile.getUuid()), e);
-            throw new RuntimeException("Profile to document conversion failed", e);
+            Logger.logException(String.format("Falha ao converter perfil para documento no UUID: %s", profile.getUuid()), e);
+            throw new RuntimeException("Falha ao converter perfil para documento", e);
         }
     }
 
@@ -135,10 +135,10 @@ public class MongoUtility {
      */
     public void updateProfileFromDocument(Profile profile, Document document) {
         if (profile == null) {
-            throw new IllegalArgumentException("Profile cannot be null");
+            throw new IllegalArgumentException("Perfil nao pode ser nulo");
         }
         if (document == null) {
-            throw new IllegalArgumentException("Document cannot be null");
+            throw new IllegalArgumentException("Documento nao pode ser nulo");
         }
 
         try {
@@ -152,12 +152,12 @@ public class MongoUtility {
                 ProfileData profileData = parseProfileData(profileDataDocument);
                 profile.setProfileData(profileData);
             } else {
-                Logger.warn(String.format("ProfileData document is null for profile: %s, creating new ProfileData", profile.getUuid()));
+                Logger.warn(String.format("Documento ProfileData esta nulo para o perfil: %s, criando novo ProfileData", profile.getUuid()));
                 profile.setProfileData(new ProfileData());
             }
         } catch (Exception e) {
-            Logger.logException(String.format("Error updating profile from document for UUID: %s", profile.getUuid()), e);
-            throw new RuntimeException("Failed to update profile from document", e);
+            Logger.logException(String.format("Erro ao atualizar perfil a partir do documento no UUID: %s", profile.getUuid()), e);
+            throw new RuntimeException("Falha ao atualizar perfil a partir do documento", e);
         }
     }
 
@@ -477,7 +477,7 @@ public class MongoUtility {
 
                 kitData.put(key, kit);
             } catch (Exception e) {
-                Logger.logException(String.format("Failed to parse unranked kit data for key: %s", key), e);
+                Logger.logException(String.format("Falha ao interpretar os dados do kit unranked para a chave: %s", key), e);
             }
         });
 
@@ -507,7 +507,7 @@ public class MongoUtility {
 
                 kitData.put(key, kit);
             } catch (Exception e) {
-                Logger.logException(String.format("Failed to parse ranked kit data for key: %s", key), e);
+                Logger.logException(String.format("Falha ao interpretar os dados do kit ranked para a chave: %s", key), e);
             }
         });
 
@@ -537,7 +537,7 @@ public class MongoUtility {
 
                 ffaData.put(key, ffa);
             } catch (Exception e) {
-                Logger.logException(String.format("Failed to parse FFA data for key: %s", key), e);
+                Logger.logException(String.format("Falha ao interpretar os dados de FFA para a chave: %s", key), e);
             }
         });
 
@@ -576,7 +576,7 @@ public class MongoUtility {
                                     try {
                                         items = Serializer.deserializeItemStack(itemsString);
                                     } catch (Exception e) {
-                                        Logger.logException(String.format("Failed to deserialize items for layout: %s", name), e);
+                                        Logger.logException(String.format("Falha ao desserializar os itens do layout: %s", name), e);
                                     }
                                 }
 
@@ -597,7 +597,7 @@ public class MongoUtility {
                     layoutData.getLayouts().put(key, layoutRecords);
                 }
             } catch (Exception e) {
-                Logger.logException(String.format("Failed to parse layout data for key: %s", key), e);
+                Logger.logException(String.format("Falha ao interpretar os dados de layout para a chave: %s", key), e);
             }
         });
 
@@ -655,7 +655,7 @@ public class MongoUtility {
                 return musicData;
             }
         } catch (Exception e) {
-            Logger.logException("Failed to parse music data, using defaults", e);
+            Logger.logException("Falha ao interpretar os dados de musica, usando padroes", e);
         }
 
         return createDefaultMusicData();
@@ -816,7 +816,7 @@ public class MongoUtility {
                 }
             }
         } catch (Exception e) {
-            Logger.logException(String.format("Failed to parse and merge field: %s", key), e);
+            Logger.logException(String.format("Falha ao interpretar e mesclar o campo: %s", key), e);
         }
 
         setter.accept(existingMap);
@@ -848,13 +848,13 @@ public class MongoUtility {
                 }
             }
         } catch (Exception e) {
-            Logger.logException(String.format("Failed to parse and set field: %s", key), e);
+            Logger.logException(String.format("Falha ao interpretar e definir o campo: %s", key), e);
         }
 
         try {
             setter.accept(defaultSupplier.get());
         } catch (Exception e) {
-            Logger.logException(String.format("Failed to create default value for field: %s", key), e);
+            Logger.logException(String.format("Falha ao criar o valor padrao para o campo: %s", key), e);
         }
     }
 
@@ -878,7 +878,7 @@ public class MongoUtility {
                 });
             }
         } catch (Exception e) {
-            Logger.logException("Failed to create default music data", e);
+            Logger.logException("Falha ao criar os dados padrao de musica", e);
         }
         return musicData;
     }
@@ -911,7 +911,7 @@ public class MongoUtility {
                     }
                 }
             } catch (Exception e) {
-                Logger.logException(String.format("Failed to put safe value for key: %s", key), e);
+                Logger.logException(String.format("Falha ao inserir valor seguro para a chave: %s", key), e);
             }
             return this;
         }

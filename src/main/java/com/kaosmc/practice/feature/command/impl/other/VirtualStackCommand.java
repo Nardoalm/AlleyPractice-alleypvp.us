@@ -30,8 +30,8 @@ public class VirtualStackCommand extends BaseCommand {
 
         if (args.length < 1) {
             command.sendUsage();
-            player.sendMessage(CC.translate("&7Example: /virtualstack 127"));
-            player.sendMessage(CC.translate("&7To bypass stack size limits, use: '/virtualstack 130 true'"));
+            player.sendMessage(CC.translate("&7Exemplo: /virtualstack 127"));
+            player.sendMessage(CC.translate("&7Para ignorar o limite de stack, use: '/virtualstack 130 true'"));
             return;
         }
 
@@ -57,9 +57,9 @@ public class VirtualStackCommand extends BaseCommand {
 
         try {
             this.plugin.getService(ReflectionService.class).getReflectionService(VirtualStackReflectionServiceImpl.class).setVirtualStackAmount(player, amount);
-            player.sendMessage(CC.translate("&aSuccessfully set the virtual stack amount to &6" + amount + "&a."));
+            player.sendMessage(CC.translate("&aDefiniu a quantidade da pilha virtual para &6" + amount + "&a."));
         } catch (Exception exception) {
-            Logger.logException("Failed to set virtual stack amount", exception);
+            Logger.logException("Falha ao definir a quantidade da pilha virtual", exception);
         }
     }
 }

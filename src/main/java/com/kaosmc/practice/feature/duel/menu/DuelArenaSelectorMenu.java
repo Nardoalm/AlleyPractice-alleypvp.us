@@ -29,7 +29,7 @@ public class DuelArenaSelectorMenu extends PaginatedMenu {
 
     @Override
     public String getPrePaginatedTitle(Player player) {
-        return "&6&lSelect an arena";
+        return "&6&lSelecione uma arena";
     }
 
     @Override
@@ -72,10 +72,10 @@ public class DuelArenaSelectorMenu extends PaginatedMenu {
             return new ItemBuilder(Material.PAPER)
                     .name("&6&l" + this.arena.getDisplayName())
                     .lore(
-                            " &f◆ &6Target: &f" + this.targetPlayer.getName(),
+                            " &f◆ &6Alvo: &f" + this.targetPlayer.getName(),
                             " &f◆ &6Kit: &f" + this.kit.getDisplayName(),
                             "",
-                            "&aClick to send request!"
+                            "&aClique para enviar o pedido!"
                     )
                     .durability(0)
                     .hideMeta()

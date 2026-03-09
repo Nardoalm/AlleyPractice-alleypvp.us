@@ -126,7 +126,7 @@ SWAPPER_AXE:
     TARGET:
       - ''
       - ' &6►  &6%PLAYER% &fusou %ABILITY%'
-      - ' &6►  &fYour helmet take off in 5 segundos.'
+      - ' &6►  &fSeu capacete cairá em 5 segundos.'
       - ''
 SCRAMMBLER:
   ICON:
@@ -287,7 +287,7 @@ TIME_WARP:
       - '&6❤ &fAgora está em cooldown por &6%COOLDOWN% &fsegundos.'
       - ''
 STILL_ON_COOLDOWN: '&6%ABILITY% &fainda está em cooldown por mais &6%COOLDOWN%&f.'
-COOLDOWN_EXPIRED: '&fYour &6%ABILITY% &fsaiu do cooldown.'
+COOLDOWN_EXPIRED: '&fSua habilidade &6%ABILITY% &fsaiu do cooldown.'
 RECEIVED_ABILITY: '&fYou''ve received &6x%AMOUNT% %ABILITY%&f.'
 GIVE_ABILITY: '&fYou''ve given &6x%AMOUNT% %ABILITY% &fpara &6%PLAYER%&f.'
 SCRAMBLER:

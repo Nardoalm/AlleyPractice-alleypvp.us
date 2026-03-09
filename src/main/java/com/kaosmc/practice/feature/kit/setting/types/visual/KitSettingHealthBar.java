@@ -8,6 +8,6 @@ import com.kaosmc.practice.feature.kit.setting.annotation.KitSettingData;
  * @project Kaos
  * @since 27/06/2025
  */
-@KitSettingData(name = "HealthBar", description = "Shows the health bar of your opponent in action bar.", enabled = true)
+@KitSettingData(name = "HealthBar", description = "Mostra a barra de vida do oponente na action bar.", enabled = true)
 public class KitSettingHealthBar extends KitSetting {
 }

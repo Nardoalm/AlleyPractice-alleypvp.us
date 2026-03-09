@@ -83,7 +83,7 @@ public class Logger {
                 CC.ERROR_PREFIX + "&c&lEXCEPTION",
                 " &f" + message + ": &r" + exception.getMessage(),
                 "",
-                " &c(Type &4viewerror " + errorId + " &cin console to see details)",
+                " &c(Digite &4viewerror " + errorId + " &cno console para ver os detalhes)",
                 ""
         ).forEach(line -> consoleSender.sendMessage(CC.translate(line)));
     }
@@ -97,7 +97,7 @@ public class Logger {
     public static void viewException(UUID errorId) {
         Exception exception = storedExceptions.get(errorId);
         if (exception == null) {
-            consoleSender.sendMessage(CC.translate(CC.ERROR_PREFIX + "&cNo exception found with ID: " + errorId));
+            consoleSender.sendMessage(CC.translate(CC.ERROR_PREFIX + "&cNenhuma excecao encontrada com o ID: " + errorId));
             return;
         }
 
@@ -105,18 +105,18 @@ public class Logger {
                 "",
                 CC.MENU_BAR + CC.MENU_BAR + CC.MENU_BAR + CC.MENU_BAR,
                 "",
-                "&c&lVIEWING ERROR: " + errorId,
+                "&c&lVISUALIZANDO ERRO: " + errorId,
                 ""
         ).forEach(line -> consoleSender.sendMessage(CC.translate(line)));
 
         exception.printStackTrace();
 
         StackTraceElement[] stackTrace = exception.getStackTrace();
-        String locationMessage = "&cError occurred at: Unknown location";
+        String locationMessage = "&cErro ocorrido em: local desconhecido";
 
         for (StackTraceElement element : stackTrace) {
             if (element.getClassName().startsWith(KaosPractice.getInstance().getService(PluginConstant.class).getPackageDirectory())) {
-                locationMessage = "&cError occurred at: " + element.getClassName() + " (Line " + element.getLineNumber() + ")";
+                locationMessage = "&cErro ocorrido em: " + element.getClassName() + " (Linha " + element.getLineNumber() + ")";
                 break;
             }
         }
@@ -143,7 +143,7 @@ public class Logger {
             runnable.run();
             success = true;
         } catch (Exception exception) {
-            logException("Failed to run the " + taskName + " task", exception);
+            logException("Falha ao executar a tarefa " + taskName, exception);
         } finally {
             long end = System.currentTimeMillis();
             String prefix = success ? TASK_PREFIX_SUCCESS : TASK_PREFIX_FAIL;
@@ -164,11 +164,11 @@ public class Logger {
             runnable.run();
             success = true;
         } catch (Exception exception) {
-            logException("Failed to run the " + runnableTaskName + " task", exception);
+            logException("Falha ao executar a tarefa " + runnableTaskName, exception);
         } finally {
             long end = System.currentTimeMillis();
             String prefix = success ? TASK_PREFIX_SUCCESS : TASK_PREFIX_FAIL;
-            String message = success ? "&fExecutado com sucesso -> &6" : "&cFailed to run &6";
+            String message = success ? "&fExecutado com sucesso -> &6" : "&cFalha ao executar -> &6";
             consoleSender.sendMessage(CC.translate( prefix + message + runnableTaskName + " &fem &6" + (end - start) + " ms&f."));
         }
     }
@@ -187,12 +187,12 @@ public class Logger {
             runnable.run();
             success = true;
         } catch (Exception exception) {
-            logException("Failed to " + action + " the " + task + " task", exception);
+            logException("Falha ao " + action + " a tarefa " + task, exception);
         } finally {
             long runtime = System.currentTimeMillis() - start;
             String prefix = success ? TASK_PREFIX_SUCCESS : TASK_PREFIX_FAIL;
-            String message = success ? "&fSucesso " + action + "&f the &6" : "&cFailed to " + action + "&f the &6";
-            consoleSender.sendMessage(CC.translate(prefix + message + task + " &fin &6" + runtime + "ms&f."));
+            String message = success ? "&fSucesso ao " + action + " &6" : "&cFalha ao " + action + " &6";
+            consoleSender.sendMessage(CC.translate(prefix + message + task + " &fem &6" + runtime + "ms&f."));
         }
     }
 
@@ -210,7 +210,7 @@ public class Logger {
      * @param phaseName The name of the phase (e.g., "Service Initialization").
      */
     public void logPhaseComplete(String phaseName) {
-        consoleSender.sendMessage(CC.translate(PHASE_HEADER_PREFIX + phaseName.toUpperCase() + " COMPLETE" + PHASE_HEADER_SUFFIX));
+        consoleSender.sendMessage(CC.translate(PHASE_HEADER_PREFIX + phaseName.toUpperCase() + " CONCLUIDA" + PHASE_HEADER_SUFFIX));
         consoleSender.sendMessage(CC.translate(""));
     }
 

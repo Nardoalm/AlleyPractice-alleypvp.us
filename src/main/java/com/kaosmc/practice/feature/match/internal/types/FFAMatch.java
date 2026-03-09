@@ -96,7 +96,7 @@ public class FFAMatch extends Match {
 
                     // temporarily, couldnt be asked to mess with clickables again
 
-                    this.sendMessage("Winner: " + this.winner.getLeader().getUsername());
+                    this.sendMessage("Vencedor: " + this.winner.getLeader().getUsername());
 
                     String losers = this.participants.stream()
                             .filter(participant -> participant != this.winner)

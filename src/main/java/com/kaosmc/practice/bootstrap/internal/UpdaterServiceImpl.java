@@ -42,7 +42,7 @@ public class UpdaterServiceImpl implements UpdaterService {
         try {
             this.latestVersion = getLatestVersion();
         } catch (IOException e) {
-            Logger.logException("Failed to fetch the latest version from GitHub", e);
+            Logger.logException("Falha ao buscar a versão mais recente no GitHub", e);
         }
     }
 
@@ -63,7 +63,7 @@ public class UpdaterServiceImpl implements UpdaterService {
                     }
                 }
             } catch (Exception e) {
-                Logger.logException("Failed to check for updates", e);
+                Logger.logException("Falha ao verificar atualizações", e);
             }
         });
     }
@@ -109,7 +109,7 @@ public class UpdaterServiceImpl implements UpdaterService {
                 Logger.warn("Falha ao mover arquivo temporário para: " + updateFile.getName());
             }
         } catch (Exception e) {
-            Logger.logException("Failed to download and update to version " + version, e);
+            Logger.logException("Falha ao baixar e atualizar para a versão " + version, e);
         }
     }
 

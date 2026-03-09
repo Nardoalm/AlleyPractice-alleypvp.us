@@ -8,6 +8,6 @@ import com.kaosmc.practice.feature.kit.setting.annotation.KitSettingData;
  * @project Kaos
  * @since 21/05/2025
  */
-@KitSettingData(name = "Bed", description = "Kit setting for Bed Fight", enabled = false)
+@KitSettingData(name = "Bed", description = "Ativa o modo Bed Fight.", enabled = false)
 public class KitSettingBed extends KitSetting {
 }

@@ -27,7 +27,7 @@ public class FileUtil {
         try {
             deleteDirectory(worldFolder);
         } catch (Exception e) {
-            Logger.logException("Failed to delete world folder", e);
+            Logger.logException("Falha ao excluir a pasta do mundo", e);
 
             try {
                 Files.walk(worldFolder.toPath())
@@ -36,11 +36,11 @@ public class FileUtil {
                             try {
                                 Files.delete(path);
                             } catch (Exception ex) {
-                                Logger.logException("Failed to delete: " + path, ex);
+                                Logger.logException("Falha ao excluir: " + path, ex);
                             }
                         });
             } catch (Exception ex) {
-                Logger.logException("Alternative deletion method also failed", ex);
+                Logger.logException("O metodo alternativo de exclusao tambem falhou", ex);
             }
         }
     }
@@ -63,14 +63,14 @@ public class FileUtil {
                     deleteDirectory(file);
                 } else {
                     if (!file.delete()) {
-                        Logger.error("Failed to delete file: " + file.getAbsolutePath());
+                        Logger.error("Falha ao excluir arquivo: " + file.getAbsolutePath());
                     }
                 }
             }
         }
 
         if (!directory.delete()) {
-            Logger.error("Failed to delete directory: " + directory.getAbsolutePath());
+            Logger.error("Falha ao excluir diretorio: " + directory.getAbsolutePath());
         }
     }
 
@@ -107,7 +107,7 @@ public class FileUtil {
             String processedContent = convertQuotesToDouble(content);
             Files.write(file.toPath(), processedContent.getBytes());
         } catch (IOException exception) {
-            Logger.error("Failed to post-process config file: " + file.getName());
+            Logger.error("Falha ao pos-processar o arquivo de configuracao: " + file.getName());
         }
     }
 }

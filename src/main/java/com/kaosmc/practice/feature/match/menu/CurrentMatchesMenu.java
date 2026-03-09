@@ -35,7 +35,7 @@ public class CurrentMatchesMenu extends PaginatedMenu {
      */
     @Override
     public String getPrePaginatedTitle(Player player) {
-        return "&6&lCurrent Matches (" + KaosPractice.getInstance().getService(MatchService.class).getMatches().size() + ")";
+        return "&6&lPartidas Atuais (" + KaosPractice.getInstance().getService(MatchService.class).getMatches().size() + ")";
     }
 
     /**
@@ -89,9 +89,9 @@ public class CurrentMatchesMenu extends PaginatedMenu {
                             CC.MENU_BAR,
                             " &f◆ &6Arena: &f" + match.getArena().getName(),
                             " &f◆ &6Kit: &f" + match.getKit().getDisplayName(),
-                            " &f◆ &6Queue: &f" + (match.getQueue() == null ? "None" : match.getQueue().getQueueType()),
+                            " &f◆ &6Fila: &f" + (match.getQueue() == null ? "Nenhuma" : match.getQueue().getQueueType()),
                             " ",
-                            "&aClick to spectate.",
+                            "&aClique para assistir.",
                             CC.MENU_BAR
                     )
                     .hideMeta().build();
@@ -130,8 +130,8 @@ public class CurrentMatchesMenu extends PaginatedMenu {
         @Override
         public ItemStack getButtonItem(Player player) {
             return new ItemBuilder(Material.CARPET)
-                    .name("&6&lRefresh")
-                    .lore(" &f◆ &6Press to refresh the matches")
+                    .name("&6&lAtualizar")
+                    .lore(" &f◆ &6Clique para atualizar as partidas")
                     .durability(2)
                     .build();
         }

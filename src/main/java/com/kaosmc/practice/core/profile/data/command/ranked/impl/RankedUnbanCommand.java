@@ -70,9 +70,9 @@ public class RankedUnbanCommand extends BaseCommand {
                 this.plugin.getServer().broadcastMessage(CC.translate(line
                         .replace("{name-color}", String.valueOf(profile.getNameColor()))
                         .replace("{player}", targetDisplayName)
-                        .replace("{reason}", "N/A")
-                        .replace("{ban-id}", "N/A")
-                        .replace("{duration}", "N/A") //TODO
+                        .replace("{reason}", "N/D")
+                        .replace("{ban-id}", "N/D")
+                        .replace("{duration}", "N/D") //TODO
                 ));
             }
         }
@@ -85,9 +85,9 @@ public class RankedUnbanCommand extends BaseCommand {
                     targetPlayer.sendMessage(line
                             .replace("{name-color}", String.valueOf(profile.getNameColor()))
                             .replace("{player}", targetDisplayName)
-                            .replace("{reason}", "N/A")
-                            .replace("{ban-id}", "N/A")
-                            .replace("{duration}", "N/A") //TODO
+                            .replace("{reason}", "N/D")
+                            .replace("{ban-id}", "N/D")
+                            .replace("{duration}", "N/D") //TODO
                     );
                 }
             }

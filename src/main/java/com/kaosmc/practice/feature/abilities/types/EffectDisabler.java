@@ -49,13 +49,13 @@ public class EffectDisabler extends Ability {
             if (isBard(victim) || isArcher(victim) || isRogue(victim) || isMiner(victim)) return;
 
             if (profile.getCooldown(EffectDisabler.class).onCooldown(damager)) {
-                damager.sendMessage(CC.translate("&fYou are on &6&lEffect Disabler &7cooldown for &4" + DurationFormatter.getRemaining(profile.getCooldown(EffectDisabler.class).getRemainingMillis(damager), true, true)));
+                damager.sendMessage(CC.translate("&fVocê está no cooldown de &6&lEffect Disabler &7por &4" + DurationFormatter.getRemaining(profile.getCooldown(EffectDisabler.class).getRemainingMillis(damager), true, true)));
                 damager.updateInventory();
                 return;
             }
 
             if(profile.getGlobalCooldown(GlobalCooldown.PARTNER_ITEM).onCooldown(damager)){
-                damager.sendMessage(CC.translate("&fYou are on &6&lPartner Item &fcooldown for &6" + DurationFormatter.getRemaining(profile.getGlobalCooldown(GlobalCooldown.PARTNER_ITEM).getRemainingMillis(damager), true, true)));
+                damager.sendMessage(CC.translate("&fVocê está no cooldown de &6&lPartner Item &fpor &6" + DurationFormatter.getRemaining(profile.getGlobalCooldown(GlobalCooldown.PARTNER_ITEM).getRemainingMillis(damager), true, true)));
                 damager.updateInventory();
                 return;
             }
@@ -111,7 +111,7 @@ public class EffectDisabler extends Ability {
             }
             if (isAbility(player.getItemInHand())) {
                 if (this.hasCooldown(player)) {
-                    player.sendMessage(CC.translate("&fYou are on cooldown for &4" + DurationFormatter.getRemaining(profile.getCooldown(EffectDisabler.class).getRemainingMillis(player), true)));
+                    player.sendMessage(CC.translate("&fVocê está em cooldown por &4" + DurationFormatter.getRemaining(profile.getCooldown(EffectDisabler.class).getRemainingMillis(player), true)));
                     event.setCancelled(true);
                     player.updateInventory();
                 }

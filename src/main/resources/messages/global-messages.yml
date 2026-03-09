@@ -93,8 +93,7 @@ division:
     display-name-set: '&aDefiniu o nome de exibição da divisão &6{division-name} &apara &r{display-name}&a!'
     icon-set: '&aDefiniu o ícone da divisão &6{division-name} &ato
       &6{item-type}:{item-durability}&a!'
-    wins-set: '&aDefiniu as vitórias necessárias para o nível &6{division-name} &adivision''s
-      &6{tier-name} &apara &6{required-wins}&a!'
+    wins-set: '&aDefiniu as vitórias necessárias para o tier &6{tier-name} &ada divisão &6{division-name} &apara &6{required-wins}&a!'
     created: '&aCriou uma nova divisão chamada &6{division-name} &acom
       &6{required-wins} &avitórias!'
     deleted: '&cExcluiu a divisão chamada &6{division-name}&c!'
@@ -310,7 +309,7 @@ party:
       - ''
       - ' &6&lInformações da Party'
       - '  &6&l│ &rLíder: &6{name-color}{leader}'
-      - '  &6&l│ &rMembers &7({members-amount})&f: &6{members}'
+      - '  &6&l│ &rMembros &7({members-amount})&f: &6{members}'
       - '  &6&l│ &rPrivacidade: &6{privacy}'
       - '  &6&l│ &rTamanho: &6{size}'
       - ''

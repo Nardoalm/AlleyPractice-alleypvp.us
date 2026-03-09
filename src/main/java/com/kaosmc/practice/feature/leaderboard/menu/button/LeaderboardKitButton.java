@@ -42,11 +42,11 @@ public class LeaderboardKitButton extends Button {
             case RANKED:
                 return builder.lore(generateLore("Elo")).build();
             case UNRANKED:
-                return builder.lore(generateLore("Wins")).build();
+                return builder.lore(generateLore("Vitórias")).build();
             case FFA:
-                return builder.lore(generateLore("Kills")).build();
+                return builder.lore(generateLore("Abates")).build();
             case WIN_STREAK:
-                return builder.lore(generateLore("Wins")).build();
+                return builder.lore(generateLore("Vitórias")).build();
             case UNRANKED_MONTHLY:
             case TOURNAMENT:
             default:
@@ -62,7 +62,7 @@ public class LeaderboardKitButton extends Button {
      */
     private List<String> generateLore(String statName) {
         if (this.leaderboard.isEmpty()) {
-            return Arrays.asList("", "&7No entries yet for this kit.");
+            return Arrays.asList("", "&7Ainda não há registros para este kit.");
         }
 
         List<String> lore = new ArrayList<>();
@@ -103,12 +103,12 @@ public class LeaderboardKitButton extends Button {
      */
     private ItemStack inDevelopment() {
         return new ItemBuilder(Material.BARRIER)
-                .name("&c&lComing Soon")
+                .name("&c&lEm Breve")
                 .lore(
                         CC.MENU_BAR,
-                        "&7This leaderboard is currently",
-                        "&7being worked on. Please check",
-                        "&7back later.",
+                        "&7Este ranking ainda está",
+                        "&7sendo desenvolvido. Confira",
+                        "&7novamente depois.",
                         CC.MENU_BAR
                 )
                 .build();

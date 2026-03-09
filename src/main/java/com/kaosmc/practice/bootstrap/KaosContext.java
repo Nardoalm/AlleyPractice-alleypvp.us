@@ -31,7 +31,7 @@ public final class KaosContext {
     private List<com.kaosmc.practice.bootstrap.lifecycle.Service> sortedServices = Collections.emptyList();
 
     public KaosContext(KaosPractice plugin) {
-        this.plugin = Objects.requireNonNull(plugin, "Plugin instance cannot be null");
+        this.plugin = Objects.requireNonNull(plugin, "A instância do plugin não pode ser nula");
     }
 
     /**
@@ -43,12 +43,12 @@ public final class KaosContext {
         try {
             this.scanResult = new ClassGraph().enableAllInfo().acceptPackages(SERVICE_IMPL_PACKAGE).scan();
         } catch (Exception e) {
-            throw new IllegalStateException("Classpath scanning failed.", e);
+            throw new IllegalStateException("A varredura do classpath falhou.", e);
         }
 
         List<Class<? extends com.kaosmc.practice.bootstrap.lifecycle.Service>> implementationClasses = discoverServices(this.scanResult);
         if (implementationClasses.isEmpty()) {
-            throw new IllegalStateException("No services found to load.");
+            throw new IllegalStateException("Nenhum serviço encontrado para carregar.");
         }
 
         for (Class<? extends com.kaosmc.practice.bootstrap.lifecycle.Service> implClass : implementationClasses) {
@@ -56,7 +56,7 @@ public final class KaosContext {
         }
 
         List<Class<? extends com.kaosmc.practice.bootstrap.lifecycle.Service>> sortedImplClasses = sortServicesByPriority(implementationClasses);
-        Logger.info("Service Initialization Order: " +
+        Logger.info("Ordem de Inicialização dos Serviços: " +
                 sortedImplClasses.stream().map(Class::getSimpleName).collect(Collectors.joining(" -> ")));
 
         for (Class<? extends com.kaosmc.practice.bootstrap.lifecycle.Service> implClass : sortedImplClasses) {
@@ -84,7 +84,7 @@ public final class KaosContext {
      * Shuts down all managed services in reverse order.
      */
     public void shutdown() {
-        Logger.info("--- Service Shutdown Start ---");
+        Logger.info("--- Início do Encerramento dos Serviços ---");
         if (sortedServices == null) return;
 
         List<com.kaosmc.practice.bootstrap.lifecycle.Service> reversedServices = new ArrayList<>(sortedServices);
@@ -94,10 +94,10 @@ public final class KaosContext {
             try {
                 service.shutdown(this);
             } catch (Exception e) {
-                Logger.logException("Failed to shutdown service " + service.getClass().getSimpleName(), e);
+                Logger.logException("Falha ao encerrar o serviço " + service.getClass().getSimpleName(), e);
             }
         }
-        Logger.info("--- Service Shutdown Complete ---");
+        Logger.info("--- Encerramento dos Serviços Concluído ---");
     }
 
     /**
@@ -117,13 +117,13 @@ public final class KaosContext {
         }
 
         if (servicesBeingConstructed.contains(implClass)) {
-            throw new IllegalStateException("Cyclic Dependency Detected! Cycle involves: " + implClass.getName());
+            throw new IllegalStateException("Dependência cíclica detectada! O ciclo envolve: " + implClass.getName());
         }
         servicesBeingConstructed.add(implClass);
 
         Constructor<?> constructor = Arrays.stream(implClass.getConstructors())
                 .max(Comparator.comparingInt(Constructor::getParameterCount))
-                .orElseThrow(() -> new NoSuchMethodException("No suitable constructor found for " + implClass.getSimpleName()));
+                .orElseThrow(() -> new NoSuchMethodException("Nenhum construtor adequado encontrado para " + implClass.getSimpleName()));
 
         List<Object> dependencies = new ArrayList<>();
         for (Class<?> paramType : constructor.getParameterTypes()) {
@@ -135,13 +135,13 @@ public final class KaosContext {
                 Class<? extends com.kaosmc.practice.bootstrap.lifecycle.Service> dependencyInterface = (Class<? extends com.kaosmc.practice.bootstrap.lifecycle.Service>) paramType;
                 Class<? extends com.kaosmc.practice.bootstrap.lifecycle.Service> dependencyImpl = this.serviceRegistry.get(dependencyInterface);
                 if (dependencyImpl == null) {
-                    throw new ClassNotFoundException("No implementation found for service interface: " + dependencyInterface.getName());
+                    throw new ClassNotFoundException("Nenhuma implementação encontrada para a interface de serviço: " + dependencyInterface.getName());
                 }
 
                 instantiateService(dependencyImpl);
                 dependencies.add(serviceInstances.get(dependencyInterface));
             } else {
-                throw new IllegalStateException("Unsupported dependency type in " + implClass.getSimpleName() + ": " + paramType.getSimpleName());
+                throw new IllegalStateException("Tipo de dependência não suportado em " + implClass.getSimpleName() + ": " + paramType.getSimpleName());
             }
         }
 

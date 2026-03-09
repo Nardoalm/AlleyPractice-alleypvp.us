@@ -26,11 +26,11 @@ public class FFAButton extends Button {
                 .durability(this.match.getKit().getDurability())
                 .lore(
                         CC.MENU_BAR,
-                        " &fPlaying: &6" + this.match.getPlayers().size() + "/" + this.match.getMaxPlayers(),
+                        " &fJogando: &6" + this.match.getPlayers().size() + "/" + this.match.getMaxPlayers(),
                         " &fArena: &6" + this.match.getArena().getName(),
                         " &fKit: &6" + this.match.getKit().getName(),
                         "",
-                        "&aClick to join.",
+                        "&aClique para entrar.",
                         CC.MENU_BAR
 
                 )

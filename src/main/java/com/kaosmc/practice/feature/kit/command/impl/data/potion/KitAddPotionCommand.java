@@ -52,14 +52,14 @@ public class KitAddPotionCommand extends BaseCommand {
         }
 
         if (!(itemInHand.getItemMeta() instanceof PotionMeta)) {
-            player.sendMessage(CC.translate("&cInvalid potion!"));
+            player.sendMessage(CC.translate("&cPoção inválida!"));
             return;
         }
 
         PotionMeta potionMeta = (PotionMeta) itemInHand.getItemMeta();
         List<PotionEffect> effects = potionMeta.getCustomEffects();
         if (effects.isEmpty()) {
-            player.sendMessage(CC.translate("&cThe potion you are holding has no custom effects!"));
+            player.sendMessage(CC.translate("&cA poção que você está segurando não possui efeitos customizados!"));
             return;
         }
 

@@ -67,18 +67,18 @@ public class PlaytimeCommand extends BaseCommand {
 
         List<String> messages = new ArrayList<>();
         messages.add("");
-        messages.add("&6&l" + targetPlayer.getName() + "'s Playtime");
-        messages.add("  &f&l● &6Days: &f" + days);
-        messages.add("  &f&l● &6Hours: &f" + hours);
-        messages.add("  &f&l● &6Minutes: &f" + minutes);
-        messages.add("  &f&l● &6Seconds: &f" + seconds);
+        messages.add("&6&lTempo de Jogo de " + targetPlayer.getName());
+        messages.add("  &f&l● &6Dias: &f" + days);
+        messages.add("  &f&l● &6Horas: &f" + hours);
+        messages.add("  &f&l● &6Minutos: &f" + minutes);
+        messages.add("  &f&l● &6Segundos: &f" + seconds);
         messages.add("");
-        messages.add("&fTheir first join was on &6" + firstJoinFormatted.setFancy(ChatColor.AQUA, ChatColor.WHITE) + "&f.");
+        messages.add("&fA primeira entrada foi em &6" + firstJoinFormatted.setFancy(ChatColor.AQUA, ChatColor.WHITE) + "&f.");
         messages.add("");
 
         if (targetProfile.isOnline()) {
-            messages.add(" &c&lNote: &7" + targetPlayer.getName() + " is currently online.");
-            messages.add(" &7Their playtime will update as soon as they log off.");
+            messages.add(" &c&lAviso: &7" + targetPlayer.getName() + " está online agora.");
+            messages.add(" &7O tempo de jogo será atualizado quando ele sair.");
             messages.add("");
         }
 

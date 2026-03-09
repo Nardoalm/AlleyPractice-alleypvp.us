@@ -40,10 +40,10 @@ public class DisplayTypeButton extends Button {
             lore.add((currentType == type ? "&f● &6" : "&f● &7") + type.getName());
         }
         lore.add("");
-        lore.add("&aClick to change the display type.");
+        lore.add("&aClique para alterar o tipo de exibição.");
 
         return new ItemBuilder(Material.EYE_OF_ENDER)
-                .name("&6&lDisplay Type")
+                .name("&6&lTipo de Exibição")
                 .lore(lore)
                 .build();
     }

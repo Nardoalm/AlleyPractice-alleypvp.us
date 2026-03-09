@@ -8,6 +8,6 @@ import com.kaosmc.practice.feature.kit.setting.annotation.KitSettingData;
  * @project Kaos
  * @date 5/21/2024
  */
-@KitSettingData(name = "Ranked", description = "This is the ranked kit type", enabled = true)
+@KitSettingData(name = "Ranked", description = "Ativa o modo Ranked para o kit.", enabled = true)
 public class KitSettingRanked extends KitSetting {
 }

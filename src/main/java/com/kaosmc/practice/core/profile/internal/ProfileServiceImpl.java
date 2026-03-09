@@ -84,18 +84,18 @@ public class ProfileServiceImpl implements ProfileService {
 
         Arrays.asList(
                 "",
-                "&c&lSTAT RESET ISSUED",
-                "&cSuccessfully reset stats of " + targetPlayer.getName() + ".",
-                "&7Be aware that if this is being abused, you will be punished.",
+                "&c&lRESET DE ESTATÍSTICAS",
+                "&cAs estatísticas de " + targetPlayer.getName() + " foram resetadas.",
+                "&7Se isso estiver sendo abusado, haverá punição.",
                 ""
         ).forEach(line -> player.sendMessage(CC.translate(line)));
 
         if (targetPlayer.isOnline() && targetPlayer.getPlayer() != null) {
             Arrays.asList(
-                    "",
-                    "&c&lSTAT RESET ACTION",
-                    "&cYour stats have been wiped due to suspicious activity.",
-                    "&7If you believe this was unjust, create a support ticket.",
+                "",
+                    "&c&lRESET DE ESTATÍSTICAS",
+                    "&cSuas estatísticas foram apagadas por atividade suspeita.",
+                    "&7Se você acredita que isso foi injusto, abra um ticket de suporte.",
                     ""
             ).forEach(line -> targetPlayer.getPlayer().sendMessage(CC.translate(line)));
         }
@@ -121,7 +121,7 @@ public class ProfileServiceImpl implements ProfileService {
                 profile.getProfileData().getLayoutData().addLayout(
                         kit.getName(),
                         "Layout1",
-                        "Layout 1",
+                        "Modelo 1",
                         InventoryUtil.cloneItemStackArray(kit.getItems())
                 );
             } else {

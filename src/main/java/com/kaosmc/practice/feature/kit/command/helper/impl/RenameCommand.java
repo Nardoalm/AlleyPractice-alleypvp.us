@@ -44,7 +44,7 @@ public class RenameCommand extends BaseCommand {
 
         ItemMeta itemMeta = itemStack.getItemMeta();
         if (itemMeta == null) {
-            player.sendMessage(CC.translate("&cFailed to rename the item."));
+            player.sendMessage(CC.translate("&cFalha ao renomear o item."));
             return;
         }
 

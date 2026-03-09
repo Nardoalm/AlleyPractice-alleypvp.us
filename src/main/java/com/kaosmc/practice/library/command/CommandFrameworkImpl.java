@@ -63,7 +63,7 @@ public class CommandFrameworkImpl implements CommandFramework, CommandExecutor {
                 field.setAccessible(true);
                 this.map = (CommandMap) field.get(manager);
             } catch (ReflectiveOperationException e) {
-                throw new RuntimeException("Failed to initialize CommandFramework: Could not get CommandMap.", e);
+                throw new RuntimeException("Falha ao inicializar o CommandFramework: nao foi possivel obter o CommandMap.", e);
             }
         }
     }
@@ -72,7 +72,7 @@ public class CommandFrameworkImpl implements CommandFramework, CommandExecutor {
     public void initialize(KaosContext context) {
         ScanResult scanResult = context.getScanResult();
         if (scanResult == null) {
-            Logger.error("CommandFramework cannot initialize: ScanResult from context is null.");
+            Logger.error("CommandFramework nao pode ser inicializado: o ScanResult do contexto esta nulo.");
             return;
         }
 
@@ -85,7 +85,7 @@ public class CommandFrameworkImpl implements CommandFramework, CommandExecutor {
                 Object instance = classInfo.loadClass().getDeclaredConstructor().newInstance();
                 registerCommands(instance);
             } catch (Exception e) {
-                Logger.logException("Failed to instantiate and register command container: " + classInfo.getName(), e);
+                Logger.logException("Falha ao instanciar e registrar o container de comando: " + classInfo.getName(), e);
             }
         }
 
@@ -146,7 +146,7 @@ public class CommandFrameworkImpl implements CommandFramework, CommandExecutor {
                     return true;
                 }
                 if (commandData.inGameOnly() && !(sender instanceof Player)) {
-                    sender.sendMessage(ChatColor.RED + "This command is only performable in game.");
+                    sender.sendMessage(ChatColor.RED + "Este comando so pode ser executado dentro do jogo.");
                     return true;
                 }
 
@@ -154,7 +154,7 @@ public class CommandFrameworkImpl implements CommandFramework, CommandExecutor {
                     method.invoke(methodObject,
                             new CommandArgs(sender, cmd, label, args, cmdLabel.split("\\.").length - 1));
                 } catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
-                    Bukkit.getConsoleSender().sendMessage("Failed to execute command: " + cmdLabel + " - " + e.getMessage());
+                    Bukkit.getConsoleSender().sendMessage("Falha ao executar comando: " + cmdLabel + " - " + e.getMessage());
                     e.printStackTrace();
                 }
                 return true;
@@ -169,7 +169,7 @@ public class CommandFrameworkImpl implements CommandFramework, CommandExecutor {
             if (m.getAnnotation(CommandData.class) != null) {
                 CommandData commandData = m.getAnnotation(CommandData.class);
                 if (m.getParameterTypes().length > 1 || m.getParameterTypes()[0] != CommandArgs.class) {
-                    System.out.println("Unable to register command " + m.getName() + ". Unexpected method arguments");
+                    System.out.println("Nao foi possivel registrar o comando " + m.getName() + ". Argumentos de metodo inesperados");
                     continue;
                 }
                 registerCommand(commandData, Objects.requireNonNull(commandData).name(), m, obj);
@@ -181,11 +181,11 @@ public class CommandFrameworkImpl implements CommandFramework, CommandExecutor {
                 if (m.getParameterTypes().length != 1
                         || m.getParameterTypes()[0] != CommandArgs.class) {
                     System.out.println(
-                            "Unable to register tab completer " + m.getName() + ". Unexpected method arguments");
+                            "Nao foi possivel registrar o autocompletar " + m.getName() + ". Argumentos de metodo inesperados");
                     continue;
                 }
                 if (m.getReturnType() != List.class) {
-                    System.out.println("Unable to register tab completer " + m.getName() + ". Unexpected return type");
+                    System.out.println("Nao foi possivel registrar o autocompletar " + m.getName() + ". Tipo de retorno inesperado");
                     continue;
                 }
                 registerCompleter(Objects.requireNonNull(comp).name(), m, obj);
@@ -202,8 +202,8 @@ public class CommandFrameworkImpl implements CommandFramework, CommandExecutor {
             HelpTopic topic = new GenericCommandHelpTopic(cmd);
             help.add(topic);
         }
-        IndexHelpTopic topic = new IndexHelpTopic(pluginConstant.getName(), "All commands for " + pluginConstant.getName(), null, help,
-                "Below is a list of all " + pluginConstant.getName() + " commands:");
+        IndexHelpTopic topic = new IndexHelpTopic(pluginConstant.getName(), "Todos os comandos de " + pluginConstant.getName(), null, help,
+                "Abaixo esta a lista de todos os comandos de " + pluginConstant.getName() + ":");
         Bukkit.getServer().getHelpMap().addTopic(topic);
     }
 
@@ -272,11 +272,11 @@ public class CommandFrameworkImpl implements CommandFramework, CommandExecutor {
                     BukkitCompleter completer = (BukkitCompleter) field.get(command);
                     completer.addCompleter(label, m, obj);
                 } else {
-                    System.out.println("Unable to register tab completer " + m.getName()
-                            + ". A tab completer is already registered for that command!");
+                    System.out.println("Nao foi possivel registrar o autocompletar " + m.getName()
+                            + ". Ja existe um autocompletar registrado para esse comando!");
                 }
             } catch (Exception exception) {
-                System.out.println("Failed to register tab completer " + m.getName() + " for command " + label + ": " + exception.getMessage());
+                System.out.println("Falha ao registrar o autocompletar " + m.getName() + " para o comando " + label + ": " + exception.getMessage());
             }
         }
     }
@@ -307,7 +307,7 @@ public class CommandFrameworkImpl implements CommandFramework, CommandExecutor {
                     args.getSender().getServer().dispatchCommand(args.getSender(), command);
                 }
             } else {
-                args.getSender().sendMessage(CC.translate("&cMissing arguments / Wrong format or Internal error."));
+                args.getSender().sendMessage(CC.translate("&cArgumentos faltando / formato incorreto ou erro interno."));
             }
         } else {
             args.getSender().sendMessage(this.localeService.getString(SettingsLocaleImpl.COMMAND_ANTI_SYNTAX_MESSAGE).replace("{argument}", args.getLabel()));

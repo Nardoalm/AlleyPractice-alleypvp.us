@@ -21,13 +21,13 @@ public class LayoutDeleteButton extends Button {
     @Override
     public ItemStack getButtonItem(Player player) {
         return new ItemBuilder(Material.INK_SACK)
-                .name("&c&lDelete Layout")
+                .name("&c&lExcluir Layout")
                 .durability(1)
                 .lore(
                         CC.MENU_BAR,
-                        "&7Warning: Permanent!",
+                        "&7Aviso: permanente!",
                         "",
-                        "&aClick to delete.",
+                        "&aClique para excluir.",
                         CC.MENU_BAR
                 )
                 .hideMeta()

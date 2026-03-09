@@ -54,7 +54,7 @@ public class VisibilityServiceImpl implements VisibilityService {
         Profile targetProfile = this.profileService.getProfile(target.getUniqueId());
 
         if (viewerProfile == null || targetProfile == null) {
-            Logger.error("Could not retrieve profile for viewer or target player.");
+            Logger.error("Não foi possível obter o perfil do visualizador ou do jogador alvo.");
             return;
         }
 

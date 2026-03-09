@@ -33,7 +33,7 @@ public class MusicDiscSelectorButton extends Button {
                         CC.MENU_BAR,
                         LoreHelper.displayToggled(this.profile.getProfileData().getMusicData().isDiscSelected(this.disc.name())),
                         "",
-                        "&aClick to toggle.",
+                        "&aClique para alternar.",
                         CC.MENU_BAR
                 )
                 .build();

@@ -57,7 +57,7 @@ public class ReflectionServiceImpl implements ReflectionService {
                 Reflection instance = constructor.newInstance();
                 this.reflectionServices.add(instance);
             } catch (Exception exception) {
-                Logger.logException("Failed to register reflect service: " + clazz.getName(), exception);
+                Logger.logException("Falha ao registrar o servico de reflection: " + clazz.getName(), exception);
             }
         }
     }

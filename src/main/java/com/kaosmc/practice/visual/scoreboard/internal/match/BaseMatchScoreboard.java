@@ -71,14 +71,14 @@ public abstract class BaseMatchScoreboard implements MatchScoreboard {
 
         ProfileService profileService = KaosPractice.getInstance().getService(ProfileService.class);
 
-        String opponentName = match.isTeamMatch() ? getColoredName(profileService.getProfile(opponent.getLeader().getUuid())) + "' Team" : getColoredName(profileService.getProfile(opponent.getLeader().getUuid()));
+        String opponentName = match.isTeamMatch() ? getColoredName(profileService.getProfile(opponent.getLeader().getUuid())) + " Time" : getColoredName(profileService.getProfile(opponent.getLeader().getUuid()));
 
         return CC.translate(line)
                 .replace("{opponent}", opponentName)
                 .replace("{player-ping}", String.valueOf(getPing(player)))
                 .replace("{opponent-ping}", String.valueOf(getPing(opponent.getLeader().getTeamPlayer())))
                 .replace("{duration}", match.getDuration())
-                .replace("{arena}", match.getArena().getDisplayName() == null ? "&c&lNULL" : match.getArena().getDisplayName())
+                .replace("{arena}", match.getArena().getDisplayName() == null ? "&c&lINDEFINIDO" : match.getArena().getDisplayName())
                 .replace("{kit}", match.getKit().getDisplayName())
                 .replace("{your-players}", String.valueOf(you.getPlayerSize()))
                 .replace("{opponent-players}", String.valueOf(opponent.getPlayerSize()))

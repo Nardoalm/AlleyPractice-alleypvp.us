@@ -9,12 +9,12 @@ import lombok.Getter;
  */
 @Getter
 public enum LeaderboardType {
-    UNRANKED("Unranked (All time)"),
-    UNRANKED_MONTHLY("Unranked (Monthly)"),
+    UNRANKED("Unranked (Geral)"),
+    UNRANKED_MONTHLY("Unranked (Mensal)"),
     WIN_STREAK("Win Streak"),
     FFA("FFA"),
     RANKED("Ranked"),
-    TOURNAMENT("Tournament");
+    TOURNAMENT("Torneio");
 
     private final String name;
 

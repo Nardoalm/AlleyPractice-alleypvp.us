@@ -29,7 +29,7 @@ public class ToggleScoreboardCommand extends BaseCommand {
         profile.getProfileData().getSettingData().setScoreboardEnabled(!profile.getProfileData().getSettingData().isScoreboardEnabled());
 
         player.sendMessage(CC.translate(this.getString(GlobalMessagesLocaleImpl.PROFILE_TOGGLED_SCOREBOARD)
-                .replace("{status}", profile.getProfileData().getSettingData().isScoreboardEnabled() ? "&aenabled" : "&cdisabled"))
+                .replace("{status}", profile.getProfileData().getSettingData().isScoreboardEnabled() ? "&aativou" : "&cdesativou"))
         );
     }
 }

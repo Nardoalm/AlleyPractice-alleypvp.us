@@ -29,7 +29,7 @@ public class ViewErrorCommand extends BaseCommand {
         String[] args = command.getArgs();
 
         if (sender instanceof Player) {
-            sender.sendMessage(CC.translate("&cThis command can only be used in console."));
+            sender.sendMessage(CC.translate("&cEste comando só pode ser usado no console."));
             return;
         }
 
@@ -42,7 +42,7 @@ public class ViewErrorCommand extends BaseCommand {
             UUID errorId = UUID.fromString(args[0]);
             Logger.viewException(errorId);
         } catch (IllegalArgumentException e) {
-            sender.sendMessage(CC.translate("&cInvalid error ID!"));
+            sender.sendMessage(CC.translate("&cID de erro inválido!"));
         }
     }
 }

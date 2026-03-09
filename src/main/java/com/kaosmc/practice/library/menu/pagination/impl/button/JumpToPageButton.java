@@ -24,7 +24,7 @@ public class JumpToPageButton extends Button {
         ItemStack itemStack = new ItemStack(this.current ? Material.ENCHANTED_BOOK : Material.BOOK, this.page);
         ItemMeta itemMeta = itemStack.getItemMeta();
 
-        itemMeta.setDisplayName(CC.translate("&6&lPage " + this.page));
+        itemMeta.setDisplayName(CC.translate("&6&lPágina " + this.page));
 
         List<String> lore = new ArrayList<>();
         lore.add(CC.MENU_BAR);

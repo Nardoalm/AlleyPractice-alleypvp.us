@@ -8,6 +8,6 @@ import com.kaosmc.practice.feature.kit.setting.annotation.KitSettingData;
  * @project Kaos
  * @date 16/10/2024 - 17:35
  */
-@KitSettingData(name = "NoHunger", description = "Prevent the player from getting hungry", enabled = false)
+@KitSettingData(name = "NoHunger", description = "Impede que o jogador sinta fome.", enabled = false)
 public class KitSettingNoHungerImpl extends KitSetting {
 }

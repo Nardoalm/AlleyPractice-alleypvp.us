@@ -33,7 +33,7 @@ public class SnapshotMenu extends Menu {
 
     @Override
     public String getTitle(Player player) {
-        String title = KaosPractice.getInstance().getService(ConfigService.class).getMenusConfig().getString("menus.snapshot-menu.title", "&6&l{name}'s Inventory");
+        String title = KaosPractice.getInstance().getService(ConfigService.class).getMenusConfig().getString("menus.snapshot-menu.title", "&6&lInventario de {name}");
         return title.replace("{name}", this.snapshot.getUsername());
     }
 
@@ -126,7 +126,7 @@ public class SnapshotMenu extends Menu {
                 config.getStringList(path + ".potions.lore").stream().map(line -> line
                         .replaceAll("\\{potions_remaining}", String.valueOf(this.snapshot.getAmountOfPotionsInInventory()))
                         .replaceAll("\\{potions_thrown}", String.valueOf(this.snapshot.getThrownPotions()))
-                        .replaceAll("\\{potions_wasted}", "N/A")
+                        .replaceAll("\\{potions_wasted}", "N/D")
                         .replaceAll("\\{potions_missed}", String.valueOf(this.snapshot.getMissedPotions()))
                         .replaceAll("\\{potion_accuracy}", String.valueOf(this.snapshot.getPotionAccuracy()))
                         .replaceAll("\\{heart}", Symbol.HEART)
@@ -179,7 +179,7 @@ public class SnapshotMenu extends Menu {
 
                 config.getStringList(path + ".food.lore").stream().map(line -> line
                         .replaceAll("\\{food_level}", String.valueOf(this.snapshot.getFoodLevel()))
-                        .replaceAll("\\{saturation}", "N/A")
+                        .replaceAll("\\{saturation}", "N/D")
                 ).collect(Collectors.toList()),
 
                 Material.getMaterial(config.getString(path + ".food.item", "COOKED_BEEF")),
@@ -201,7 +201,7 @@ public class SnapshotMenu extends Menu {
 
                 config.getStringList(path + ".health.lore").stream().map(line -> line
                         .replaceAll("\\{health}", String.valueOf(this.snapshot.getHealth()))
-                        .replaceAll("\\{absorption}", "N/A")
+                        .replaceAll("\\{absorption}", "N/D")
                         .replaceAll("\\{heart}", Symbol.HEART)
                 ).collect(Collectors.toList()),
 

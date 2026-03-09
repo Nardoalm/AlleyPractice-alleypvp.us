@@ -26,15 +26,15 @@ public class SnapshotOpponentButton extends Button {
         Snapshot opponentSnapshot = KaosPractice.getInstance().getService(SnapshotService.class).getSnapshot(this.snapshot.getOpponent());
         if (opponentSnapshot == null) {
             return new ItemBuilder(Material.BARRIER)
-                    .name(CC.translate("&cOpponent Not Found"))
-                    .lore("&7The opponent's snapshot could not be found.")
+                    .name(CC.translate("&cOponente Não Encontrado"))
+                    .lore("&7O snapshot do oponente não foi encontrado.")
                     .hideMeta()
                     .build();
         }
 
         return new ItemBuilder(Material.PAPER)
                 .name(CC.translate("&6Ver Oponente"))
-                .lore("&7Click to view &6" + opponentSnapshot.getUsername() + "'s &7inventory.")
+                .lore("&7Clique para ver o inventário de &6" + opponentSnapshot.getUsername() + "&7.")
                 .hideMeta()
                 .build();
     }

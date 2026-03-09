@@ -114,7 +114,7 @@ public class LobbyScoreboardImpl implements Scoreboard {
 
                 processedLine = CC.translate(processedLine)
                         .replace("{party-size}", String.valueOf(profile.getParty().getMembers().size()))
-                        .replace("{party-privacy}", profile.getParty().isPrivate() ? "Private" : "Public")
+                        .replace("{party-privacy}", profile.getParty().isPrivate() ? "Privada" : "Pública")
                         .replace("{party-leader}", leaderName); // Usando variável segura
             }
 

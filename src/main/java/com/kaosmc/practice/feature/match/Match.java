@@ -111,9 +111,9 @@ public abstract class Match {
      * @param ranked Whether the match is ranked.
      */
     public Match(Queue queue, Kit kit, Arena arena, boolean ranked) {
-        this.queue = Objects.requireNonNull(queue, "Queue cannot be null");
-        this.kit = Objects.requireNonNull(kit, "Kit cannot be null");
-        this.arena = Objects.requireNonNull(arena, "Arena cannot be null");
+        this.queue = Objects.requireNonNull(queue, "Fila nao pode ser nula");
+        this.kit = Objects.requireNonNull(kit, "Kit nao pode ser nulo");
+        this.arena = Objects.requireNonNull(arena, "Arena nao pode ser nula");
         this.ranked = ranked;
     }
 

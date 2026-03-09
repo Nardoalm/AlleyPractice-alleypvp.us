@@ -57,7 +57,7 @@ public class MongoServiceImpl implements MongoService {
 
             this.mongoDatabase.listCollectionNames().first();
         } catch (Exception e) {
-            Logger.error("Failed to connect to MongoDB. Please check your credentials and network access.");
+            Logger.error("Falha ao conectar ao MongoDB. Verifique suas credenciais e o acesso a rede.");
             throw new RuntimeException("MongoDB Connection Failure", e);
         }
     }

@@ -47,7 +47,7 @@ public class LocaleServiceImpl implements LocaleService {
         );
 
         Logger.infoNoPrefix("");
-        Logger.info("Checking locale entries...");
+        Logger.info("Verificando entradas de locale...");
         Logger.infoNoPrefix("");
 
         int missingCount = 0;
@@ -59,7 +59,7 @@ public class LocaleServiceImpl implements LocaleService {
                 FileConfiguration config = this.configService.getConfig(entry.getConfigName());
                 if (!config.contains(entry.getConfigPath())) {
                     config.set(entry.getConfigPath(), entry.getDefaultValue());
-                    Logger.infoNoPrefix("&8'&6" + entry.getConfigPath() + "&8' &fnot found in &6" + entry.getConfigName() + "&f.");
+                    Logger.infoNoPrefix("&8'&6" + entry.getConfigPath() + "&8' &fnão encontrada em &6" + entry.getConfigName() + "&f.");
                     filesToSave.put(entry.getConfigName(), true);
                     missingCount++;
                 }
@@ -73,11 +73,11 @@ public class LocaleServiceImpl implements LocaleService {
         }
 
         Logger.infoNoPrefix("");
-        Logger.info("Locale entries check complete.");
+        Logger.info("Verificação de locales concluída.");
         if (missingCount > 0) {
-            Logger.info("Total of " + missingCount + " missing locale entr" + (missingCount == 1 ? "y" : "ies") + (missingCount == 1 ? " was" : " were") + " added.");
+            Logger.info("Total de " + missingCount + " entrad" + (missingCount == 1 ? "a" : "as") + " de locale ausente" + (missingCount == 1 ? "" : "s") + " adicionad" + (missingCount == 1 ? "a" : "as") + ".");
         } else {
-            Logger.info("No missing locale entries found.");
+            Logger.info("Nenhuma entrada de locale ausente foi encontrada.");
         }
         Logger.infoNoPrefix("");
     }
@@ -88,7 +88,7 @@ public class LocaleServiceImpl implements LocaleService {
         if (config.contains(entry.getConfigPath())) {
             return CC.translate(config.getString(entry.getConfigPath()));
         } else {
-            Logger.error("'" + entry.getConfigPath() + "' doesn't exist in " + entry.getConfigName() + ". Using default value. Restarting your server will fix this.");
+            Logger.error("'" + entry.getConfigPath() + "' não existe em " + entry.getConfigName() + ". Usando valor padrão. Reiniciar o servidor corrigirá isso.");
             return CC.translate(entry.getDefaultValue().toString());
         }
     }
@@ -100,7 +100,7 @@ public class LocaleServiceImpl implements LocaleService {
         if (config.contains(entry.getConfigPath())) {
             return CC.translateList(config.getStringList(entry.getConfigPath()));
         } else {
-            Logger.error("'" + entry.getConfigPath() + "' doesn't exist in " + entry.getConfigName() + ". Using default value. Restarting your server will fix this.");
+            Logger.error("'" + entry.getConfigPath() + "' não existe em " + entry.getConfigName() + ". Usando valor padrão. Reiniciar o servidor corrigirá isso.");
             return CC.translateList((List<String>) entry.getDefaultValue());
         }
     }
@@ -112,7 +112,7 @@ public class LocaleServiceImpl implements LocaleService {
         if (config.contains(entry.getConfigPath())) {
             return config.getStringList(entry.getConfigPath());
         } else {
-            Logger.error("'" + entry.getConfigPath() + "' doesn't exist in " + entry.getConfigName() + ". Using default value. Restarting your server will fix this.");
+            Logger.error("'" + entry.getConfigPath() + "' não existe em " + entry.getConfigName() + ". Usando valor padrão. Reiniciar o servidor corrigirá isso.");
             return (List<String>) entry.getDefaultValue();
         }
     }
@@ -123,7 +123,7 @@ public class LocaleServiceImpl implements LocaleService {
         if (config.contains(entry.getConfigPath())) {
             return config.getInt(entry.getConfigPath());
         } else {
-            Logger.error("'" + entry.getConfigPath() + "' doesn't exist in " + entry.getConfigName() + ". Using default value. Restarting your server will fix this.");
+            Logger.error("'" + entry.getConfigPath() + "' não existe em " + entry.getConfigName() + ". Usando valor padrão. Reiniciar o servidor corrigirá isso.");
             return (int) entry.getDefaultValue();
         }
     }
@@ -134,7 +134,7 @@ public class LocaleServiceImpl implements LocaleService {
         if (config.contains(entry.getConfigPath())) {
             return config.getDouble(entry.getConfigPath());
         } else {
-            Logger.error("'" + entry.getConfigPath() + "' doesn't exist in " + entry.getConfigName() + ". Using default value. Restarting your server will fix this.");
+            Logger.error("'" + entry.getConfigPath() + "' não existe em " + entry.getConfigName() + ". Usando valor padrão. Reiniciar o servidor corrigirá isso.");
             return (double) entry.getDefaultValue();
         }
     }
@@ -145,7 +145,7 @@ public class LocaleServiceImpl implements LocaleService {
         if (config.contains(entry.getConfigPath())) {
             return config.getBoolean(entry.getConfigPath());
         } else {
-            Logger.error("'" + entry.getConfigPath() + "' doesn't exist in " + entry.getConfigName() + ". Using default value. Restarting your server will fix this.");
+            Logger.error("'" + entry.getConfigPath() + "' não existe em " + entry.getConfigName() + ". Usando valor padrão. Reiniciar o servidor corrigirá isso.");
             return (boolean) entry.getDefaultValue();
         }
     }

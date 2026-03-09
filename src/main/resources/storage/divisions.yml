@@ -16,8 +16,8 @@ divisions:
       V:
         required-wins: 100
   Silver:
-    display-name: "Silver"
-    description: "A divisão Silver"
+    display-name: "Prata"
+    description: "A divisão Prata"
     durability: 0
     icon: IRON_INGOT
     tier-levels:
@@ -32,8 +32,8 @@ divisions:
       V:
         required-wins: 220
   Gold:
-    display-name: "Gold"
-    description: "A divisão Gold"
+    display-name: "Ouro"
+    description: "A divisão Ouro"
     durability: 0
     icon: GOLD_INGOT
     tier-levels:
@@ -48,8 +48,8 @@ divisions:
       V:
         required-wins: 500
   Platinum:
-    display-name: "Platinum"
-    description: "A divisão Platinum"
+    display-name: "Platina"
+    description: "A divisão Platina"
     durability: 4
     icon: INK_SACK
     tier-levels:
@@ -64,8 +64,8 @@ divisions:
       V:
         required-wins: 1500
   Diamond:
-    display-name: "Diamond"
-    description: "A divisão Diamond"
+    display-name: "Diamante"
+    description: "A divisão Diamante"
     durability: 0
     icon: DIAMOND
     tier-levels:
@@ -80,8 +80,8 @@ divisions:
       V:
         required-wins: 2200
   Master:
-    display-name: "Master"
-    description: "A divisão Master"
+    display-name: "Mestre"
+    description: "A divisão Mestre"
     durability: 12
     icon: INK_SACK
     tier-levels:
@@ -96,8 +96,8 @@ divisions:
       V:
         required-wins: 5000
   Grandmaster:
-    display-name: "Grandmaster"
-    description: "A divisão Grandmaster"
+    display-name: "Grão-Mestre"
+    description: "A divisão Grão-Mestre"
     durability: 6
     icon: INK_SACK
     tier-levels:

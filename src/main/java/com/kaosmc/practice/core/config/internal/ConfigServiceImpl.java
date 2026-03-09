@@ -118,18 +118,18 @@ public class ConfigServiceImpl implements ConfigService {
                     this.assignConfigs();
 
                     Logger.sendMessageAndLog(sender, "");
-                    Logger.sendMessageAndLog(sender, "&fConfig files &a&lRE&r-&a&lASSIGNED&f.");
+                    Logger.sendMessageAndLog(sender, "&fArquivos de configuracao &a&lRE&r-&a&lATRIBUIDOS&f.");
 
                     long overallEndTime = System.nanoTime();
                     long overallTimeTaken = (overallEndTime - timeTaken) / 1_000_000;
 
-                    Logger.sendMessageAndLog(sender, "&fReload process &a&lCOMPLETED&r in &6" + overallTimeTaken + "&f ms.");
-                    Logger.sendMessageAndLog(sender, "&fIndividual file reloads took a total of &6" + finalTotalReloadTime + "&f ms.");
+                    Logger.sendMessageAndLog(sender, "&fProcesso de reload &a&lCONCLUIDO&r em &6" + overallTimeTaken + "&f ms.");
+                    Logger.sendMessageAndLog(sender, "&fOs reloads individuais dos arquivos levaram um total de &6" + finalTotalReloadTime + "&f ms.");
                 }, delay + delayIncrement);
             }, 20L);
         } catch (Exception exception) {
-            Logger.sendMessageAndLog(sender, "&c✘  &c&lFAILURE: " + exception.getMessage());
-            Logger.logException("Error occurred while reloading configs.", exception);
+            Logger.sendMessageAndLog(sender, "&c✘  &c&lFALHA: " + exception.getMessage());
+            Logger.logException("Ocorreu um erro ao recarregar as configuracoes.", exception);
         }
     }
 

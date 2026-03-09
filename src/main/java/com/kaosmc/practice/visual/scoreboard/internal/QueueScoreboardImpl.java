@@ -35,7 +35,7 @@ public class QueueScoreboardImpl implements Scoreboard {
         // Variáveis de Fila Seguras
         String queueType = "Carregando...";
         String queueKit = "Carregando...";
-        String pingRangeDisplay = "N/A";
+        String pingRangeDisplay = "N/D";
         long elapsedTime = 0L;
 
         if (profile.getQueueProfile() != null && profile.getQueueProfile().getQueue() != null) {

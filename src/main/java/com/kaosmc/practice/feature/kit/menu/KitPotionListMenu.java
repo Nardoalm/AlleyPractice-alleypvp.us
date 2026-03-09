@@ -31,7 +31,7 @@ public class KitPotionListMenu extends PaginatedMenu {
 
     @Override
     public String getPrePaginatedTitle(Player player) {
-        return "&6&lPotions for " + this.kit.getDisplayName();
+        return "&6&lPoções de " + this.kit.getDisplayName();
     }
 
     @Override
@@ -67,10 +67,10 @@ public class KitPotionListMenu extends PaginatedMenu {
             return new ItemBuilder(Material.POTION)
                     .name("&6" + this.potionEffect.getType().getName())
                     .lore(
-                            "&7Duration: &6" + this.potionEffect.getDuration() / 20 + " seconds",
-                            "&7Amplifier: &6" + this.potionEffect.getAmplifier(),
+                            "&7Duração: &6" + this.potionEffect.getDuration() / 20 + " segundos",
+                            "&7Amplificador: &6" + this.potionEffect.getAmplifier(),
                             "",
-                            "&7Click to remove this potion effect."
+                            "&7Clique para remover este efeito de poção."
                     )
                     .hideMeta()
                     .build();

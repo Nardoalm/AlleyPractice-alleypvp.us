@@ -103,14 +103,14 @@ public class ArenaServiceImpl implements ArenaService {
             );
 
             if (Bukkit.unloadWorld(temporaryWorld, false)) {
-                Logger.info("Successfully unloaded temporary world: " + worldName);
+                Logger.info("Mundo temporário descarregado com sucesso: " + worldName);
                 File worldFolder = new File(Bukkit.getWorldContainer(), worldName);
                 if (worldFolder.exists()) {
                     FileUtil.deleteWorldFolder(worldFolder);
                     Logger.info("Deleted temporary world folder: " + worldName);
                 }
             } else {
-                Logger.error("Failed to unload temporary world: " + worldName);
+                Logger.error("Falha ao descarregar o mundo temporário: " + worldName);
             }
             temporaryWorld = null;
         }
@@ -193,10 +193,10 @@ public class ArenaServiceImpl implements ArenaService {
                     this.arenas.add(arena);
                 }
             } catch (TimeoutException e) {
-                Logger.error("Arena loading timed out after 5 seconds");
+                Logger.error("O carregamento da arena excedeu o tempo limite após 5 segundos");
                 future.cancel(true);
             } catch (Exception e) {
-                Logger.error("Failed to load arena: " + e.getMessage());
+                Logger.error("Falha ao carregar a arena: " + e.getMessage());
             }
         }
     }
@@ -244,7 +244,7 @@ public class ArenaServiceImpl implements ArenaService {
                 );
 
             default:
-                throw new IllegalStateException("Unexpected arena type: " + arenaType);
+                throw new IllegalStateException("Tipo de arena inesperado: " + arenaType);
         }
     }
 
@@ -366,7 +366,7 @@ public class ArenaServiceImpl implements ArenaService {
 
             boolean unloaded = this.plugin.getServer().unloadWorld(existingWorld, false);
             if (!unloaded) {
-                Logger.error("Failed to unload world: " + worldName);
+                Logger.error("Falha ao descarregar o mundo: " + worldName);
             }
         }
 

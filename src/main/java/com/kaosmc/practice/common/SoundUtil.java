@@ -111,7 +111,7 @@ public class SoundUtil {
      */
     private void playSoundIfEnabled(Match match, Sound sound, boolean enabled) {
         if (match == null) {
-            throw new IllegalArgumentException("Match cannot be null");
+            throw new IllegalArgumentException("Partida nao pode ser nula");
         }
 
         if (enabled) {

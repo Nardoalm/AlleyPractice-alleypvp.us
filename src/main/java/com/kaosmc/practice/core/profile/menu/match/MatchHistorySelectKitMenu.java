@@ -25,7 +25,7 @@ public class MatchHistorySelectKitMenu extends Menu {
 
     @Override
     public String getTitle(Player player) {
-        return "&6&lMatch History";
+        return "&6&lHistórico de Partidas";
     }
 
     @Override

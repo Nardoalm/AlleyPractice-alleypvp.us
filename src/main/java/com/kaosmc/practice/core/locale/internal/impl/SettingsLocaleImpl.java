@@ -24,7 +24,7 @@ public enum SettingsLocaleImpl implements LocaleEntry {
     CONFIG_ARENA_DEFAULT_DISPLAY_NAME_STANDALONE("settings.yml", "configuration.arena-default-display-name.standalone", "&6{arena-name}"),
 
     CONFIG_KIT_DEFAULT_DESCRIPTION("settings.yml", "configuration.default-kit-values.description", ""),
-    CONFIG_KIT_DEFAULT_DISCLAIMER("settings.yml", "configuration.default-kit-values.disclaimer", "&7{kit-name} kit disclaimer."),
+    CONFIG_KIT_DEFAULT_DISCLAIMER("settings.yml", "configuration.default-kit-values.disclaimer", "&7Aviso do kit {kit-name}."),
     CONFIG_KIT_DEFAULT_DISPLAYNAME("settings.yml", "configuration.default-kit-values.display-name", "&6{kit-name}"),
     CONFIG_KIT_DEFAULT_MENU_TITLE("settings.yml", "configuration.default-kit-values.menu-title", "&6&l{kit-name}"),
 
@@ -55,7 +55,7 @@ public enum SettingsLocaleImpl implements LocaleEntry {
 
     PROFANITY_FILTER_ADD_DEFAULT_WORDS_BOOLEAN("settings.yml", "profanity-filter.add-default-words", true),
     PROFANITY_FILTER_FILTERED_WORDS_LIST("settings.yml", "profanity-filter.filtered-words", Arrays.asList("shit", "fuck", "bitch")),
-    PROFANITY_FILTER_STAFF_NOTIFICATION_FORMAT("settings.yml", "profanity-filter.staff-notification-format", "&6[S] &f(&6Kaos: &fProfanity Detected) &c{player}&f: &7{message}"),
+    PROFANITY_FILTER_STAFF_NOTIFICATION_FORMAT("settings.yml", "profanity-filter.staff-notification-format", "&6[S] &f(&6Kaos: &fPalavrão Detectado) &c{player}&f: &7{message}"),
 
     PRACTICE_API_NAMETAG_PRIORITY("settings.yml", "practice-api.nametag.priority", 100),
 

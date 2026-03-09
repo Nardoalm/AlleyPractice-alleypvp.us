@@ -158,7 +158,7 @@ public class MatchUtility {
         );
 
         match.sendMessage("");
-        match.sendMessage(CC.translate("&aWinner Team: &f" + winnerTeamName));
+        match.sendMessage(CC.translate("&aTime Vencedor: &f" + winnerTeamName));
 
         for (MatchGamePlayer player : winnerParticipant.getAllPlayers()) {
             String commandName = player.getUsername();
@@ -167,13 +167,13 @@ public class MatchUtility {
             TextComponent playerComponent = new TextComponent(CC.translate("&7- &f" + displayName));
             playerComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/inventory " + commandName));
             playerComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                    new ComponentBuilder(CC.translate("&eClick to view " + displayName + "'s inventory")).create()));
+                    new ComponentBuilder(CC.translate("&eClique para ver o inventário de " + displayName)).create()));
 
             sendCombinedSpigotMessage(match, playerComponent);
         }
 
         match.sendMessage("");
-        match.sendMessage(CC.translate("&cLoser Team: &f" + loserTeamName));
+        match.sendMessage(CC.translate("&cTime Perdedor: &f" + loserTeamName));
 
         for (MatchGamePlayer player : loserParticipant.getAllPlayers()) {
             String commandName = player.getUsername();
@@ -182,7 +182,7 @@ public class MatchUtility {
             TextComponent playerComponent = new TextComponent(CC.translate("&7- &f" + displayName));
             playerComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/inventory " + commandName));
             playerComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                    new ComponentBuilder(CC.translate("&eClick to view " + displayName + "'s inventory")).create()));
+                    new ComponentBuilder(CC.translate("&eClique para ver o inventário de " + displayName)).create()));
 
             sendCombinedSpigotMessage(match, playerComponent);
         }

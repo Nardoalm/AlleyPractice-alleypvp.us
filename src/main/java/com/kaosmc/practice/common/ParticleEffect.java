@@ -715,7 +715,7 @@ public enum ParticleEffect {
             throw new ParticleColorException("This particle effect is not colorable");
         }
         if (!isColorCorrect(this, color)) {
-            throw new ParticleColorException("The particle color type is incorrect");
+            throw new ParticleColorException("O tipo de cor da particula esta incorreto");
         }
         new ParticlePacket(this, color, range > 256).sendTo(center, range);
     }
@@ -739,7 +739,7 @@ public enum ParticleEffect {
             throw new ParticleColorException("This particle effect is not colorable");
         }
         if (!isColorCorrect(this, color)) {
-            throw new ParticleColorException("The particle color type is incorrect");
+            throw new ParticleColorException("O tipo de cor da particula esta incorreto");
         }
         new ParticlePacket(this, color, isLongDistance(center, players)).sendTo(center, players);
     }
@@ -782,7 +782,7 @@ public enum ParticleEffect {
             throw new ParticleDataException("This particle effect does not require additional data");
         }
         if (!isDataCorrect(this, data)) {
-            throw new ParticleDataException("The particle data type is incorrect");
+            throw new ParticleDataException("O tipo de dado da particula esta incorreto");
         }
         new ParticlePacket(this, offsetX, offsetY, offsetZ, speed, amount, range > 256, data).sendTo(center, range);
     }
@@ -811,7 +811,7 @@ public enum ParticleEffect {
             throw new ParticleDataException("This particle effect does not require additional data");
         }
         if (!isDataCorrect(this, data)) {
-            throw new ParticleDataException("The particle data type is incorrect");
+            throw new ParticleDataException("O tipo de dado da particula esta incorreto");
         }
         new ParticlePacket(this, offsetX, offsetY, offsetZ, speed, amount, isLongDistance(center, players), data).sendTo(center, players);
     }
@@ -856,7 +856,7 @@ public enum ParticleEffect {
             throw new ParticleDataException("This particle effect does not require additional data");
         }
         if (!isDataCorrect(this, data)) {
-            throw new ParticleDataException("The particle data type is incorrect");
+            throw new ParticleDataException("O tipo de dado da particula esta incorreto");
         }
         new ParticlePacket(this, direction, speed, range > 256, data).sendTo(center, range);
     }
@@ -882,7 +882,7 @@ public enum ParticleEffect {
             throw new ParticleDataException("This particle effect does not require additional data");
         }
         if (!isDataCorrect(this, data)) {
-            throw new ParticleDataException("The particle data type is incorrect");
+            throw new ParticleDataException("O tipo de dado da particula esta incorreto");
         }
         new ParticlePacket(this, direction, speed, isLongDistance(center, players), data).sendTo(center, players);
     }
@@ -1034,7 +1034,7 @@ public enum ParticleEffect {
         public BlockData(Material material, byte data) throws IllegalArgumentException {
             super(material, data);
             if (!material.isBlock()) {
-                throw new IllegalArgumentException("The material is not a block");
+                throw new IllegalArgumentException("O material nao e um bloco");
             }
         }
     }
@@ -1093,24 +1093,24 @@ public enum ParticleEffect {
          */
         public OrdinaryColor(int red, int green, int blue) throws IllegalArgumentException {
             if (red < 0) {
-                throw new IllegalArgumentException("The red value is lower than 0");
+                throw new IllegalArgumentException("O valor de vermelho e menor que 0");
             }
             if (red > 255) {
-                throw new IllegalArgumentException("The red value is higher than 255");
+                throw new IllegalArgumentException("O valor de vermelho e maior que 255");
             }
             this.red = red;
             if (green < 0) {
-                throw new IllegalArgumentException("The green value is lower than 0");
+                throw new IllegalArgumentException("O valor de verde e menor que 0");
             }
             if (green > 255) {
-                throw new IllegalArgumentException("The green value is higher than 255");
+                throw new IllegalArgumentException("O valor de verde e maior que 255");
             }
             this.green = green;
             if (blue < 0) {
-                throw new IllegalArgumentException("The blue value is lower than 0");
+                throw new IllegalArgumentException("O valor de azul e menor que 0");
             }
             if (blue > 255) {
-                throw new IllegalArgumentException("The blue value is higher than 255");
+                throw new IllegalArgumentException("O valor de azul e maior que 255");
             }
             this.blue = blue;
         }
@@ -1201,10 +1201,10 @@ public enum ParticleEffect {
          */
         public NoteColor(int note) throws IllegalArgumentException {
             if (note < 0) {
-                throw new IllegalArgumentException("The note value is lower than 0");
+                throw new IllegalArgumentException("O valor da nota e menor que 0");
             }
             if (note > 24) {
-                throw new IllegalArgumentException("The note value is higher than 24");
+                throw new IllegalArgumentException("O valor da nota e maior que 24");
             }
             this.note = note;
         }
@@ -1358,10 +1358,10 @@ public enum ParticleEffect {
         public ParticlePacket(ParticleEffect effect, float offsetX, float offsetY, float offsetZ, float speed, int amount, boolean longDistance, ParticleData data) throws IllegalArgumentException {
             initialize();
             if (speed < 0) {
-                throw new IllegalArgumentException("The speed is lower than 0");
+                throw new IllegalArgumentException("A velocidade e menor que 0");
             }
             if (amount < 0) {
-                throw new IllegalArgumentException("The amount is lower than 0");
+                throw new IllegalArgumentException("A quantidade e menor que 0");
             }
             this.effect = effect;
             this.offsetX = offsetX;
@@ -1425,7 +1425,7 @@ public enum ParticleEffect {
                 playerConnection = ReflectionUtility.getField("EntityPlayer", ReflectionUtility.PackageType.MINECRAFT_SERVER, false, "playerConnection");
                 sendPacket = ReflectionUtility.getMethod(playerConnection.getType(), "sendPacket", ReflectionUtility.PackageType.MINECRAFT_SERVER.getClass("Packet"));
             } catch (Exception exception) {
-                throw new VersionIncompatibleException("Your current bukkit version seems to be incompatible with this library", exception);
+                throw new VersionIncompatibleException("Sua versao atual do Bukkit parece ser incompativel com esta biblioteca", exception);
             }
             initialized = true;
         }
@@ -1509,7 +1509,7 @@ public enum ParticleEffect {
          */
         public void sendTo(Location center, List<Player> players) throws IllegalArgumentException {
             if (players.isEmpty()) {
-                throw new IllegalArgumentException("The player list is empty");
+                throw new IllegalArgumentException("A lista de jogadores esta vazia");
             }
             for (Player player : players) {
                 sendTo(center, player);
@@ -1526,7 +1526,7 @@ public enum ParticleEffect {
          */
         public void sendTo(Location center, double range) throws IllegalArgumentException {
             if (range < 1) {
-                throw new IllegalArgumentException("The range is lower than 1");
+                throw new IllegalArgumentException("O alcance e menor que 1");
             }
             String worldName = center.getWorld().getName();
             double squared = range * range;

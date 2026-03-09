@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
  * @project Kaos
  * @since 02/04/2025
  */
-@CosmeticData(type = CosmeticType.SOUND_EFFECT, name = "Explosion", description = "Play an explosion sound", permission = "explosion", icon = Material.TNT, slot = 12)
+@CosmeticData(type = CosmeticType.SOUND_EFFECT, name = "Explosion", description = "Toca um som de explosão", permission = "explosion", icon = Material.TNT, slot = 12)
 public class ExplosionSoundEffect extends BaseSoundEffect {
     @Override
     public void execute(Player player) {

@@ -8,6 +8,6 @@ import com.kaosmc.practice.feature.kit.setting.annotation.KitSettingData;
  * @project Kaos
  * @date 27/08/2024 - 19:10
  */
-@KitSettingData(name = "Checkpoint", description = "This is the checkpoint kit type", enabled = false)
+@KitSettingData(name = "Checkpoint", description = "Ativa o modo de kit com checkpoints.", enabled = false)
 public class KitSettingCheckpoint extends KitSetting {
 }

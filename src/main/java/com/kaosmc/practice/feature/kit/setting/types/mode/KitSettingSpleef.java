@@ -8,6 +8,6 @@ import com.kaosmc.practice.feature.kit.setting.annotation.KitSettingData;
  * @project Kaos
  * @date 08/06/2024 - 19:11
  */
-@KitSettingData(name = "Spleef", description = "This is the spleef kit type", enabled = false)
+@KitSettingData(name = "Spleef", description = "Ativa o modo Spleef.", enabled = false)
 public class KitSettingSpleef extends KitSetting {
 }

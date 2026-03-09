@@ -8,6 +8,6 @@ import com.kaosmc.practice.feature.kit.setting.annotation.KitSettingData;
  * @project Kaos
  * @since 21/05/2025
  */
-@KitSettingData(name = "HideAndSeek", description = "The hide and seek gamemode", enabled = false)
+@KitSettingData(name = "HideAndSeek", description = "Ativa o modo Hide and Seek.", enabled = false)
 public class KitSettingHideAndSeek extends KitSetting {
 }

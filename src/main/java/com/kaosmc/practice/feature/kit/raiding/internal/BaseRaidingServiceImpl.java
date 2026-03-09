@@ -47,7 +47,7 @@ public class BaseRaidingServiceImpl implements BaseRaidingService {
         FileConfiguration config = this.configService.getKitsConfig();
         ConfigurationSection kitsSection = config.getConfigurationSection("kits");
         if (kitsSection == null) {
-            Logger.warn("Could not find 'kits' section in kits.yml for RaidingService.");
+            Logger.warn("Não foi possível encontrar a seção 'kits' em kits.yml para o RaidingService.");
             return;
         }
 
@@ -80,7 +80,7 @@ public class BaseRaidingServiceImpl implements BaseRaidingService {
                     Logger.error("Raiding sub-kit for role " + role + " not found: " + roleKitName);
                 }
             } catch (IllegalArgumentException e) {
-                Logger.error("Invalid raiding role: '" + roleName + "' in parent kit: " + parentKit.getName());
+                Logger.error("Função de raiding inválida: '" + roleName + "' no kit pai: " + parentKit.getName());
             }
         }
 

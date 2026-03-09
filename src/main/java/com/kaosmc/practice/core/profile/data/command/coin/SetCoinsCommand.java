@@ -42,7 +42,7 @@ public class SetCoinsCommand extends BaseCommand {
         try {
             int amount = Integer.parseInt(args[1]);
             profile.getProfileData().setCoins(amount);
-            player.sendMessage(CC.translate("&aSuccessfully set " + target.getName() + "'s coins to " + amount + "."));
+            player.sendMessage(CC.translate("&aDefiniu as moedas de " + target.getName() + " para " + amount + "."));
         } catch (NumberFormatException e) {
             player.sendMessage(this.getString(GlobalMessagesLocaleImpl.ERROR_INVALID_NUMBER).replace("{input}", args[1]));
         }

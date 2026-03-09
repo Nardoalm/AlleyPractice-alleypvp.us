@@ -118,7 +118,7 @@ public class DeathReflectionServiceImpl implements Reflection {
                 this.setField(field, packet, this.FAKE_ENTITY_ID);
             }
         } catch (Exception exception) {
-            Logger.logException("Failed to set entity ID for death animation packet.", exception);
+            Logger.logException("Falha ao definir o ID da entidade para o pacote da animacao de morte.", exception);
         }
     }
 
@@ -132,7 +132,7 @@ public class DeathReflectionServiceImpl implements Reflection {
             Field field = this.getField(PacketPlayOutEntityStatus.class, "b");
             this.setField(field, statusPacket, this.DEATH_STATUS);
         } catch (Exception exception) {
-            Logger.logException("Failed to set status for death animation packet.", exception);
+            Logger.logException("Falha ao definir o status do pacote da animacao de morte.", exception);
         }
     }
 
@@ -184,7 +184,7 @@ public class DeathReflectionServiceImpl implements Reflection {
 
             return metadataPacket;
         } catch (Exception exception) {
-            Logger.logException("Failed to create metadata packet for death animation.", exception);
+            Logger.logException("Falha ao criar o pacote de metadata da animacao de morte.", exception);
             return null;
         }
     }

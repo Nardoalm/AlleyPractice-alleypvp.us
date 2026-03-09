@@ -34,10 +34,10 @@ public class LayoutSaveButton extends Button {
                 .durability(13)
                 .lore(
                         CC.MENU_BAR,
-                        "&7Save changes &",
-                        "&7return to main menu.",
+                        "&7Salva as alterações e",
+                        "&7volta ao menu principal.",
                         "",
-                        "&aClick to save.",
+                        "&aClique para salvar.",
                         CC.MENU_BAR
                 )
                 .hideMeta()

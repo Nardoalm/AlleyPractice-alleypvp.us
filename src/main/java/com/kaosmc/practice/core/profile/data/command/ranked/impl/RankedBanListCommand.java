@@ -79,7 +79,7 @@ public class RankedBanListCommand extends BaseCommand {
                     addEntry(bannedEntries, new RankedBanEntry(name, uuid));
                 }
             } catch (Exception exception) {
-                Logger.logException("Failed to query ranked banlist from Mongo, using cache fallback.", exception);
+                Logger.logException("Falha ao consultar a lista de banidos do ranked no Mongo, usando fallback em cache.", exception);
             }
         }
 
@@ -117,7 +117,7 @@ public class RankedBanListCommand extends BaseCommand {
         sender.sendMessage(CC.translate("&6&lRanked Banlist &7(" + page + "/" + maxPages + ") &8- &fTotal: &6" + entries.size()));
         for (int index = start; index < end; index++) {
             RankedBanEntry entry = entries.get(index);
-            String uuidDisplay = entry.getUuid() != null ? entry.getUuid().toString() : "N/A";
+            String uuidDisplay = entry.getUuid() != null ? entry.getUuid().toString() : "N/D";
             sender.sendMessage(CC.translate(" &8- &c" + entry.getName() + " &8(&7" + uuidDisplay + "&8)"));
         }
         sender.sendMessage(CC.translate(" "));

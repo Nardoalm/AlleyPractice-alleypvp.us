@@ -22,12 +22,12 @@ public class ToggleLobbyMusicButton extends Button {
     public ItemStack getButtonItem(Player player) {
         Profile profile = KaosPractice.getInstance().getService(ProfileService.class).getProfile(player.getUniqueId());
         return new ItemBuilder(Material.EMERALD)
-                .name("&6&lLobby Music")
+                .name("&6&lMúsica do Lobby")
                 .lore(
                         CC.MENU_BAR,
                         LoreHelper.displayEnabled(profile.getProfileData().getSettingData().isLobbyMusicEnabled()),
                         "",
-                        "&aClick to toggle.",
+                        "&aClique para alternar.",
                         CC.MENU_BAR
                 )
                 .hideMeta()

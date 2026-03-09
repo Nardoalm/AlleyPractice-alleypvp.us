@@ -44,7 +44,7 @@ public class AnimationServiceImpl implements AnimationService {
     public void initialize(KaosContext context) {
         Reflections reflections = this.pluginConstant.getReflections();
         if (reflections == null) {
-            Logger.error("AnimationServiceImpl cannot initialize: Reflections object is null.");
+            Logger.error("AnimationServiceImpl nao pode ser inicializado: o objeto Reflections esta nulo.");
             return;
         }
 
@@ -60,7 +60,7 @@ public class AnimationServiceImpl implements AnimationService {
                 .filter(clazz::isInstance)
                 .map(clazz::cast)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("No animation found for class: " + clazz.getName() + " with type: " + type));
+                .orElseThrow(() -> new IllegalArgumentException("Nenhuma animacao encontrada para a classe: " + clazz.getName() + " com o tipo: " + type));
     }
 
     @Override
@@ -90,7 +90,7 @@ public class AnimationServiceImpl implements AnimationService {
                 T instance = clazz.getDeclaredConstructor().newInstance();
                 targetSet.add(instance);
             } catch (Exception e) {
-                Logger.logException("Failed to instantiate animation: " + clazz.getName(), e);
+                Logger.logException("Falha ao instanciar animacao: " + clazz.getName(), e);
             }
         }
     }
