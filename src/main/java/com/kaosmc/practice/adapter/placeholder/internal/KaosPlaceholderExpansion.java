@@ -122,12 +122,12 @@ public class KaosPlaceholderExpansion extends PlaceholderExpansion {
             case "level":
             case "nivel":
             case "nível":
-                return LevelBadgeUtil.getBadge(profileData.getExperience());
+                return LevelBadgeUtil.getDisplayBadge(player, profileData.getExperience());
 
             case "player-level-number":
             case "level-number":
             case "nivel-numero":
-                return String.valueOf(LevelBadgeUtil.getLevel(profileData.getExperience()));
+                return String.valueOf(LevelBadgeUtil.getDisplayLevel(player, profileData.getExperience()));
 
             case "player-experience":
             case "xp":

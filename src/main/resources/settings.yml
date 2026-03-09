@@ -72,16 +72,6 @@ permissions:
     # Permite usar emojis no chat (:sad:, etc).
     emoji-usage-permission: kaos.donator.chat.emoji
 
-profanity-filter:
-  # O Kaos possui uma lista nativa de palavrões; se estiver true, ela será usada junto da lista personalizada abaixo.
-  add-default-words: true
-  filtered-words:
-    - shit
-    - fuck
-    - bitch
-    - caralho
-  staff-notification-format: '&6[S] &f(&6Kaos: &fPalavrão Detectado) &c{player}&f: &7{message}'
-
 practice-api:
   nametag:
     priority: 100

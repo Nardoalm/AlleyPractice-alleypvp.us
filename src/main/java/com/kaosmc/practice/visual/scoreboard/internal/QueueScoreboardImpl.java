@@ -47,7 +47,7 @@ public class QueueScoreboardImpl implements Scoreboard {
         }
 
         // Variável de Nível Segura (Antiga linha 46)
-        String levelDisplay = LevelBadgeUtil.getBadge(profile.getProfileData().getExperience());
+        String levelDisplay = LevelBadgeUtil.getDisplayBadge(player, profile.getProfileData().getExperience());
         if (profile.getProfileData().getSettingData() != null) {
             pingRangeDisplay = profile.getProfileData().getSettingData().getPingRangeDisplay();
         }

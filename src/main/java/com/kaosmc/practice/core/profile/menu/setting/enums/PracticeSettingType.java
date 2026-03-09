@@ -1,10 +1,7 @@
 package com.kaosmc.practice.core.profile.menu.setting.enums;
 
-import com.kaosmc.practice.KaosPractice;
 import com.kaosmc.practice.common.text.CC;
 import com.kaosmc.practice.common.text.LoreHelper;
-import com.kaosmc.practice.core.locale.LocaleService;
-import com.kaosmc.practice.core.locale.internal.impl.SettingsLocaleImpl;
 import com.kaosmc.practice.core.profile.data.types.ProfileSettingData;
 import org.bukkit.Material;
 
@@ -85,23 +82,6 @@ public enum PracticeSettingType {
                     "&7Exibir linhas da scoreboard.",
                     "",
                     LoreHelper.displayShown(settings.isShowScoreboardLines()),
-                    "",
-                    "&aClique para alternar.",
-                    CC.MENU_BAR
-            )
-    ),
-
-    PROFANITY_FILTER(20, "&6&lFiltro de Palavrões", Material.ROTTEN_FLESH,
-            settings -> Arrays.asList(
-                    CC.MENU_BAR,
-                    "&7Oculta palavras ofensivas e inadequadas.",
-                    "",
-                    KaosPractice.getInstance().getService(LocaleService.class).getBoolean(SettingsLocaleImpl.SERVER_CHAT_FORMAT_ENABLED_BOOLEAN)
-                            ?
-                            LoreHelper.displayEnabled(settings.isProfanityFilterEnabled())
-                            :
-                            "&cO servidor desativou esta opção."
-                    ,
                     "",
                     "&aClique para alternar.",
                     CC.MENU_BAR

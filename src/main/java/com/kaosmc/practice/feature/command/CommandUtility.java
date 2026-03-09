@@ -121,7 +121,6 @@ public class CommandUtility {
             new ToggleScoreboardLinesCommand();
             new TogglePingRangeCommand();
             new ToggleWorldTimeCommand();
-            new ToggleProfanityFilterCommand();
 
             new PartyCommand();
             new AcceptCommand();

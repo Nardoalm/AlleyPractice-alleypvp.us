@@ -72,9 +72,6 @@ public class PracticeSettingsButton extends Button {
             case PING_RANGE:
                 player.performCommand("togglepingrange");
                 break;
-            case PROFANITY_FILTER:
-                player.performCommand("toggleprofanityfilter");
-                break;
             case DUEL_REQUESTS:
                 player.performCommand("toggleduelrequests");
                 break;

@@ -1,6 +1,7 @@
 package com.kaosmc.practice.common;
 
 import com.kaosmc.practice.KaosPractice;
+import com.kaosmc.practice.adapter.core.CoreAdapter;
 import com.kaosmc.practice.adapter.core.kaoscore.KaosCoreBridge;
 import com.kaosmc.practice.common.text.CC;
 import lombok.experimental.UtilityClass;
@@ -26,6 +27,16 @@ public class PlayerDisplayUtil {
         String nick = resolveCurrentNick(player, fallback);
         String tagPrefix = resolveTagPrefix(player);
         return CC.translate(tagPrefix + nick).trim();
+    }
+
+    public String resolveTagColoredNick(Player player) {
+        String fallback = player != null ? player.getName() : "Unknown";
+        return resolveTagColoredNick(player, fallback);
+    }
+
+    public String resolveTagColoredNick(Player player, String fallback) {
+        String nick = resolveCurrentNick(player, fallback);
+        return (resolveTagColor(player) + nick).trim();
     }
 
     public String resolveCurrentNick(Player player) {
@@ -157,5 +168,35 @@ public class PlayerDisplayUtil {
         } catch (Exception ignored) {
             return null;
         }
+    }
+
+    private ChatColor resolveTagColor(Player player) {
+        if (player == null) {
+            return ChatColor.WHITE;
+        }
+
+        KaosPractice instance = KaosPractice.getInstance();
+        if (instance != null) {
+            try {
+                CoreAdapter coreAdapter = instance.getService(CoreAdapter.class);
+                if (coreAdapter != null && coreAdapter.getCore() != null) {
+                    ChatColor tagColor = coreAdapter.getCore().getTagColor(player);
+                    if (tagColor != null && tagColor != ChatColor.RESET) {
+                        return tagColor;
+                    }
+                }
+            } catch (Exception ignored) {
+            }
+        }
+
+        KaosCoreBridge kaosCoreBridge = getKaosCoreBridge();
+        if (kaosCoreBridge != null) {
+            ChatColor tagColor = kaosCoreBridge.getTagColor(player);
+            if (tagColor != null && tagColor != ChatColor.RESET) {
+                return tagColor;
+            }
+        }
+
+        return ChatColor.WHITE;
     }
 }

@@ -148,11 +148,11 @@ public class MatchUtility {
      * @param loserParticipant  The loser participant.
      */
     public void sendConjoinedMatchResult(Match match, GameParticipant<MatchGamePlayer> winnerParticipant, GameParticipant<MatchGamePlayer> loserParticipant) {
-        String winnerTeamName = PlayerDisplayUtil.resolveDisplayName(
+        String winnerTeamName = PlayerDisplayUtil.resolveTagColoredNick(
                 winnerParticipant.getLeader().getTeamPlayer(),
                 winnerParticipant.getLeader().getUsername()
         );
-        String loserTeamName = PlayerDisplayUtil.resolveDisplayName(
+        String loserTeamName = PlayerDisplayUtil.resolveTagColoredNick(
                 loserParticipant.getLeader().getTeamPlayer(),
                 loserParticipant.getLeader().getUsername()
         );
@@ -162,7 +162,7 @@ public class MatchUtility {
 
         for (MatchGamePlayer player : winnerParticipant.getAllPlayers()) {
             String commandName = player.getUsername();
-            String displayName = PlayerDisplayUtil.resolveDisplayName(player.getTeamPlayer(), commandName);
+            String displayName = PlayerDisplayUtil.resolveTagColoredNick(player.getTeamPlayer(), commandName);
 
             TextComponent playerComponent = new TextComponent(CC.translate("&7- &f" + displayName));
             playerComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/inventory " + commandName));
@@ -177,7 +177,7 @@ public class MatchUtility {
 
         for (MatchGamePlayer player : loserParticipant.getAllPlayers()) {
             String commandName = player.getUsername();
-            String displayName = PlayerDisplayUtil.resolveDisplayName(player.getTeamPlayer(), commandName);
+            String displayName = PlayerDisplayUtil.resolveTagColoredNick(player.getTeamPlayer(), commandName);
 
             TextComponent playerComponent = new TextComponent(CC.translate("&7- &f" + displayName));
             playerComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/inventory " + commandName));

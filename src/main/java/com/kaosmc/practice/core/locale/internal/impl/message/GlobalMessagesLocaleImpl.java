@@ -298,7 +298,6 @@ public enum GlobalMessagesLocaleImpl implements LocaleEntry {
     PROFILE_TOGGLED_PARTY_MESSAGES("messages/global-messages.yml", "profile-messages.player-settings.party-messages", "&aVocê {status} &aas mensagens da party."),
     PROFILE_TOGGLED_SCOREBOARD("messages/global-messages.yml", "profile-messages.player-settings.scoreboard", "&aVocê {status} &aa scoreboard."),
     PROFILE_TOGGLED_SCOREBOARD_LINES("messages/global-messages.yml", "profile-messages.player-settings.scoreboard-lines", "&aVocê {status} &aas linhas da scoreboard."),
-    PROFILE_TOGGLED_PROFANITY_FILTER("messages/global-messages.yml", "profile-messages.player-settings.profanity-filter", "&aVocê {status} &ao filtro de palavrões."),
     PROFILE_TOGGLED_DUEL_REQUESTS("messages/global-messages.yml", "profile-messages.player-settings.duel-requests", "&aVocê {status} &ao recebimento de pedidos de duelo."),
     PROFILE_TOGGLED_LOBBY_MUSIC("messages/global-messages.yml", "profile-messages.player-settings.lobby-music", "&aVocê {status} &aa música do lobby."),
     PROFILE_TOGGLED_SERVER_TITLES("messages/global-messages.yml", "profile-messages.player-settings.server-titles", "&aVocê {status} &aos títulos do servidor."),

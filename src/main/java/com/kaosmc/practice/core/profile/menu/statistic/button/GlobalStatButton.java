@@ -49,9 +49,9 @@ public class GlobalStatButton extends Button {
                 .mapToInt(ProfileFFAData::getDeaths)
                 .sum();
 
-        String levelDisplay = LevelBadgeUtil.getBadge(profile.getProfileData().getExperience());
-        String rankDisplay = "&7N/D";
         Player targetPlayer = target.getPlayer();
+        String levelDisplay = LevelBadgeUtil.getDisplayBadge(targetPlayer, profile.getProfileData().getExperience());
+        String rankDisplay = "&7N/D";
         if (coreAdapter != null && coreAdapter.getCore() != null && targetPlayer != null) {
             rankDisplay = String.valueOf(coreAdapter.getCore().getRankColor(targetPlayer)) + coreAdapter.getCore().getRankName(targetPlayer);
         }

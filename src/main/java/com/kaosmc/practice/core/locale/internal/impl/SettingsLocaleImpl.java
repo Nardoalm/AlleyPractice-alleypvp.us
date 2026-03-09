@@ -53,10 +53,6 @@ public enum SettingsLocaleImpl implements LocaleEntry {
     PERMISSION_DONATOR_LOBBY_FLIGHT_BYPASS("settings.yml", "permissions.donators.lobby-flight-bypass", "kaos.donator.lobby.flight"),
     PERMISSION_DONATOR_EMOJI_USAGE("settings.yml", "permissions.donators.emoji-usage-permission", "kaos.donator.chat.emoji"),
 
-    PROFANITY_FILTER_ADD_DEFAULT_WORDS_BOOLEAN("settings.yml", "profanity-filter.add-default-words", true),
-    PROFANITY_FILTER_FILTERED_WORDS_LIST("settings.yml", "profanity-filter.filtered-words", Arrays.asList("shit", "fuck", "bitch")),
-    PROFANITY_FILTER_STAFF_NOTIFICATION_FORMAT("settings.yml", "profanity-filter.staff-notification-format", "&6[S] &f(&6Kaos: &fPalavrão Detectado) &c{player}&f: &7{message}"),
-
     PRACTICE_API_NAMETAG_PRIORITY("settings.yml", "practice-api.nametag.priority", 100),
 
     SERVER_CHAT_FORMAT_ENABLED_BOOLEAN("settings.yml", "server.chat-format.global.enabled", true),

@@ -195,8 +195,8 @@ public class DefaultMatch extends Match {
         } else {
             MatchGamePlayer winnerPlayer = winner.getLeader();
             MatchGamePlayer loserPlayer = loser.getLeader();
-            String winnerName = PlayerDisplayUtil.resolveDisplayName(winnerPlayer.getTeamPlayer(), winnerPlayer.getUsername());
-            String loserName = PlayerDisplayUtil.resolveDisplayName(loserPlayer.getTeamPlayer(), loserPlayer.getUsername());
+            String winnerName = PlayerDisplayUtil.resolveTagColoredNick(winnerPlayer.getTeamPlayer(), winnerPlayer.getUsername());
+            String loserName = PlayerDisplayUtil.resolveTagColoredNick(loserPlayer.getTeamPlayer(), loserPlayer.getUsername());
             MatchUtility.sendMatchResult(
                     this,
                     winnerName,
@@ -276,8 +276,8 @@ public class DefaultMatch extends Match {
         this.updateClanStats(winnerPlayer, loserPlayer, true, winnerDelta, loserDelta);
 
         this.sendEloResult(
-                PlayerDisplayUtil.resolveDisplayName(winnerPlayer, winner.getLeader().getUsername()),
-                PlayerDisplayUtil.resolveDisplayName(loserPlayer, loser.getLeader().getUsername()),
+                PlayerDisplayUtil.resolveTagColoredNick(winnerPlayer, winner.getLeader().getUsername()),
+                PlayerDisplayUtil.resolveTagColoredNick(loserPlayer, loser.getLeader().getUsername()),
                 result.getOldWinnerElo(),
                 result.getOldLoserElo(),
                 eloResult.getNewWinnerElo(),
@@ -320,6 +320,9 @@ public class DefaultMatch extends Match {
         loserProfile.getProfileData().incrementUnrankedLosses();
         loserProfile.getProfileData().resetWinStreak();
 
+        winnerProfile.save();
+        loserProfile.save();
+
         this.updateClanStats(winner.getLeader().getTeamPlayer(), loser.getLeader().getTeamPlayer(), false, 0, 0);
     }
 
@@ -333,7 +336,7 @@ public class DefaultMatch extends Match {
 
 
         if (localeService.getBoolean(VisualsLocaleImpl.TITLE_MATCH_RESPAWNED_ENABLED_BOOLEAN)) {
-            String winnerName = PlayerDisplayUtil.resolveDisplayName(
+            String winnerName = PlayerDisplayUtil.resolveTagColoredNick(
                     winner.getLeader().getTeamPlayer(),
                     winner.getLeader().getUsername()
             );
@@ -367,7 +370,7 @@ public class DefaultMatch extends Match {
         LocaleService localeService = this.plugin.getService(LocaleService.class);
 
         if (localeService.getBoolean(VisualsLocaleImpl.TITLE_MATCH_DEFEAT_ENABLED_BOOLEAN)) {
-            String winnerName = PlayerDisplayUtil.resolveDisplayName(
+            String winnerName = PlayerDisplayUtil.resolveTagColoredNick(
                     winner.getLeader().getTeamPlayer(),
                     winner.getLeader().getUsername()
             );
@@ -566,6 +569,7 @@ public class DefaultMatch extends Match {
         winnerProfile.getProfileData().incrementRankedWins();
         winnerProfile.getProfileData().incrementWinStreak();
         winnerProfile.getProfileData().updateElo(winnerProfile);
+        winnerProfile.save();
     }
 
     /**
@@ -593,6 +597,7 @@ public class DefaultMatch extends Match {
         loserProfile.getProfileData().incrementRankedLosses();
         loserProfile.getProfileData().resetWinStreak();
         loserProfile.getProfileData().updateElo(loserProfile);
+        loserProfile.save();
     }
 
     private void updateClanStats(Player winner, Player loser, boolean ranked, int winnerEloDelta, int loserEloDelta) {

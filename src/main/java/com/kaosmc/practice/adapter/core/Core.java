@@ -167,7 +167,7 @@ public interface Core {
         if (profile != null && profile.getProfileData() != null) {
             String rawTitle = profile.getProfileData().getSelectedTitle();
             selectedTitle = rawTitle != null ? CC.translate(rawTitle) : "";
-            level = LevelBadgeUtil.getBadge(profile.getProfileData().getExperience());
+            level = LevelBadgeUtil.getDisplayBadge(player, profile.getProfileData().getExperience());
         }
 
         String tagAppearanceTemplate = localeService.getString(SettingsLocaleImpl.SERVER_CHAT_FORMAT_TAG_APPEARANCE_FORMAT);

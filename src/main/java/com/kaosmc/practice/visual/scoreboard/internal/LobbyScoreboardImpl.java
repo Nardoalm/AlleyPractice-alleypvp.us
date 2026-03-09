@@ -60,7 +60,7 @@ public class LobbyScoreboardImpl implements Scoreboard {
         String levelProgressBar = LevelBadgeUtil.getProgressBar(experience, 12);
         String levelProgressDetails = LevelBadgeUtil.getProgressDetails(experience);
 
-        String levelName = LevelBadgeUtil.getBadge(experience);
+        String levelName = LevelBadgeUtil.getDisplayBadge(player, experience);
 
         // 4. Prevenção: CoreAdapter ou Core ausente
         String rankStr = "";

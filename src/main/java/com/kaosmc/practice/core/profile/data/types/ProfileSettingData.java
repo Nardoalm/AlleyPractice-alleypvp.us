@@ -29,7 +29,6 @@ public class ProfileSettingData {
      * settings.put(ProfileSetting.SCOREBOARD, ToggleState.ENABLED);
      * settings.put(ProfileSetting.TABLIST, ToggleState.ENABLED);
      * settings.put(ProfileSetting.SCOREBOARD_LINES, ToggleState.ENABLED);
-     * settings.put(ProfileSetting.PROFANITY_FILTER, ToggleState.DISABLED);
      * settings.put(ProfileSetting.DUEL_REQUESTS, ToggleState.ENABLED);
      * settings.put(ProfileSetting.LOBBY_MUSIC, ToggleState.ENABLED);
      * settings.put(ProfileSetting.SERVER_TITLES, ToggleState.ENABLED);
@@ -89,7 +88,6 @@ public class ProfileSettingData {
     private boolean scoreboardEnabled;
     private boolean tablistEnabled;
     private boolean showScoreboardLines;
-    private boolean isProfanityFilterEnabled;
     private boolean receiveDuelRequestsEnabled;
     private boolean lobbyMusicEnabled;
     private boolean serverTitles;
@@ -106,7 +104,6 @@ public class ProfileSettingData {
         this.scoreboardEnabled = true;
         this.tablistEnabled = true;
         this.showScoreboardLines = true;
-        this.isProfanityFilterEnabled = false;
         this.receiveDuelRequestsEnabled = true;
         this.lobbyMusicEnabled = true;
         this.serverTitles = true;

@@ -368,7 +368,6 @@ public class MongoUtility {
                 .put("scoreboardEnabled", settingData.isScoreboardEnabled())
                 .put("tablistEnabled", settingData.isTablistEnabled())
                 .put("showScoreboardLines", settingData.isShowScoreboardLines())
-                .put("profanityFilterEnabled", settingData.isProfanityFilterEnabled())
                 .put("receiveDuelRequestsEnabled", settingData.isReceiveDuelRequestsEnabled())
                 .put("lobbyMusicEnabled", settingData.isLobbyMusicEnabled())
                 .put("serverTitles", settingData.isServerTitles())
@@ -678,7 +677,6 @@ public class MongoUtility {
         settingData.setScoreboardEnabled(settingDocument.getBoolean("scoreboardEnabled", DEFAULT_BOOLEAN_TRUE));
         settingData.setTablistEnabled(settingDocument.getBoolean("tablistEnabled", DEFAULT_BOOLEAN_TRUE));
         settingData.setShowScoreboardLines(settingDocument.getBoolean("showScoreboardLines", DEFAULT_BOOLEAN_TRUE));
-        settingData.setProfanityFilterEnabled(settingDocument.getBoolean("profanityFilterEnabled", DEFAULT_BOOLEAN_TRUE));
         settingData.setReceiveDuelRequestsEnabled(settingDocument.getBoolean("receiveDuelRequestsEnabled", DEFAULT_BOOLEAN_TRUE));
         settingData.setLobbyMusicEnabled(settingDocument.getBoolean("lobbyMusicEnabled", DEFAULT_BOOLEAN_TRUE));
         settingData.setServerTitles(settingDocument.getBoolean("serverTitles", DEFAULT_BOOLEAN_TRUE));

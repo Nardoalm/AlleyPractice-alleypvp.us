@@ -48,7 +48,7 @@ public class KaosPlaceholderExpansion extends PlaceholderExpansion {
         // %kaos_level%
         if (params.equalsIgnoreCase("level")) {
             if (profile != null && profile.getProfileData() != null) {
-                return LevelBadgeUtil.getBadge(profile.getProfileData().getExperience());
+                return LevelBadgeUtil.getDisplayBadge(player, profile.getProfileData().getExperience());
             }
             return "0";
         }
