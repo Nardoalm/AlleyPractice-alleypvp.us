@@ -64,13 +64,13 @@ permissions:
   color-code-usage-permission: kaos.chat.color
   donators:
     # Permite que jogadores escolham arena em parties.
-    party-arena-selector: kaos.donator.duel.arena.selector
+    party-arena-selector: kaospractice.duel.arena.selector
     # Permite que jogadores escolham arena no menu /duel.
-    duel-arena-selector: kaos.donator.duel.arena.selector
+    duel-arena-selector: kaospractice.duel.arena.selector
     # Permite voar no lobby/fila.
-    lobby-flight-bypass: kaos.donator.lobby.flight
+    lobby-flight-bypass: kaoscore.vip.fly
     # Permite usar emojis no chat (:sad:, etc).
-    emoji-usage-permission: kaos.donator.chat.emoji
+    emoji-usage-permission: kaoscore.vip.emojis
 
 practice-api:
   nametag:
