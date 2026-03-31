@@ -64,6 +64,8 @@ public interface ConfigService extends Service {
 
     FileConfiguration getLevelsConfig();
 
+    FileConfiguration getEventsConfig();
+
     FileConfiguration getPearlConfig();
 
     FileConfiguration getAbilityConfig();

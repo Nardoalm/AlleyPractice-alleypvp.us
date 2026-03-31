@@ -1,20 +1,12 @@
 package com.kaosmc.practice.common.text;
 
-import com.kaosmc.practice.KaosPractice;
-import com.kaosmc.practice.adapter.core.kaoscore.KaosCoreBridge;
 import org.bukkit.entity.Player;
-
-import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ThreadLocalRandom;
 
 public final class LevelBadgeUtil {
     private static final int BASE_XP_PER_LEVEL = 20;
     private static final int XP_INCREMENT_PER_STAGE = 10;
     private static final int EARLY_STAGE_SIZE = 10;
     private static final int LATE_STAGE_SIZE = 100;
-    private static final Map<UUID, Integer> DISGUISED_LEVEL_CACHE = new ConcurrentHashMap<>();
 
     private LevelBadgeUtil() {
     }
@@ -31,7 +23,7 @@ public final class LevelBadgeUtil {
         int safeLevel = Math.max(0, level);
         int bracket = getDisplayBracket(safeLevel);
         LevelStyle style = resolveStyle(bracket);
-        return format(style.color, bracket, style.icon);
+        return format(style.color, safeLevel, style.icon);
     }
 
     public static int getLevel(int experience) {
@@ -67,8 +59,7 @@ public final class LevelBadgeUtil {
     }
 
     public static int getDisplayLevel(Player player, int experience) {
-        int realLevel = getLevel(experience);
-        return resolveDisplayedLevel(player, realLevel);
+        return getLevel(experience);
     }
 
     public static int getXpRequiredForNextLevel(int currentLevel) {
@@ -199,34 +190,6 @@ public final class LevelBadgeUtil {
 
     private static String format(String color, int number, String icon) {
         return CC.translate(color + "[" + number + icon + "]");
-    }
-
-    private static int resolveDisplayedLevel(Player player, int realLevel) {
-        if (player == null) {
-            return realLevel;
-        }
-
-        KaosPractice instance = KaosPractice.getInstance();
-        if (instance == null) {
-            return realLevel;
-        }
-
-        KaosCoreBridge kaosCoreBridge;
-        try {
-            kaosCoreBridge = instance.getService(KaosCoreBridge.class);
-        } catch (Exception ignored) {
-            return realLevel;
-        }
-
-        if (kaosCoreBridge == null || !kaosCoreBridge.isDisguised(player)) {
-            DISGUISED_LEVEL_CACHE.remove(player.getUniqueId());
-            return realLevel;
-        }
-
-        return DISGUISED_LEVEL_CACHE.computeIfAbsent(
-                player.getUniqueId(),
-                ignored -> ThreadLocalRandom.current().nextInt(51)
-        );
     }
 
     private static final class LevelStyle {

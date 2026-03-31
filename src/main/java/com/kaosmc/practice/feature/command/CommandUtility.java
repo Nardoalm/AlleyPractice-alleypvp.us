@@ -28,6 +28,11 @@ import com.kaosmc.practice.feature.abilities.command.AbilityCommand;
 import com.kaosmc.practice.feature.cosmetic.command.CosmeticCommand;
 import com.kaosmc.practice.feature.division.command.DivisionCommand;
 import com.kaosmc.practice.feature.emoji.command.EmojiCommand;
+import com.kaosmc.practice.feature.event.command.EventCommand;
+import com.kaosmc.practice.feature.event.command.EventJoinCommand;
+import com.kaosmc.practice.feature.event.command.EventLeaveCommand;
+import com.kaosmc.practice.feature.event.command.EventStartCommand;
+import com.kaosmc.practice.feature.event.command.EventStopCommand;
 import com.kaosmc.practice.feature.layout.command.LayoutCommand;
 import com.kaosmc.practice.feature.leaderboard.command.LeaderboardCommand;
 import com.kaosmc.practice.feature.level.command.LevelAdminCommand;
@@ -148,6 +153,11 @@ public class CommandUtility {
             new LayoutCommand();
 
             new HostCommand();
+            new EventCommand();
+            new EventJoinCommand();
+            new EventLeaveCommand();
+            new EventStartCommand();
+            new EventStopCommand();
             new EmojiCommand();
         });
     }

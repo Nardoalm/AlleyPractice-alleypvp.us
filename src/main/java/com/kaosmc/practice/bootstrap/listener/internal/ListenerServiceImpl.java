@@ -6,6 +6,7 @@ import com.kaosmc.practice.feature.match.listener.types.*;
 import com.kaosmc.practice.library.menu.MenuListener;
 import com.kaosmc.practice.feature.arena.listener.ArenaListener;
 import com.kaosmc.practice.feature.combat.listener.CombatListener;
+import com.kaosmc.practice.feature.event.listener.EventListener;
 import com.kaosmc.practice.feature.hotbar.listener.HotbarListener;
 import com.kaosmc.practice.feature.queue.listener.QueueListener;
 import com.kaosmc.practice.feature.server.listener.CraftingListener;
@@ -46,6 +47,7 @@ public class ListenerServiceImpl implements ListenerService {
         Arrays.asList(
                 new ProfileListener(),
                 new HotbarListener(),
+                new EventListener(),
                 new PartyListener(),
                 new ArenaListener(),
                 new MenuListener(),

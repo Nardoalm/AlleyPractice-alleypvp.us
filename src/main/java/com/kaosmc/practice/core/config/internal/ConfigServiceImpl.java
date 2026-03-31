@@ -29,7 +29,7 @@ public class ConfigServiceImpl implements ConfigService {
     private final Map<String, File> configFiles = new HashMap<>();
 
     private FileConfiguration settingsConfig, globalMessagesConfig, gameMessagesConfig, databaseConfig, kitsConfig, arenasConfig,
-            scoreboardConfig, divisionsConfig, menusConfig, titlesConfig, levelsConfig,
+            scoreboardConfig, divisionsConfig, menusConfig, titlesConfig, levelsConfig, eventsConfig,
             pearlConfig, abilityConfig, visualsConfig, saltyMessagesConfig, yeetMessagesConfig,
             nerdMessagesConfig, spigotCommunityMessagesConfig, texturesConfig, hotbarConfig;
 
@@ -39,7 +39,7 @@ public class ConfigServiceImpl implements ConfigService {
             "messages/global-messages.yml", "messages/game-messages.yml",
             "settings.yml", "menus.yml",
 
-            "storage/kits.yml", "storage/arenas.yml", "storage/divisions.yml", "storage/titles.yml", "storage/levels.yml",
+            "storage/kits.yml", "storage/arenas.yml", "storage/divisions.yml", "storage/titles.yml", "storage/levels.yml", "storage/events.yml",
 
             "providers/scoreboard.yml", "providers/textures.yml", "storage/hotbar.yml",
             "providers/pearls.yml", "providers/abilities.yml", "providers/visuals.yml",
@@ -165,6 +165,7 @@ public class ConfigServiceImpl implements ConfigService {
         this.arenasConfig = this.getConfig("storage/arenas.yml");
         this.titlesConfig = this.getConfig("storage/titles.yml");
         this.levelsConfig = this.getConfig("storage/levels.yml");
+        this.eventsConfig = this.getConfig("storage/events.yml");
         this.divisionsConfig = this.getConfig("storage/divisions.yml");
         this.texturesConfig = this.getConfig("providers/textures.yml");
         this.scoreboardConfig = this.getConfig("providers/scoreboard.yml");

@@ -204,7 +204,9 @@ public class ProfileData {
         if (amount <= 0) {
             return;
         }
+
         this.experience += amount;
+        this.determineLevel();
     }
 
     public void incrementWinStreak() {

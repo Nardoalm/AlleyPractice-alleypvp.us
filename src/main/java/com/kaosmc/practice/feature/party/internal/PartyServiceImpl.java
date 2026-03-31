@@ -273,7 +273,7 @@ public class PartyServiceImpl implements PartyService {
                 .replace("{player}", player.getName())
                 .replace("{name-color}", String.valueOf(profile.getNameColor()))
                 .replace("{current-size}", String.valueOf(party.getMembers().size()))
-                .replace("{max-size}", "30") //TODO: Implement party size limit with permissions ect...
+                .replace("{max-size}", String.valueOf(party.getMaxSize()))
         );
 
         if (this.localeService.getBoolean(VisualsLocaleImpl.TITLE_PARTY_LEFT_ENABLED_BOOLEAN)) {
@@ -326,7 +326,7 @@ public class PartyServiceImpl implements PartyService {
                 .replace("{player}", member.getName())
                 .replace("{name-color}", String.valueOf(profile.getNameColor()))
                 .replace("{current-size}", String.valueOf(party.getMembers().size()))
-                .replace("{max-size}", "30") //TODO: Implement party size limit with permissions ect...
+                .replace("{max-size}", String.valueOf(party.getMaxSize()))
         );
 
         if (queueProfile != null) {
@@ -370,7 +370,7 @@ public class PartyServiceImpl implements PartyService {
                 .replace("{player}", target.getName())
                 .replace("{name-color}", String.valueOf(profile.getNameColor()))
                 .replace("{current-size}", String.valueOf(party.getMembers().size()))
-                .replace("{max-size}", "30") //TODO: Implement party size limit with permissions ect...
+                .replace("{max-size}", String.valueOf(party.getMaxSize()))
         );
     }
 
@@ -421,6 +421,11 @@ public class PartyServiceImpl implements PartyService {
             return;
         }
 
+        if (party.isFull()) {
+            player.sendMessage(CC.translate("&cEssa party atingiu o limite de &6" + party.getMaxSize() + " &cmembros."));
+            return;
+        }
+
         if (party.getBannedPlayers().contains(player.getUniqueId())) {
             player.sendMessage(localeService.getString(GlobalMessagesLocaleImpl.ERROR_YOU_BANNED_FROM_PARTY)
                     .replace("{player}", leader.getName())
@@ -443,7 +448,7 @@ public class PartyServiceImpl implements PartyService {
                 .replace("{player}", player.getName())
                 .replace("{name-color}", String.valueOf(profile.getNameColor()))
                 .replace("{current-size}", String.valueOf(party.getMembers().size()))
-                .replace("{max-size}", "30") //TODO: Implement party size limit with permissions ect...
+                .replace("{max-size}", String.valueOf(party.getMaxSize()))
         );
 
         List<String> joinedMessage = this.localeService.getStringList(GlobalMessagesLocaleImpl.PARTY_YOU_JOINED);
@@ -549,8 +554,15 @@ public class PartyServiceImpl implements PartyService {
     }
 
     @Override
-    public void sendInvite(Party party, Player sender, Player target) {
-        if (party == null) return;
+    public boolean sendInvite(Party party, Player sender, Player target) {
+        if (party == null) {
+            return false;
+        }
+
+        if (party.isFull()) {
+            sender.sendMessage(CC.translate("&cSua party já atingiu o limite de &6" + party.getMaxSize() + " &cmembros."));
+            return false;
+        }
 
         PartyRequest request = new PartyRequest(sender, target);
         this.partyRequests.add(request);
@@ -590,6 +602,8 @@ public class PartyServiceImpl implements PartyService {
                 target.sendMessage(CC.translate(line));
             }
         });
+
+        return true;
     }
 
     @Override

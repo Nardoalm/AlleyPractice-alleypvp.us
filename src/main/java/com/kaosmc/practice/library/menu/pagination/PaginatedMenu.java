@@ -69,8 +69,15 @@ public abstract class PaginatedMenu extends Menu {
             }
         }
 
-        buttons.put(0, new PageButton(this, -1));
-        buttons.put(8, new PageButton(this, 1));
+        Button previousPageButton = getPreviousPageButton(player);
+        if (previousPageButton != null) {
+            buttons.put(getPreviousPageButtonSlot(), previousPageButton);
+        }
+
+        Button nextPageButton = getNextPageButton(player);
+        if (nextPageButton != null) {
+            buttons.put(getNextPageButtonSlot(), nextPageButton);
+        }
 
 
         Map<Integer, Button> global = getGlobalButtons(player);
@@ -147,6 +154,22 @@ public abstract class PaginatedMenu extends Menu {
      */
     public Map<Integer, Button> getGlobalButtons(Player player) {
         return null;
+    }
+
+    public int getPreviousPageButtonSlot() {
+        return 0;
+    }
+
+    public int getNextPageButtonSlot() {
+        return 8;
+    }
+
+    public Button getPreviousPageButton(Player player) {
+        return new PageButton(this, -1);
+    }
+
+    public Button getNextPageButton(Player player) {
+        return new PageButton(this, 1);
     }
 
     /**

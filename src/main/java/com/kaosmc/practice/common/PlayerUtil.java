@@ -26,6 +26,8 @@ import org.bukkit.inventory.ItemStack;
  */
 @UtilityClass
 public class PlayerUtil {
+    private static final String VIP_FLY_PERMISSION = "kaoscore.vip.fly";
+
     /**
      * Reset a player's state to default values.
      *
@@ -80,7 +82,18 @@ public class PlayerUtil {
      * @param player the player to start flying.
      */
     public boolean canFly(Player player) {
-        return inLobby(player) && player.hasPermission(KaosPractice.getInstance().getService(LocaleService.class).getString(SettingsLocaleImpl.PERMISSION_DONATOR_LOBBY_FLIGHT_BYPASS));
+        if (!inLobby(player)) {
+            return false;
+        }
+
+        String configuredPermission = KaosPractice.getInstance()
+                .getService(LocaleService.class)
+                .getString(SettingsLocaleImpl.PERMISSION_DONATOR_LOBBY_FLIGHT_BYPASS);
+
+        return player.hasPermission(VIP_FLY_PERMISSION)
+                || (configuredPermission != null
+                && !configuredPermission.trim().isEmpty()
+                && player.hasPermission(configuredPermission));
     }
 
     /**

@@ -51,7 +51,7 @@ public enum PracticeSettingType {
             )
     ),
 
-    PING_RANGE(23, "&6&lFaixa de Ping", Material.STICK,
+    PING_RANGE(19, "&6&lFaixa de Ping", Material.STICK,
             settings -> Arrays.asList(
                     CC.MENU_BAR,
                     "&7Limita o pareamento pela diferença de ping.",
@@ -63,7 +63,7 @@ public enum PracticeSettingType {
             )
     ),
 
-    WORLD_TIME(14, "&6&lHorário do Mundo", Material.WATCH, settings -> Arrays.asList(
+    WORLD_TIME(13, "&6&lHorário do Mundo", Material.WATCH, settings -> Arrays.asList(
             CC.MENU_BAR,
             "&7Altere o horário do seu mundo.",
             "",
@@ -76,7 +76,7 @@ public enum PracticeSettingType {
             CC.MENU_BAR
     )),
 
-    SCOREBOARD_LINES(19, "&6&lLinhas da Scoreboard", Material.STRING,
+    SCOREBOARD_LINES(14, "&6&lLinhas da Scoreboard", Material.STRING,
             settings -> Arrays.asList(
                     CC.MENU_BAR,
                     "&7Exibir linhas da scoreboard.",
@@ -99,7 +99,7 @@ public enum PracticeSettingType {
                     CC.MENU_BAR
             )
     ),
-    SERVER_TITLES(22, "&6&lTítulos do Servidor", Material.PAPER,
+    SERVER_TITLES(20, "&6&lTítulos do Servidor", Material.PAPER,
             settings -> Arrays.asList(
                     CC.MENU_BAR,
                     "&7Exibe títulos enviados pelo servidor.",

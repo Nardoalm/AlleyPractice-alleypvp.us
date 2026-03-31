@@ -97,6 +97,8 @@ public class StatisticsMenu extends Menu {
             int unrankedWins = profileUnrankedKitData != null ? profileUnrankedKitData.getWins() : 0;
             int rankedWins = profileRankedKitData != null ? profileRankedKitData.getWins() : 0;
             int rankedElo = profileRankedKitData != null ? profileRankedKitData.getElo() : DEFAULT_ELO;
+            int currentWinStreak = profileUnrankedKitData != null ? profileUnrankedKitData.getWinstreak() : 0;
+            int bestWinStreak = profileUnrankedKitData != null ? profileUnrankedKitData.getBestWinstreak() : 0;
 
             String divisionName = "Unranked";
             String tierName = "I";
@@ -120,8 +122,8 @@ public class StatisticsMenu extends Menu {
                     "&6│ &fVitórias: &6" + unrankedWins,
                     //"&f● &6Losses: &f" + profileUnrankedKitData.getLosses(),
                     "",
-                    "&6│ &fWin Streak: " + "&6N/D",
-                    "    &fMelhor: " + "&6N/D" + " &7(N/D Diário)"
+                    "&6│ &fWin Streak: &6" + currentWinStreak,
+                    "    &fMelhor: &6" + bestWinStreak
             ));
 
             if (targetProfile != null && targetProfile.hasParticipatedInRanked()) {

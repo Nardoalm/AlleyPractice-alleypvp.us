@@ -654,9 +654,9 @@ public class DefaultMatch extends Match {
 
         Profile profile = this.plugin.getService(ProfileService.class).getProfile(player.getUniqueId());
         if (profile != null) {
-            this.sendMessage(profile.getFancyName() + " &fdisconnected.");
+            this.sendMessage(profile.getFancyName() + " &cdesconectou.");
         } else {
-            this.sendMessage("&c" + player.getName() + " &fdisconnected.");
+            this.sendMessage("&c" + player.getName() + " &cdesconectou.");
         }
 
         gamePlayer.setDisconnected(true);

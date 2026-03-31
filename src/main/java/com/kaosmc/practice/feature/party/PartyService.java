@@ -82,7 +82,7 @@ public interface PartyService extends Service {
      * @param sender The player sending the invite.
      * @param target The player receiving the invite.
      */
-    void sendInvite(Party party, Player sender, Player target);
+    boolean sendInvite(Party party, Player sender, Player target);
 
     /**
      * Gets the party that a player is the leader of.

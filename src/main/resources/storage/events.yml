@@ -1,0 +1,260 @@
+events:
+  sumo:
+    enabled: true
+    type: SUMO
+    display-name: "&6&lSumo"
+    material: LEASH
+    durability: 0
+    arena: "sumo"
+    kit: ""
+    minimum-players: 2
+    maximum-players: 32
+    countdown-seconds: 30
+    description:
+      - "&7Evento de sumo em rodadas."
+      - "&7O ultimo jogador restante vence."
+    settings:
+      round-seconds: 90
+      duration-seconds: 600
+
+  brackets:
+    enabled: false
+    type: BRACKETS
+    display-name: "&6&lBrackets"
+    material: DIAMOND_SWORD
+    durability: 0
+    arena: "brackets"
+    kit: "NoDebuff"
+    minimum-players: 2
+    maximum-players: 32
+    countdown-seconds: 30
+    description:
+      - "&7Duelo por rodadas em chave aberta."
+      - "&7O ultimo jogador restante vence."
+    settings:
+      round-seconds: 180
+      duration-seconds: 900
+
+  gulag:
+    enabled: false
+    type: GULAG
+    display-name: "&6&lGulag"
+    material: IRON_HOE
+    durability: 0
+    arena: "gulag"
+    kit: ""
+    minimum-players: 2
+    maximum-players: 32
+    countdown-seconds: 30
+    description:
+      - "&7Rounds 1v1 estilo gulag."
+      - "&7Quem sobreviver por ultimo vence."
+    settings:
+      round-seconds: 180
+      duration-seconds: 900
+
+  lms:
+    enabled: false
+    type: LMS
+    display-name: "&6&lLMS"
+    material: DIAMOND_CHESTPLATE
+    durability: 0
+    arena: "lms"
+    kit: "NoDebuff"
+    minimum-players: 2
+    maximum-players: 30
+    countdown-seconds: 30
+    spawn-locations: []
+    description:
+      - "&7Last Man Standing com kit configurado."
+      - "&7Sem respawn, ultimo vivo vence."
+    settings:
+      duration-seconds: 600
+
+  knockout:
+    enabled: false
+    type: KNOCKOUT
+    display-name: "&6&lKnockout"
+    material: STICK
+    durability: 0
+    arena: "knockout"
+    kit: ""
+    minimum-players: 2
+    maximum-players: 30
+    countdown-seconds: 30
+    spawn-locations: []
+    description:
+      - "&7Todos recebem stick com knockback."
+      - "&7Caiu da arena, foi eliminado."
+    settings:
+      duration-seconds: 600
+
+  oitc:
+    enabled: false
+    type: OITC
+    display-name: "&6&lOITC"
+    material: BOW
+    durability: 0
+    arena: "oitc"
+    kit: ""
+    minimum-players: 2
+    maximum-players: 30
+    countdown-seconds: 30
+    spawn-locations: []
+    description:
+      - "&7One in the Chamber com respawn."
+      - "&7O primeiro a atingir a meta vence."
+    settings:
+      duration-seconds: 300
+      score-to-win: 20
+
+  parkour:
+    enabled: false
+    type: PARKOUR
+    display-name: "&6&lParkour"
+    material: FEATHER
+    durability: 0
+    arena: "parkour"
+    kit: ""
+    minimum-players: 2
+    maximum-players: 30
+    countdown-seconds: 20
+    locations: {}
+    description:
+      - "&7Corrida de parkour com checkpoint."
+      - "&7O primeiro a chegar na placa dourada vence."
+    settings:
+      duration-seconds: 600
+
+  dropper:
+    enabled: false
+    type: DROPPER
+    display-name: "&6&lDropper"
+    material: WATER_BUCKET
+    durability: 0
+    arena: "dropper"
+    kit: ""
+    minimum-players: 2
+    maximum-players: 30
+    countdown-seconds: 20
+    spawn-locations: []
+    description:
+      - "&7Passe por todas as fases do dropper."
+      - "&7O primeiro a concluir todas vence."
+    settings:
+      duration-seconds: 600
+
+  skywars:
+    enabled: false
+    type: SKYWARS
+    display-name: "&6&lSkyWars"
+    material: CHEST
+    durability: 0
+    arena: "skywars"
+    kit: "NoDebuff"
+    minimum-players: 2
+    maximum-players: 24
+    countdown-seconds: 30
+    spawn-locations: []
+    description:
+      - "&7Modo livre com loot e construcao."
+      - "&7Sem respawn, ultimo vivo vence."
+    settings:
+      duration-seconds: 900
+
+  spleef:
+    enabled: false
+    type: SPLEEF
+    display-name: "&6&lSpleef"
+    material: DIAMOND_SPADE
+    durability: 0
+    arena: "spleef"
+    kit: ""
+    minimum-players: 2
+    maximum-players: 24
+    countdown-seconds: 20
+    description:
+      - "&7Quebre o chao de neve e derrube os inimigos."
+      - "&7O ultimo jogador em pe vence."
+    settings:
+      duration-seconds: 600
+
+  stoplight:
+    enabled: false
+    type: STOPLIGHT
+    display-name: "&6&lStoplight"
+    material: WOOL
+    durability: 14
+    arena: "stoplight"
+    kit: ""
+    minimum-players: 2
+    maximum-players: 30
+    countdown-seconds: 20
+    spawn-locations: []
+    locations: {}
+    description:
+      - "&7Corra no GO e pare no STOP."
+      - "&7Quem chegar primeiro vence."
+    settings:
+      duration-seconds: 600
+      go-min-seconds: 2
+      go-max-seconds: 4
+      stop-min-seconds: 2
+      stop-max-seconds: 4
+      finish-radius: 2.5
+
+  corners:
+    enabled: false
+    type: FOUR_CORNERS
+    display-name: "&6&l4Corners"
+    material: WOOL
+    durability: 4
+    arena: "corners"
+    kit: ""
+    minimum-players: 2
+    maximum-players: 30
+    countdown-seconds: 20
+    description:
+      - "&7Uma cor some a cada rodada."
+      - "&7Nao caia da plataforma."
+    settings:
+      duration-seconds: 600
+      round-seconds: 10
+
+  thimble:
+    enabled: false
+    type: THIMBLE
+    display-name: "&6&lThimble"
+    material: WATER_BUCKET
+    durability: 0
+    arena: "thimble"
+    kit: ""
+    minimum-players: 2
+    maximum-players: 30
+    countdown-seconds: 20
+    locations: {}
+    description:
+      - "&7Acertou a agua? avanca para a proxima rodada."
+      - "&7Errou o salto? foi eliminado."
+    settings:
+      duration-seconds: 600
+      round-seconds: 20
+
+  tnttag:
+    enabled: false
+    type: TNTTAG
+    display-name: "&6&lTNT Tag"
+    material: TNT
+    durability: 0
+    arena: "tnttag"
+    kit: ""
+    minimum-players: 2
+    maximum-players: 30
+    countdown-seconds: 20
+    spawn-locations: []
+    description:
+      - "&7Passe a TNT antes dela explodir."
+      - "&7O ultimo sem ser eliminado vence."
+    settings:
+      duration-seconds: 600
+      tag-seconds: 30

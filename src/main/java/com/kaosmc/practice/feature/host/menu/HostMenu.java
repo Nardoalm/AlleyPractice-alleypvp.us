@@ -1,6 +1,7 @@
 package com.kaosmc.practice.feature.host.menu;
 
 import com.kaosmc.practice.common.item.ItemBuilder;
+import com.kaosmc.practice.feature.event.menu.EventMenu;
 import com.kaosmc.practice.library.menu.Button;
 import com.kaosmc.practice.library.menu.Menu;
 import lombok.AllArgsConstructor;
@@ -33,8 +34,10 @@ public class HostMenu extends Menu {
                 "&fHospede um evento com",
                 "&fimplementações diferentes.",
                 "",
-                " &f◆ &6Tipos: &7Sumo",
-                " &f● &cMais em breve...",
+                " &f◆ &6Tipos: &7Sumo, Brackets, Gulag, LMS",
+                " &f◆ &7Knockout, OITC, Parkour, Dropper",
+                " &f◆ &7SkyWars, Spleef, Stoplight, 4Corners",
+                " &f◆ &7Thimble e TNT Tag",
                 "",
                 "&aClique para hospedar!"
         )));
@@ -77,7 +80,7 @@ public class HostMenu extends Menu {
                     // Open the tournament menu
                     break;
                 case EMPTY_MAP:
-                    //new EventMenu().openMenu(player);
+                    new EventMenu().openMenu(player);
                     break;
             }
 

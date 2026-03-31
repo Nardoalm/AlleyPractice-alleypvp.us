@@ -95,6 +95,26 @@ scoreboard:
       - "&6&l│ &rFaixa de Ping: &6{ping-range}"
       - ""
       - "&fProcurando partida{dot-animation}"
+    event:
+      waiting:
+        - "{sidebar}"
+        - "&6&lEvento"
+        - "&6&l│ &rModo: {event-name}"
+        - "&6&l│ &rHost: &6{event-host}"
+        - "&6&l│ &rJogadores: &6{event-players}/{event-max}"
+        - "&6&l│ &rInício: &6{event-countdown}"
+        - ""
+        - "&7Use o item vermelho para sair."
+      playing:
+        - "{sidebar}"
+        - "&6&lEvento"
+        - "&6&l│ &rModo: {event-name}"
+        - "&6&l│ &rRound: &6#{event-round}"
+        - "&6&l│ &rRestantes: &6{event-players}/{event-max}"
+        - ""
+        - "&a{fighter-a} &7({fighter-a-ping}ms)"
+        - "&fvs"
+        - "&c{fighter-b} &7({fighter-b-ping}ms)"
     starting:
       - "{sidebar}"
       - "&6&lIniciando Partida"

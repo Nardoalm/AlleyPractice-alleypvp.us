@@ -63,7 +63,14 @@ public class SpawnServiceImpl implements SpawnService {
             return;
         }
 
-        player.teleport(this.location);
         PlayerUtil.reset(player, false, true);
+
+        Location targetLocation = this.location.clone();
+        if (PlayerUtil.canFly(player)) {
+            targetLocation.add(0.0D, 4.0D, 0.0D);
+        }
+
+        player.teleport(targetLocation);
+        player.setFallDistance(0.0F);
     }
 }

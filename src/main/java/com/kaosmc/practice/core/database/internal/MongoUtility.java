@@ -262,6 +262,7 @@ public class MongoUtility {
                             .put("wins", data.getWins())
                             .put("losses", data.getLosses())
                             .put("winstreak", data.getWinstreak())
+                            .put("bestWinstreak", data.getBestWinstreak())
                             .build();
                     kitDataDocument.put(entry.getKey(), kitEntry);
                 });
@@ -473,6 +474,7 @@ public class MongoUtility {
                 kit.setWins(kitEntry.getInteger("wins", DEFAULT_INT));
                 kit.setLosses(kitEntry.getInteger("losses", DEFAULT_INT));
                 kit.setWinstreak(kitEntry.getInteger("winstreak", DEFAULT_INT));
+                kit.setBestWinstreak(kitEntry.getInteger("bestWinstreak", DEFAULT_INT));
 
                 kitData.put(key, kit);
             } catch (Exception e) {

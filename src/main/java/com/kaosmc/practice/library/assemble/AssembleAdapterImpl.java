@@ -4,6 +4,7 @@ import com.kaosmc.practice.core.config.ConfigService;
 import com.kaosmc.practice.core.profile.ProfileService;
 import com.kaosmc.practice.core.profile.Profile;
 import com.kaosmc.practice.core.profile.enums.ProfileState;
+import com.kaosmc.practice.visual.scoreboard.internal.EventScoreboardImpl;
 import com.kaosmc.practice.visual.scoreboard.internal.FFAScoreboardImpl;
 import com.kaosmc.practice.visual.scoreboard.internal.LobbyScoreboardImpl;
 import com.kaosmc.practice.visual.scoreboard.internal.QueueScoreboardImpl;
@@ -35,6 +36,7 @@ public class AssembleAdapterImpl implements AssembleAdapter {
     private final MatchScoreboardImpl matchScoreboardImpl = new MatchScoreboardImpl();
     private final SpectatorScoreboardImpl spectatorScoreboardImpl = new SpectatorScoreboardImpl();
     private final FFAScoreboardImpl ffaScoreboardImpl = new FFAScoreboardImpl();
+    private final EventScoreboardImpl eventScoreboardImpl = new EventScoreboardImpl();
 
     public AssembleAdapterImpl(AnimationService animationService, ProfileService profileService, ConfigService configService) {
         this.animationService = animationService;
@@ -81,6 +83,9 @@ public class AssembleAdapterImpl implements AssembleAdapter {
                     break;
                 case FFA:
                     lines.addAll(this.ffaScoreboardImpl.getLines(profile, player));
+                    break;
+                case PLAYING_EVENT:
+                    lines.addAll(this.eventScoreboardImpl.getLines(profile, player));
                     break;
             }
 

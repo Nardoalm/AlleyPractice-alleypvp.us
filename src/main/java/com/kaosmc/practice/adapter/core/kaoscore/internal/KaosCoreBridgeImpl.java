@@ -5,7 +5,7 @@ import com.kaosmc.practice.adapter.core.kaoscore.KaosCoreBridge;
 import com.kaosmc.practice.bootstrap.annotation.Service;
 import com.knowplugins.ysubz.kaoscore.api.KaosCoreAPI;
 import com.knowplugins.ysubz.kaoscore.clan.Clan;
-import com.knowplugins.ysubz.kaoscore.tag.Tag;
+import com.knowplugins.ysubz.kaoscore.utils.tag.Tag;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;

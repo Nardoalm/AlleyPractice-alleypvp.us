@@ -12,11 +12,6 @@ import java.util.List;
 public class AssembleThread extends Thread {
     private final AssembleServiceImpl assembleServiceImpl;
 
-    /**
-     * Assemble Thread.
-     *
-     * @param assembleServiceImpl instance.
-     */
     AssembleThread(AssembleServiceImpl assembleServiceImpl) {
         this.assembleServiceImpl = assembleServiceImpl;
         this.start();
@@ -28,9 +23,12 @@ public class AssembleThread extends Thread {
         while (!this.isInterrupted()) {
             try {
                 tick();
-                sleep(this.assembleServiceImpl.getTicks() * 50);
+                Thread.sleep(this.assembleServiceImpl.getTicks() * 50);
+            } catch (InterruptedException exception) {
+                this.interrupt();
+                break;
             } catch (Exception exception) {
-                Logger.error("There was an error in the Assemble Thread.");
+                Logger.error("Ocorreu um erro na Thread do Assemble.");
                 exception.printStackTrace();
             }
         }
@@ -96,8 +94,10 @@ public class AssembleThread extends Thread {
                     player.setScoreboard(scoreboard);
                 }
             } catch (Exception exception) {
-                exception.printStackTrace();
-                throw new AssembleException("There was an error updating " + player.getName() + "'s scoreboard.");
+                if (!(exception instanceof InterruptedException)) {
+                    exception.printStackTrace();
+                    throw new AssembleException("Ocorreu um erro ao atualizar a scoreboard de " + player.getName() + ".");
+                }
             }
         }
     }

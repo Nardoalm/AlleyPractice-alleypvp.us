@@ -20,10 +20,13 @@ import java.util.UUID;
 @Getter
 @Setter
 public class Party {
+    public static final int DEFAULT_MAX_SIZE = 30;
+
     private Player leader;
     private PartyState state;
     private List<UUID> members;
     private List<UUID> bannedPlayers;
+    private int maxSize;
 
     /**
      * Constructor for the Party class.
@@ -36,6 +39,7 @@ public class Party {
         this.members.add(leader.getUniqueId());
         this.bannedPlayers = new ArrayList<>();
         this.state = PartyState.PRIVATE;
+        this.maxSize = DEFAULT_MAX_SIZE;
     }
 
     /**
@@ -77,5 +81,14 @@ public class Party {
      */
     public boolean isPrivate() {
         return this.state == PartyState.PRIVATE;
+    }
+
+    /**
+     * Checks if the party has reached its maximum size.
+     *
+     * @return True if the party is full.
+     */
+    public boolean isFull() {
+        return this.members.size() >= this.maxSize;
     }
 }

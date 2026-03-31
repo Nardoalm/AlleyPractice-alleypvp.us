@@ -10,6 +10,9 @@ import com.kaosmc.practice.core.profile.Profile;
 import com.kaosmc.practice.core.profile.ProfileService;
 import com.kaosmc.practice.feature.hotbar.HotbarService;
 import com.kaosmc.practice.feature.kit.Kit;
+import com.kaosmc.practice.feature.leaderboard.LeaderboardService;
+import com.kaosmc.practice.feature.leaderboard.LeaderboardType;
+import com.kaosmc.practice.feature.leaderboard.data.LeaderboardPlayerData;
 import com.kaosmc.practice.feature.queue.Queue;
 import com.kaosmc.practice.feature.server.ServerService;
 import com.kaosmc.practice.library.menu.Button;
@@ -52,6 +55,7 @@ public class RankedButton extends Button {
      * @return the lore for the kit
      */
     private @NotNull List<String> getLore(Kit kit, Player player) {
+        List<String> topRanked = this.getTopEntries(kit, LeaderboardType.RANKED);
         List<String> lore = new ArrayList<>();
         lore.add(CC.MENU_BAR);
 
@@ -66,15 +70,34 @@ public class RankedButton extends Button {
                 "&6│ &rNa fila: &6" + this.queue.getProfiles().size(),
                 "",
                 "&f&lSeu ELO: &6" + KaosPractice.getInstance().getService(ProfileService.class).getProfile(player.getUniqueId()).getProfileData().getRankedKitData().get(kit.getName()).getElo(),
-                " &f1. &6INDEFINIDO &f- &6N/D",
-                " &f2. &6INDEFINIDO &f- &6N/D",
-                " &f3. &6INDEFINIDO &f- &6N/D",
+                topRanked.get(0),
+                topRanked.get(1),
+                topRanked.get(2),
                 "",
                 "&aClique para jogar.",
                 CC.MENU_BAR
         );
 
         return lore;
+    }
+
+    private @NotNull List<String> getTopEntries(Kit kit, LeaderboardType type) {
+        List<LeaderboardPlayerData> entries = KaosPractice.getInstance()
+                .getService(LeaderboardService.class)
+                .getLeaderboardEntries(kit, type);
+        List<String> topEntries = new ArrayList<>(3);
+
+        for (int index = 0; index < 3; index++) {
+            if (index < entries.size()) {
+                LeaderboardPlayerData entry = entries.get(index);
+                topEntries.add(" &f" + (index + 1) + ". &6" + entry.getName() + " &f- &6" + entry.getValue());
+                continue;
+            }
+
+            topEntries.add(" &f" + (index + 1) + ". &6Ninguém &f- &6N/D");
+        }
+
+        return topEntries;
     }
 
     @Override

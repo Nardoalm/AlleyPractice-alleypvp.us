@@ -7,9 +7,6 @@ import com.kaosmc.practice.feature.division.model.DivisionTier;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Objects;
-import java.util.Collections;
-
 /**
  * @author Emmy
  * @project Kaos
@@ -23,16 +20,21 @@ public class ProfileUnrankedKitData {
     private int wins;
     private int losses;
     private int winstreak;
+    private int bestWinstreak;
 
     public ProfileUnrankedKitData() {
         this.wins = 0;
         this.losses = 0;
         this.winstreak = 0;
+        this.bestWinstreak = 0;
         // Não chamamos determineDivision no construtor para evitar loops antes dos dados carregarem
     }
 
     public void incrementWins() {
         this.winstreak++;
+        if (this.winstreak > this.bestWinstreak) {
+            this.bestWinstreak = this.winstreak;
+        }
         this.wins++;
         this.determineDivision();
     }
@@ -43,7 +45,12 @@ public class ProfileUnrankedKitData {
     }
 
     public void determineDivision() {
-        DivisionService divisionService = KaosPractice.getInstance().getService(DivisionService.class);
+        KaosPractice plugin = KaosPractice.getInstance();
+        if (plugin == null) {
+            return;
+        }
+
+        DivisionService divisionService = plugin.getService(DivisionService.class);
         if (divisionService == null || divisionService.getDivisions() == null) return;
 
         for (Division divisionObj : divisionService.getDivisions()) {
@@ -66,7 +73,13 @@ public class ProfileUnrankedKitData {
      */
     public Division getDivision() {
         if (this.division == null) return null;
-        DivisionService divisionService = KaosPractice.getInstance().getService(DivisionService.class);
+
+        KaosPractice plugin = KaosPractice.getInstance();
+        if (plugin == null) {
+            return null;
+        }
+
+        DivisionService divisionService = plugin.getService(DivisionService.class);
         return (divisionService != null) ? divisionService.getDivision(this.division) : null;
     }
 

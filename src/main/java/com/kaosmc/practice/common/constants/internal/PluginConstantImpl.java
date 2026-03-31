@@ -58,7 +58,7 @@ public class PluginConstantImpl implements PluginConstant {
         this.packageDirectory = "com.kaosmc.practice";
 
         this.adminPermissionPrefix = this.name + ".admin";
-        this.permissionLackMessage = ChatColor.RED + "Missing permission.";
+        this.permissionLackMessage = ChatColor.RED + ".";
 
         this.reflections = new Reflections(this.packageDirectory);
     }

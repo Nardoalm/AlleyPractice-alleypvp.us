@@ -6,6 +6,7 @@ import com.kaosmc.practice.common.logger.Logger;
 import com.kaosmc.practice.core.profile.Profile;
 import com.kaosmc.practice.core.profile.ProfileService;
 import com.kaosmc.practice.core.profile.enums.ProfileState;
+import com.kaosmc.practice.feature.event.EventService;
 import com.kaosmc.practice.feature.match.model.internal.MatchGamePlayer;
 import com.kaosmc.practice.feature.visibility.VisibilityService;
 import org.bukkit.entity.Player;
@@ -71,6 +72,9 @@ public class VisibilityServiceImpl implements VisibilityService {
                 break;
             case PLAYING:
                 this.handlePlayingCase(viewer, target, viewerProfile, targetProfile);
+                break;
+            case PLAYING_EVENT:
+                this.handleEventCase(viewer, target);
                 break;
             case SPECTATING:
                 this.handleSpectatingCase(viewer, target, viewerProfile);
@@ -180,5 +184,20 @@ public class VisibilityServiceImpl implements VisibilityService {
         }
 
         viewer.showPlayer(target);
+    }
+
+    private void handleEventCase(Player viewer, Player target) {
+        EventService eventService = this.plugin.getService(EventService.class);
+        if (eventService == null) {
+            viewer.hidePlayer(target);
+            return;
+        }
+
+        if (eventService.isEventParticipant(viewer.getUniqueId()) && eventService.isEventParticipant(target.getUniqueId())) {
+            viewer.showPlayer(target);
+            return;
+        }
+
+        viewer.hidePlayer(target);
     }
 }

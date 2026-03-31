@@ -75,7 +75,8 @@ public class PartyInviteCommand extends BaseCommand {
             return;
         }
 
-        partyService.sendInvite(party, player, targetPlayer);
-        party.notifyParty("&6" + targetPlayer.getName() + " &awas invited to the party by &6" + player.getName() + "&a.");
+        if (partyService.sendInvite(party, player, targetPlayer)) {
+            party.notifyParty("&6" + targetPlayer.getName() + " &awas invited to the party by &6" + player.getName() + "&a.");
+        }
     }
 }
