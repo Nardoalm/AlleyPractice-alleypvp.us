@@ -1,9 +1,8 @@
-name: KaosPractice
+name: AlleyPractice
 version: '${project.version}'
-main: com.kaosmc.practice.KaosPractice
-author: ysubz
+main: us.alleypvp.practice.AlleyPractice
+author: Hamza, Remi & Emmy (ysubz edit)
 description: '${project.description}'
-website: https://kaosmc.com
 softDepend:
   - PlaceholderAPI
   - SlimeWorldManager

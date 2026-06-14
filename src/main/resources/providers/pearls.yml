@@ -15,7 +15,7 @@ TalibanPearl:
 return-pearl: true
 tp-com-taliban-disabled: true
 
-Message: '&cPérola inválida'
+Message: '&cEnderpearl invalid'
 Invalid-Pearl-Message: false
 invalid-if-block-in-front: true
 Invalid-Pearl-Remove-Timer: true

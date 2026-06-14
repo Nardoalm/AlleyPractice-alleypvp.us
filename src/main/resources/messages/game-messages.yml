@@ -1,49 +1,49 @@
 duel-requests:
-  accepted: '&aVocê aceitou o pedido de duelo de &6{name-color}{player}&a!'
+  accepted: '&aYou accepted the duel request from &b{name-color}{player}&a!'
 duel:
   request:
     sent:
       solo:
         format:
           - ''
-          - '&6&lPedido de Duelo'
-          - ' &6&l│ &fAlvo: &6{name-color}{target}'
-          - ' &6&l│ &fKit: &6{kit}'
-          - ' &6&l│ &fArena: &6{arena}'
+          - '&b&lDuel Request'
+          - ' &b&l│ &fTarget: &b{name-color}{target}'
+          - ' &b&l│ &fKit: &b{kit}'
+          - ' &b&l│ &fArena: &b{arena}'
           - ''
       party:
         format:
           - ''
-          - '&6&lPedido de Duelo de Party'
-          - ' &6&l│ &fAlvo: &6{name-color}{target}&f da Party &6(&a{party-size}&6)'
-          - ' &6&l│ &fKit: &6{kit}'
-          - ' &6&l│ &fArena: &6{arena}'
+          - '&b&lParty Duel Request'
+          - ' &b&l│ &fTarget: &b{name-color}{target}&f from Party &b(&a{party-size}&b)'
+          - ' &b&l│ &fKit: &b{kit}'
+          - ' &b&l│ &fArena: &b{arena}'
           - ''
     received:
       solo:
         clickable:
-          format: ' &a(Clique para aceitar)'
+          format: ' &a(Click to accept)'
           command: /accept {sender}
-          hover: '&aClique para aceitar &6{sender}&a pedido de duelo.'
+          hover: '&aClick to accept &b{sender}&a''s duel request.'
         format:
           - ''
-          - '&6&lPedido de Duelo'
-          - ' &6&l│ &fDe: &6{name-color}{sender}'
-          - ' &6&l│ &fArena: &6{arena}'
-          - ' &6&l│ &fKit: &6{kit}'
+          - '&b&lDuel Request'
+          - ' &b&l│ &fFrom: &b{name-color}{sender}'
+          - ' &b&l│ &fArena: &b{arena}'
+          - ' &b&l│ &fKit: &b{kit}'
           - '{clickable}'
           - ''
       party:
         clickable:
-          format: ' &a(Clique para aceitar)'
+          format: ' &a(Click to accept)'
           command: /accept {sender}
-          hover: '&aClique para aceitar o pedido de duelo de party de &6{sender}&a.'
+          hover: '&aClick to accept the party duel request from &b{sender}&a.'
         format:
           - ''
-          - '&6&lPedido de Duelo de Party'
-          - ' &6&l│ &fDe: &6{name-color}{sender}&f da Party &6(&a{party-size}&6)'
-          - ' &6&l│ &fArena: &6{arena}'
-          - ' &6&l│ &fKit: &6{kit}'
+          - '&b&lParty Duel Request'
+          - ' &b&l│ &fFrom: &b{name-color}{sender}&f from Party &b(&a{party-size}&b)'
+          - ' &b&l│ &fArena: &b{arena}'
+          - ' &b&l│ &fKit: &b{kit}'
           - '{clickable}'
           - ''
     expired:
@@ -51,15 +51,15 @@ duel:
         enabled: true
         format:
           - ''
-          - '&c&lPedido de Duelo Expirado'
-          - ' &c&l│ &fSeu pedido de duelo para &6{target} &fexpirou.'
+          - '&c&lDuel Request Expired'
+          - ' &c&l│ &fYour duel request to &b{target} &fhas expired.'
           - ''
       target:
         enabled: true
         format:
           - ''
-          - '&c&lPedido de Duelo Expirado'
-          - ' &c&l│ &fO pedido de duelo de &6{sender} &fexpirou.'
+          - '&c&lDuel Request Expired'
+          - ' &c&l│ &fThe duel request from &b{sender} &fhas expired.'
           - ''
 ffa:
   killstreak-alert:
@@ -67,64 +67,64 @@ ffa:
     interval: 5
     message:
       - ''
-      - '&6&lSequência de Abates'
-      - ' &6&l│ &f{name-color}{player} &festá em uma sequência de &6{killstreak} &fabates!'
+      - '&b&lKillstreak'
+      - ' &b&l│ &f{name-color}{player} &fis on a killstreak of &b{killstreak} &fkills!'
       - ''
   combat-log:
-    death-message: '&7(Combat Log) &c{name-color}{player} &ffoi morto por &c{killer-name-color}{killer}&f.'
-  teleported-to-safe-zone: '&aVocê foi teleportado para a zona segura.'
+    death-message: '&7(Combat Log) &c{name-color}{player} &fwas killed by &c{killer-name-color}{killer}&f.'
+  teleported-to-safe-zone: '&aYou have been teleported to the safe zone.'
   player:
     join-message:
       enabled: false
       format:
-        - '&a{name-color}{player} &aentrou na partida de FFA.'
+        - '&a{name-color}{player} &ajoined the FFA match.'
     left-message:
       enabled: false
       format:
-        - '&c{name-color}{player} &csaiu da partida de FFA.'
+        - '&c{name-color}{player} &cleft the FFA match.'
     death:
       no-killer-message:
         enabled: true
         format:
-          - '&c{name-color}{player} &fmorreu!'
+          - '&c{name-color}{player} &fdied!'
       killed-message:
         enabled: true
         format:
-          - '&c{name-color}{player} &ffoi morto por &c{killer-name-color}{killer}&f!'
+          - '&c{name-color}{player} &fwas killed by &c{killer-name-color}{killer}&f!'
 game:
-  cannot-drop-sword: '&cVocê não pode dropar sua espada!'
+  cannot-drop-sword: '&cYou cannot drop your sword!'
 match:
   death-message:
-    generic: '&c&lMORTE! &f{name-color}{player} &fmorreu.'
-    generic-killer: '&c&lMORTO! &f{name-color}{victim} &ffoi morto por &c{killer-name-color}{killer}&f.'
-    custom: '&c&lMORTO! &f{message}'
-  seeker-respawned: '&c&lMORTE! &fO seeker &c{name-color}{player} &frenasceu.'
+    generic: '&c&lDEATH! &f{name-color}{player} &fdied.'
+    generic-killer: '&c&lKILLED! &f{name-color}{victim} &fwas killed by &c{killer-name-color}{killer}&f.'
+    custom: '&c&lKILLED! &f{message}'
+  seeker-respawned: '&c&lDEATH! &fThe seeker &c{name-color}{player} &fhas respawned.'
   started:
     kit-disclaimer:
       enabled: true
       format:
         - ''
-        - '&6&l{kit-name}'
-        - ' &6&l│ &f{kit-disclaimer}'
+        - '&b&l{kit-name}'
+        - ' &b&l│ &f{kit-disclaimer}'
         - ''
     message:
       regular:
         enabled: true
         format:
-          - '&aA partida começou!'
+          - '&aThe match has started!'
       round:
         enabled: true
         format:
-          - '&aA rodada &6{current-round} &acomeçou.'
+          - '&aRound &b{current-round} &ahas started.'
   elevator:
-    no-safe-spot-found: '&cNão há um local seguro para teleporte!'
-  cannot-interact-during-match: '&cVocê não pode interagir com isso durante uma partida!'
-  cannot-interact-as-raider: '&cVocê não pode interagir com isso como raider!'
-  cannot-place-blocks-during-hiding-phase: '&cVocê não pode colocar blocos durante a fase de esconder!'
-  cannot-place-blocks-above-height-limit: '&cVocê não pode colocar blocos acima do limite de altura!'
-  cannot-build-near-portal: '&cVocê não pode construir perto de um portal!'
-  cannot-break-blocks-during-hiding-phase: '&cVocê não pode quebrar blocos durante a fase de esconder!'
-  cannot-break-own-bed: '&cVocê não pode quebrar sua própria cama!'
+    no-safe-spot-found: '&cNo safe spot found for teleportation!'
+  cannot-interact-during-match: '&cYou cannot interact with this during a match!'
+  cannot-interact-as-raider: '&cYou cannot interact with this as a raider!'
+  cannot-place-blocks-during-hiding-phase: '&cYou cannot place blocks during the hiding phase!'
+  cannot-place-blocks-above-height-limit: '&cYou cannot place blocks above the height limit!'
+  cannot-build-near-portal: '&cYou cannot build near a portal!'
+  cannot-break-blocks-during-hiding-phase: '&cYou cannot break blocks during the hiding phase!'
+  cannot-break-own-bed: '&cYou cannot break your own bed!'
   starting:
     message:
       enabled: true
@@ -143,105 +143,105 @@ match:
   ending:
     time-limit-exceeded:
       format:
-        - '&cA partida terminou por atingir o limite de tempo de &6{time-limit} minutos&c.'
+        - '&cThe match ended due to reaching the time limit of &b{time-limit} minutes&c.'
   scored:
     enabled: true
     format:
       solo:
         - ''
-        - '{winner-color}&l{scorer} &6&lmarcou!'
+        - '{winner-color}&l{scorer} &b&lscored!'
         - '{winner-color}&l{winner-goals} &7- {loser-color}&l{loser-goals}'
         - ''
       team:
         - ''
-        - '{winner-color}&lTime de {winner} &6&lmarcou!'
+        - '{winner-color}&l{winner}''s Team &b&lscored!'
         - '{winner-color}&l{winner-goals} &7- {loser-color}&l{loser-goals}'
         - ''
   bed-destruction:
     enabled: true
     format:
       - ''
-      - '&6&lCAMA DESTRUÍDA! &6{bed-color}{bed} &ffoi destruída por &6{breaker-color}{breaker}&f!'
+      - '&b&lBED DESTROYED! &b{bed-color}{bed} &fwas destroyed by &b{breaker-color}{breaker}&f!'
       - ''
   ended:
     spectators-list:
-      - '&6&lEspectadores: &f{spectators} &7(e mais &6{more_count} &7...)'
+      - '&b&lSpectators: &f{spectators} &7(and &b{more_count} &7more...)'
     match-result:
       regular:
         format:
           - ''
-          - '&6&lResultados da Partida: &7(clique para ver)'
-          - '&aVencedor: &f{winner} &7| &cPerdedor: &f{loser}'
+          - '&b&lMatch Results: &7(click to view)'
+          - '&aWinner: &f{winner} &7| &cLoser: &f{loser}'
           - ''
         winner:
           command: /inventory {winner}
-          hover: '&aClique para ver {winner} inventário'
+          hover: '&aClick to view {winner}''s inventory'
         loser:
           command: /inventory {loser}
-          hover: '&cClique para ver {loser} inventário'
+          hover: '&cClick to view {loser}''s inventory'
     elo-changes:
       enabled: true
       format:
-        - '&6&lMudanças de Elo'
-        - ' &6&l│ &f{winner} &a+{math-winner-elo} &7(&f{old-winner-elo} &7-> &f{new-winner-elo})'
-        - ' &6&l│ &f{loser} &c-{math-loser-elo} &7(&f{old-loser-elo} &7-> &f{new-loser-elo})'
+        - '&b&lElo Changes'
+        - ' &b&l│ &f{winner} &a+{math-winner-elo} &7(&f{old-winner-elo} &7-> &f{new-winner-elo})'
+        - ' &b&l│ &f{loser} &c-{math-loser-elo} &7(&f{old-loser-elo} &7-> &f{new-loser-elo})'
         - ''
   blocks-reset:
     enabled: true
     format:
-      - '&4{name-color}{player} &fresolveu resetar os blocos!'
+      - '&4{name-color}{player} &fdecided to reset the blocks!'
   platform-decay:
     will-no-longer-decay:
-      - '&c&lA plataforma não irá mais decair!'
+      - '&c&lThe platform will no longer decay!'
     notifications:
       '75':
         format:
-          - '&6A arena começou a desmoronar...'
+          - '&bThe arena has started to decay...'
       '50':
         format:
-          - '&e&lAVISO! &eA arena encolheu pela metade!'
+          - '&e&lWARNING! &eThe arena has shrunk by half!'
       '25':
         format:
-          - '&c&lPERIGO! &cA plataforma está colapsando rápido!'
+          - '&c&lDANGER! &cThe platform is collapsing fast!'
   versus-message:
     solo:
       enabled: true
       format:
-        - '&7[&6Partida&7] &6{playerA} &avs &6{playerB}'
+        - '&7[&bMatch&7] &b{playerA} &avs &b{playerB}'
     team:
       enabled: true
       format:
-        - '&7[&6Partida&7] &6{teamA-leader} (Time) &7(&a{teamA-size}&7) &avs &6{teamB-leader} (Time) &7(&a{teamB-size}&7)'
+        - '&7[&bMatch&7] &b{teamA-leader}''s Party &7(&a{teamA-size}&7) &avs &b{teamB-leader}''s Party &7(&a{teamB-size}&7)'
 party:
   invitation:
     received:
       clickable:
-        format: ' &a(Clique para aceitar)'
+        format: ' &a(Click to accept)'
         command: /party accept {sender}
-        hover: '&aClique para aceitar o convite de party de &6{sender}&a.'
+        hover: '&aClick to accept the party invitation from &b{sender}&a.'
       format:
         - ''
-        - '&6&lConvite de Party'
-        - ' &6&l│ &fDe: &6{name-color}{sender}'
-        - ' &6&l│ &fJogadores: &6{party-size}&f/&6N/D'
+        - '&b&lParty Invitation'
+        - ' &b&l│ &fFrom: &b{name-color}{sender}'
+        - ' &b&l│ &fPlayers: &b{party-size}&f/&bN/A'
         - '{clickable}'
         - ''
     sent:
       format:
         - ''
-        - '&6&lConvite de Party Enviado'
-        - ' &6&l│ &fAlvo: &6{name-color}{target}'
+        - '&b&lParty Invitation Sent'
+        - ' &b&l│ &fTarget: &b{name-color}{target}'
         - ''
   announcement:
     clickable:
-      format: ' &a(Clique para entrar)'
+      format: ' &a(Click to join)'
       command: /party join {leader}
-      hover: '&aClique para entrar na party de &6{leader}&a.'
+      hover: '&aClick to join &b{leader}&a''s party.'
     format:
       - ''
-      - '&6&lConvite Público de Party'
-      - ' &6&l│ &fLíder: &6{name-color}{leader}'
-      - ' &6&l│ &fJogadores: &6{party-size}&f/&6N/D'
+      - '&b&lPublic Party Announcement'
+      - ' &b&l│ &fLeader: &b{name-color}{leader}'
+      - ' &b&l│ &fPlayers: &b{party-size}&f/&bN/A'
       - '{clickable}'
       - ''
   request:
@@ -250,13 +250,13 @@ party:
         enabled: true
         format:
           - ''
-          - '&c&lPedido de Party Expirado'
-          - ' &c&l│ &fSeu pedido de party para &6{target} &fexpirou.'
+          - '&c&lParty Request Expired'
+          - ' &c&l│ &fYour party request to &b{target} &fhas expired.'
           - ''
       target:
         enabled: true
         format:
           - ''
-          - '&c&lPedido de Party Expirado'
-          - ' &c&l│ &fO pedido de party de &6{sender} &fexpirou.'
+          - '&c&lParty Request Expired'
+          - ' &c&l│ &fThe party request from &b{sender} &fhas expired.'
           - ''

@@ -1,25 +1,25 @@
 #   ─────────────────────────────────────────────────────────────────────────────────────
-#   Lista de menus disponíveis para usar:
+#   List of available menus to use:
 #
-#   UNRANKED_MENU              - Abre o menu de fila unranked padrão
-#   LAYOUT_EDITOR_MENU         - Abre o editor de kit
-#   CURRENT_MATCHES_MENU       - Abre um menu com as partidas em andamento
-#   SETTINGS_MENU              - Abre o menu de configurações do jogador (/practicesettings)
-#   HOST_EVENTS_MENU           - Abre o menu de eventos
-#   LEADERBOARD_MENU           - Abre o menu de rankings/estatísticas
-#   PARTY_EVENT_MENU           - Abre o menu de evento de party para iniciar um evento
-#   PARTY_DUEL_MENU            - Abre o menu de duelo de party
-#   SPECTATOR_TELEPORTER_MENU  - Abre o menu de teleporte do espectador
-#   RANKED_MENU                - Abre o menu de fila ranked
-#   UNRANKED_DUO_MENU          - Abre o menu de fila duo unranked
+#   UNRANKED_MENU              - Opens the default unranked queue menu
+#   LAYOUT_EDITOR_MENU         - Opens the kit layout editor
+#   CURRENT_MATCHES_MENU       - Opens a menu with ongoing matches
+#   SETTINGS_MENU              - Opens the player settings menu (/practicesettings)
+#   HOST_EVENTS_MENU           - Opens the events hosting menu
+#   LEADERBOARD_MENU           - Opens the leaderboards/statistics menu
+#   PARTY_EVENT_MENU           - Opens the party event menu to start an event
+#   PARTY_DUEL_MENU            - Opens the party duel menu
+#   SPECTATOR_TELEPORTER_MENU  - Opens the spectator teleport menu
+#   RANKED_MENU                - Opens the ranked queue menu
+#   UNRANKED_DUO_MENU          - Opens the unranked duo queue menu
 #   ─────────────────────────────────────────────────────────────────────────────────────
 
 hotbar-items:
 
   UNRANKED_QUEUES:
-    display-name: "&6Filas Unranked &7(Clique Direito)"
+    display-name: "&bUnranked Queues &7(Right-Click)"
     lore:
-      - "&7Entre nas filas unranked para treinar livremente."
+      - "&7Join unranked queues to practice freely."
     material: IRON_SWORD
     durability: 0
     command: ""
@@ -42,9 +42,9 @@ hotbar-items:
         slot: 0
 
   RANKED_QUEUES:
-    display-name: "&6Filas Ranked &7(Clique Direito)"
+    display-name: "&bRanked Queues &7(Right-Click)"
     lore:
-      - "&7Desafie-se nas partidas ranked."
+      - "&7Challenge yourself in ranked matches."
     material: DIAMOND_SWORD
     durability: 0
     command: ""
@@ -67,9 +67,9 @@ hotbar-items:
         slot: 0
 
   LAYOUT_EDITOR:
-    display-name: "&6Editor de Layout &7(Clique Direito)"
+    display-name: "&bLayout Editor &7(Right-Click)"
     lore:
-      - "&7Personalize os layouts dos seus kits."
+      - "&7Customize your kit layouts."
     material: BOOK
     durability: 0
     command: ""
@@ -92,9 +92,9 @@ hotbar-items:
         slot: 0
 
   CURRENT_MATCHES:
-    display-name: "&6Partidas Atuais &7(Clique Direito)"
+    display-name: "&bCurrent Matches &7(Right-Click)"
     lore:
-      - "&7Veja as partidas em andamento."
+      - "&7View ongoing matches."
     material: COMPASS
     durability: 0
     command: ""
@@ -117,9 +117,9 @@ hotbar-items:
         slot: 0
 
   PARTY:
-    display-name: "&6Criar Party &7(Clique Direito)"
+    display-name: "&bCreate Party &7(Right-Click)"
     lore:
-      - "&7Monte uma party com seus amigos."
+      - "&7Form a party with your friends."
     material: NAME_TAG
     durability: 0
     command: "party create"
@@ -142,9 +142,9 @@ hotbar-items:
         slot: 0
 
   LEADERBOARD:
-    display-name: "&6Rankings &7(Clique Direito)"
+    display-name: "&bLeaderboards &7(Right-Click)"
     lore:
-      - "&7Confira os melhores jogadores."
+      - "&7Check out the top players."
     material: EMERALD
     durability: 0
     command: ""
@@ -167,9 +167,9 @@ hotbar-items:
         slot: 0
 
   EVENTS:
-    display-name: "&6Eventos &7(Clique Direito)"
+    display-name: "&bEvents &7(Right-Click)"
     lore:
-      - "&7Participe de eventos empolgantes."
+      - "&7Participate in exciting events."
     material: EYE_OF_ENDER
     durability: 0
     command: ""
@@ -192,9 +192,9 @@ hotbar-items:
         slot: 0
 
   SETTINGS:
-    display-name: "&6Configurações &7(Clique Direito)"
+    display-name: "&bSettings &7(Right-Click)"
     lore:
-      - "&7Ajuste suas preferências pessoais."
+      - "&7Adjust your personal preferences."
     material: SKULL_ITEM
     durability: 0
     command: ""
@@ -217,9 +217,9 @@ hotbar-items:
         slot: 0
 
   DUO_UNRANKED_QUEUE:
-    display-name: "&6Fila Duo Unranked &7(Clique Direito)"
+    display-name: "&bDuo Unranked Queue &7(Right-Click)"
     lore:
-      - "&7Entre na fila para partidas duo unranked."
+      - "&7Join the queue for duo unranked matches."
     material: IRON_SWORD
     durability: 0
     command: ""
@@ -242,9 +242,9 @@ hotbar-items:
         slot: 0
 
   START_PARTY_EVENT:
-    display-name: "&6Iniciar Evento de Party &7(Clique Direito)"
+    display-name: "&bStart Party Event &7(Right-Click)"
     lore:
-      - "&7Inicie um evento de party."
+      - "&7Launch a party event."
     material: IRON_AXE
     durability: 0
     command: ""
@@ -267,9 +267,9 @@ hotbar-items:
         slot: 0
 
   FIGHT_OTHER_PARTY:
-    display-name: "&6Lutar contra outra Party &7(Clique Direito)"
+    display-name: "&bFight Other Party &7(Right-Click)"
     lore:
-      - "&7Desafie outra party para uma luta."
+      - "&7Challenge another party to a fight."
     material: DIAMOND_AXE
     durability: 0
     command: ""
@@ -292,9 +292,9 @@ hotbar-items:
         slot: 0
 
   PARTY_INFO:
-    display-name: "&6Informações da Party &7(Clique Direito)"
+    display-name: "&bParty Information &7(Right-Click)"
     lore:
-      - "&7Veja detalhes da sua party."
+      - "&7View details of your party."
     material: PAPER
     durability: 0
     command: "party info"
@@ -317,9 +317,9 @@ hotbar-items:
         slot: 0
 
   PARTY_LEAVE:
-    display-name: "&cSair da Party &7(Clique Direito)"
+    display-name: "&cLeave Party &7(Right-Click)"
     lore:
-      - "&7Saia da sua party atual."
+      - "&7Leave your current party."
     material: REDSTONE
     durability: 0
     command: "party leave"
@@ -342,9 +342,9 @@ hotbar-items:
         slot: 0
 
   TIPS:
-    display-name: "&6Dica do Dia &7(Clique Direito)"
+    display-name: "&bTip of the Day &7(Right-Click)"
     lore:
-      - "&7Receba uma dica útil do dia."
+      - "&7Receive a useful tip of the day."
     material: PAPER
     durability: 0
     command: "tip"
@@ -367,9 +367,9 @@ hotbar-items:
         slot: 0
 
   LEAVE_QUEUE:
-    display-name: "&cSair da Fila &7(Clique Direito)"
+    display-name: "&cLeave Queue &7(Right-Click)"
     lore:
-      - "&7Saia da fila atual."
+      - "&7Leave the current queue."
     material: REDSTONE
     durability: 0
     command: "leavequeue"
@@ -392,9 +392,9 @@ hotbar-items:
         slot: 0
 
   SPECTATOR_TELEPORTER:
-    display-name: "&6Teleporte &7(Clique Direito)"
+    display-name: "&bTeleport &7(Right-Click)"
     lore:
-      - "&7Teleporte-se para vários locais."
+      - "&7Teleport to various locations."
     material: COMPASS
     durability: 0
     command: ""
@@ -417,9 +417,9 @@ hotbar-items:
         slot: 0
 
   STOP_SPECTATING:
-    display-name: "&cParar de assistir &7(Clique Direito)"
+    display-name: "&cStop Spectating &7(Right-Click)"
     lore:
-      - "&7Pare de assistir à partida atual."
+      - "&7Stop watching the current match."
     material: REDSTONE
     durability: 0
     command: "leavespectator"
@@ -442,9 +442,9 @@ hotbar-items:
         slot: 0
 
   TOURNAMENT_LEAVE:
-    display-name: "&cSair do Torneio &7(Clique Direito)"
+    display-name: "&cLeave Tournament &7(Right-Click)"
     lore:
-      - "&7Saia do torneio atual."
+      - "&7Leave the current tournament."
     material: REDSTONE
     durability: 0
     command: "tournament leave"
@@ -467,9 +467,9 @@ hotbar-items:
         slot: 8
 
   TOURNAMENT_INFO:
-    display-name: "&6Informações do Torneio &7(Clique Direito)"
+    display-name: "&bTournament Information &7(Right-Click)"
     lore:
-      - "&7Veja informações do torneio."
+      - "&7View tournament details."
     material: PAPER
     durability: 0
     command: "tournament info"

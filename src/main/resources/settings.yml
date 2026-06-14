@@ -1,5 +1,5 @@
 plugin:
-  # Define se o Kaos Practice deve atualizar automaticamente ao iniciar o servidor, quando houver nova versão.
+  # Define se o Alley Practice deve atualizar automaticamente ao iniciar o servidor, quando houver nova versão.
   auto-update: false
 
 arena-management:
@@ -13,25 +13,25 @@ crafting-operations:
   blocked-items: [ ]
 
 commands:
-  anti-syntax-message: '&cVocê não pode executar {argument}.'
+  anti-syntax-message: '&cYou cannot execute {argument}.'
   # Este comando é executado sempre que um jogador compra um item cosmético no menu da loja in-game.
   grant-cosmetic-permission: permission set {player} {permission}
 
 configuration:
   arena-default-display-name:
     # Ao criar uma arena, estes são os valores padrão que serão aplicados.
-    ffa: '&6{arena-name}'
-    shared: '&6{arena-name}'
-    standalone: '&6{arena-name}'
+    ffa: '&b{arena-name}'
+    shared: '&b{arena-name}'
+    standalone: '&b{arena-name}'
   default-kit-values:
     # Ao criar um kit, estes são os valores padrão que serão aplicados.
     description: ''
-    disclaimer: '&7Aviso do kit {kit-name}.'
-    display-name: '&6{kit-name}'
-    menu-title: '&6&l{kit-name}'
+    disclaimer: '&7Kit notice for {kit-name}.'
+    display-name: '&b{kit-name}'
+    menu-title: '&b&l{kit-name}'
 
 explosive:
-  # Define se você quer usar as mecânicas de explosivos nativas do Kaos (Fireball e TNT instantânea).
+  # Define se você quer usar as mecânicas de explosivos nativas do Alley (Fireball e TNT instantânea).
   enabled: true
   values:
     fireball:
@@ -83,7 +83,7 @@ server:
       format: '&7[{nivel}&7]&r {prefix}{rank-color}{name-color}{player}{suffix}{tag}{separator}{message}'
       separator: '&7: &f'
     tag-appearance:
-      format: ' {tag-color}{tag-prefix}'
+      format: '{tag-color}{tag-prefix}'
     party:
       format: '§7[§6Party§7] {tag_prefix}{nick} §8» §f{message}'
   essentials:
