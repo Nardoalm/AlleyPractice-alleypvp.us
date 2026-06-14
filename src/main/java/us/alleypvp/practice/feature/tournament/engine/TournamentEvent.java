@@ -1,6 +1,6 @@
 package us.alleypvp.practice.feature.tournament.engine;
 
-import dev.revere.alley.feature.match.Match;
+import us.alleypvp.practice.feature.match.Match;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.entity.Player;

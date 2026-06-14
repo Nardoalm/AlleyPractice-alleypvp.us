@@ -1,7 +1,7 @@
 package us.alleypvp.practice.feature.tournament.broadcast;
 
-import dev.revere.alley.feature.tournament.model.Tournament;
-import dev.revere.alley.feature.tournament.model.TournamentParticipant;
+import us.alleypvp.practice.feature.tournament.model.Tournament;
+import us.alleypvp.practice.feature.tournament.model.TournamentParticipant;
 import lombok.Getter;
 
 /**

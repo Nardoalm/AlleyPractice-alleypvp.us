@@ -1,28 +1,28 @@
 package us.alleypvp.practice.feature.tournament.execution.internal;
 
-import dev.revere.alley.AlleyPlugin;
-import dev.revere.alley.bootstrap.annotation.Service;
-import dev.revere.alley.common.text.CC;
-import dev.revere.alley.feature.tournament.broadcast.BroadcastEvent;
-import dev.revere.alley.feature.tournament.broadcast.TournamentBroadcaster;
-import dev.revere.alley.feature.tournament.broadcast.TournamentPlacements;
-import dev.revere.alley.feature.tournament.engine.TournamentEvent;
-import dev.revere.alley.feature.tournament.execution.ExecutionResult;
-import dev.revere.alley.feature.tournament.execution.TournamentExecutionStrategy;
-import dev.revere.alley.feature.tournament.formation.TournamentTeamFormationService;
-import dev.revere.alley.feature.tournament.internal.helpers.TournamentMessageBuilder;
-import dev.revere.alley.feature.tournament.match.MatchOrchestrationResult;
-import dev.revere.alley.feature.tournament.match.MatchOrchestrator;
-import dev.revere.alley.feature.tournament.model.Tournament;
-import dev.revere.alley.feature.tournament.model.TournamentParticipant;
-import dev.revere.alley.feature.tournament.model.TournamentState;
-import dev.revere.alley.feature.tournament.participant.ParticipantRegistry;
-import dev.revere.alley.feature.tournament.participant.ParticipantStatus;
-import dev.revere.alley.feature.tournament.player.PlayerTournamentStateService;
-import dev.revere.alley.feature.tournament.state.TournamentStateManager;
-import dev.revere.alley.feature.tournament.task.TournamentCountdownService;
-import dev.revere.alley.feature.tournament.task.TournamentRoundStartTask;
-import dev.revere.alley.feature.tournament.task.TournamentStartTask;
+import us.alleypvp.practice.AlleyPractice;
+import us.alleypvp.practice.bootstrap.annotation.Service;
+import us.alleypvp.practice.common.text.CC;
+import us.alleypvp.practice.feature.tournament.broadcast.BroadcastEvent;
+import us.alleypvp.practice.feature.tournament.broadcast.TournamentBroadcaster;
+import us.alleypvp.practice.feature.tournament.broadcast.TournamentPlacements;
+import us.alleypvp.practice.feature.tournament.engine.TournamentEvent;
+import us.alleypvp.practice.feature.tournament.execution.ExecutionResult;
+import us.alleypvp.practice.feature.tournament.execution.TournamentExecutionStrategy;
+import us.alleypvp.practice.feature.tournament.formation.TournamentTeamFormationService;
+import us.alleypvp.practice.feature.tournament.internal.helpers.TournamentMessageBuilder;
+import us.alleypvp.practice.feature.tournament.match.MatchOrchestrationResult;
+import us.alleypvp.practice.feature.tournament.match.MatchOrchestrator;
+import us.alleypvp.practice.feature.tournament.model.Tournament;
+import us.alleypvp.practice.feature.tournament.model.TournamentParticipant;
+import us.alleypvp.practice.feature.tournament.model.TournamentState;
+import us.alleypvp.practice.feature.tournament.participant.ParticipantRegistry;
+import us.alleypvp.practice.feature.tournament.participant.ParticipantStatus;
+import us.alleypvp.practice.feature.tournament.player.PlayerTournamentStateService;
+import us.alleypvp.practice.feature.tournament.state.TournamentStateManager;
+import us.alleypvp.practice.feature.tournament.task.TournamentCountdownService;
+import us.alleypvp.practice.feature.tournament.task.TournamentRoundStartTask;
+import us.alleypvp.practice.feature.tournament.task.TournamentStartTask;
 import org.bukkit.Bukkit;
 
 import java.util.ArrayList;
@@ -246,11 +246,11 @@ public class StandardExecutionStrategy implements TournamentExecutionStrategy {
         }
 
         TournamentStartTask startTask = new TournamentStartTask(starting);
-        AlleyPlugin.getInstance()
+        AlleyPractice.getInstance()
                 .getService(TournamentCountdownService.class)
                 .setStartTask(startTask);
 
-        starting.setStartingTask(Bukkit.getScheduler().runTaskTimer(AlleyPlugin.getInstance(), startTask, 0L, 20L));
+        starting.setStartingTask(Bukkit.getScheduler().runTaskTimer(AlleyPractice.getInstance(), startTask, 0L, 20L));
 
         return ExecutionResult.transitionState(starting, "Tournament starting");
     }
@@ -301,12 +301,12 @@ public class StandardExecutionStrategy implements TournamentExecutionStrategy {
         intermission.setCurrentRound(intermission.getCurrentRound() + 1);
 
         TournamentRoundStartTask roundTask = new TournamentRoundStartTask(intermission);
-        AlleyPlugin.getInstance()
+        AlleyPractice.getInstance()
                 .getService(TournamentCountdownService.class)
                 .setRoundStartTask(roundTask);
 
         intermission.setRoundStartTask(
-                Bukkit.getScheduler().runTaskTimer(AlleyPlugin.getInstance(), roundTask, 0L, 20L)
+                Bukkit.getScheduler().runTaskTimer(AlleyPractice.getInstance(), roundTask, 0L, 20L)
         );
 
         return ExecutionResult.transitionState(intermission, "Round completed");

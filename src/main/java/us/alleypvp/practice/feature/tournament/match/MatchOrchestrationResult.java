@@ -1,7 +1,7 @@
 package us.alleypvp.practice.feature.tournament.match;
 
-import dev.revere.alley.feature.match.Match;
-import dev.revere.alley.feature.tournament.model.TournamentParticipant;
+import us.alleypvp.practice.feature.match.Match;
+import us.alleypvp.practice.feature.tournament.model.TournamentParticipant;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

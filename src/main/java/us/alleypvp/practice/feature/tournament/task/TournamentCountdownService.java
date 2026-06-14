@@ -1,6 +1,6 @@
 package us.alleypvp.practice.feature.tournament.task;
 
-import dev.revere.alley.bootstrap.lifecycle.Service;
+import us.alleypvp.practice.bootstrap.lifecycle.Service;
 
 /**
  * @author Remi

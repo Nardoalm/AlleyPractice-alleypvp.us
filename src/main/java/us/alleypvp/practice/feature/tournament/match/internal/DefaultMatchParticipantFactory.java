@@ -1,11 +1,11 @@
 package us.alleypvp.practice.feature.tournament.match.internal;
 
-import dev.revere.alley.bootstrap.annotation.Service;
-import dev.revere.alley.feature.match.model.GameParticipant;
-import dev.revere.alley.feature.match.model.TeamGameParticipant;
-import dev.revere.alley.feature.match.model.internal.MatchGamePlayer;
-import dev.revere.alley.feature.tournament.match.MatchParticipantFactory;
-import dev.revere.alley.feature.tournament.model.TournamentParticipant;
+import us.alleypvp.practice.bootstrap.annotation.Service;
+import us.alleypvp.practice.feature.match.model.GameParticipant;
+import us.alleypvp.practice.feature.match.model.TeamGameParticipant;
+import us.alleypvp.practice.feature.match.model.internal.MatchGamePlayer;
+import us.alleypvp.practice.feature.tournament.match.MatchParticipantFactory;
+import us.alleypvp.practice.feature.tournament.model.TournamentParticipant;
 import org.bukkit.entity.Player;
 
 import java.util.List;

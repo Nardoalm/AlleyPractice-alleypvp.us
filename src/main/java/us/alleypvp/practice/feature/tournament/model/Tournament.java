@@ -1,7 +1,7 @@
 package us.alleypvp.practice.feature.tournament.model;
 
-import dev.revere.alley.feature.kit.Kit;
-import dev.revere.alley.feature.match.Match;
+import us.alleypvp.practice.feature.kit.Kit;
+import us.alleypvp.practice.feature.match.Match;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.entity.Player;

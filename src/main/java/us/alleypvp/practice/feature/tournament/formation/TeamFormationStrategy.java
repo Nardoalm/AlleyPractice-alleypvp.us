@@ -1,6 +1,6 @@
 package us.alleypvp.practice.feature.tournament.formation;
 
-import dev.revere.alley.feature.tournament.model.TournamentParticipant;
+import us.alleypvp.practice.feature.tournament.model.TournamentParticipant;
 
 import java.util.List;
 

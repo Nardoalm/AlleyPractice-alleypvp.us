@@ -1,9 +1,9 @@
 package us.alleypvp.practice.feature.tournament.task.internal;
 
-import dev.revere.alley.bootstrap.annotation.Service;
-import dev.revere.alley.feature.tournament.task.TournamentCountdownService;
-import dev.revere.alley.feature.tournament.task.TournamentRoundStartTask;
-import dev.revere.alley.feature.tournament.task.TournamentStartTask;
+import us.alleypvp.practice.bootstrap.annotation.Service;
+import us.alleypvp.practice.feature.tournament.task.TournamentCountdownService;
+import us.alleypvp.practice.feature.tournament.task.TournamentRoundStartTask;
+import us.alleypvp.practice.feature.tournament.task.TournamentStartTask;
 import lombok.Getter;
 import lombok.Setter;
 

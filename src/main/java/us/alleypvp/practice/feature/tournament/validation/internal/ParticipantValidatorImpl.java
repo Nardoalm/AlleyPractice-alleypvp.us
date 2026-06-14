@@ -1,15 +1,15 @@
 package us.alleypvp.practice.feature.tournament.validation.internal;
 
-import dev.revere.alley.AlleyPlugin;
-import dev.revere.alley.bootstrap.annotation.Service;
-import dev.revere.alley.common.text.CC;
-import dev.revere.alley.feature.party.Party;
-import dev.revere.alley.feature.party.PartyService;
-import dev.revere.alley.feature.tournament.TournamentService;
-import dev.revere.alley.feature.tournament.model.Tournament;
-import dev.revere.alley.feature.tournament.model.TournamentParticipant;
-import dev.revere.alley.feature.tournament.model.TournamentState;
-import dev.revere.alley.feature.tournament.validation.ParticipantValidator;
+import us.alleypvp.practice.AlleyPractice;
+import us.alleypvp.practice.bootstrap.annotation.Service;
+import us.alleypvp.practice.common.text.CC;
+import us.alleypvp.practice.feature.party.Party;
+import us.alleypvp.practice.feature.party.PartyService;
+import us.alleypvp.practice.feature.tournament.TournamentService;
+import us.alleypvp.practice.feature.tournament.model.Tournament;
+import us.alleypvp.practice.feature.tournament.model.TournamentParticipant;
+import us.alleypvp.practice.feature.tournament.model.TournamentState;
+import us.alleypvp.practice.feature.tournament.validation.ParticipantValidator;
 import org.bukkit.entity.Player;
 
 /**
@@ -22,7 +22,7 @@ public class ParticipantValidatorImpl implements ParticipantValidator {
     private final PartyService partyService;
 
     public ParticipantValidatorImpl() {
-        this.partyService = AlleyPlugin.getInstance().getService(PartyService.class);
+        this.partyService = AlleyPractice.getInstance().getService(PartyService.class);
     }
 
     @Override
@@ -32,7 +32,7 @@ public class ParticipantValidatorImpl implements ParticipantValidator {
             return false;
         }
 
-        TournamentService tournamentService = AlleyPlugin.getInstance().getService(TournamentService.class);
+        TournamentService tournamentService = AlleyPractice.getInstance().getService(TournamentService.class);
         if (tournamentService.getPlayerTournament(player) != null) {
             player.sendMessage(CC.translate("&cYou are already in a tournament."));
             return false;

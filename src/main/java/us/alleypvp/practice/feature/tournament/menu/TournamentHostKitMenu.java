@@ -1,14 +1,14 @@
 package us.alleypvp.practice.feature.tournament.menu;
 
-import dev.revere.alley.AlleyPlugin;
-import dev.revere.alley.common.item.ItemBuilder;
-import dev.revere.alley.common.text.CC;
-import dev.revere.alley.feature.kit.Kit;
-import dev.revere.alley.feature.kit.KitService;
-import dev.revere.alley.feature.tournament.TournamentService;
-import dev.revere.alley.feature.tournament.model.TournamentType;
-import dev.revere.alley.library.menu.Button;
-import dev.revere.alley.library.menu.pagination.PaginatedMenu;
+import us.alleypvp.practice.AlleyPractice;
+import us.alleypvp.practice.common.item.ItemBuilder;
+import us.alleypvp.practice.common.text.CC;
+import us.alleypvp.practice.feature.kit.Kit;
+import us.alleypvp.practice.feature.kit.KitService;
+import us.alleypvp.practice.feature.tournament.TournamentService;
+import us.alleypvp.practice.feature.tournament.model.TournamentType;
+import us.alleypvp.practice.library.menu.Button;
+import us.alleypvp.practice.library.menu.pagination.PaginatedMenu;
 import lombok.AllArgsConstructor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -40,7 +40,7 @@ public class TournamentHostKitMenu extends PaginatedMenu {
     @Override
     public Map<Integer, Button> getAllPagesButtons(Player player) {
         Map<Integer, Button> buttons = new HashMap<>();
-        KitService kitService = AlleyPlugin.getInstance().getService(KitService.class);
+        KitService kitService = AlleyPractice.getInstance().getService(KitService.class);
 
         int slot = 0;
         for (Kit kit : kitService.getKits()) {
@@ -99,7 +99,7 @@ public class TournamentHostKitMenu extends PaginatedMenu {
         public void clicked(Player player, ClickType clickType) {
             if (clickType.isLeftClick()) {
                 player.closeInventory();
-                TournamentService tournamentService = AlleyPlugin.getInstance().getService(TournamentService.class);
+                TournamentService tournamentService = AlleyPractice.getInstance().getService(TournamentService.class);
                 tournamentService.hostTournament(player, type, kit);
                 playSuccess(player);
             }

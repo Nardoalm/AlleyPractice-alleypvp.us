@@ -1,10 +1,10 @@
 package us.alleypvp.practice.feature.tournament.task;
 
-import dev.revere.alley.AlleyPlugin;
-import dev.revere.alley.common.text.CC;
-import dev.revere.alley.feature.tournament.engine.TournamentEngine;
-import dev.revere.alley.feature.tournament.engine.TournamentEvent;
-import dev.revere.alley.feature.tournament.model.Tournament;
+import us.alleypvp.practice.AlleyPractice;
+import us.alleypvp.practice.common.text.CC;
+import us.alleypvp.practice.feature.tournament.engine.TournamentEngine;
+import us.alleypvp.practice.feature.tournament.engine.TournamentEvent;
+import us.alleypvp.practice.feature.tournament.model.Tournament;
 import lombok.Getter;
 import org.bukkit.Sound;
 
@@ -22,9 +22,9 @@ public class TournamentRoundStartTask implements Runnable {
 
     public TournamentRoundStartTask(Tournament tournament) {
         this.tournament = tournament;
-        this.engine = AlleyPlugin.getInstance().getService(TournamentEngine.class);
+        this.engine = AlleyPractice.getInstance().getService(TournamentEngine.class);
         this.countdowns =
-                AlleyPlugin.getInstance().getService(TournamentCountdownService.class);
+                AlleyPractice.getInstance().getService(TournamentCountdownService.class);
     }
 
     @Override

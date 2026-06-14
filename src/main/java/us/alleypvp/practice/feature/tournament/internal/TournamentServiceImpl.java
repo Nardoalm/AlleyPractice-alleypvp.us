@@ -1,27 +1,27 @@
 package us.alleypvp.practice.feature.tournament.internal;
 
-import dev.revere.alley.AlleyPlugin;
-import dev.revere.alley.bootstrap.annotation.Service;
-import dev.revere.alley.core.profile.Profile;
-import dev.revere.alley.core.profile.ProfileService;
-import dev.revere.alley.feature.cooldown.Cooldown;
-import dev.revere.alley.feature.cooldown.CooldownService;
-import dev.revere.alley.feature.cooldown.CooldownType;
-import dev.revere.alley.feature.kit.Kit;
-import dev.revere.alley.feature.match.Match;
-import dev.revere.alley.feature.tournament.TournamentService;
-import dev.revere.alley.feature.tournament.broadcast.BroadcastEvent;
-import dev.revere.alley.feature.tournament.broadcast.TournamentBroadcaster;
-import dev.revere.alley.feature.tournament.engine.TournamentConfiguration;
-import dev.revere.alley.feature.tournament.engine.TournamentEngine;
-import dev.revere.alley.feature.tournament.engine.TournamentEvent;
-import dev.revere.alley.feature.tournament.model.Tournament;
-import dev.revere.alley.feature.tournament.model.TournamentState;
-import dev.revere.alley.feature.tournament.model.TournamentType;
-import dev.revere.alley.feature.tournament.participant.ParticipantRegistry;
-import dev.revere.alley.feature.tournament.task.TournamentBroadcastTask;
-import dev.revere.alley.feature.tournament.task.TournamentCountdownService;
-import dev.revere.alley.feature.tournament.validation.TournamentValidationService;
+import us.alleypvp.practice.AlleyPractice;
+import us.alleypvp.practice.bootstrap.annotation.Service;
+import us.alleypvp.practice.core.profile.Profile;
+import us.alleypvp.practice.core.profile.ProfileService;
+import us.alleypvp.practice.feature.cooldown.Cooldown;
+import us.alleypvp.practice.feature.cooldown.CooldownService;
+import us.alleypvp.practice.feature.cooldown.CooldownType;
+import us.alleypvp.practice.feature.kit.Kit;
+import us.alleypvp.practice.feature.match.Match;
+import us.alleypvp.practice.feature.tournament.TournamentService;
+import us.alleypvp.practice.feature.tournament.broadcast.BroadcastEvent;
+import us.alleypvp.practice.feature.tournament.broadcast.TournamentBroadcaster;
+import us.alleypvp.practice.feature.tournament.engine.TournamentConfiguration;
+import us.alleypvp.practice.feature.tournament.engine.TournamentEngine;
+import us.alleypvp.practice.feature.tournament.engine.TournamentEvent;
+import us.alleypvp.practice.feature.tournament.model.Tournament;
+import us.alleypvp.practice.feature.tournament.model.TournamentState;
+import us.alleypvp.practice.feature.tournament.model.TournamentType;
+import us.alleypvp.practice.feature.tournament.participant.ParticipantRegistry;
+import us.alleypvp.practice.feature.tournament.task.TournamentBroadcastTask;
+import us.alleypvp.practice.feature.tournament.task.TournamentCountdownService;
+import us.alleypvp.practice.feature.tournament.validation.TournamentValidationService;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -237,7 +237,7 @@ public class TournamentServiceImpl implements TournamentService {
             tournament.setBroadcastTask(null);
         }
 
-        TournamentCountdownService countdowns = AlleyPlugin.getInstance().getService(TournamentCountdownService.class);
+        TournamentCountdownService countdowns = AlleyPractice.getInstance().getService(TournamentCountdownService.class);
 
         if (countdowns != null) {
             countdowns.clearStartTask();
@@ -264,7 +264,7 @@ public class TournamentServiceImpl implements TournamentService {
         TournamentBroadcastTask task = new TournamentBroadcastTask(tournament);
         tournament.setBroadcastTask(
                 Bukkit.getScheduler()
-                        .runTaskTimer(AlleyPlugin.getInstance(), task, 0L, 300L));
+                        .runTaskTimer(AlleyPractice.getInstance(), task, 0L, 300L));
     }
 
     /**
@@ -277,7 +277,7 @@ public class TournamentServiceImpl implements TournamentService {
         if (tournament.getInactivityTask() != null) {
             tournament.getInactivityTask().cancel();
         }
-        tournament.setInactivityTask(Bukkit.getScheduler().runTaskLater(AlleyPlugin.getInstance(),
+        tournament.setInactivityTask(Bukkit.getScheduler().runTaskLater(AlleyPractice.getInstance(),
                 () -> {
                     engine.processEvent(tournament, new TournamentEvent.AdminCancellation("Inactivity"));
                     clearGlobalHostCooldown();

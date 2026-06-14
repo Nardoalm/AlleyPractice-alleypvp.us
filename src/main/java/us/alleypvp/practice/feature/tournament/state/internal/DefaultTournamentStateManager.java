@@ -1,9 +1,9 @@
 package us.alleypvp.practice.feature.tournament.state.internal;
 
-import dev.revere.alley.bootstrap.annotation.Service;
-import dev.revere.alley.feature.tournament.model.Tournament;
-import dev.revere.alley.feature.tournament.model.TournamentState;
-import dev.revere.alley.feature.tournament.state.TournamentStateManager;
+import us.alleypvp.practice.bootstrap.annotation.Service;
+import us.alleypvp.practice.feature.tournament.model.Tournament;
+import us.alleypvp.practice.feature.tournament.model.TournamentState;
+import us.alleypvp.practice.feature.tournament.state.TournamentStateManager;
 
 import java.util.EnumMap;
 import java.util.EnumSet;

@@ -1,10 +1,10 @@
 package us.alleypvp.practice.feature.tournament.menu;
 
-import dev.revere.alley.common.item.ItemBuilder;
-import dev.revere.alley.common.text.CC;
-import dev.revere.alley.feature.tournament.model.TournamentType;
-import dev.revere.alley.library.menu.Button;
-import dev.revere.alley.library.menu.Menu;
+import us.alleypvp.practice.common.item.ItemBuilder;
+import us.alleypvp.practice.common.text.CC;
+import us.alleypvp.practice.feature.tournament.model.TournamentType;
+import us.alleypvp.practice.library.menu.Button;
+import us.alleypvp.practice.library.menu.Menu;
 import lombok.AllArgsConstructor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

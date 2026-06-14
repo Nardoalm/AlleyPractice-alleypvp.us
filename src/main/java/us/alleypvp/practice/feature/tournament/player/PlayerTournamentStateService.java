@@ -1,7 +1,7 @@
 package us.alleypvp.practice.feature.tournament.player;
 
-import dev.revere.alley.bootstrap.lifecycle.Service;
-import dev.revere.alley.feature.tournament.model.Tournament;
+import us.alleypvp.practice.bootstrap.lifecycle.Service;
+import us.alleypvp.practice.feature.tournament.model.Tournament;
 import org.bukkit.entity.Player;
 
 /**

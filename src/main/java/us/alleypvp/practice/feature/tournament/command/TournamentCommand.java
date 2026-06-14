@@ -1,21 +1,21 @@
 package us.alleypvp.practice.feature.tournament.command;
 
-import dev.revere.alley.AlleyPlugin;
-import dev.revere.alley.common.text.CC;
-import dev.revere.alley.common.text.ClickableUtil;
-import dev.revere.alley.common.tournament.RoundStageUtil;
-import dev.revere.alley.feature.kit.Kit;
-import dev.revere.alley.feature.kit.KitService;
-import dev.revere.alley.feature.match.Match;
-import dev.revere.alley.feature.match.model.GameParticipant;
-import dev.revere.alley.feature.match.model.internal.MatchGamePlayer;
-import dev.revere.alley.feature.tournament.TournamentService;
-import dev.revere.alley.feature.tournament.model.Tournament;
-import dev.revere.alley.feature.tournament.model.TournamentParticipant;
-import dev.revere.alley.feature.tournament.model.TournamentState;
-import dev.revere.alley.library.command.BaseCommand;
-import dev.revere.alley.library.command.CommandArgs;
-import dev.revere.alley.library.command.annotation.CommandData;
+import us.alleypvp.practice.AlleyPractice;
+import us.alleypvp.practice.common.text.CC;
+import us.alleypvp.practice.common.text.ClickableUtil;
+import us.alleypvp.practice.common.tournament.RoundStageUtil;
+import us.alleypvp.practice.feature.kit.Kit;
+import us.alleypvp.practice.feature.kit.KitService;
+import us.alleypvp.practice.feature.match.Match;
+import us.alleypvp.practice.feature.match.model.GameParticipant;
+import us.alleypvp.practice.feature.match.model.internal.MatchGamePlayer;
+import us.alleypvp.practice.feature.tournament.TournamentService;
+import us.alleypvp.practice.feature.tournament.model.Tournament;
+import us.alleypvp.practice.feature.tournament.model.TournamentParticipant;
+import us.alleypvp.practice.feature.tournament.model.TournamentState;
+import us.alleypvp.practice.library.command.BaseCommand;
+import us.alleypvp.practice.library.command.CommandArgs;
+import us.alleypvp.practice.library.command.annotation.CommandData;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -33,8 +33,8 @@ import java.util.stream.Collectors;
  * @date 6/08/2025
  */
 public class TournamentCommand extends BaseCommand {
-    private final TournamentService tournamentService = AlleyPlugin.getInstance().getService(TournamentService.class);
-    private final KitService kitService = AlleyPlugin.getInstance().getService(KitService.class);
+    private final TournamentService tournamentService = AlleyPractice.getInstance().getService(TournamentService.class);
+    private final KitService kitService = AlleyPractice.getInstance().getService(KitService.class);
 
     private final String[][] pages = {
             {

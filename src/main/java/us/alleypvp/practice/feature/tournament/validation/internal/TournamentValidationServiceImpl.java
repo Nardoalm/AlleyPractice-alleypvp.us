@@ -1,15 +1,15 @@
 package us.alleypvp.practice.feature.tournament.validation.internal;
 
-import dev.revere.alley.AlleyPlugin;
-import dev.revere.alley.bootstrap.annotation.Service;
-import dev.revere.alley.common.text.CC;
-import dev.revere.alley.feature.cooldown.Cooldown;
-import dev.revere.alley.feature.cooldown.CooldownService;
-import dev.revere.alley.feature.cooldown.CooldownType;
-import dev.revere.alley.feature.tournament.TournamentService;
-import dev.revere.alley.feature.tournament.model.Tournament;
-import dev.revere.alley.feature.tournament.model.TournamentState;
-import dev.revere.alley.feature.tournament.validation.TournamentValidationService;
+import us.alleypvp.practice.AlleyPractice;
+import us.alleypvp.practice.bootstrap.annotation.Service;
+import us.alleypvp.practice.common.text.CC;
+import us.alleypvp.practice.feature.cooldown.Cooldown;
+import us.alleypvp.practice.feature.cooldown.CooldownService;
+import us.alleypvp.practice.feature.cooldown.CooldownType;
+import us.alleypvp.practice.feature.tournament.TournamentService;
+import us.alleypvp.practice.feature.tournament.model.Tournament;
+import us.alleypvp.practice.feature.tournament.model.TournamentState;
+import us.alleypvp.practice.feature.tournament.validation.TournamentValidationService;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
@@ -31,7 +31,7 @@ public class TournamentValidationServiceImpl implements TournamentValidationServ
 
     @Override
     public boolean canPlayerHostTournament(Player player) {
-        TournamentService tournamentService = AlleyPlugin.getInstance().getService(TournamentService.class);
+        TournamentService tournamentService = AlleyPractice.getInstance().getService(TournamentService.class);
         if (tournamentService.getPlayerTournament(player) != null) {
             player.sendMessage(CC.translate("&cYou cannot host a tournament while participating in one."));
             return false;

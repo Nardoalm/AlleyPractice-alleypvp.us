@@ -1,10 +1,10 @@
 package us.alleypvp.practice.feature.tournament.internal.helpers;
 
-import dev.revere.alley.AlleyPlugin;
-import dev.revere.alley.common.text.CC;
-import dev.revere.alley.core.profile.Profile;
-import dev.revere.alley.core.profile.ProfileService;
-import dev.revere.alley.feature.tournament.model.TournamentParticipant;
+import us.alleypvp.practice.AlleyPractice;
+import us.alleypvp.practice.common.text.CC;
+import us.alleypvp.practice.core.profile.Profile;
+import us.alleypvp.practice.core.profile.ProfileService;
+import us.alleypvp.practice.feature.tournament.model.TournamentParticipant;
 import lombok.experimental.UtilityClass;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -57,7 +57,7 @@ public class TournamentMessageBuilder {
      * @return A formatted string of team member names with profile colors.
      */
     public String getNaturalTeamNameListWithProfileColors(TournamentParticipant participant) {
-        ProfileService profileService = AlleyPlugin.getInstance().getService(ProfileService.class);
+        ProfileService profileService = AlleyPractice.getInstance().getService(ProfileService.class);
 
         List<String> coloredNames = participant.getMemberUuids().stream()
                 .map(uuid -> {

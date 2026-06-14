@@ -1,15 +1,15 @@
 package us.alleypvp.practice.feature.tournament.participant.internal;
 
-import dev.revere.alley.AlleyPlugin;
-import dev.revere.alley.bootstrap.annotation.Service;
-import dev.revere.alley.feature.party.Party;
-import dev.revere.alley.feature.party.PartyService;
-import dev.revere.alley.feature.tournament.model.Tournament;
-import dev.revere.alley.feature.tournament.model.TournamentParticipant;
-import dev.revere.alley.feature.tournament.participant.ParticipantRegistry;
-import dev.revere.alley.feature.tournament.participant.ParticipantStatus;
-import dev.revere.alley.feature.tournament.player.PlayerTournamentStateService;
-import dev.revere.alley.feature.tournament.validation.ParticipantValidator;
+import us.alleypvp.practice.AlleyPractice;
+import us.alleypvp.practice.bootstrap.annotation.Service;
+import us.alleypvp.practice.feature.party.Party;
+import us.alleypvp.practice.feature.party.PartyService;
+import us.alleypvp.practice.feature.tournament.model.Tournament;
+import us.alleypvp.practice.feature.tournament.model.TournamentParticipant;
+import us.alleypvp.practice.feature.tournament.participant.ParticipantRegistry;
+import us.alleypvp.practice.feature.tournament.participant.ParticipantStatus;
+import us.alleypvp.practice.feature.tournament.player.PlayerTournamentStateService;
+import us.alleypvp.practice.feature.tournament.validation.ParticipantValidator;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -31,7 +31,7 @@ public class ParticipantRegistryImpl implements ParticipantRegistry {
     private final PlayerTournamentStateService playerState;
 
     public ParticipantRegistryImpl(ParticipantValidator validator, PlayerTournamentStateService playerState) {
-        this.partyService = AlleyPlugin.getInstance().getService(PartyService.class);
+        this.partyService = AlleyPractice.getInstance().getService(PartyService.class);
         this.validator = validator;
         this.playerState = playerState;
     }

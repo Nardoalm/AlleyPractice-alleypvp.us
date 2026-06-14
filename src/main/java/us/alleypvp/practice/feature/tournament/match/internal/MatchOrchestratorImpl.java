@@ -1,26 +1,26 @@
 package us.alleypvp.practice.feature.tournament.match.internal;
 
-import dev.revere.alley.AlleyPlugin;
-import dev.revere.alley.bootstrap.annotation.Service;
-import dev.revere.alley.common.text.CC;
-import dev.revere.alley.feature.arena.Arena;
-import dev.revere.alley.feature.arena.ArenaService;
-import dev.revere.alley.feature.match.Match;
-import dev.revere.alley.feature.match.MatchService;
-import dev.revere.alley.feature.match.internal.types.DefaultMatch;
-import dev.revere.alley.feature.match.model.GameParticipant;
-import dev.revere.alley.feature.match.model.internal.MatchGamePlayer;
-import dev.revere.alley.feature.tournament.broadcast.BroadcastEvent;
-import dev.revere.alley.feature.tournament.broadcast.TournamentBroadcaster;
-import dev.revere.alley.feature.tournament.match.MatchOrchestrationResult;
-import dev.revere.alley.feature.tournament.match.MatchOrchestrator;
-import dev.revere.alley.feature.tournament.match.MatchParticipantFactory;
-import dev.revere.alley.feature.tournament.match.MatchProcessingResult;
-import dev.revere.alley.feature.tournament.model.Tournament;
-import dev.revere.alley.feature.tournament.model.TournamentParticipant;
-import dev.revere.alley.feature.tournament.participant.ParticipantRegistry;
-import dev.revere.alley.feature.tournament.participant.ParticipantStatus;
-import dev.revere.alley.feature.tournament.player.PlayerTournamentStateService;
+import us.alleypvp.practice.AlleyPractice;
+import us.alleypvp.practice.bootstrap.annotation.Service;
+import us.alleypvp.practice.common.text.CC;
+import us.alleypvp.practice.feature.arena.Arena;
+import us.alleypvp.practice.feature.arena.ArenaService;
+import us.alleypvp.practice.feature.match.Match;
+import us.alleypvp.practice.feature.match.MatchService;
+import us.alleypvp.practice.feature.match.internal.types.DefaultMatch;
+import us.alleypvp.practice.feature.match.model.GameParticipant;
+import us.alleypvp.practice.feature.match.model.internal.MatchGamePlayer;
+import us.alleypvp.practice.feature.tournament.broadcast.BroadcastEvent;
+import us.alleypvp.practice.feature.tournament.broadcast.TournamentBroadcaster;
+import us.alleypvp.practice.feature.tournament.match.MatchOrchestrationResult;
+import us.alleypvp.practice.feature.tournament.match.MatchOrchestrator;
+import us.alleypvp.practice.feature.tournament.match.MatchParticipantFactory;
+import us.alleypvp.practice.feature.tournament.match.MatchProcessingResult;
+import us.alleypvp.practice.feature.tournament.model.Tournament;
+import us.alleypvp.practice.feature.tournament.model.TournamentParticipant;
+import us.alleypvp.practice.feature.tournament.participant.ParticipantRegistry;
+import us.alleypvp.practice.feature.tournament.participant.ParticipantStatus;
+import us.alleypvp.practice.feature.tournament.player.PlayerTournamentStateService;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -48,8 +48,8 @@ public class MatchOrchestratorImpl implements MatchOrchestrator {
             ParticipantRegistry participantRegistry,
             TournamentBroadcaster broadcaster,
             PlayerTournamentStateService playerState) {
-        this.matchService = AlleyPlugin.getInstance().getService(MatchService.class);
-        this.arenaService = AlleyPlugin.getInstance().getService(ArenaService.class);
+        this.matchService = AlleyPractice.getInstance().getService(MatchService.class);
+        this.arenaService = AlleyPractice.getInstance().getService(ArenaService.class);
         this.participantFactory = participantFactory;
         this.participantRegistry = participantRegistry;
         this.broadcaster = broadcaster;

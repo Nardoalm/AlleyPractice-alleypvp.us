@@ -1,9 +1,9 @@
 package us.alleypvp.practice.feature.tournament.match;
 
-import dev.revere.alley.bootstrap.lifecycle.Service;
-import dev.revere.alley.feature.match.model.GameParticipant;
-import dev.revere.alley.feature.match.model.internal.MatchGamePlayer;
-import dev.revere.alley.feature.tournament.model.TournamentParticipant;
+import us.alleypvp.practice.bootstrap.lifecycle.Service;
+import us.alleypvp.practice.feature.match.model.GameParticipant;
+import us.alleypvp.practice.feature.match.model.internal.MatchGamePlayer;
+import us.alleypvp.practice.feature.tournament.model.TournamentParticipant;
 
 /**
  * @author Remi

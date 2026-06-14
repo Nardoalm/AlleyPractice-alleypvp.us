@@ -1,7 +1,7 @@
 package us.alleypvp.practice.feature.tournament.formation;
 
-import dev.revere.alley.feature.tournament.formation.strategy.BalancedTeamFormationStrategy;
-import dev.revere.alley.feature.tournament.formation.strategy.LegacyTeamFormationStrategy;
+import us.alleypvp.practice.feature.tournament.formation.strategy.BalancedTeamFormationStrategy;
+import us.alleypvp.practice.feature.tournament.formation.strategy.LegacyTeamFormationStrategy;
 
 public class TeamFormationStrategyFactory {
     public enum StrategyType {

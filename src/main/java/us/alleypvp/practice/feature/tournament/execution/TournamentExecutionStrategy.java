@@ -1,8 +1,8 @@
 package us.alleypvp.practice.feature.tournament.execution;
 
-import dev.revere.alley.bootstrap.lifecycle.Service;
-import dev.revere.alley.feature.tournament.engine.TournamentEvent;
-import dev.revere.alley.feature.tournament.model.Tournament;
+import us.alleypvp.practice.bootstrap.lifecycle.Service;
+import us.alleypvp.practice.feature.tournament.engine.TournamentEvent;
+import us.alleypvp.practice.feature.tournament.model.Tournament;
 
 /**
  * @author Remi

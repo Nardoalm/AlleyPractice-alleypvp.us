@@ -1,7 +1,7 @@
 package us.alleypvp.practice.feature.tournament.formation.strategy;
 
-import dev.revere.alley.feature.tournament.formation.TeamFormationStrategy;
-import dev.revere.alley.feature.tournament.model.TournamentParticipant;
+import us.alleypvp.practice.feature.tournament.formation.TeamFormationStrategy;
+import us.alleypvp.practice.feature.tournament.model.TournamentParticipant;
 
 import java.util.ArrayList;
 import java.util.Comparator;

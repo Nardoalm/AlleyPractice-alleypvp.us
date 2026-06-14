@@ -1,9 +1,9 @@
 package us.alleypvp.practice.feature.tournament.formation.distribution.internal;
 
-import dev.revere.alley.feature.tournament.formation.distribution.DistributionOptimizer;
-import dev.revere.alley.feature.tournament.formation.distribution.TeamDistributionCalculator;
-import dev.revere.alley.feature.tournament.formation.model.TeamDistribution;
-import dev.revere.alley.feature.tournament.model.TournamentParticipant;
+import us.alleypvp.practice.feature.tournament.formation.distribution.DistributionOptimizer;
+import us.alleypvp.practice.feature.tournament.formation.distribution.TeamDistributionCalculator;
+import us.alleypvp.practice.feature.tournament.formation.model.TeamDistribution;
+import us.alleypvp.practice.feature.tournament.model.TournamentParticipant;
 
 import java.util.ArrayList;
 import java.util.List;

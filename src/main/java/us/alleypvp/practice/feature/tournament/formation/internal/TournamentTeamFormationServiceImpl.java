@@ -1,11 +1,11 @@
 package us.alleypvp.practice.feature.tournament.formation.internal;
 
-import dev.revere.alley.bootstrap.annotation.Service;
-import dev.revere.alley.feature.tournament.formation.TeamFormationStrategy;
-import dev.revere.alley.feature.tournament.formation.TeamFormationStrategyFactory;
-import dev.revere.alley.feature.tournament.formation.TournamentTeamFormationService;
-import dev.revere.alley.feature.tournament.model.Tournament;
-import dev.revere.alley.feature.tournament.model.TournamentParticipant;
+import us.alleypvp.practice.bootstrap.annotation.Service;
+import us.alleypvp.practice.feature.tournament.formation.TeamFormationStrategy;
+import us.alleypvp.practice.feature.tournament.formation.TeamFormationStrategyFactory;
+import us.alleypvp.practice.feature.tournament.formation.TournamentTeamFormationService;
+import us.alleypvp.practice.feature.tournament.model.Tournament;
+import us.alleypvp.practice.feature.tournament.model.TournamentParticipant;
 
 import java.util.ArrayList;
 import java.util.List;

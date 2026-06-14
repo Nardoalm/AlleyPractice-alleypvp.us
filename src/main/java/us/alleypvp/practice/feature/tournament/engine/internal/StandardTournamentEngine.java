@@ -1,11 +1,11 @@
 package us.alleypvp.practice.feature.tournament.engine.internal;
 
-import dev.revere.alley.bootstrap.annotation.Service;
-import dev.revere.alley.feature.tournament.engine.TournamentConfiguration;
-import dev.revere.alley.feature.tournament.engine.TournamentEngine;
-import dev.revere.alley.feature.tournament.engine.TournamentEvent;
-import dev.revere.alley.feature.tournament.execution.TournamentExecutionStrategy;
-import dev.revere.alley.feature.tournament.model.Tournament;
+import us.alleypvp.practice.bootstrap.annotation.Service;
+import us.alleypvp.practice.feature.tournament.engine.TournamentConfiguration;
+import us.alleypvp.practice.feature.tournament.engine.TournamentEngine;
+import us.alleypvp.practice.feature.tournament.engine.TournamentEvent;
+import us.alleypvp.practice.feature.tournament.execution.TournamentExecutionStrategy;
+import us.alleypvp.practice.feature.tournament.model.Tournament;
 
 /**
  * @author Remi
