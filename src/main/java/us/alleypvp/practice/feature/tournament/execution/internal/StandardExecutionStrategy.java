@@ -113,7 +113,7 @@ public class StandardExecutionStrategy implements TournamentExecutionStrategy {
         int currentPlayers = tournament.getWaitingPool().stream()
                 .mapToInt(TournamentParticipant::getSize)
                 .sum();
-        int currentTeams = currentPlayers / teamSize;
+        int currentTeams = tournament.getWaitingPool().size();
 
         boolean meetsMinTeams = currentTeams >= tournament.getMinTeams();
         boolean isFull = currentPlayers >= maxPlayers;

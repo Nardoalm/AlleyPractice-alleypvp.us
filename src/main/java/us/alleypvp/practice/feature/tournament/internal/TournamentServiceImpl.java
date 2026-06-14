@@ -120,6 +120,9 @@ public class TournamentServiceImpl implements TournamentService {
     @Override
     public void joinTournament(Player player, Tournament tournament) {
         engine.processEvent(tournament, new TournamentEvent.PlayerJoinRequest(player));
+        if (tournament.getState() == TournamentState.WAITING) {
+            scheduleInactivityTask(tournament);
+        }
         pruneIfEnded(tournament);
     }
 
@@ -134,6 +137,9 @@ public class TournamentServiceImpl implements TournamentService {
         if (tournament == null) return;
 
         engine.processEvent(tournament, new TournamentEvent.PlayerDeparture(player));
+        if (tournament.getState() == TournamentState.WAITING) {
+            scheduleInactivityTask(tournament);
+        }
         pruneIfEnded(tournament);
     }
 
@@ -268,6 +274,9 @@ public class TournamentServiceImpl implements TournamentService {
      * @param tournament The tournament to monitor for inactivity.
      */
     private void scheduleInactivityTask(Tournament tournament) {
+        if (tournament.getInactivityTask() != null) {
+            tournament.getInactivityTask().cancel();
+        }
         tournament.setInactivityTask(Bukkit.getScheduler().runTaskLater(AlleyPlugin.getInstance(),
                 () -> {
                     engine.processEvent(tournament, new TournamentEvent.AdminCancellation("Inactivity"));
