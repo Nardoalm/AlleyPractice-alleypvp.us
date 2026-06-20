@@ -47,7 +47,7 @@ public class PartyListener implements Listener {
                 || party.getMembers().isEmpty()
                 || !party.getMembers().contains(player.getUniqueId())) {
             profile.getProfileData().getSettingData().setChatChannel(ChatChannel.GLOBAL.toString());
-            player.sendMessage(CC.translate("&eSeu chat voltou para o global, pois você não está em uma party ativa."));
+            player.sendMessage(CC.translate("&eYour chat channel has been reverted to global because you are not in an active party."));
             event.setCancelled(true);
             return;
         }

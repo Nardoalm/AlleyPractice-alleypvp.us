@@ -119,7 +119,7 @@ public class MatchPearlListener implements Listener {
         }
 
         if (profile.getMatch().getState() != MatchState.RUNNING) {
-            cancelPearlAndRefund(player, event, "&cVocê não pode usar ender pearls agora.");
+            cancelPearlAndRefund(player, event, "&cYou cannot use ender pearls right now.");
             return false;
         }
 
@@ -138,7 +138,7 @@ public class MatchPearlListener implements Listener {
 
         if (optionalCooldown.isPresent() && optionalCooldown.get().isActive()) {
             cancelPearlAndRefund(player, event,
-                    "&cVocê precisa esperar " + optionalCooldown.get().remainingTime() + " segundos antes de usar outra ender pearl.");
+                    "&cYou must wait " + optionalCooldown.get().remainingTime() + " seconds before using another ender pearl.");
             return true;
         }
 

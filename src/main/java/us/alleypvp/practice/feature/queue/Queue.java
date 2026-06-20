@@ -90,42 +90,42 @@ public class Queue {
             for (UUID memberId : party.getMembers()) {
                 Profile memberProfile = profileService.getProfile(memberId);
                 if (memberProfile != null && memberProfile.getQueueProfile() != null) {
-                    player.sendMessage(CC.translate("&cAlguém da sua party já está em uma fila."));
+                    player.sendMessage(CC.translate("&cSomeone in your party is already in a queue."));
                     return;
                 }
             }
         } else if (this.profiles.stream().anyMatch(queueProfile -> queueProfile.getUuid().equals(uuid))) {
-            player.sendMessage(CC.translate("&cVocê já está em uma fila."));
+            player.sendMessage(CC.translate("&cYou are already in a queue."));
             return;
         }
 
         if (!this.isDuos() && party != null) {
-            player.sendMessage(CC.translate("&cVocê não pode entrar na fila 1v1 enquanto estiver em uma party."));
+            player.sendMessage(CC.translate("&cYou cannot join a 1v1 queue while in a party."));
             return;
         }
 
 
         if (this.isDuos()) {
             if (party != null && !party.isLeader(player)) {
-                player.sendMessage(CC.translate("&cApenas o líder da party pode entrar na fila."));
+                player.sendMessage(CC.translate("&cOnly the party leader can join the queue."));
                 return;
             }
 
             if (party != null && party.getMembers().size() > 2) {
-                player.sendMessage(CC.translate("&cO tamanho da sua party é grande demais para filas duo."));
+                player.sendMessage(CC.translate("&cYour party size is too large for duos queues."));
                 return;
             }
 
             if (party != null && party.getMembers().size() == 2) {
                 for (UUID memberId : party.getMembers()) {
                     if (Bukkit.getPlayer(memberId) == null || !Bukkit.getPlayer(memberId).isOnline()) {
-                        player.sendMessage(CC.translate("&cTodos os membros da party precisam estar online para entrar na fila."));
+                        player.sendMessage(CC.translate("&cAll party members must be online to join the queue."));
                         return;
                     }
 
                     Profile memberProfile = profileService.getProfile(memberId);
                     if (memberProfile.getState() != ProfileState.LOBBY) {
-                        player.sendMessage(CC.translate("&cTodos os membros da party precisam estar no lobby para entrar na fila."));
+                        player.sendMessage(CC.translate("&cAll party members must be in the lobby to join the queue."));
                         return;
                     }
                 }
@@ -136,7 +136,7 @@ public class Queue {
                 }
 
                 if (party == null || party.getMembers().size() == 1) {
-                    player.sendMessage(CC.translate("&eVocê entrou na fila de duos solo. Um companheiro aleatório será selecionado."));
+                    player.sendMessage(CC.translate("&eYou joined the duos queue solo. A random teammate will be selected."));
                 }
             }
         } else {
@@ -165,7 +165,7 @@ public class Queue {
                             Player memberPlayer = Bukkit.getPlayer(memberId);
                             if (memberPlayer != null) {
                                 hotbarService.applyHotbarItems(memberPlayer);
-                                memberPlayer.sendMessage(CC.translate("&aO líder da sua party entrou na fila &b" + queueProfile.getQueue().getKit().getDisplayName() + "&a."));
+                                memberPlayer.sendMessage(CC.translate("&aYour party leader has joined the &b" + queueProfile.getQueue().getKit().getDisplayName() + " &aqueue."));
                             }
                         }
                     }
@@ -220,7 +220,7 @@ public class Queue {
                     Player memberPlayer = Bukkit.getPlayer(memberId);
                     if (memberPlayer != null) {
                         hotbarService.applyHotbarItems(memberPlayer);
-                        memberPlayer.sendMessage(CC.translate("&cSua party saiu da fila."));
+                        memberPlayer.sendMessage(CC.translate("&cYour party has left the queue."));
                     }
                 }
             }

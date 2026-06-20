@@ -456,7 +456,7 @@ public class DefaultMatch extends Match {
             String progressLine;
 
             if (progress.isMaxRank() && progress.getCurrentWins() >= progress.getWinsForNextTier()) {
-                progressLine = " &b&l● &fPARABÉNS! Você alcançou o rank máximo!";
+                progressLine = " &b&l● &fCONGRATULATIONS! You have reached the maximum rank!";
             } else {
                 progressLine = String.format(" &b&l● &fUnlock &b%s &fwith %d more %s!",
                         progress.getNextRankName(),

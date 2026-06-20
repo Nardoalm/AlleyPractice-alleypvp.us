@@ -64,14 +64,12 @@ public class SwmArenaManager implements ArenaCopyManager {
 
             if (!swmEnabledInConfig) {
                 this.enabled = false;
-                Logger.info("Gerenciamento de arenas via SWM está desativado no settings.yml.");
                 return;
             }
 
             Plugin possiblePlugin = Bukkit.getPluginManager().getPlugin(SWM_PLUGIN_NAME);
             if (!(possiblePlugin instanceof SlimePlugin)) {
                 this.enabled = false;
-                Logger.error("SlimeWorldManager não encontrado ou incompatível. Retornando para gerenciamento por schematic.");
                 return;
             }
 
@@ -79,23 +77,14 @@ public class SwmArenaManager implements ArenaCopyManager {
             this.slimeLoader = this.slimePlugin.getLoader(loaderId);
             if (this.slimeLoader == null) {
                 this.enabled = false;
-                Logger.error("Loader SWM '" + loaderId + "' não encontrado. Retornando para gerenciamento por schematic.");
                 return;
             }
 
             this.enabled = true;
-            Logger.info("Gerenciamento de arenas via SWM ativado com loader: " + loaderId);
             this.cleanupCorruptedTemplates();
             this.cleanupStaleImportWorlds();
         } catch (Throwable throwable) {
             this.enabled = false;
-
-            if (throwable instanceof Exception) {
-                Logger.logException("Falha ao inicializar integração SWM. Retornando para gerenciamento por schematic.", (Exception) throwable);
-            } else {
-                System.err.println("ERRO FATAL (NÃO-EXCEÇÃO) NO SWM:");
-                throwable.printStackTrace();
-            }
         }
     }
 
@@ -126,7 +115,6 @@ public class SwmArenaManager implements ArenaCopyManager {
 
             if (this.slimeLoader.worldExists(copyWorldName)) {
                 this.slimeLoader.deleteWorld(copyWorldName);
-                Logger.info("Limpando registro antigo de mundo: " + copyWorldName);
             }
 
             SlimeWorld copiedWorld = templateWorld.clone(copyWorldName, this.slimeLoader);
@@ -137,7 +125,6 @@ public class SwmArenaManager implements ArenaCopyManager {
 
             World bukkitWorld = Bukkit.getWorld(copyWorldName);
             if (bukkitWorld == null) {
-                Logger.error("Falha ao gerar o mundo SWM '" + copyWorldName + "'.");
                 return null;
             }
 
@@ -146,13 +133,17 @@ public class SwmArenaManager implements ArenaCopyManager {
 
             if (copiedArena.getPos1() != null) {
                 copiedArena.setHeightLimit(copiedArena.getPos1().getBlockY() + copiedArena.getHeightLimit());
+                copiedArena.getPos1().getChunk().load(true);
+            }
+
+            if (copiedArena.getPos2() != null) {
+                copiedArena.getPos2().getChunk().load(true);
             }
 
             copiedArena.setManagedBySlimeWorldManager(true);
             return copiedArena;
 
         } catch (Exception exception) {
-            Logger.logException("Falha ao criar cópia SWM da arena " + originalArena.getName(), exception);
             return null;
         }
     }
@@ -180,7 +171,6 @@ public class SwmArenaManager implements ArenaCopyManager {
                 this.slimeLoader.deleteWorld(worldName);
             }
         } catch (Exception exception) {
-            Logger.logException("Falha ao remover cópia SWM do loader: " + worldName, exception);
         }
 
         File worldFolder = new File(Bukkit.getWorldContainer(), worldName);
@@ -225,7 +215,6 @@ public class SwmArenaManager implements ArenaCopyManager {
         World tempImportWorld = creator.createWorld();
 
         if (tempImportWorld == null) {
-            Logger.error("Falha ao criar mundo temporário de importação para o template SWM " + templateName);
             scheduleCleanupWorld(importWorldName, worldFolder, IMPORT_CLEANUP_RETRIES);
             return;
         }
@@ -239,9 +228,7 @@ public class SwmArenaManager implements ArenaCopyManager {
 
         try {
             this.slimePlugin.importWorld(worldFolder, templateName, this.slimeLoader);
-            Logger.info("Template SWM importado: " + templateName);
         } catch (Throwable throwable) {
-            Logger.error("A importação via SWM da arena '" + originalArena.getName() + "' falhou por dados corrompidos de chunks.");
             File swmFolder = new File(this.plugin.getDataFolder(), "storage/swm_import_" + sanitizeName(originalArena.getName()));
             if (swmFolder.exists()) {
                 FileUtil.deleteWorldFolder(swmFolder);
@@ -287,11 +274,9 @@ public class SwmArenaManager implements ArenaCopyManager {
 
     private SlimePropertyMap createTemplatePropertyMap() {
         SlimePropertyMap propertyMap = new SlimePropertyMap();
-
         propertyMap.setInt(SlimeProperties.SPAWN_X, 0);
         propertyMap.setInt(SlimeProperties.SPAWN_Y, 100);
         propertyMap.setInt(SlimeProperties.SPAWN_Z, 0);
-
         return propertyMap;
     }
 
@@ -327,12 +312,10 @@ public class SwmArenaManager implements ArenaCopyManager {
             for (String worldName : this.slimeLoader.listWorlds()) {
                 if (worldName.startsWith(TEMPLATE_PREFIX)) {
                     this.slimeLoader.deleteWorld(worldName);
-                    Logger.info("Template antigo removido para reimportação limpa: " + worldName);
                 }
             }
             this.templateWorldCache.clear();
         } catch (Exception e) {
-            Logger.logException("Erro ao limpar templates antigos", e);
         }
     }
 

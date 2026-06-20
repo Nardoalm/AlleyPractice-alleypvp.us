@@ -1,5 +1,6 @@
 package us.alleypvp.practice.feature.tournament.formation.distribution.internal;
 
+
 import us.alleypvp.practice.feature.tournament.formation.distribution.DistributionOptimizer;
 
 import java.util.ArrayList;

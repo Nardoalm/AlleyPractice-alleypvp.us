@@ -25,11 +25,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.UUID;
 
-/**
- * @author Emmy
- * @project Alley
- * @date 20/05/2024 - 19:14
- */
 @Setter
 @Getter
 public class StandAloneArena extends Arena {
@@ -47,13 +42,6 @@ public class StandAloneArena extends Arena {
     private int heightLimit;
     private int voidLevel;
 
-    /**
-     * Constructor for the StandAloneArena class.
-     *
-     * @param name    The name of the arena.
-     * @param minimum The minimum location of the arena.
-     * @param maximum The maximum location of the arena.
-     */
     public StandAloneArena(String name, Location minimum, Location maximum, Location team1Portal, Location team2Portal, int heightLimit, int voidLevel) {
         super(name, minimum, maximum);
 
@@ -250,6 +238,7 @@ public class StandAloneArena extends Arena {
             int offsetZ = this.getPos1().getBlockZ() - actualMinZ;
             Location location = targetLocation.clone().add(offsetX + middleOffset, offsetY, offsetZ + middleOffset);
             location.setYaw(getPos1().getYaw());
+            location.setPitch(getPos1().getPitch());
             copiedArena.setPos1(location);
         }
 
@@ -259,6 +248,7 @@ public class StandAloneArena extends Arena {
             int offsetZ = this.getPos2().getBlockZ() - actualMinZ;
             Location location = targetLocation.clone().add(offsetX + middleOffset, offsetY, offsetZ + middleOffset);
             location.setYaw(getPos2().getYaw());
+            location.setPitch(getPos2().getPitch());
             copiedArena.setPos2(location);
         }
 
@@ -272,26 +262,11 @@ public class StandAloneArena extends Arena {
         return copiedArena;
     }
 
-    /**
-     * Check if the player is in the enemy portal.
-     *
-     * @param match          The match.
-     * @param playerLocation The location of the player.
-     * @param playerTeam     The team of the player.
-     * @return Whether the player is in the enemy portal or not.
-     */
     public boolean isEnemyPortal(RoundsMatch match, Location playerLocation, GameParticipant<MatchGamePlayer> playerTeam) {
         Location enemyPortal = playerTeam == match.getParticipantA() ? this.team2Portal : this.team1Portal;
         return playerLocation.distance(enemyPortal) < this.portalRadius;
     }
 
-    /**
-     * Check if the block is an enemy bed.
-     *
-     * @param block              The block to check.
-     * @param breakerParticipant The player who is breaking the bed.
-     * @return Whether the block is an enemy bed or not.
-     */
     public boolean isEnemyBed(Block block, GameParticipant<MatchGamePlayer> breakerParticipant) {
         Location bedLocation = block.getLocation();
 

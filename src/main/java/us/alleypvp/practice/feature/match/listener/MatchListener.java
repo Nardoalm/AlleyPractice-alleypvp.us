@@ -1,5 +1,6 @@
 package us.alleypvp.practice.feature.match.listener;
 
+import org.bukkit.event.entity.PlayerDeathEvent;
 import us.alleypvp.practice.AlleyPractice;
 import us.alleypvp.practice.common.ListenerUtil;
 import us.alleypvp.practice.common.PlayerDisplayUtil;
@@ -32,20 +33,15 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.*;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.block.Action;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-/**
- * @author Remi
- * @project Alley
- * @date 5/21/2024
- */
 public class MatchListener implements Listener {
+
     @EventHandler
     private void onTeleport(PlayerTeleportEvent event) {
         Player player = event.getPlayer();
@@ -55,7 +51,7 @@ public class MatchListener implements Listener {
             if (event.getCause() == PlayerTeleportEvent.TeleportCause.ENDER_PEARL) {
                 if (MatchUtility.isBeyondBounds(event.getTo(), profile)) {
                     event.setCancelled(true);
-                    player.sendMessage(CC.translate("&cVocê não pode sair da arena."));
+                    player.sendMessage(CC.translate("&cYou cannot leave the arena."));
                 }
             }
         }
@@ -68,6 +64,9 @@ public class MatchListener implements Listener {
         Profile profile = profileService.getProfile(player.getUniqueId());
         Match match = profile.getMatch();
         if (match == null) return;
+
+        MatchGamePlayer gamePlayer = match.getGamePlayer(player);
+        if (gamePlayer == null || gamePlayer.isDead()) return;
 
         Kit matchKit = match.getKit();
         if (profile.getState() == ProfileState.PLAYING && profile.getMatch().getState() == MatchState.RUNNING) {
@@ -86,7 +85,7 @@ public class MatchListener implements Listener {
                     if (match.getArena().getType() != ArenaType.STANDALONE) return;
                     if (profile.getState() != ProfileState.PLAYING) return;
 
-                    if (match.getKit().isSettingEnabled(KitSettingStickFight.class)) {
+                    if (match instanceof RoundsMatch && match.getKit().isSettingEnabled(KitSettingStickFight.class)) {
                         RoundsMatch roundsMatch = (RoundsMatch) match;
                         roundsMatch.handleDeath(player, EntityDamageEvent.DamageCause.VOID);
                         return;
@@ -115,24 +114,8 @@ public class MatchListener implements Listener {
                 }
             }
         }
-
-        if (profile.getState() == ProfileState.PLAYING) {
-            if (profile.getMatch() == null) {
-                return;
-            }
-
-            if (MatchUtility.isBeyondBounds(event.getTo(), profile)) {
-                // player.teleport(event.getFrom());
-                // player.sendMessage(CC.translate("&cVocê não pode sair da arena."));
-            }
-        }
     }
 
-    /**
-     * Resolves a safe void level threshold for standalone arenas.
-     * If the configured void-level is above the match spawn Y, players could die just by moving.
-     * In that case we clamp it to be at least two blocks below the lowest spawn.
-     */
     private int resolveEffectiveVoidLevel(StandAloneArena arena, Match match) {
         int configuredVoidLevel = arena.getVoidLevel();
         Location pos1 = match.getArena().getPos1();
@@ -154,7 +137,7 @@ public class MatchListener implements Listener {
         return Math.min(configuredVoidLevel, maxReasonableVoidLevel);
     }
 
-    @EventHandler
+    @org.bukkit.event.EventHandler
     private void onPlayerRespawn(PlayerRespawnEvent event) {
         Player player = event.getPlayer();
         if (player == null) return;
@@ -175,16 +158,21 @@ public class MatchListener implements Listener {
 
         ProfileService profileService = AlleyPractice.getInstance().getService(ProfileService.class);
         Profile profile = profileService.getProfile(player.getUniqueId());
-        if (profile.getState() != ProfileState.PLAYING) return;
+        if (profile.getState() != ProfileState.PLAYING || profile.getMatch() == null) return;
 
         event.setDeathMessage(null);
 
-        profile.getMatch().handleDeathItemDrop(player, event);
+        AlleyPractice.getInstance().getServer().getScheduler().runTask(AlleyPractice.getInstance(), () -> {
+            if (!player.isOnline()) {
+                return;
+            }
 
-        AlleyPractice.getInstance().getServer().getScheduler().runTaskLater(AlleyPractice.getInstance(), () -> player.spigot().respawn(), 1L);
+            profile.getMatch().handleDeathItemDrop(player, event);
+            player.spigot().respawn();
 
-        EntityDamageEvent.DamageCause cause = player.getLastDamageCause() != null ? player.getLastDamageCause().getCause() : EntityDamageEvent.DamageCause.CUSTOM;
-        profile.getMatch().handleDeath(player, cause);
+            EntityDamageEvent.DamageCause cause = player.getLastDamageCause() != null ? player.getLastDamageCause().getCause() : EntityDamageEvent.DamageCause.CUSTOM;
+            profile.getMatch().handleDeath(player, cause);
+        });
     }
 
     @EventHandler
@@ -303,8 +291,9 @@ public class MatchListener implements Listener {
         ProfileService profileService = AlleyPractice.getInstance().getService(ProfileService.class);
         Profile profile = profileService.getProfile(player.getUniqueId());
         if (profile.getState() == ProfileState.PLAYING) {
+            if (!(profile.getMatch() instanceof RoundsMatch)) return;
             RoundsMatch match = (RoundsMatch) profile.getMatch();
-            if (match.getKit().isSettingEnabled(KitSettingRounds.class) /*|| profile.getMatch().getKit().isSettingEnabled(KitSettingBridgesImpl.class)*/) {
+            if (match.getKit().isSettingEnabled(KitSettingRounds.class)) {
                 if (player.getGameMode() == GameMode.CREATIVE) return;
                 if (player.getGameMode() == GameMode.SPECTATOR) return;
                 if (player.getLocation().getBlock().getType() == Material.ENDER_PORTAL || player.getLocation().getBlock().getType() == Material.ENDER_PORTAL_FRAME) {
@@ -314,7 +303,7 @@ public class MatchListener implements Listener {
                             : match.getParticipantB();
 
                     if (!arena.isEnemyPortal(match, player.getLocation(), playerTeam)) {
-                        player.sendMessage(CC.translate("&cVocê não pode entrar no seu próprio portal!"));
+                        player.sendMessage(CC.translate("&cYou cannot enter your own portal!"));
 
                         if (match.getKit().isSettingEnabled(KitSettingRespawnTimer.class)) {
                             player.setHealth(0);

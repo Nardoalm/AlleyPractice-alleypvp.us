@@ -22,7 +22,9 @@ public class Hologram {
     public void update(List<String> textLines) {
         while (lines.size() > textLines.size()) {
             ArmorStand removed = lines.remove(lines.size() - 1);
-            removed.remove();
+            if (removed != null) {
+                removed.remove();
+            }
         }
 
         Location currentLoc = location.clone();
@@ -33,26 +35,36 @@ public class Hologram {
 
             if (i < lines.size()) {
                 ArmorStand as = lines.get(i);
-                as.setCustomName(text);
-                as.setCustomNameVisible(!isBlank);
-                as.teleport(currentLoc);
+                if (as != null && as.isValid()) {
+                    as.setCustomName(text);
+                    as.setCustomNameVisible(!isBlank);
+                    as.teleport(currentLoc);
+                } else {
+                    ArmorStand newAs = createArmorStandElement(currentLoc, text, isBlank);
+                    lines.set(i, newAs);
+                }
             } else {
-                ArmorStand as = (ArmorStand) location.getWorld().spawnEntity(currentLoc, EntityType.ARMOR_STAND);
-                as.setVisible(false);
-                as.setGravity(false);
-                as.setCustomName(text);
-                as.setCustomNameVisible(!isBlank);
-                as.setBasePlate(false);
-                as.setSmall(true);
-                as.setArms(false);
+                ArmorStand as = createArmorStandElement(currentLoc, text, isBlank);
                 lines.add(as);
             }
             currentLoc.subtract(0, LINE_SPACING, 0);
         }
     }
 
+    private ArmorStand createArmorStandElement(Location loc, String text, boolean isBlank) {
+        ArmorStand as = (ArmorStand) loc.getWorld().spawnEntity(loc, EntityType.ARMOR_STAND);
+        as.setVisible(false);
+        as.setGravity(false);
+        as.setCustomName(text);
+        as.setCustomNameVisible(!isBlank);
+        as.setBasePlate(false);
+        as.setSmall(true);
+        as.setArms(false);
+        return as;
+    }
+
     public void destroy() {
-        lines.forEach(ArmorStand::remove);
+        lines.stream().filter(java.util.Objects::nonNull).forEach(ArmorStand::remove);
         lines.clear();
     }
 

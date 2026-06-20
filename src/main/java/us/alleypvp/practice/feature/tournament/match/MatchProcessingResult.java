@@ -1,8 +1,8 @@
 package us.alleypvp.practice.feature.tournament.match;
 
-import us.alleypvp.practice.feature.tournament.model.TournamentParticipant;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import us.alleypvp.practice.feature.tournament.model.TournamentParticipant;
 
 /**
  * @author Remi

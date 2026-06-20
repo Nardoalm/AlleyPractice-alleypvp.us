@@ -39,6 +39,6 @@ public class PartyOpenCommand extends BaseCommand {
         }
 
         profile.getParty().setState(PartyState.PUBLIC);
-        player.sendMessage(CC.translate("&aVocê abriu sua party ao público. Agora qualquer um pode entrar."));
+        player.sendMessage(CC.translate("&aYou opened your party to the public. Now anyone can join."));
     }
 }

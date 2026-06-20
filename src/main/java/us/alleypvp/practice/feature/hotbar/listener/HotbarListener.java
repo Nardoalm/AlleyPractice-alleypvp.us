@@ -9,19 +9,17 @@ import us.alleypvp.practice.feature.hotbar.HotbarType;
 import us.alleypvp.practice.core.profile.ProfileService;
 import us.alleypvp.practice.core.profile.Profile;
 import us.alleypvp.practice.common.logger.Logger;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-/**
- * @author Remi
- * @project Alley
- * @date 5/27/2024
- */
 public class HotbarListener implements Listener {
+
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
         Action action = event.getAction();
@@ -65,5 +63,21 @@ public class HotbarListener implements Listener {
         }
 
         event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
+        if (!(event.getRightClicked() instanceof Player)) {
+            return;
+        }
+
+        Player player = event.getPlayer();
+        ItemStack item = player.getItemInHand();
+
+        if (item != null && item.getType() == Material.BLAZE_ROD) {
+            Player clicked = (Player) event.getRightClicked();
+            player.performCommand("duel " + clicked.getName());
+            event.setCancelled(true);
+        }
     }
 }

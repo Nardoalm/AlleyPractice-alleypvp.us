@@ -1,8 +1,9 @@
 package us.alleypvp.practice.feature.tournament.formation.strategy;
 
+
 import us.alleypvp.practice.feature.tournament.formation.TeamFormationStrategy;
-import us.alleypvp.practice.feature.tournament.formation.assembly.internal.PartyAwareTeamAssembler;
 import us.alleypvp.practice.feature.tournament.formation.assembly.TeamAssembler;
+import us.alleypvp.practice.feature.tournament.formation.assembly.internal.PartyAwareTeamAssembler;
 import us.alleypvp.practice.feature.tournament.formation.distribution.TeamDistributionCalculator;
 import us.alleypvp.practice.feature.tournament.formation.distribution.internal.OptimalDistributionCalculator;
 import us.alleypvp.practice.feature.tournament.formation.model.TeamDistribution;

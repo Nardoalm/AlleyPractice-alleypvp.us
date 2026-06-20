@@ -50,9 +50,9 @@ public class CosmeticCategoryButton extends Button {
         lore.add(CC.MENU_BAR);
         lore.add("&7" + cosmeticType.getDescription());
         lore.add("");
-        lore.add(String.format("&b│ &fDesbloqueados: &b%d/%d &7(%d%%)", ownedCount, totalCount, percentage));
+        lore.add(String.format("&b│ &fUnlocked: &b%d/%d &7(%d%%)", ownedCount, totalCount, percentage));
         lore.add("");
-        lore.add("&aClique para visualizar.");
+        lore.add("&aClick to view.");
         lore.add(CC.MENU_BAR);
 
         return new ItemBuilder(this.icon)

@@ -9,134 +9,129 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
-/**
- * @author Emmy
- * @project Alley
- * @since 21/04/2025
- */
 public enum PracticeSettingType {
-    PARTY_MESSAGES(10, "&b&lMensagens da Party", Material.FEATHER,
+    PARTY_MESSAGES(10, "&b&lParty Messages", Material.FEATHER,
             settings -> Arrays.asList(
                     CC.MENU_BAR,
-                    "&7Ver mensagens do chat da party.",
+                    "&7Toggle visibility of party chat messages.",
                     "",
                     LoreHelper.displayEnabled(settings.isPartyMessagesEnabled()),
                     "",
-                    "&aClique para alternar.",
+                    "&aClick to toggle.",
                     CC.MENU_BAR
             )
     ),
 
-    PARTY_INVITES(11, "&b&lConvites de Party", Material.NAME_TAG,
+    PARTY_INVITES(11, "&b&lParty Invites", Material.NAME_TAG,
             settings -> Arrays.asList(
                     CC.MENU_BAR,
-                    "&7Receber convites de party.",
+                    "&7Toggle receiving party invitations.",
                     "",
                     LoreHelper.displayEnabled(settings.isPartyInvitesEnabled()),
                     "",
-                    "&aClique para alternar.",
+                    "&aClick to toggle.",
                     CC.MENU_BAR
             )
     ),
 
-    SIDEBAR_VISIBILITY(12, "&b&lVisibilidade da Sidebar", Material.CARPET, 5,
+    SIDEBAR_VISIBILITY(12, "&b&lSidebar Visibility", Material.CARPET, 5,
             settings -> Arrays.asList(
                     CC.MENU_BAR,
-                    "&7Ver a scoreboard.",
+                    "&7Toggle the scoreboard display.",
                     "",
                     LoreHelper.displayShown(settings.isScoreboardEnabled()),
                     "",
-                    "&aClique para alternar.",
+                    "&aClick to toggle.",
                     CC.MENU_BAR
             )
     ),
 
-    PING_RANGE(19, "&b&lFaixa de Ping", Material.STICK,
+    PING_RANGE(19, "&b&lPing Range", Material.STICK,
             settings -> Arrays.asList(
                     CC.MENU_BAR,
-                    "&7Limita o pareamento pela diferença de ping.",
+                    "&7Limit matchmaking pairs by ping difference.",
                     "",
-                    "&f&l│ &bAtual: &f" + settings.getPingRangeDisplay(),
+                    "&f&l│ &bCurrent: &f" + settings.getPingRangeDisplay(),
                     "",
-                    "&aClique para alterar.",
+                    "&aClick to change.",
                     CC.MENU_BAR
             )
     ),
 
-    WORLD_TIME(13, "&b&lHorário do Mundo", Material.WATCH, settings -> Arrays.asList(
+    WORLD_TIME(13, "&b&lWorld Time", Material.WATCH, settings -> Arrays.asList(
             CC.MENU_BAR,
-            "&7Altere o horário do seu mundo.",
+            "&7Change your personal world time.",
             "",
-            formatTime("Padrão", settings.isDefaultTime(), "&a&l"),
-            formatTime("Dia", settings.isDayTime(), "&e&l"),
-            formatTime("Pôr do Sol", settings.isSunsetTime(), "&b&l"),
-            formatTime("Noite", settings.isNightTime(), "&4&l"),
+            formatTime("Default", settings.isDefaultTime(), "&a&l"),
+            formatTime("Day", settings.isDayTime(), "&e&l"),
+            formatTime("Sunset", settings.isSunsetTime(), "&b&l"),
+            formatTime("Night", settings.isNightTime(), "&4&l"),
             "",
-            "&aClique para alternar.",
+            "&aClick to toggle.",
             CC.MENU_BAR
     )),
 
-    SCOREBOARD_LINES(14, "&b&lLinhas da Scoreboard", Material.STRING,
+    SCOREBOARD_LINES(14, "&b&lScoreboard Lines", Material.STRING,
             settings -> Arrays.asList(
                     CC.MENU_BAR,
-                    "&7Exibir linhas da scoreboard.",
+                    "&7Toggle scoreboard line separators.",
                     "",
                     LoreHelper.displayShown(settings.isShowScoreboardLines()),
                     "",
-                    "&aClique para alternar.",
+                    "&aClick to toggle.",
                     CC.MENU_BAR
             )
     ),
 
-    DUEL_REQUESTS(21, "&b&lPedidos de Duel", Material.DIAMOND_SWORD,
+    DUEL_REQUESTS(21, "&b&lDuel Requests", Material.DIAMOND_SWORD,
             settings -> Arrays.asList(
                     CC.MENU_BAR,
-                    "&7Receber pedidos de duel.",
+                    "&7Toggle receiving duel requests.",
                     "",
                     LoreHelper.displayEnabled(settings.isReceiveDuelRequestsEnabled()),
                     "",
-                    "&aClique para alternar.",
+                    "&aClick to toggle.",
                     CC.MENU_BAR
             )
     ),
-    SERVER_TITLES(20, "&b&lTítulos do Servidor", Material.PAPER,
+    SERVER_TITLES(20, "&b&lServer Titles", Material.PAPER,
             settings -> Arrays.asList(
                     CC.MENU_BAR,
-                    "&7Exibe títulos enviados pelo servidor.",
+                    "&7Toggle screen titles sent by the server.",
                     "",
                     LoreHelper.displayShown(settings.isServerTitles()),
                     "",
-                    "&aClique para alternar.",
+                    "&aClick to toggle.",
                     CC.MENU_BAR
             )
     ),
 
-    MATCH_SETTINGS(16, "&b&lConfigurações de Match", Material.BOOK,
+    MATCH_SETTINGS(16, "&b&lMatch Settings", Material.BOOK,
             settings -> Arrays.asList(
                     CC.MENU_BAR,
-                    "&7Ajuste suas configurações de match.",
+                    "&7Adjust your custom match settings.",
                     "",
-                    "&aClique para visualizar.",
+                    "&aClick to view.",
                     CC.MENU_BAR
             )
     ),
 
-    COSMETICS(25, "&b&lCosméticos", Material.NETHER_STAR,
+    COSMETICS(25, "&b&lCosmetics", Material.NETHER_STAR,
             settings -> Arrays.asList(
                     CC.MENU_BAR,
-                    "&7Personalize seus cosméticos.",
+                    "&7Customize your cosmetic rewards.",
                     "",
-                    "&aClique para visualizar.",
+                    "&aClick to view.",
                     CC.MENU_BAR
             )
     ),
 
-    LOBBY_MUSIC(34, "&b&lMúsica do Lobby", Material.JUKEBOX,
+    LOBBY_MUSIC(34, "&b&lLobby Music", Material.JUKEBOX,
             settings -> Arrays.asList(
                     CC.MENU_BAR,
-                    "&7Personalize sua música do lobby.",
+                    "&7Customize your background lobby music.",
                     "",
-                    "&aClique para visualizar.",
+                    "&aClick to view.",
                     CC.MENU_BAR
             )
     ),
@@ -149,27 +144,10 @@ public enum PracticeSettingType {
     public final int durability;
     public final Function<ProfileSettingData, List<String>> loreProvider;
 
-    /**
-     * Constructor for the EnumPracticeSettingType enum.
-     *
-     * @param slot         The slot of the item in the menu.
-     * @param displayName  The display name of the item.
-     * @param material     The material of the item.
-     * @param loreProvider A function that provides the lore for the item based on ProfileSettingData.
-     */
     PracticeSettingType(int slot, String displayName, Material material, Function<ProfileSettingData, List<String>> loreProvider) {
         this(slot, displayName, material, 0, loreProvider);
     }
 
-    /**
-     * Constructor for the EnumPracticeSettingType enum.
-     *
-     * @param slot         The slot of the item in the menu.
-     * @param displayName  The display name of the item.
-     * @param material     The material of the item.
-     * @param durability   The durability of the item.
-     * @param loreProvider A function that provides the lore for the item based on ProfileSettingData.
-     */
     PracticeSettingType(int slot, String displayName, Material material, int durability, Function<ProfileSettingData, List<String>> loreProvider) {
         this.slot = slot;
         this.displayName = displayName;
@@ -178,14 +156,6 @@ public enum PracticeSettingType {
         this.loreProvider = loreProvider;
     }
 
-    /**
-     * Formats the time string based on the active status.
-     *
-     * @param label       The label to display.
-     * @param active      Whether the time is active or not.
-     * @param activeColor The color for the active state.
-     * @return The formatted time string.
-     */
     private static String formatTime(String label, boolean active, String activeColor) {
         return " &f● " + (active ? activeColor : "&7") + label;
     }

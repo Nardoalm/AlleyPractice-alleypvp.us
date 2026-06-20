@@ -115,7 +115,6 @@ public class LeaderboardServiceImpl implements LeaderboardService {
         }
 
         pipeline.add(new Document("$sort", new Document("value", -1)));
-
         pipeline.add(new Document("$limit", 100));
 
         return pipeline;
@@ -173,14 +172,7 @@ public class LeaderboardServiceImpl implements LeaderboardService {
             return fetchGlobalLeaderboard(profileCollection, type);
         }
 
-        this.refreshOnlinePlayersOptimized(kit, type);
-
-        return this.leaderboardCache.getOrDefault(kit, Collections.emptyList())
-                .stream()
-                .filter(record -> record.getType() == type)
-                .findFirst()
-                .map(LeaderboardRecord::getParticipants)
-                .orElse(Collections.emptyList());
+        return this.refreshOnlinePlayersOptimized(kit, type);
     }
 
     private List<LeaderboardPlayerData> fetchGlobalLeaderboard(MongoCollection<Document> profileCollection, LeaderboardType type) {
@@ -268,22 +260,27 @@ public class LeaderboardServiceImpl implements LeaderboardService {
         return playerDataList;
     }
 
-    private void refreshOnlinePlayersOptimized(Kit kit, LeaderboardType type) {
-        if (kit == null) return;
+    private List<LeaderboardPlayerData> refreshOnlinePlayersOptimized(Kit kit, LeaderboardType type) {
+        if (kit == null) return Collections.emptyList();
 
         List<LeaderboardRecord> records = this.leaderboardCache.get(kit);
-        if (records == null) return;
+        if (records == null) return Collections.emptyList();
 
         LeaderboardRecord record = records.stream()
                 .filter(r -> r.getType() == type)
                 .findFirst()
                 .orElse(null);
 
-        if (record == null) return;
+        if (record == null) return Collections.emptyList();
 
-        List<LeaderboardPlayerData> leaderboard = record.getParticipants();
+        List<LeaderboardPlayerData> cachedLeaderboard = record.getParticipants();
+        List<LeaderboardPlayerData> temporaryLeaderboard = new ArrayList<>();
+
+        for (LeaderboardPlayerData data : cachedLeaderboard) {
+            temporaryLeaderboard.add(new LeaderboardPlayerData(data.getName(), data.getUuid(), data.getKit(), data.getValue()));
+        }
+
         Map<UUID, Integer> onlinePlayerUpdates = new HashMap<>();
-
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
             Profile profile = this.profileService.getProfile(onlinePlayer.getUniqueId());
             if (profile != null) {
@@ -292,27 +289,28 @@ public class LeaderboardServiceImpl implements LeaderboardService {
             }
         }
 
-        for (LeaderboardPlayerData playerData : leaderboard) {
+        for (LeaderboardPlayerData playerData : temporaryLeaderboard) {
             Integer newValue = onlinePlayerUpdates.get(playerData.getUuid());
             if (newValue != null) {
                 playerData.setValue(newValue);
             }
         }
 
-        Set<UUID> leaderboardUuids = leaderboard.stream()
+        Set<UUID> temporaryUuids = temporaryLeaderboard.stream()
                 .map(LeaderboardPlayerData::getUuid)
                 .collect(Collectors.toSet());
 
         for (Map.Entry<UUID, Integer> entry : onlinePlayerUpdates.entrySet()) {
-            if (!leaderboardUuids.contains(entry.getKey())) {
+            if (!temporaryUuids.contains(entry.getKey())) {
                 Player player = Bukkit.getPlayer(entry.getKey());
                 if (player != null) {
-                    leaderboard.add(new LeaderboardPlayerData(player.getName(), entry.getKey(), kit, entry.getValue()));
+                    temporaryLeaderboard.add(new LeaderboardPlayerData(player.getName(), entry.getKey(), kit, entry.getValue()));
                 }
             }
         }
 
-        leaderboard.sort(Comparator.comparingInt(LeaderboardPlayerData::getValue).reversed());
+        temporaryLeaderboard.sort(Comparator.comparingInt(LeaderboardPlayerData::getValue).reversed());
+        return temporaryLeaderboard;
     }
 
     private int getValueForType(Profile profile, Kit kit, LeaderboardType type) {

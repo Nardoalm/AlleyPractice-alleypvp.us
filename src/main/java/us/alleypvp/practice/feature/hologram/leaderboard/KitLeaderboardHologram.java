@@ -50,7 +50,9 @@ public class KitLeaderboardHologram {
                 int limit = Math.min(10, entries.size());
                 for (int i = 0; i < limit; i++) {
                     LeaderboardPlayerData data = entries.get(i);
-                    lines.add(getRankPrefix(i + 1) + " &f" + data.getName() + " &7- &b" + data.getValue());
+                    if (data != null && data.getName() != null) {
+                        lines.add(getRankPrefix(i + 1) + " &f" + data.getName() + " &7- &b" + data.getValue());
+                    }
                 }
             }
         } else if (kit != null) {
@@ -65,7 +67,9 @@ public class KitLeaderboardHologram {
                 int limit = Math.min(10, entries.size());
                 for (int i = 0; i < limit; i++) {
                     LeaderboardPlayerData data = entries.get(i);
-                    lines.add(getRankPrefix(i + 1) + " &f" + data.getName() + " &7- &b" + data.getValue());
+                    if (data != null && data.getName() != null) {
+                        lines.add(getRankPrefix(i + 1) + " &f" + data.getName() + " &7- &b" + data.getValue());
+                    }
                 }
             }
         }

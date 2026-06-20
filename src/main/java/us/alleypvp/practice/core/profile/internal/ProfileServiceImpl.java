@@ -84,18 +84,18 @@ public class ProfileServiceImpl implements ProfileService {
 
         Arrays.asList(
                 "",
-                "&c&lRESET DE ESTATÍSTICAS",
-                "&cAs estatísticas de " + targetPlayer.getName() + " foram resetadas.",
-                "&7Se isso estiver sendo abusado, haverá punição.",
+                "&c&lSTATISTICS RESET",
+                "&cThe statistics for " + targetPlayer.getName() + " have been reset.",
+                "&7Abusing this feature will lead to severe punishment.",
                 ""
         ).forEach(line -> player.sendMessage(CC.translate(line)));
 
         if (targetPlayer.isOnline() && targetPlayer.getPlayer() != null) {
             Arrays.asList(
-                "",
-                    "&c&lRESET DE ESTATÍSTICAS",
-                    "&cSuas estatísticas foram apagadas por atividade suspeita.",
-                    "&7Se você acredita que isso foi injusto, abra um ticket de suporte.",
+                    "",
+                    "&c&lSTATISTICS RESET",
+                    "&cYour statistics have been wiped due to suspicious activity.",
+                    "&7If you believe this was an error, please open a support ticket.",
                     ""
             ).forEach(line -> targetPlayer.getPlayer().sendMessage(CC.translate(line)));
         }
@@ -134,6 +134,6 @@ public class ProfileServiceImpl implements ProfileService {
             profile.save();
         });
 
-        Bukkit.broadcastMessage(CC.translate("&c&lRESET DE LAYOUT: &cO layout do kit " + kit.getName() + " foi resetado para todos os jogadores."));
+        Bukkit.broadcastMessage(CC.translate("&c&lLAYOUT RESET: &cThe layout for the kit " + kit.getName() + " has been reset for all players."));
     }
 }

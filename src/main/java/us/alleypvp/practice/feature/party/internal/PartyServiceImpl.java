@@ -120,7 +120,7 @@ public class PartyServiceImpl implements PartyService {
 
         if (allPartyPlayers.size() < 2) {
             if (party.getLeader() != null) {
-                party.getLeader().sendMessage(CC.translate("&cTodos os membros da party precisam estar online para iniciar o party split."));
+                party.getLeader().sendMessage(CC.translate("&cAll party members must be online to start the party split."));
             }
             return;
         }
@@ -308,12 +308,12 @@ public class PartyServiceImpl implements PartyService {
         }
 
         if (party.getLeader().equals(member)) {
-            leader.sendMessage(CC.translate("&cVocê não pode expulsar o líder da party."));
+            leader.sendMessage(CC.translate("&cYou cannot kick the party leader."));
             return;
         }
 
         if (!party.getMembers().contains(member.getUniqueId())) {
-            leader.sendMessage(CC.translate("&cEsse jogador não está na sua party."));
+            leader.sendMessage(CC.translate("&cThat player is not in your party."));
             return;
         }
 
@@ -345,12 +345,12 @@ public class PartyServiceImpl implements PartyService {
         }
 
         if (party.getLeader().equals(target)) {
-            leader.sendMessage(CC.translate("&cVocê não pode banir o líder da party."));
+            leader.sendMessage(CC.translate("&cYou cannot ban the party leader."));
             return;
         }
 
         if (!party.getMembers().contains(target.getUniqueId())) {
-            leader.sendMessage(CC.translate("&cEsse jogador não está na sua party."));
+            leader.sendMessage(CC.translate("&cThat player is not in your party."));
             return;
         }
 
@@ -383,13 +383,13 @@ public class PartyServiceImpl implements PartyService {
         }
 
         if (!party.getBannedPlayers().contains(target.getUniqueId())) {
-            leader.sendMessage(CC.translate("&cEsse jogador não está banido da sua party."));
+            leader.sendMessage(CC.translate("&cThat player is not banned from your party."));
             return;
         }
 
         party.getBannedPlayers().remove(target.getUniqueId());
-        party.notifyParty(CC.translate("&b" + target.getName() + " &afoi desbanido da party e agora pode entrar novamente."));
-        target.sendMessage(CC.translate("&aVocê foi desbanido da party de &b" + party.getLeader().getName() + "&a."));
+        party.notifyParty(CC.translate("&b" + target.getName() + " &ahas been unbanned from the party and can now rejoin."));
+        target.sendMessage(CC.translate("&aYou have been unbanned from &b" + party.getLeader().getName() + "'s party."));
     }
 
     @Override
@@ -401,7 +401,7 @@ public class PartyServiceImpl implements PartyService {
         }
         Party party = this.getPartyByLeader(leader);
         if (party == null) {
-            player.sendMessage(CC.translate("&cEssa party não existe."));
+            player.sendMessage(CC.translate("&cThis party does not exist."));
             return;
         }
 
@@ -412,7 +412,7 @@ public class PartyServiceImpl implements PartyService {
         }
 
         if (party.isLeader(player)) {
-            player.sendMessage(CC.translate("&cVocê não pode entrar na sua própria party."));
+            player.sendMessage(CC.translate("&cYou cannot join your own party."));
             return;
         }
 
@@ -422,7 +422,7 @@ public class PartyServiceImpl implements PartyService {
         }
 
         if (party.isFull()) {
-            player.sendMessage(CC.translate("&cEssa party atingiu o limite de &b" + party.getMaxSize() + " &cmembros."));
+            player.sendMessage(CC.translate("&cThis party has reached the limit of &b" + party.getMaxSize() + " &cmembers."));
             return;
         }
 
@@ -438,7 +438,7 @@ public class PartyServiceImpl implements PartyService {
         QueueProfile queueProfile = leaderProfile.getQueueProfile();
 
         if (queueProfile != null) {
-            player.sendMessage(CC.translate("&cVocê não pode entrar na party, pois ela já está em uma fila."));
+            player.sendMessage(CC.translate("&cYou cannot join the party because it is already in a queue."));
             return;
         }
 
@@ -541,7 +541,7 @@ public class PartyServiceImpl implements PartyService {
                 && profile.getProfileData().getSettingData() != null
                 && ChatChannel.PARTY.toString().equalsIgnoreCase(profile.getProfileData().getSettingData().getChatChannel())) {
             profile.getProfileData().getSettingData().setChatChannel(ChatChannel.GLOBAL.toString());
-            player.sendMessage(CC.translate("&eVocê saiu da party, então seu chat voltou para o global."));
+            player.sendMessage(CC.translate("&eYou left the party, so your chat channel has been reverted to global."));
         }
 
         if (profile.getMatch() != null) {
@@ -560,7 +560,7 @@ public class PartyServiceImpl implements PartyService {
         }
 
         if (party.isFull()) {
-            sender.sendMessage(CC.translate("&cSua party já atingiu o limite de &b" + party.getMaxSize() + " &cmembros."));
+            sender.sendMessage(CC.translate("&cYour party has already reached the limit of &b" + party.getMaxSize() + " &cmembers."));
             return false;
         }
 
@@ -710,7 +710,7 @@ public class PartyServiceImpl implements PartyService {
         queue.removePlayer(associatedQueueProfile);
 
         if (leaderWillBecomeSolo && leader.isOnline()) {
-            leader.sendMessage(CC.translate("&eUm membro da party saiu/desconectou. Sua fila de duos foi cancelada."));
+            leader.sendMessage(CC.translate("&eA party member left/disconnected. Your duos queue has been cancelled."));
         }
     }
 }

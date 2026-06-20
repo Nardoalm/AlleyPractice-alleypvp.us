@@ -81,7 +81,7 @@ public class ServerServiceImpl implements ServerService {
     public void endAllMatches(Player issuer) {
         List<Match> matches = new ArrayList<>(this.matchService.getMatches());
         if (matches.isEmpty()) {
-            if (issuer != null) issuer.sendMessage(CC.translate("&cNão foi possível encontrar partidas para encerrar."));
+            if (issuer != null) issuer.sendMessage(CC.translate("&cCould not find any matches to end."));
             return;
         }
 
@@ -103,7 +103,7 @@ public class ServerServiceImpl implements ServerService {
     public void disbandAllParties(Player issuer) {
         List<Party> parties = new ArrayList<>(this.partyService.getParties());
         if (parties.isEmpty()) {
-            if (issuer != null) issuer.sendMessage(CC.translate("&cNão foi possível encontrar parties para desfazer."));
+            if (issuer != null) issuer.sendMessage(CC.translate("&cCould not find any parties to disband."));
             return;
         }
 
@@ -128,7 +128,7 @@ public class ServerServiceImpl implements ServerService {
                     profile.setQueueProfile(null);
                     this.hotbarService.applyHotbarItems(queuePlayer);
                     this.spawnService.teleportToSpawn(queuePlayer);
-                    queuePlayer.sendMessage(CC.translate("&cVocê foi removido da fila por um administrador."));
+                    queuePlayer.sendMessage(CC.translate("&cYou have been removed from the queue by an administrator."));
                     playersRemoved++;
                 }
             }
@@ -138,7 +138,7 @@ public class ServerServiceImpl implements ServerService {
             if (playersRemoved > 0) {
                 issuer.sendMessage(CC.translate("&cRemoved &f" + playersRemoved + " &cplayer(s) from the queue."));
             } else {
-                issuer.sendMessage(CC.translate("&cNão foi possível encontrar jogadores em fila."));
+                issuer.sendMessage(CC.translate("&cCould not find any players in queue."));
             }
         }
     }

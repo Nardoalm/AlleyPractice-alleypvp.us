@@ -9,8 +9,8 @@ import lombok.Getter;
  */
 @Getter
 public enum PartyState {
-    PRIVATE("Privada", "Apenas jogadores convidados podem entrar"),
-    PUBLIC("Pública", "Todos podem entrar");
+    PRIVATE("Private", "Only invited players can join."),
+    PUBLIC("Public", "All can join");
 
     private final String name;
     private final String description;

@@ -37,14 +37,9 @@ import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
-/**
- * @author Emmy
- * @project Alley
- * @date 20/05/2024 - 16:54
- */
 @Getter
 @Service(provides = ArenaService.class, priority = 110)
-public class ArenaServiceImpl implements ArenaService {
+public final class ArenaServiceImpl implements ArenaService {
     private final AlleyPractice plugin;
     private final ConfigService configService;
     private final KitService kitService;
@@ -158,9 +153,6 @@ public class ArenaServiceImpl implements ArenaService {
         this.nextCopyLocation = new Location(temporaryWorld, 0, 100, 0);
     }
 
-    /**
-     * Method to load all arenas from the arenas.yml file.
-     */
     public void loadArenas() {
         FileConfiguration config = configService.getArenasConfig();
         ConfigurationSection arenasConfig = config.getConfigurationSection("arenas");
@@ -300,6 +292,14 @@ public class ArenaServiceImpl implements ArenaService {
             StandAloneArena copiedArena = this.arenaCopyManager.createTemporaryArenaCopy(originalArena, copyId);
             if (copiedArena != null) {
                 this.temporaryArenas.add(copiedArena);
+
+                if (copiedArena.getPos1() != null) {
+                    copiedArena.getPos1().getChunk().load(true);
+                }
+                if (copiedArena.getPos2() != null) {
+                    copiedArena.getPos2().getChunk().load(true);
+                }
+
                 return copiedArena;
             }
 
@@ -329,6 +329,14 @@ public class ArenaServiceImpl implements ArenaService {
         }
 
         this.arenaSchematicService.paste(copyLocation, this.arenaSchematicService.getSchematicFile(originalArena.getName()));
+
+        if (copiedArena.getPos1() != null) {
+            copiedArena.getPos1().getChunk().load(true);
+        }
+        if (copiedArena.getPos2() != null) {
+            copiedArena.getPos2().getChunk().load(true);
+        }
+
         this.temporaryArenas.add(copiedArena);
         return copiedArena;
     }
@@ -362,13 +370,6 @@ public class ArenaServiceImpl implements ArenaService {
         this.temporaryArenas.clear();
     }
 
-    /**
-     * Cleans up an existing world by unloading it and deleting its corresponding folder.
-     * This includes teleporting any players in the world back to the spawn location of the
-     * first loaded world.
-     *
-     * @param worldName the name of the world to be cleaned up
-     */
     private void cleanupExistingWorld(String worldName) {
         World existingWorld = this.plugin.getServer().getWorld(worldName);
         if (existingWorld != null) {
@@ -467,9 +468,6 @@ public class ArenaServiceImpl implements ArenaService {
         }
     }
 
-    /**
-     * Refresh caches when kits or arenas are modified
-     */
     public void refreshCaches() {
         CompletableFuture.runAsync(this::buildCaches, executorService);
     }
@@ -488,7 +486,8 @@ public class ArenaServiceImpl implements ArenaService {
 
         try {
             Class<?> swmManagerClass = Class.forName("us.alleypvp.practice.feature.arena.internal.swm.SwmArenaManager");
-            Constructor<?> constructor = swmManagerClass.getConstructor(AlleyPractice.class, ConfigService.class, ArenaSchematicService.class);
+            Class<?> swmManagerClassDef = Class.forName("us.alleypvp.practice.feature.arena.internal.swm.SwmArenaManager");
+            Constructor<?> constructor = swmManagerClassDef.getConstructor(AlleyPractice.class, ConfigService.class, ArenaSchematicService.class);
             Object managerInstance = constructor.newInstance(this.plugin, this.configService, this.arenaSchematicService);
 
             if (managerInstance instanceof ArenaCopyManager) {

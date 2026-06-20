@@ -54,6 +54,7 @@ import us.alleypvp.practice.feature.match.task.other.MatchCampProtectionTask;
 import us.alleypvp.practice.feature.match.task.other.MatchRespawnTask;
 import us.alleypvp.practice.feature.queue.Queue;
 import us.alleypvp.practice.feature.spawn.SpawnService;
+import us.alleypvp.practice.feature.tournament.model.Tournament;
 import us.alleypvp.practice.feature.visibility.VisibilityService;
 import lombok.Getter;
 import lombok.Setter;
@@ -85,6 +86,7 @@ public abstract class Match {
     private final Arena arena;
     private final boolean ranked;
     private final String matchId = UUID.randomUUID().toString();
+    private Tournament tournament;
 
     private final Map<BlockState, Location> brokenBlocks = new ConcurrentHashMap<>();
     private final Map<BlockState, Location> placedBlocks = new ConcurrentHashMap<>();
@@ -100,9 +102,9 @@ public abstract class Match {
     private long endTime;
 
     public Match(Queue queue, Kit kit, Arena arena, boolean ranked) {
-        this.queue = Objects.requireNonNull(queue, "Fila nao pode ser nula");
-        this.kit = Objects.requireNonNull(kit, "Kit nao pode ser nulo");
-        this.arena = Objects.requireNonNull(arena, "Arena nao pode ser nula");
+        this.queue = Objects.requireNonNull(queue, "Queue cannot be null");
+        this.kit = Objects.requireNonNull(kit, "Kit cannot be null");
+        this.arena = Objects.requireNonNull(arena, "Arena cannot be null");
         this.ranked = ranked;
     }
 
@@ -125,17 +127,17 @@ public abstract class Match {
 
         this.state = MatchState.STARTING;
 
-        this.handleMatchTasks();
-
         this.getParticipants().forEach(this::initializeParticipant);
+
+        this.handleMatchTasks();
 
         this.startTime = System.currentTimeMillis();
     }
 
     public void endMatch() {
-        deleteArenaCopyIfStandalone();
-
         this.cleanupHealthDisplay();
+
+        deleteArenaCopyIfStandalone();
 
         this.getParticipants().forEach(this::finalizeParticipant);
 
@@ -158,7 +160,6 @@ public abstract class Match {
         KnockbackAdapter knockbackAdapter = this.plugin.getService(KnockbackAdapter.class);
         KaosCoreBridge kaosCoreBridge = this.plugin.getService(KaosCoreBridge.class);
 
-        // Define qual ponto de spawn este participante deve usar com base no índice
         int participantIndex = this.getParticipants().indexOf(gameParticipant);
         Location spawnLocation = (participantIndex == 0 || participantIndex == -1)
                 ? this.getArena().getPos1()
@@ -170,17 +171,16 @@ public abstract class Match {
                 return;
             }
 
+            if (spawnLocation != null) {
+                ListenerUtil.teleportAndClearSpawn(player, spawnLocation);
+            }
+
             if (kaosCoreBridge != null) {
                 kaosCoreBridge.removeVanish(player);
             }
 
             this.updatePlayerProfileForMatch(player);
             this.setupPlayer(player);
-
-            // Força o teleporte limpo e imediato antes de aplicar efeitos e visibilidade
-            if (spawnLocation != null) {
-                ListenerUtil.teleportAndClearSpawn(player, spawnLocation);
-            }
 
             visibilityService.updateVisibility(player);
             knockbackAdapter.getKnockbackImplementation().applyKnockback(player, getKit().getKnockbackProfile());
@@ -239,23 +239,35 @@ public abstract class Match {
     }
 
     private void cleanupHealthDisplay() {
-        if (!this.getKit().isSettingEnabled(KitSettingHealthBar.class)) {
-            return;
+        List<Player> playersToCleanup = new ArrayList<>();
+
+        if (getParticipants() != null) {
+            getParticipants().stream()
+                    .filter(Objects::nonNull)
+                    .flatMap(participant -> participant.getPlayers().stream())
+                    .filter(Objects::nonNull)
+                    .map(gamePlayer -> this.plugin.getServer().getPlayer(gamePlayer.getUuid()))
+                    .filter(Objects::nonNull)
+                    .forEach(playersToCleanup::add);
         }
 
-        getParticipants().stream()
-                .flatMap(participant -> participant.getPlayers().stream())
-                .map(gamePlayer -> this.plugin.getServer().getPlayer(gamePlayer.getUuid()))
-                .filter(Objects::nonNull)
-                .forEach(player -> {
-                    Scoreboard scoreboard = player.getScoreboard();
-                    if (scoreboard != null) {
-                        Objective objective = scoreboard.getObjective("showhealth");
-                        if (objective != null) {
-                            objective.unregister();
-                        }
-                    }
-                });
+        if (getSpectators() != null) {
+            getSpectators().stream()
+                    .filter(Objects::nonNull)
+                    .map(this.plugin.getServer()::getPlayer)
+                    .filter(Objects::nonNull)
+                    .forEach(playersToCleanup::add);
+        }
+
+        playersToCleanup.forEach(player -> {
+            Scoreboard scoreboard = player.getScoreboard();
+            if (scoreboard != null) {
+                Objective objective = scoreboard.getObjective("showhealth");
+                if (objective != null) {
+                    objective.unregister();
+                }
+            }
+        });
     }
 
     private void cleanupTasks() {
@@ -346,6 +358,7 @@ public abstract class Match {
 
         this.createSnapshot(player);
 
+        Location deathLocation = player.getLocation().clone();
         player.setVelocity(new Vector());
 
         if (this.canEndRound()) {
@@ -389,7 +402,7 @@ public abstract class Match {
         }
 
         if (!this.shouldHandleRegularRespawn(player)) {
-            this.startRespawnProcess(player);
+            this.startRespawnProcess(player, deathLocation);
         }
     }
 
@@ -603,7 +616,7 @@ public abstract class Match {
                 break;
 
             default:
-                Logger.warn("Cosmético do tipo " + cosmeticType.name() + " não tem suporte para execução.");
+                Logger.warn("Cosmetic type " + cosmeticType.name() + " is not supported for explicit execution.");
                 break;
         }
     }
@@ -617,6 +630,28 @@ public abstract class Match {
 
     public void handleRoundEnd() {
         this.endTime = System.currentTimeMillis();
+
+        this.getParticipants().forEach(participant -> participant.getAllPlayers().forEach(gamePlayer -> {
+            Player player = this.plugin.getServer().getOnlinePlayers().stream()
+                    .filter(p -> p.getUniqueId().equals(gamePlayer.getUuid()))
+                    .findFirst()
+                    .orElse(null);
+
+            if (player != null && player.isOnline()) {
+                player.getInventory().clear();
+                player.getInventory().setArmorContents(null);
+                player.updateInventory();
+
+                player.setVelocity(new Vector(0, 0.8, 0));
+
+                this.plugin.getServer().getScheduler().runTaskLater(this.plugin, () -> {
+                    if (player.isOnline()) {
+                        player.setAllowFlight(true);
+                        player.setFlying(true);
+                    }
+                }, 1L);
+            }
+        }));
 
         this.handleMatchHistoryData();
 
@@ -701,7 +736,7 @@ public abstract class Match {
     public void addSpectator(Player player) {
         if (this.getGamePlayer(player) == null) {
             if (this.getState() == MatchState.ENDING_MATCH) {
-                player.sendMessage(CC.translate("&cEsta partida já terminou."));
+                player.sendMessage(CC.translate("&cThis match has already ended."));
                 return;
             }
 
@@ -716,7 +751,7 @@ public abstract class Match {
         hotbarService.applyHotbarItems(player);
 
         if (this.arena.getCenter() == null) {
-            player.sendMessage(CC.translate("&cA arena não está configurada para espectadores"));
+            player.sendMessage(CC.translate("&cArena is not configured for spectators."));
             return;
         }
 
@@ -727,7 +762,7 @@ public abstract class Match {
 
         ProfileService profileService = this.plugin.getService(ProfileService.class);
         Profile profile = profileService.getProfile(player.getUniqueId());
-        this.notifyAll("&b" + profile.getFancyName() + " &eestá espectando a partida.");
+        this.notifyAll("&b" + profile.getFancyName() + " &eis now spectating the match.");
     }
 
     public void removeSpectator(Player player, boolean notify) {
@@ -752,10 +787,7 @@ public abstract class Match {
         }
     }
 
-    public void startRespawnProcess(Player player) {
-        player.setAllowFlight(true);
-        player.setFlying(true);
-
+    public void startRespawnProcess(Player player, Location deathLocation) {
         player.getInventory().clear();
         player.getInventory().setArmorContents(null);
         player.getInventory().setHelmet(null);
@@ -773,8 +805,23 @@ public abstract class Match {
             gamePlayer.setDead(false);
         }
 
-        Location spawnLocation = this.arena.getCenter();
-        ListenerUtil.teleportAndClearSpawn(player, spawnLocation);
+        Location hoverLocation = deathLocation.clone();
+        ListenerUtil.teleportAndClearSpawn(player, hoverLocation);
+
+        player.setVelocity(new Vector(0, 0.72, 0));
+
+        this.plugin.getServer().getScheduler().runTaskLater(this.plugin, () -> {
+            if (player.isOnline()) {
+                player.setAllowFlight(true);
+                player.setFlying(true);
+            }
+        }, 1L);
+
+        org.bukkit.Bukkit.getOnlinePlayers().forEach(onlinePlayer -> {
+            if (!onlinePlayer.getUniqueId().equals(player.getUniqueId())) {
+                onlinePlayer.hidePlayer(player);
+            }
+        });
 
         new MatchRespawnTask(player, this, 3).runTaskTimer(this.plugin, 0L, 20L);
     }

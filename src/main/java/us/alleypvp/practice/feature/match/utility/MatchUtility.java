@@ -20,22 +20,10 @@ import org.bukkit.entity.Player;
 import java.util.List;
 import java.util.UUID;
 
-/**
- * @author Emmy
- * @project Alley
- * @date 24/09/2024 - 17:12
- */
 @UtilityClass
 public class MatchUtility {
     private final AlleyPractice plugin = AlleyPractice.getInstance();
 
-    /**
-     * Check if a location is beyond the bounds of an arena excluding specific conditions.
-     *
-     * @param location the location
-     * @param profile  the profile
-     * @return if the location is beyond the bounds
-     */
     public boolean isBeyondBounds(Location location, Profile profile) {
         Arena arena = profile.getMatch().getArena();
         Location corner1 = arena.getMinimum();
@@ -50,11 +38,6 @@ public class MatchUtility {
 
         boolean withinBounds;
 
-        /*
-         * If the match is ending or has specific kit settings enabled, we only check X and Z bounds and exclude Y bounds,
-         * because there is a death y level coordinate that eliminates players when they fall below it.
-         * This is to prevent players from being stuck in the air because by default, moving out of bounds is cancelled.
-         */
         if (profile.getMatch().getState() == MatchState.ENDING_MATCH
                 || profile.getMatch().getKit().isSettingEnabled(KitSettingBed.class)
                 || profile.getMatch().getKit().isSettingEnabled(KitSettingLives.class)
@@ -69,15 +52,6 @@ public class MatchUtility {
         return !withinBounds;
     }
 
-    /**
-     * Sends a match result message to all participants and spectators.
-     *
-     * @param match      The match.
-     * @param winnerName The name of the winning team.
-     * @param loserName  The name of the losing team.
-     * @param winnerUuid The UUID of the winning team.
-     * @param loserUuid  The UUID of the losing team.
-     */
     public void sendMatchResult(Match match, String winnerName, String loserName, UUID winnerUuid, UUID loserUuid) {
         LocaleService localeService = AlleyPractice.getInstance().getService(LocaleService.class);
 
@@ -140,13 +114,6 @@ public class MatchUtility {
         }
     }
 
-    /**
-     * Sends the conjoined match result message.
-     *
-     * @param match             The match.
-     * @param winnerParticipant The winner participant.
-     * @param loserParticipant  The loser participant.
-     */
     public void sendConjoinedMatchResult(Match match, GameParticipant<MatchGamePlayer> winnerParticipant, GameParticipant<MatchGamePlayer> loserParticipant) {
         String winnerTeamName = PlayerDisplayUtil.resolveTagColoredNick(
                 winnerParticipant.getLeader().getTeamPlayer(),
@@ -158,7 +125,7 @@ public class MatchUtility {
         );
 
         match.sendMessage("");
-        match.sendMessage(CC.translate("&aTime Vencedor: &f" + winnerTeamName));
+        match.sendMessage(CC.translate("&aWinning Team: &f" + winnerTeamName));
 
         for (MatchGamePlayer player : winnerParticipant.getAllPlayers()) {
             String commandName = player.getUsername();
@@ -167,13 +134,13 @@ public class MatchUtility {
             TextComponent playerComponent = new TextComponent(CC.translate("&7- &f" + displayName));
             playerComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/inventory " + commandName));
             playerComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                    new ComponentBuilder(CC.translate("&eClique para ver o inventário de " + displayName)).create()));
+                    new ComponentBuilder(CC.translate("&eClick to view " + displayName + "'s inventory")).create()));
 
             sendCombinedSpigotMessage(match, playerComponent);
         }
 
         match.sendMessage("");
-        match.sendMessage(CC.translate("&cTime Perdedor: &f" + loserTeamName));
+        match.sendMessage(CC.translate("&cLosing Team: &f" + loserTeamName));
 
         for (MatchGamePlayer player : loserParticipant.getAllPlayers()) {
             String commandName = player.getUsername();
@@ -182,7 +149,7 @@ public class MatchUtility {
             TextComponent playerComponent = new TextComponent(CC.translate("&7- &f" + displayName));
             playerComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/inventory " + commandName));
             playerComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                    new ComponentBuilder(CC.translate("&eClique para ver o inventário de " + displayName)).create()));
+                    new ComponentBuilder(CC.translate("&eClick to view " + displayName + "'s inventory")).create()));
 
             sendCombinedSpigotMessage(match, playerComponent);
         }
@@ -190,11 +157,6 @@ public class MatchUtility {
         match.sendMessage(CC.translate(""));
     }
 
-    /**
-     * Sends a combined spigot (clickable) message to all participants including spectators.
-     *
-     * @param message The message to send.
-     */
     public void sendCombinedSpigotMessage(Match match, BaseComponent... message) {
         match.getParticipants().forEach(gameParticipant -> {
             gameParticipant.getPlayers().forEach(uuid -> {

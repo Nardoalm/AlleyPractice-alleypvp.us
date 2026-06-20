@@ -21,21 +21,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * @author Emmy
- * @project Alley
- * @since 30/04/2025
- */
 public class LobbyScoreboardImpl implements Scoreboard {
 
     @Override
     public List<String> getLines(Profile profile) {
-        // 1. Prevenção: O perfil ou os dados ainda não carregaram
         if (profile == null || profile.getProfileData() == null) {
-            return Collections.singletonList("&cCarregando dados...");
+            return Collections.singletonList("&cLoading data...");
         }
 
-        // 2. Prevenção: O jogador não está online no momento do tick
         Player player = Bukkit.getPlayer(profile.getUuid());
         if (player == null || !player.isOnline()) {
             return Collections.emptyList();
@@ -62,7 +55,6 @@ public class LobbyScoreboardImpl implements Scoreboard {
 
         String levelName = LevelBadgeUtil.getDisplayBadge(player, experience);
 
-        // 4. Prevenção: CoreAdapter ou Core ausente
         String rankStr = "";
         if (coreAdapter != null && coreAdapter.getCore() != null) {
             rankStr = coreAdapter.getCore().getRankColor(player) + coreAdapter.getCore().getRankName(player);
@@ -93,18 +85,17 @@ public class LobbyScoreboardImpl implements Scoreboard {
             String processedLine = CC.translate(line)
                     .replace("{online}", String.valueOf(Bukkit.getOnlinePlayers().size()))
                     .replace("{wins}", String.valueOf(profile.getProfileData().getTotalWins()))
-                    .replace("{level}", levelName) // Usando a variável segura
+                    .replace("{level}", levelName)
                     .replace("{nivel}", levelName)
                     .replace("{nível}", levelName)
                     .replace("{level_progress_bar}", levelProgressBar)
                     .replace("{level_progress_details}", levelProgressDetails)
-                    .replace("{rank}", rankStr) // Usando a variável segura
+                    .replace("{rank}", rankStr)
                     .replace("{playing}", String.valueOf(safeCountState(profileService, ProfileState.PLAYING)))
                     .replace("{in-queue}", String.valueOf(safeCountState(profileService, ProfileState.WAITING)));
 
             if (profile.getParty() != null) {
-                // 5. Prevenção: O líder da party desconectou e o perfil não está no cache
-                String leaderName = "Desconhecido";
+                String leaderName = "Unknown";
                 Profile leaderProfile = profileService.getProfile(profile.getParty().getLeader().getUniqueId());
                 if (leaderProfile != null) {
                     Player leaderPlayer = Bukkit.getPlayer(leaderProfile.getUuid());
@@ -114,8 +105,8 @@ public class LobbyScoreboardImpl implements Scoreboard {
 
                 processedLine = CC.translate(processedLine)
                         .replace("{party-size}", String.valueOf(profile.getParty().getMembers().size()))
-                        .replace("{party-privacy}", profile.getParty().isPrivate() ? "Privada" : "Pública")
-                        .replace("{party-leader}", leaderName); // Usando variável segura
+                        .replace("{party-privacy}", profile.getParty().isPrivate() ? "Private" : "Public")
+                        .replace("{party-leader}", leaderName);
             }
 
             scoreboardLines.add(processedLine);

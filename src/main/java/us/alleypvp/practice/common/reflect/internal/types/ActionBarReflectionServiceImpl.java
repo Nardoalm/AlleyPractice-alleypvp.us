@@ -9,24 +9,14 @@ import us.alleypvp.practice.core.locale.LocaleService;
 import us.alleypvp.practice.core.locale.internal.impl.VisualsLocaleImpl;
 import us.alleypvp.practice.core.profile.Profile;
 import us.alleypvp.practice.core.profile.ProfileService;
+import us.alleypvp.practice.core.profile.enums.ProfileState;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-/**
- * @author Emmy
- * @project Alley
- * @since 03/04/2025
- */
 public class ActionBarReflectionServiceImpl implements Reflection {
-    /**
-     * Method to send an action bar message to a player in a specific interval.
-     *
-     * @param player          The player.
-     * @param message         The message.
-     * @param durationSeconds The duration to show the message (in seconds).
-     */
+
     public void sendMessage(Player player, String message, int durationSeconds) {
         try {
             if (!shouldSendActionBar(player)) {
@@ -57,12 +47,6 @@ public class ActionBarReflectionServiceImpl implements Reflection {
         }
     }
 
-    /**
-     * Method to send an action bar message to a player.
-     *
-     * @param player  The player to send the message to.
-     * @param message The message to send.
-     */
     public void sendMessage(Player player, String message) {
         try {
             if (!shouldSendActionBar(player)) {
@@ -78,12 +62,6 @@ public class ActionBarReflectionServiceImpl implements Reflection {
         }
     }
 
-    /**
-     * Sends a death message to the killer.
-     *
-     * @param killer The player who killed the victim.
-     * @param victim The player who died.
-     */
     public void sendDeathMessage(Player killer, Player victim) {
         if (killer == null || victim == null) {
             return;
@@ -120,12 +98,6 @@ public class ActionBarReflectionServiceImpl implements Reflection {
         }
     }
 
-    /**
-     * Visualizes the target's health in the action bar for a player.
-     *
-     * @param player The player who will see the target's health.
-     * @param target The player whose health will be visualized.
-     */
     public void visualizeTargetHealth(Player player, Player target) {
         if (player == null || target == null) {
             return;
@@ -167,10 +139,14 @@ public class ActionBarReflectionServiceImpl implements Reflection {
         }
 
         String finalMessage = CC.translate(message.replace("{health-bar}", healthBar.toString()));
-        this.sendMessage(player, finalMessage);
+        this.sendMessage(player, finalMessage, 2);
     }
 
     private boolean shouldSendActionBar(Player player) {
-        return player != null && player.isOnline() && !PlayerDisplayUtil.isVanished(player);
+        if (player == null || !player.isOnline() || PlayerDisplayUtil.isVanished(player)) {
+            return false;
+        }
+        Profile profile = AlleyPractice.getInstance().getService(ProfileService.class).getProfile(player.getUniqueId());
+        return profile != null && profile.getState() == ProfileState.PLAYING;
     }
 }

@@ -1,7 +1,6 @@
 package us.alleypvp.practice.feature.match.internal.types;
 
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
+import org.bukkit.Bukkit;
 import us.alleypvp.practice.common.PlayerDisplayUtil;
 import us.alleypvp.practice.common.ListenerUtil;
 import us.alleypvp.practice.common.PlayerUtil;
@@ -26,26 +25,11 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * @author Emmy
- * @project Alley
- * @since 21/05/2025
- */
 @Getter
 public class BedMatch extends DefaultMatch {
     private final GameParticipant<MatchGamePlayer> participantA;
     private final GameParticipant<MatchGamePlayer> participantB;
 
-    /**
-     * Constructor for the MatchBedImpl class.
-     *
-     * @param queue        The queue of the match.
-     * @param kit          The kit of the match.
-     * @param arena        The arena of the match.
-     * @param ranked       Whether the match is ranked or not.
-     * @param participantA The first participant.
-     * @param participantB The second participant.
-     */
     public BedMatch(Queue queue, Kit kit, Arena arena, boolean ranked, GameParticipant<MatchGamePlayer> participantA, GameParticipant<MatchGamePlayer> participantB) {
         super(queue, kit, arena, ranked, participantA, participantB);
         this.participantA = participantA;
@@ -102,10 +86,8 @@ public class BedMatch extends DefaultMatch {
 
     @Override
     public void handleRespawn(Player player) {
-        player.addPotionEffects(Arrays.asList(
-                new PotionEffect(PotionEffectType.BLINDNESS, 45, 3),
-                new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 3)
-        ));
+        player.setFlying(false);
+        player.setAllowFlight(false);
 
         PlayerUtil.reset(player, true, true);
 
@@ -114,14 +96,14 @@ public class BedMatch extends DefaultMatch {
 
         this.giveLoadout(player, this.getKit());
         this.applyColorKit(player);
+
+        Bukkit.getOnlinePlayers().forEach(onlinePlayer -> {
+            if (!onlinePlayer.getUniqueId().equals(player.getUniqueId())) {
+                onlinePlayer.showPlayer(player);
+            }
+        });
     }
 
-    /**
-     * Alerts the participants about the bed destruction.
-     *
-     * @param breaker             The player who broke the bed.
-     * @param opponentParticipant The opponent whose bed was destroyed.
-     */
     public void alertBedDestruction(Player breaker, GameParticipant<MatchGamePlayer> opponentParticipant) {
         LocaleService localeService = this.plugin.getService(LocaleService.class);
         TitleReflectionServiceImpl titleService = this.plugin.getService(ReflectionService.class).getReflectionService(TitleReflectionServiceImpl.class);
@@ -146,23 +128,37 @@ public class BedMatch extends DefaultMatch {
 
         if (localeService.getBoolean(GameMessagesLocaleImpl.MATCH_BED_DESTRUCTION_MESSAGE_ENABLED_BOOLEAN)) {
             List<String> message = localeService.getStringList(GameMessagesLocaleImpl.MATCH_BED_DESTRUCTION_MESSAGE_FORMAT);
+
+            String formattedBedName = getFormattedBedName(opponentParticipant);
+
             message.forEach(line -> {
                 String formattedLine = line
                         .replace("{bed-color}", String.valueOf(this.getTeamColor(opponentParticipant)))
                         .replace("{breaker-color}", String.valueOf(this.getTeamColor(breakerParticipant)))
-                        .replace("{bed}", this.getParticipantA() == opponentParticipant ? "Blue Bed" : "Red Bed")
+                        .replace("{bed}", formattedBedName)
                         .replace("{breaker}", PlayerDisplayUtil.resolveCurrentNick(breaker, breaker.getName()));
                 this.sendMessage(formattedLine);
             });
         }
     }
 
-    /**
-     * Checks if a block is near a bed.
-     *
-     * @param block The block to check.
-     * @return true if the block is near a bed, false otherwise.
-     */
+    private String getFormattedBedName(GameParticipant<MatchGamePlayer> participant) {
+        org.bukkit.ChatColor color = this.getTeamColor(participant);
+        switch (color) {
+            case RED: return "&c[R] &fRed Bed";
+            case BLUE: return "&b[B] &fBlue Bed";
+            case GREEN: return "&a[G] &fGreen Bed";
+            case YELLOW: return "&e[Y] &fYellow Bed";
+            case AQUA: return "&3[A] &fAqua Bed";
+            case LIGHT_PURPLE: return "&d[P] &fPink Bed";
+            case GOLD: return "&6[O] &fOrange Bed";
+            case WHITE: return "&f[W] &fWhite Bed";
+            case GRAY: return "&7[G] &fGray Bed";
+            case DARK_PURPLE: return "&5[P] &fPurple Bed";
+            default: return color + "[" + color.name().substring(0, 1) + "] &f" + color.name() + " Bed";
+        }
+    }
+
     public boolean isNearBed(Block block) {
         Location center = block.getLocation();
         for (int x = -8; x <= 1; x++) {

@@ -27,6 +27,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import us.alleypvp.practice.feature.tournament.model.Tournament;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -43,6 +44,7 @@ public class Profile {
     private String name;
     private long firstJoin;
     private boolean online;
+    private Tournament tournament;
 
     private ProfileData profileData;
     private QueueProfile queueProfile;

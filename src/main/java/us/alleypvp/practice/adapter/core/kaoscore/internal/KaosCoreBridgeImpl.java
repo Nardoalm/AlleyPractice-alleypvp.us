@@ -80,6 +80,8 @@ public class KaosCoreBridgeImpl implements KaosCoreBridge {
         }
     }
 
+    // fazer o para pegar o rank
+
     @Override
     public void removeVanish(Player player) {
         KaosCoreAPI resolvedApi = this.resolveApi();

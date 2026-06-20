@@ -91,43 +91,18 @@ hotbar-items:
         enabled: false
         slot: 0
 
-  CURRENT_MATCHES:
-    display-name: "&bCurrent Matches &7(Right-Click)"
+  COSMETIC:
+    display-name: "&bCosmetics &7(Right-Click)"
     lore:
-      - "&7View ongoing matches."
-    material: COMPASS
+      - "&7Open the cosmetics menu."
+    material: ENDER_CHEST
     durability: 0
-    command: ""
-    menu: "CURRENT_MATCHES_MENU"
-    types:
-      LOBBY:
-        enabled: true
-        slot: 3
-      PARTY:
-        enabled: false
-        slot: 0
-      QUEUE:
-        enabled: false
-        slot: 0
-      SPECTATOR:
-        enabled: false
-        slot: 0
-      TOURNAMENT:
-        enabled: false
-        slot: 0
-
-  PARTY:
-    display-name: "&bCreate Party &7(Right-Click)"
-    lore:
-      - "&7Form a party with your friends."
-    material: NAME_TAG
-    durability: 0
-    command: "party create"
+    command: "cosmetics"
     menu: ""
     types:
       LOBBY:
         enabled: true
-        slot: 5
+        slot: 4
       PARTY:
         enabled: false
         slot: 0

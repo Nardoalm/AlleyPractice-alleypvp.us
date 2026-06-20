@@ -1,5 +1,6 @@
 package us.alleypvp.practice.feature.tournament.formation.internal;
 
+
 import us.alleypvp.practice.bootstrap.annotation.Service;
 import us.alleypvp.practice.feature.tournament.formation.TeamFormationStrategy;
 import us.alleypvp.practice.feature.tournament.formation.TeamFormationStrategyFactory;

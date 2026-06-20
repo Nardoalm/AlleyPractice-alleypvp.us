@@ -34,12 +34,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 
-/**
- * @author Emmy
- * @project Alley
- * @since 08/02/2025
- */
 public class MatchDamageListener implements Listener {
+
     @EventHandler
     private void onEntityDamage(EntityDamageEvent event) {
         if (!(event.getEntity() instanceof Player)) return;
@@ -59,7 +55,7 @@ public class MatchDamageListener implements Listener {
             }
 
             MatchGamePlayer gamePlayer = match.getGamePlayer(player);
-            if (gamePlayer == null) {
+            if (gamePlayer == null || gamePlayer.isDead()) {
                 event.setCancelled(true);
                 return;
             }
@@ -79,11 +75,6 @@ public class MatchDamageListener implements Listener {
             }
 
             if (match.getState() != MatchState.RUNNING) {
-                event.setCancelled(true);
-                return;
-            }
-
-            if (gamePlayer.isDead()) {
                 event.setCancelled(true);
                 return;
             }
@@ -206,13 +197,15 @@ public class MatchDamageListener implements Listener {
                         int requiredHits = lowestPlayerCount * 100;
 
                         if (participant.getTeamHits() >= requiredHits) {
-                            opponent.getPlayers().forEach(matchGamePlayer -> {
-                                Player loser = matchGamePlayer.getTeamPlayer();
-                                if (loser == null) {
-                                    return;
-                                }
+                            AlleyPractice.getInstance().getServer().getScheduler().runTask(AlleyPractice.getInstance(), () -> {
+                                opponent.getPlayers().forEach(matchGamePlayer -> {
+                                    Player loser = matchGamePlayer.getTeamPlayer();
+                                    if (loser == null) {
+                                        return;
+                                    }
 
-                                match.handleDeath(loser, EntityDamageEvent.DamageCause.ENTITY_ATTACK);
+                                    match.handleDeath(loser, EntityDamageEvent.DamageCause.ENTITY_ATTACK);
+                                });
                             });
                         }
                     }
@@ -236,7 +229,7 @@ public class MatchDamageListener implements Listener {
             }
 
             if (profile.getState() == ProfileState.PLAYING) {
-                if (profile.getMatch() == null) {
+                if (profile.getMatch() == null || profile.getMatch().getState() != MatchState.RUNNING) {
                     event.setCancelled(true);
                     return;
                 }

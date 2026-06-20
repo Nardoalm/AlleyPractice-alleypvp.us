@@ -34,10 +34,10 @@ public class KaosCommand extends BaseCommand {
     }
 
     @CommandData(
-            name = "kaos",
-            aliases = {"kaospractice", "practice", "prac"},
+            name = "alley",
+            aliases = {"alleypractice", "practice", "prac"},
             inGameOnly = false,
-            usage = "kaos",
+            usage = "alley",
             description = "Exibe informações sobre o plugin."
     )
     @Override
@@ -46,7 +46,7 @@ public class KaosCommand extends BaseCommand {
 
         Arrays.asList(
                 "",
-                " &b&lKaosPractice",
+                " &b&lAlleyPractice",
                 "      &b&l│ &fLicença: &bCC BY-NC-SA 4.0",
                 "      &b&l│ &fVersão: &b" + this.plugin.getDescription().getVersion(),
                 ""

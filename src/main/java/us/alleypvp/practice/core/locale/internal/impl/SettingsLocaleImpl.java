@@ -6,25 +6,20 @@ import lombok.Getter;
 import java.util.Arrays;
 import java.util.Collections;
 
-/**
- * @author Emmy
- * @project Alley
- * @since 09/09/2025
- */
 @Getter
 public enum SettingsLocaleImpl implements LocaleEntry {
     AUTO_UPDATE_BOOLEAN("settings.yml", "plugin.auto-update", true),
 
     BLOCKED_CRAFTING_ITEMS_LIST("settings.yml", "crafting-operations.blocked-items", Collections.emptyList()),
 
-    COMMAND_ANTI_SYNTAX_MESSAGE("settings.yml", "commands.anti-syntax-message", "&cVocê não pode executar {argument}."),
+    COMMAND_ANTI_SYNTAX_MESSAGE("settings.yml", "commands.anti-syntax-message", "&cYou cannot execute {argument}."),
 
     CONFIG_ARENA_DEFAULT_DISPLAY_NAME_FFA("settings.yml", "configuration.arena-default-display-name.ffa", "&b{arena-name}"),
     CONFIG_ARENA_DEFAULT_DISPLAY_NAME_SHARED("settings.yml", "configuration.arena-default-display-name.shared", "&b{arena-name}"),
     CONFIG_ARENA_DEFAULT_DISPLAY_NAME_STANDALONE("settings.yml", "configuration.arena-default-display-name.standalone", "&b{arena-name}"),
 
     CONFIG_KIT_DEFAULT_DESCRIPTION("settings.yml", "configuration.default-kit-values.description", ""),
-    CONFIG_KIT_DEFAULT_DISCLAIMER("settings.yml", "configuration.default-kit-values.disclaimer", "&7Aviso do kit {kit-name}."),
+    CONFIG_KIT_DEFAULT_DISCLAIMER("settings.yml", "configuration.default-kit-values.disclaimer", "&7Notice for kit {kit-name}."),
     CONFIG_KIT_DEFAULT_DISPLAYNAME("settings.yml", "configuration.default-kit-values.display-name", "&b{kit-name}"),
     CONFIG_KIT_DEFAULT_MENU_TITLE("settings.yml", "configuration.default-kit-values.menu-title", "&b&l{kit-name}"),
 
@@ -37,7 +32,7 @@ public enum SettingsLocaleImpl implements LocaleEntry {
     EXPLOSIVE_TNT_FUSE_TICKS_VALUE("settings.yml", "explosive.values.tnt.fuse-ticks", 60),
 
     GAME_ARENA_PORTAL_RADIUS("settings.yml", "game.portal-radius", 5),
-    GAME_BLOCKED_COMMANDS_DURING_MATCH_LIST("settings.yml", "game.blocked-commands", Arrays.asList("kill", "tp")),
+    GAME_BLOCKED_COMMANDS_DURING_MATCH_LIST("settings.yml", "game.blocked-commands", Arrays.asList("fly", "sit")),
     GAME_LIVES_PER_MATCH("settings.yml", "game.lives-per-game", 3),
 
     GRANT_COSMETIC_PERMISSION_COMMAND("settings.yml", "commands.grant-cosmetic-permission", "permission set {player} {permission}"),
@@ -76,13 +71,6 @@ public enum SettingsLocaleImpl implements LocaleEntry {
     private final String configPath;
     private final Object defaultValue;
 
-    /**
-     * Constructor for the SettingsLocaleImpl enum.
-     *
-     * @param configName   The name of the configuration file.
-     * @param configPath   The path to the specific string within the configuration file.
-     * @param defaultValue The default value for the locale entry.
-     */
     SettingsLocaleImpl(String configName, String configPath, Object defaultValue) {
         this.configName = configName;
         this.configPath = configPath;

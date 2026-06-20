@@ -31,12 +31,12 @@ public class PartyUnbanCommand extends BaseCommand {
 
         Player target = player.getServer().getPlayer(args[0]);
         if (target == null) {
-            player.sendMessage(CC.translate("&cEsse jogador não está online."));
+            player.sendMessage(CC.translate("&cThat player is not online."));
             return;
         }
 
         if (target.equals(player)) {
-            player.sendMessage(CC.translate("&cVocê não pode se desbanir da party."));
+            player.sendMessage(CC.translate("&cYou cannot unban yourself from the party."));
             return;
         }
 

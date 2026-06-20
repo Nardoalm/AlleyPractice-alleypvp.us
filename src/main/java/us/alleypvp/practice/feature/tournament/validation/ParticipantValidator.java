@@ -1,8 +1,8 @@
 package us.alleypvp.practice.feature.tournament.validation;
 
+import org.bukkit.entity.Player;
 import us.alleypvp.practice.bootstrap.lifecycle.Service;
 import us.alleypvp.practice.feature.tournament.model.Tournament;
-import org.bukkit.entity.Player;
 
 /**
  * @author Remi

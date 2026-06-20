@@ -21,11 +21,6 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
 
-/**
- * @author Emmy
- * @project Alley
- * @since 04/06/2025
- */
 @AllArgsConstructor
 public class MatchHistoryViewButton extends Button {
     protected final MatchData matchData;
@@ -55,24 +50,24 @@ public class MatchHistoryViewButton extends Button {
                     .lore(
                             "&7" + date,
                             "",
-                            "&b&lParticipantes",
-                            " &f● Vencedor: &a" + winnerName,
-                            " &f● Perdedor: &c" + loserName,
+                            "&b&lParticipants",
+                            " &f● Winner: &a" + winnerName,
+                            " &f● Loser: &c" + loserName,
                             "",
-                            "&b&lDetalhes da Partida",
+                            "&b&lMatch Details",
                             " &f● Kit: &b" + kit.getDisplayName(),
                             " &f● Arena: &b" + arena.getDisplayName(),
                             "",
-                            "&aClique para ver mais detalhes!"
+                            "&aClick to view more details!"
                     )
                     .hideMeta()
                     .durability(3)
                     .build();
         } else {
             return new ItemBuilder(Material.BARRIER)
-                    .name("&c&lNão implementado")
+                    .name("&c&lNot Implemented")
                     .lore(
-                            "&fIsso ainda não foi implementado para partidas em equipe."
+                            "&fThis features has not been implemented for team matches yet."
                     )
                     .hideMeta()
                     .build();

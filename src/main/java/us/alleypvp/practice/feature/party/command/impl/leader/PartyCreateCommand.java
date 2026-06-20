@@ -35,7 +35,7 @@ public class PartyCreateCommand extends BaseCommand {
         ServerService serverService = this.plugin.getService(ServerService.class);
 
         if (profileService.getProfile(playerUUID).getState() != ProfileState.LOBBY) {
-            player.sendMessage(CC.translate("&cVocê precisa estar no spawn para executar este comando."));
+            player.sendMessage(CC.translate("&cYou must be in the spawn to execute this command."));
             return;
         }
 
@@ -45,7 +45,7 @@ public class PartyCreateCommand extends BaseCommand {
         }
 
         if (!serverService.isQueueingAllowed()) {
-            player.sendMessage(CC.translate("&cVocê não pode criar uma party enquanto as filas do servidor estiverem desativadas."));
+            player.sendMessage(CC.translate("&cYou cannot create a party while the server queues are disabled."));
             return;
         }
 

@@ -12,17 +12,13 @@ import us.alleypvp.practice.library.command.annotation.CommandData;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-/**
- * @author Emmy
- * @project Alley
- * @date 22/05/2024 - 20:32
- */
 public class PartyCommand extends BaseCommand {
+
     @CommandData(
             name = "party",
             aliases = "p",
             usage = "party",
-            description = "Envia uma lista de comandos de party."
+            description = "Sends a list of party commands."
     )
     @Override
     public void onCommand(CommandArgs command) {
@@ -35,24 +31,24 @@ public class PartyCommand extends BaseCommand {
         }
 
         player.sendMessage("");
-        player.sendMessage(CC.translate("§eUso do §6/party§e:"));
-        player.sendMessage(CC.translate(" &f• &b/party create &7| Criar uma party"));
-        player.sendMessage(CC.translate(" &f• &b/party disband &7| Desfazer uma party"));
-        player.sendMessage(CC.translate(" &f• &b/party leave &7| Sair da party"));
-        player.sendMessage(CC.translate(" &f• &b/party <nick> &7| Convidar um jogador para sua party"));
-        player.sendMessage(CC.translate(" &f• &b/party join &8(&7player&8) &7| Entrar em uma party pública"));
-        player.sendMessage(CC.translate(" &f• &b/party info &7| Ver informações da sua party"));
-        player.sendMessage(CC.translate(" &f• &b/party chat &8(&7message&8) &7| Conversar com sua party"));
-        player.sendMessage(CC.translate(" &f• &b/party accept &8(&7player&8) &7| Aceitar convite de party"));
-        player.sendMessage(CC.translate(" &f• &b/party invite &8(&7player&8) &7| Convidar um jogador para sua party"));
-        player.sendMessage(CC.translate(" &f• &b/party kick &8(&7player&8) &7| Expulsar jogador da sua party"));
-        player.sendMessage(CC.translate(" &f• &b/party open &7| Abrir sua party ao público"));
-        player.sendMessage(CC.translate(" &f• &b/party close &7| Fechar sua party ao público"));
-        player.sendMessage(CC.translate(" &f• &b/party ban &8(&7player&8) &7| Banir jogador da sua party"));
-        player.sendMessage(CC.translate(" &f• &b/party unban &8(&7player&8) &7| Desbanir jogador da sua party"));
-        player.sendMessage(CC.translate(" &f• &b/party banlist &7| Listar banidos da sua party"));
-        player.sendMessage(CC.translate(" &f• &b/party announce &8(&7message&8) &7| Convite público da sua party"));
-        player.sendMessage(CC.translate(" &f• &b/party lookup &8(&7player&8) &7| Ver a party de um jogador"));
+        player.sendMessage(CC.translate("§eUsage of §6/party§e:"));
+        player.sendMessage(CC.translate(" &f• &b/party create &7| Create a party"));
+        player.sendMessage(CC.translate(" &f• &b/party disband &7| Disband your party"));
+        player.sendMessage(CC.translate(" &f• &b/party leave &7| Leave your current party"));
+        player.sendMessage(CC.translate(" &f• &b/party <player> &7| Invite a player to your party"));
+        player.sendMessage(CC.translate(" &f• &b/party join &8(&7player&8) &7| Join a public party"));
+        player.sendMessage(CC.translate(" &f• &b/party info &7| View information about your party"));
+        player.sendMessage(CC.translate(" &f• &b/party chat &8(&7message&8) &7| Chat with your party"));
+        player.sendMessage(CC.translate(" &f• &b/party accept &8(&7player&8) &7| Accept a party invitation"));
+        player.sendMessage(CC.translate(" &f• &b/party invite &8(&7player&8) &7| Invite a player to your party"));
+        player.sendMessage(CC.translate(" &f• &b/party kick &8(&7player&8) &7| Kick a player from your party"));
+        player.sendMessage(CC.translate(" &f• &b/party open &7| Open your party to the public"));
+        player.sendMessage(CC.translate(" &f• &b/party close &7| Close your party to the public"));
+        player.sendMessage(CC.translate(" &f• &b/party ban &8(&7player&8) &7| Ban a player from your party"));
+        player.sendMessage(CC.translate(" &f• &b/party unban &8(&7player&8) &7| Unban a player from your party"));
+        player.sendMessage(CC.translate(" &f• &b/party banlist &7| List banned players from your party"));
+        player.sendMessage(CC.translate(" &f• &b/party announce &8(&7message&8) &7| Publicly announce your party invitation"));
+        player.sendMessage(CC.translate(" &f• &b/party lookup &8(&7player&8) &7| View a player's current party"));
         player.sendMessage("");
     }
 
@@ -62,12 +58,12 @@ public class PartyCommand extends BaseCommand {
 
         Player targetPlayer = Bukkit.getPlayer(targetName);
         if (targetPlayer == null) {
-            player.sendMessage(CC.translate("&cO jogador que você está tentando convidar não está online."));
+            player.sendMessage(CC.translate("&cThe player you are trying to invite is not online."));
             return;
         }
 
         if (targetPlayer.equals(player)) {
-            player.sendMessage(CC.translate("&cVocê não pode convidar a si mesmo para uma party."));
+            player.sendMessage(CC.translate("&cYou cannot invite yourself to a party."));
             return;
         }
 
@@ -81,7 +77,7 @@ public class PartyCommand extends BaseCommand {
         }
 
         if (!party.getLeader().equals(player)) {
-            player.sendMessage(CC.translate("&cVocê precisa ser o líder da party para convidar jogadores."));
+            player.sendMessage(CC.translate("&cYou must be the party leader to invite players."));
             return;
         }
 
@@ -98,12 +94,12 @@ public class PartyCommand extends BaseCommand {
         }
 
         if (party.getMembers().contains(targetPlayer.getUniqueId())) {
-            player.sendMessage(CC.translate("&b" + targetPlayer.getName() + " &cjá está na sua party."));
+            player.sendMessage(CC.translate("&b" + targetPlayer.getName() + " &cis already in your party."));
             return;
         }
 
         if (partyService.sendInvite(party, player, targetPlayer)) {
-            party.notifyParty("&b" + targetPlayer.getName() + " &afoi convidado para a party por &b" + player.getName() + "&a.");
+            party.notifyParty("&b" + targetPlayer.getName() + " &ahas been invited to the party by &b" + player.getName() + "&a.");
         }
     }
 }

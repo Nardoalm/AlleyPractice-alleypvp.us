@@ -5,6 +5,7 @@ import us.alleypvp.practice.common.constants.PluginConstant;
 import us.alleypvp.practice.core.profile.ProfileService;
 import us.alleypvp.practice.core.profile.Profile;
 import us.alleypvp.practice.core.profile.data.ProfileData;
+import us.alleypvp.practice.core.profile.enums.ProfileState;
 import us.alleypvp.practice.common.text.CC;
 import us.alleypvp.practice.common.animation.internal.types.DotAnimation;
 import us.alleypvp.practice.common.text.LevelBadgeUtil;
@@ -13,24 +14,12 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-/**
- * @author Emmy
- * @project Alley
- * @since 21/05/2025
- */
 public class KaosPlaceholderExpansion extends PlaceholderExpansion {
 
     protected final AlleyPractice plugin;
     protected final String notAvailableString;
-
-    // Instância única para manter o tempo da animação correto (não reseta o frame)
     private final DotAnimation dotAnimation = new DotAnimation();
 
-    /**
-     * Constructor for the KaosPlaceholderExpansion class.
-     *
-     * @param plugin The Alley bootstrap instance.
-     */
     public KaosPlaceholderExpansion(AlleyPractice plugin) {
         this.plugin = plugin;
         this.notAvailableString = CC.translate("&cN/D");
@@ -38,7 +27,6 @@ public class KaosPlaceholderExpansion extends PlaceholderExpansion {
 
     @Override
     public @NotNull String getIdentifier() {
-        // Keep a stable namespace for PlaceholderAPI calls such as %kaos_level%.
         return "kaos";
     }
 
@@ -66,12 +54,23 @@ public class KaosPlaceholderExpansion extends PlaceholderExpansion {
 
         String normalizedParams = params.toLowerCase().replace('_', '-');
 
-        // --- Animações Globais (Independente de Perfil) ---
         if (normalizedParams.equals("dot-animation")) {
             return dotAnimation.getCurrentFrame();
         }
 
         ProfileService profileService = AlleyPractice.getInstance().getService(ProfileService.class);
+
+        if (normalizedParams.equals("playing-count")) {
+            if (profileService == null) {
+                return "0 playing now!";
+            }
+            long activePlayersCount = profileService.getProfiles().values().stream()
+                    .filter(java.util.Objects::nonNull)
+                    .filter(p -> p.getState() == ProfileState.PLAYING)
+                    .count();
+            return activePlayersCount + " playing now!";
+        }
+
         Profile profile = (profileService != null) ? profileService.getProfile(player.getUniqueId()) : null;
 
         if (profile == null || profile.getProfileData() == null) {
@@ -80,7 +79,6 @@ public class KaosPlaceholderExpansion extends PlaceholderExpansion {
 
         ProfileData profileData = profile.getProfileData();
 
-        // --- Placeholders com Parâmetros Dinâmicos ---
         if (normalizedParams.startsWith("division-")) {
             String kitName = params.length() > 9 ? params.substring(9) : "";
             if (kitName.trim().isEmpty()) {
@@ -101,7 +99,6 @@ public class KaosPlaceholderExpansion extends PlaceholderExpansion {
             return this.notAvailableString;
         }
 
-        // --- Placeholders Fixas ---
         switch (normalizedParams) {
             case "player-global-elo":
                 return String.valueOf(profileData.getElo());

@@ -71,7 +71,7 @@ public class LayoutListener implements Listener {
                         ItemStack[] fallback = InventoryUtil.getEditableKitItems(kit);
                         player.getInventory().setContents(InventoryUtil.cloneItemStackArray(fallback));
                     }
-                    player.sendMessage(CC.translate("&aVocê selecionou o layout &b" + layout.getDisplayName() + "&a."));
+                    player.sendMessage(CC.translate("&aYou selected the layout &b" + layout.getDisplayName() + "&a."));
                     event.setCancelled(true);
                     return;
                 }

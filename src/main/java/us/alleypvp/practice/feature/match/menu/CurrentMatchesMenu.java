@@ -24,34 +24,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- * @author Remi
- * @project Alley
- * @date 5/26/2024
- */
 public class CurrentMatchesMenu extends PaginatedMenu {
+
     @Override
     public int getSize() {
         return 54;
     }
 
-    /**
-     * Gets the title of the menu.
-     *
-     * @param player the player viewing the menu
-     * @return the title of the menu
-     */
     @Override
     public String getPrePaginatedTitle(Player player) {
-        return "&b&lPartidas Atuais (" + this.getDisplayableMatches().size() + ")";
+        return "&b&lCurrent Matches (" + this.getDisplayableMatches().size() + ")";
     }
 
-    /**
-     * Gets the buttons to display in the menu.
-     *
-     * @param player the player viewing the menu
-     * @return the buttons to display
-     */
     @Override
     public Map<Integer, Button> getAllPagesButtons(Player player) {
         final Map<Integer, Button> buttons = new ConcurrentHashMap<>();
@@ -83,12 +67,6 @@ public class CurrentMatchesMenu extends PaginatedMenu {
         return displayableMatches;
     }
 
-    /**
-     * Gets the buttons to display in the global section of the menu.
-     *
-     * @param player the player viewing the menu
-     * @return the global buttons
-     */
     @Override
     public Map<Integer, Button> getGlobalButtons(Player player) {
         final Map<Integer, Button> buttons = new HashMap<>();
@@ -123,21 +101,15 @@ public class CurrentMatchesMenu extends PaginatedMenu {
     public static class CurrentMatchButton extends Button {
         private final Match match;
 
-        /**
-         * Gets the item stack for the button.
-         *
-         * @param player the player viewing the button
-         * @return the item stack
-         */
         @Override
         public ItemStack getButtonItem(Player player) {
             String queueName = match.getQueue() == null || match.getQueue().getQueueType() == null
-                    ? "Privada"
+                    ? "Private"
                     : String.valueOf(match.getQueue().getQueueType());
             String firstName = resolveParticipantName(0);
             String secondName = resolveParticipantName(1);
-            String kitName = match.getKit() == null ? "Desconhecido" : match.getKit().getDisplayName();
-            String arenaName = match.getArena() == null ? "Desconhecida" : match.getArena().getName();
+            String kitName = match.getKit() == null ? "Unknown" : match.getKit().getDisplayName();
+            String arenaName = match.getArena() == null ? "Unknown" : match.getArena().getName();
             Material icon = match.getKit() == null || match.getKit().getIcon() == null ? Material.PAPER : match.getKit().getIcon();
             short durability = (short) (match.getKit() == null ? 0 : match.getKit().getDurability());
 
@@ -146,11 +118,10 @@ public class CurrentMatchesMenu extends PaginatedMenu {
                             CC.MENU_BAR,
                             "&fKit: &b" + kitName,
                             "&fArena: &b" + arenaName,
-                            "&fFila: &b" + queueName,
-                            "&fEspectadores: &b" + match.getSpectators().size(),
-                            "&fPágina: &bClique para entrar em modo espectador",
-                            " ",
-                            "&aClique para assistir a partida.",
+                            "&fQueue: &b" + queueName,
+                            "&fSpectators: &b" + match.getSpectators().size(),
+                            "",
+                            "&aClick to spectate this match.",
                             CC.MENU_BAR
                     )
                     .hideMeta().build();
@@ -158,25 +129,17 @@ public class CurrentMatchesMenu extends PaginatedMenu {
 
         private String resolveParticipantName(int index) {
             if (match.getParticipants() == null || match.getParticipants().size() <= index || match.getParticipants().get(index) == null) {
-                return "Desconhecido";
+                return "Unknown";
             }
 
             String conjoinedNames = match.getParticipants().get(index).getConjoinedNames();
             if (conjoinedNames == null || conjoinedNames.trim().isEmpty()) {
-                return "Desconhecido";
+                return "Unknown";
             }
 
             return conjoinedNames;
         }
 
-        /**
-         * Handles the click event for the button.
-         *
-         * @param player       the player who clicked the button
-         * @param slot         the slot the button was clicked in
-         * @param clickType    the type of click
-         * @param hotbarButton the hotbar button clicked
-         */
         @Override
         public void clicked(Player player, int slot, ClickType clickType, int hotbarButton) {
             if (clickType != ClickType.LEFT) return;
@@ -193,36 +156,22 @@ public class CurrentMatchesMenu extends PaginatedMenu {
 
     @AllArgsConstructor
     public static class RefreshButton extends Button {
-        /**
-         * Gets the item stack for the button.
-         *
-         * @param player the player viewing the button
-         * @return the item stack
-         */
         @Override
         public ItemStack getButtonItem(Player player) {
             return new ItemBuilder(Material.CARPET)
-                    .name("&b&lAtualizar")
+                    .name("&b&lRefresh")
                     .lore(
                             CC.MENU_BAR,
-                            "&7Recarrega a lista de partidas",
-                            "&7que estao acontecendo agora.",
+                            "&7Reloads the list of matches",
+                            "&7currently taking place.",
                             " ",
-                            "&aClique para atualizar.",
+                            "&aClick to refresh.",
                             CC.MENU_BAR
                     )
                     .durability(2)
                     .build();
         }
 
-        /**
-         * Handles the click event for the button.
-         *
-         * @param player       the player who clicked the button
-         * @param slot         the slot the button was clicked in
-         * @param clickType    the type of click
-         * @param hotbarButton the hotbar button clicked
-         */
         @Override
         public void clicked(Player player, int slot, ClickType clickType, int hotbarButton) {
             if (clickType != ClickType.LEFT) return;
@@ -241,12 +190,12 @@ public class CurrentMatchesMenu extends PaginatedMenu {
             boolean next = this.offset > 0;
 
             return new ItemBuilder(Material.ARROW)
-                    .name(next ? "&b&lProximo" : "&b&lAnterior")
+                    .name(next ? "&b&lNext" : "&b&lPrevious")
                     .lore(
                             CC.MENU_BAR,
-                            "&fPagina atual: &b" + this.menu.getPage() + "/" + this.menu.getPages(player),
+                            "&fCurrent page: &b" + this.menu.getPage() + "/" + this.menu.getPages(player),
                             " ",
-                            next ? "&aClique para ir para a proxima pagina." : "&aClique para voltar uma pagina.",
+                            next ? "&aClick to go to the next page." : "&aClick to go back a page.",
                             CC.MENU_BAR
                     )
                     .build();
@@ -267,12 +216,12 @@ public class CurrentMatchesMenu extends PaginatedMenu {
         @Override
         public ItemStack getButtonItem(Player player) {
             return new ItemBuilder(Material.BARRIER)
-                    .name("&c&lFechar")
+                    .name("&c&lClose")
                     .lore(
                             CC.MENU_BAR,
-                            "&7Fecha o menu de partidas atuais.",
+                            "&7Closes the current matches menu.",
                             " ",
-                            "&cClique para fechar.",
+                            "&cClick to close.",
                             CC.MENU_BAR
                     )
                     .build();

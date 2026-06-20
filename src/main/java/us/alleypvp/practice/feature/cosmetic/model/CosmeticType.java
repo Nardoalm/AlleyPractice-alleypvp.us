@@ -13,20 +13,20 @@ import java.util.function.BiConsumer;
  */
 @Getter
 public enum CosmeticType {
-    KILL_EFFECT("killeffect", "Mostra um efeito especial ao matar um jogador.", (cosmetic, player) -> {
+    KILL_EFFECT("killeffect", "Shows a special effect when killing a player.", (cosmetic, player) -> {
     }),
-    SOUND_EFFECT("soundeffect", "Toca um som customizado quando você consegue uma kill.", (cosmetic, player) -> {
+    SOUND_EFFECT("soundeffect", "Plays a custom sound when you get a kill.", (cosmetic, player) -> {
     }),
-    PROJECTILE_TRAIL("projectiletrail", "Deixa uma trilha de partículas nos seus projéteis.", (cosmetic, player) -> {
+    PROJECTILE_TRAIL("projectiletrail", "Leaves a particle trail on your projectiles.", (cosmetic, player) -> {
     }),
-    KILL_MESSAGE("killmessage", "&7Envia mensagens customizadas quando você morre.", (cosmetic, player) -> {
+    KILL_MESSAGE("killmessage", "&7Sends custom messages when you die.", (cosmetic, player) -> {
     }),
-    SUIT("suit", "Use uma roupa estilosa para mostrar seu estilo.", (cosmetic, player) -> {
+    SUIT("suit", "Wear a stylish suit to show off your style.", (cosmetic, player) -> {
         if (cosmetic instanceof BaseSuit) {
             ((BaseSuit) cosmetic).onSelect(player);
         }
     }),
-    CLOAK("cloak", "Use uma capa para mostrar seu estilo.", (cosmetic, player) -> {
+    CLOAK("cloak", "Wear a cloak to show off your style.", (cosmetic, player) -> {
     });
 
     private final String permissionKey;

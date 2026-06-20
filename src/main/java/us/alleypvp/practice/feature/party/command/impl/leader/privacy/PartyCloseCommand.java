@@ -29,7 +29,7 @@ public class PartyCloseCommand extends BaseCommand {
         ProfileService profileService = this.plugin.getService(ProfileService.class);
         Profile profile = profileService.getProfile(player.getUniqueId());
         if (profile.getParty() == null) {
-            player.sendMessage(CC.translate("&cVocê não está em uma party."));
+            player.sendMessage(CC.translate("&cYou are not in a party."));
             return;
         }
 
@@ -39,6 +39,6 @@ public class PartyCloseCommand extends BaseCommand {
         }
 
         profile.getParty().setState(PartyState.PRIVATE);
-        player.sendMessage(CC.translate("&aVocê fechou sua party. Ninguém pode entrar sem convite."));
+        player.sendMessage(CC.translate("&aYou closed your party. No one can join without an invitation."));
     }
 }

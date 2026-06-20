@@ -8,15 +8,13 @@ import us.alleypvp.practice.library.command.CommandArgs;
 import us.alleypvp.practice.library.command.annotation.CommandData;
 import org.bukkit.entity.Player;
 
-/**
- * Cycles a player's matchmaking ping range setting.
- */
 public class TogglePingRangeCommand extends BaseCommand {
+
     @CommandData(
             name = "togglepingrange",
             cooldown = 1,
             usage = "togglepingrange",
-            description = "Alterna o limite de diferença de ping no matchmaking."
+            description = "Toggles the matchmaking ping difference range limit."
     )
     @Override
     public void onCommand(CommandArgs command) {
@@ -27,17 +25,17 @@ public class TogglePingRangeCommand extends BaseCommand {
 
         Profile profile = this.getProfile(player.getUniqueId());
         if (profile == null || profile.getProfileData() == null) {
-            player.sendMessage(CC.translate("&cSeu perfil ainda não foi carregado."));
+            player.sendMessage(CC.translate("&cYour profile has not been loaded yet."));
             return;
         }
 
         ProfileSettingData settingData = profile.getProfileData().getSettingData();
         if (settingData == null) {
-            player.sendMessage(CC.translate("&cSuas configurações não estão disponíveis no momento."));
+            player.sendMessage(CC.translate("&cYour settings are currently unavailable."));
             return;
         }
 
         settingData.cyclePingRange();
-        player.sendMessage(CC.translate("&aPing range do matchmaking: &b" + settingData.getPingRangeDisplay() + "&a."));
+        player.sendMessage(CC.translate("&aMatchmaking ping range: &b" + settingData.getPingRangeDisplay() + "&a."));
     }
 }

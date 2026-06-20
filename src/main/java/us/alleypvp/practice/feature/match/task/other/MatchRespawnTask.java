@@ -7,6 +7,9 @@ import us.alleypvp.practice.common.text.CC;
 import us.alleypvp.practice.core.locale.LocaleService;
 import us.alleypvp.practice.core.locale.internal.impl.VisualsLocaleImpl;
 import us.alleypvp.practice.core.locale.internal.impl.message.GameMessagesLocaleImpl;
+import us.alleypvp.practice.core.profile.Profile;
+import us.alleypvp.practice.core.profile.ProfileService;
+import us.alleypvp.practice.core.profile.enums.ProfileState;
 import us.alleypvp.practice.feature.match.Match;
 import us.alleypvp.practice.feature.match.MatchState;
 import org.bukkit.entity.Player;
@@ -14,23 +17,11 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 
-/**
- * @author Emmy
- * @project Alley
- * @since 23/05/2025
- */
 public class MatchRespawnTask extends BukkitRunnable {
     protected final Player player;
     protected final Match match;
     private int count;
 
-    /**
-     * Constructor for the MatchRespawnTask class.
-     *
-     * @param player The player to respawn.
-     * @param match  The match instance.
-     * @param count  The countdown time in seconds.
-     */
     public MatchRespawnTask(Player player, Match match, int count) {
         this.player = player;
         this.match = match;
@@ -39,14 +30,26 @@ public class MatchRespawnTask extends BukkitRunnable {
 
     @Override
     public void run() {
-        if (this.count == 0) {
+        if (this.player == null || !this.player.isOnline()) {
             this.cancel();
-            this.match.handleRespawn(this.player);
             return;
         }
 
         if (this.match.getState() == MatchState.ENDING_MATCH || this.match.getState() == MatchState.ENDING_ROUND) {
             this.cancel();
+            return;
+        }
+
+        ProfileService profileService = AlleyPractice.getInstance().getService(ProfileService.class);
+        Profile profile = profileService.getProfile(this.player.getUniqueId());
+        if (profile == null || profile.getMatch() != this.match || profile.getState() != ProfileState.PLAYING) {
+            this.cancel();
+            return;
+        }
+
+        if (this.count == 0) {
+            this.cancel();
+            this.match.handleRespawn(this.player);
             return;
         }
 

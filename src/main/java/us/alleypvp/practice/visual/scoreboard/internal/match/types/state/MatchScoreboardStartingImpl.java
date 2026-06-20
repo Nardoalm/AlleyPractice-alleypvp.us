@@ -15,17 +15,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * @author Emmy
- * @project Alley
- * @since 30/04/2025
- */
 public class MatchScoreboardStartingImpl implements MatchScoreboard {
     private final DotAnimation dotAnimation;
 
-    /**
-     * Constructor for the MatchScoreboardStartingImpl class.
-     */
     public MatchScoreboardStartingImpl() {
         this.dotAnimation = new DotAnimation();
     }
@@ -50,6 +42,8 @@ public class MatchScoreboardStartingImpl implements MatchScoreboard {
         List<String> scoreboardLines = new ArrayList<>();
         List<String> template = configService.getScoreboardConfig().getStringList("scoreboard.lines.starting");
 
+        int secondsLeft = Math.max(0, 3 - (int) (profile.getMatch().getElapsedTime() / 1000));
+
         for (String line : template) {
             scoreboardLines.add(CC.translate(line)
                     .replace("{opponent}", this.getColoredName(profileService.getProfile(opponent.getLeader().getUuid())))
@@ -58,7 +52,7 @@ public class MatchScoreboardStartingImpl implements MatchScoreboard {
                     .replace("{duration}", profile.getMatch().getDuration())
                     .replace("{arena}", profile.getMatch().getArena().getDisplayName() == null ? "&c&lINDEFINIDO" : profile.getMatch().getArena().getDisplayName())
                     .replace("{dot-animation}", this.dotAnimation.getCurrentFrame())
-                    .replace("{countdown}", String.valueOf(profile.getMatch().getRunnable().getStage()))
+                    .replace("{countdown}", String.valueOf(secondsLeft))
                     .replace("{kit}", profile.getMatch().getKit().getDisplayName()));
         }
 

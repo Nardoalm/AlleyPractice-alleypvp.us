@@ -7,7 +7,7 @@ arena-management:
     # Ativa o gerenciamento de arenas standalone via SlimeWorldManager.
     enabled: true
     # Loader registrado no SWM (ex.: file, mysql, mongodb...).
-    loader: mongodb
+    loader: file
 
 crafting-operations:
   blocked-items: [ ]
@@ -54,8 +54,9 @@ game:
   portal-radius: 5
   # Comandos bloqueados durante partidas.
   blocked-commands:
-    - kill
+    - fly
     - tp
+    - sit
   # Quantidade de vidas que cada jogador terá (ex.: PearlFight).
   lives-per-game: 3
 
@@ -64,9 +65,9 @@ permissions:
   color-code-usage-permission: kaos.chat.color
   donators:
     # Permite que jogadores escolham arena em parties.
-    party-arena-selector: kaospractice.duel.arena.selector
+    party-arena-selector: alleypractice.duel.arena.selector
     # Permite que jogadores escolham arena no menu /duel.
-    duel-arena-selector: kaospractice.duel.arena.selector
+    duel-arena-selector: alleypractice.duel.arena.selector
     # Permite voar no lobby/fila.
     lobby-flight-bypass: kaoscore.vip.fly
     # Permite usar emojis no chat (:sad:, etc).
@@ -85,11 +86,11 @@ server:
     tag-appearance:
       format: '{tag-color}{tag-prefix}'
     party:
-      format: '§7[§6Party§7] {tag_prefix}{nick} §8» §f{message}'
+      format: '§7[§bParty§7] {tag_prefix}{nick} §8» §f{message}'
   essentials:
     emoji-feature: true
   locations:
-    spawn: world:10.0:100.0:100.0:0.0:0.0
+    spawn: Lobby:0.5:66.0:0.5:1.1:-0.8
 
 sounds:
   match:

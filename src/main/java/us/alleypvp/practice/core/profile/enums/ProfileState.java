@@ -13,6 +13,7 @@ public enum ProfileState {
     PLAYING_TOURNAMENT("Tournament", "The player is in a tournament"),
     PLAYING_EVENT("Event", "The player is in an event"),
     FFA("FFA", "The player is in the FFA lobby"),
+    TOURNAMENT_LOBBY("Tournament", "The player is in tournament lobby"),
 
     ;
 

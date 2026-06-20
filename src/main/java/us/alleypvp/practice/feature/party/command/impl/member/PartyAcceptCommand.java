@@ -37,7 +37,7 @@ public class PartyAcceptCommand extends BaseCommand {
         Player target = Bukkit.getPlayer(args[0]);
 
         if (target == null) {
-            player.sendMessage(CC.translate("&cO jogador que você está tentando entrar não está online."));
+            player.sendMessage(CC.translate("&cThe player you are trying to join is not online."));
             return;
         }
 
@@ -45,7 +45,7 @@ public class PartyAcceptCommand extends BaseCommand {
 
         Party party = partyService.getPartyByLeader(target);
         if (party == null) {
-            player.sendMessage(CC.translate("&cO jogador que você está tentando entrar não possui party."));
+            player.sendMessage(CC.translate("&cThe player you are trying to join does not have a party."));
             return;
         }
 
@@ -65,7 +65,7 @@ public class PartyAcceptCommand extends BaseCommand {
 
         if (partyRequest.hasExpired()) {
             partyService.removeRequest(partyRequest);
-            player.sendMessage(CC.translate("&cO pedido de party expirou."));
+            player.sendMessage(CC.translate("&cThe party invitation has expired."));
             return;
         }
 

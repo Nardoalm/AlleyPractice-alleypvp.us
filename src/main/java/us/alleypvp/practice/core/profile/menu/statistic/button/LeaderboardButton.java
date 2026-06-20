@@ -25,13 +25,13 @@ public class LeaderboardButton extends Button {
     @Override
     public ItemStack getButtonItem(Player player) {
         return new ItemBuilder(Material.EYE_OF_ENDER)
-                .name("&b&lRankings")
+                .name("&b&lLeaderboards")
                 .lore(
                         CC.MENU_BAR,
-                        "&7Todos os rankings são exibidos aqui.",
-                        "&7Você pode ver o topo de vitórias, derrotas e mais.",
+                        "&7All rankings are displayed here.",
+                        "&7You can view the top wins, losses, and more.",
                         "",
-                        "&aClique para ver os rankings.",
+                        "&aClick to view the leaderboards.",
                         CC.MENU_BAR
                 )
                 .build();
